@@ -1,0 +1,16 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="interface-calendar-check--approve-calendar-check-date-day-month-success" clip-path="url(#clip0_17_752)">
+<g id="Group">
+<path id="Vector" d="M2.57146 4.28571C2.11681 4.28571 1.68077 4.46632 1.35928 4.78781C1.03779 5.1093 0.857178 5.54533 0.857178 5.99999V21.4286C0.857178 21.8832 1.03779 22.3193 1.35928 22.6407C1.68077 22.9622 2.11681 23.1428 2.57146 23.1428H21.4286C21.8833 23.1428 22.3193 22.9622 22.6408 22.6407C22.9623 22.3193 23.1429 21.8832 23.1429 21.4286V5.99999C23.1429 5.54533 22.9623 5.1093 22.6408 4.78781C22.3193 4.46632 21.8833 4.28571 21.4286 4.28571H18" stroke="#4D4AEA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M6 0.857117V7.71426" stroke="#4D4AEA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_3" d="M18 0.857117V7.71426" stroke="#4D4AEA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_4" d="M6 4.28571H14.5714" stroke="#4D4AEA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_5" d="M6.85718 15.4285L10.2857 18L16.2857 11.1428" stroke="#4D4AEA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_17_752">
+<rect width="24" height="24" fill="white"/>
+</clipPath>
+</defs>
+</svg>

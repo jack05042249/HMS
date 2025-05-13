@@ -1,0 +1,35 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# App files
+dist/
+tmp/
+tmp/*
+node_modules/
+logs/*
+
+
+# Optional npm cache directory
+.npm
+
+# VS Code settings
+.vscode/
+*.code-workspace
+.dccache
+.idea
+.DS_Store
+/node_modules
+npm-debug.log
+package-lock.json
+./package-lock.json
+/*.env
+*.log
+./holidaysData.json
+read_excel.js
+Employee Feedback questionnaire.xlsx
+
+

@@ -1,0 +1,88 @@
+@import '../../../App.scss';
+
+#message_notification {
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  left: 50%;
+  background: $dark_grey;
+  overflow: hidden;
+  color: $white;
+  bottom: 20px;
+  width: 40%;
+  z-index: 2147483002;
+  border-radius: 10px;
+  padding: 15px;
+  font-size: 14px;
+  font-family: 'Montserrat-Medium';
+  cursor: pointer;
+  user-select: none;
+  transform: translate(-50%, 200%);
+
+  &.success {
+    color: $green;
+    .icon svg {
+      path {
+        fill: $green;
+      }
+    }
+  }
+
+  &.error {
+    color: $red;
+    .icon svg {
+      path {
+        fill: $red;
+      }
+    }
+  }
+
+  .close-button {
+    svg {
+      path {
+        fill: $white;
+      }
+    }
+  }
+
+  .body {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    .icon {
+      svg {
+        scale: 1.8;
+      }
+    }
+    .title {
+      font-weight: bold;
+    }
+  }
+
+  &.open-animation {
+    transform: translate(-50%, 0);
+    transition: ease-in 0.5s;
+  }
+  &.close-animation {
+    transform: translate(-50%, 200%);
+    transition: ease-out 0.5s;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  #message_notification {
+    width: 100%;
+    left: 0px;
+    bottom: 0px;
+    border-radius: 0px;
+    transform: translate(0, 200%);
+    &.open-animation {
+      transform: translate(0);
+    }
+    &.close-animation {
+      transform: translate(0, 200%);
+    }
+  }
+}

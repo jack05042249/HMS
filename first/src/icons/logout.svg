@@ -1,0 +1,14 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="interface-logout-circle--arrow-enter-right-logout-point-circle" clip-path="url(#clip0_28_521)">
+<g id="Group">
+<path id="Vector" d="M11.1429 12H23.1429" stroke="#9197B3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M19.7143 8.57141L23.1429 12L19.7143 15.4286" stroke="#9197B3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_3" d="M20.0572 19.6971C18.5178 21.3016 16.5336 22.4089 14.3598 22.8765C12.1861 23.3441 9.92209 23.1507 7.85913 22.3211C5.79616 21.4915 4.02857 20.0637 2.78369 18.2214C1.53882 16.379 0.873596 14.2063 0.873596 11.9828C0.873596 9.75931 1.53882 7.58665 2.78369 5.74429C4.02857 3.90193 5.79616 2.47413 7.85913 1.64455C9.92209 0.814976 12.1861 0.621555 14.3598 1.08917C16.5336 1.55678 18.5178 2.66405 20.0572 4.26854" stroke="#9197B3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_28_521">
+<rect width="24" height="24" fill="white"/>
+</clipPath>
+</defs>
+</svg>

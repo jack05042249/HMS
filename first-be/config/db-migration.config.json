@@ -1,0 +1,26 @@
+{
+  "development": {
+    "host": "127.0.0.1",
+    "database": "hms_db",
+    "username": "root",
+    "password": "",
+    "logging": false,
+    "dialect": "mysql"
+  },
+  "stage": {
+    "dialect": "mysql",
+    "host": "hms-stg1.cl4wmjxeyzoz.eu-north-1.rds.amazonaws.com",
+    "database": "hmsstg1",
+    "username": "admin",
+    "password": "SomerandomPassA123456!",
+    "logging": false
+  },
+  "production": {
+    "dialect": "mysql",
+    "host": "hms-dev.cl4wmjxeyzoz.eu-north-1.rds.amazonaws.com",
+    "database": "hms-dev",
+    "username": "admin",
+    "password": "SomerandomPassA123456!",
+    "logging": false
+  }
+}

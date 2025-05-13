@@ -1,0 +1,45 @@
+{
+  "name": "itms-be",
+  "version": "2.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:dev": "nodemon ./src/app.js",
+    "start:stage": "NODE_ENV=stage node ./src/app.js",
+    "nodemon:stage": "NODE_ENV=stage nodemon ./src/app.js",
+    "start:stage_local": "NODE_ENV=stage node ./src/app.js",
+    "start:prod": "NODE_ENV=production node ./src/app.js",
+    "migrate:dev": "npx sequelize-cli db:migrate --env development --config config/db-migration.config.json",
+    "migrate:stage": "npx sequelize-cli db:migrate --env stage --config config/db-migration.config.json",
+    "migrate:production": "npx sequelize-cli db:migrate --env production --config config/db-migration.config.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "cron": "^1.7.2",
+    "crypto-js": "^4.1.1",
+    "express": "^4.18.2",
+    "express-favicon": "^2.0.4",
+    "fs": "^0.0.1-security",
+    "jsonwebtoken": "^9.0.0",
+    "lodash": "^4.17.21",
+    "logzio-nodejs": "^2.1.7",
+    "moment": "^2.29.4",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.3.1",
+    "node-cron": "^3.0.2",
+    "nodemailer": "^6.9.3",
+    "os": "^0.1.2",
+    "path": "^0.12.7",
+    "sequelize": "^6.31.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.5",
+    "sequelize-cli": "^6.6.2"
+  }
+}

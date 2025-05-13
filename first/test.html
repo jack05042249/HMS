@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Understanding</title>
+  <style>
+      body {
+          font-family: Arial, sans-serif;
+          padding: 20px;
+      }
+
+      .container {
+          display: flex;
+          flex-direction: column;
+          border: 2px solid black;
+      }
+
+      .header, .question-row, .answers-row {
+          display: flex;
+      }
+
+      .header {
+          font-weight: bold;
+      }
+
+      .header div, .question-row div, .answers-row div {
+          padding: 10px;
+      }
+
+      .header div:last-child, .question-row div:last-child, .answers-row div:last-child {
+          border-right: none;
+      }
+
+      .section-title {
+          text-align: center;
+      }
+
+      .question-row {
+          border-bottom: 2px solid black;
+      }
+
+      .question {
+          width: 400px;
+      }
+
+      .answers {
+          display: flex;
+          flex-direction: column;
+          width: 200px;
+      }
+
+      .answers-row div {
+          border-bottom: 2px solid black;
+      }
+
+      .answers-row div:last-child {
+          border-bottom: none;
+      }
+
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <div class="section-title">Project Understanding</div>
+  </div>
+
+  <div class="question-row">
+    <div class="question">How well do you understand the goals and objectives of the current project?</div>
+    <div class="answers">
+      <div>Very well</div>
+      <div>Moderately well</div>
+      <div>Not very well</div>
+      <div>Not at all</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,121 @@
+$white: #ffffff;
+$light_grey: #ebebeb;
+$dark_grey: #444444;
+$super_dark_grey: #292828;
+$red: #d75353;
+$green: #a6d19f;
+$border_color: #b3b3b3;
+
+.App {
+  .react-datepicker__year-dropdown .react-datepicker__year-option:first-child::before {
+    content: "\25B2";
+    position: absolute;
+    top: 2%;
+    left: 45%;
+    margin: auto;
+  }
+
+  .react-datepicker__year-dropdown::after {
+    content: "\25BC";
+    display: block;
+    position: absolute;
+    bottom: 2%;
+    left: 45%;
+  }
+  text-align: center;
+  color: $dark_grey;
+  .flex {
+    display: flex;
+  }
+  .space-between {
+    justify-content: space-between;
+  }
+  .column {
+    flex-direction: column;
+  }
+  .full-width {
+    width: 100%;
+  }
+  .card {
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: $white;
+    background-clip: border-box;
+    border-radius: 1rem;
+  }
+
+  //input:not([type='checkbox']):not([type='file']),
+  //select,
+  //.multiple-select {
+  //  font-family: 'Montserrat-Medium';
+  //  font-size: 14px;
+  //  color: $dark_grey;
+  //  padding: 6px 10px;
+  //  border-radius: 6px;
+  //  border: 1px solid $border_color;
+  //  appearance: none;
+  //  box-shadow: inset 1px 3px 3px rgba(0, 0, 0, 0.1);
+  //  -moz-box-shadow: inset 1px 3px 3px rgba(0, 0, 0, 0.1);
+  //  -webkit-box-shadow: inset 1px 3px 3px rgba(0, 0, 0, 0.1);
+  //  background-color: $white;
+  //}
+
+  .btn {
+    border-radius: 4px;
+    border: none;
+    margin: 10px 0;
+    height: 34px;
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding: 0.375rem 0.75rem;
+    line-height: 1.5;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+      box-shadow 0.15s ease-in-out;
+    cursor: pointer;
+  }
+  .logout-btn {
+    margin-right: 20px;
+  }
+  .grey-button {
+    color: $white;
+    background-color: $super_dark_grey;
+  }
+
+  .red {
+    color: $red;
+  }
+
+  .pointer {
+    cursor: pointer;
+  }
+
+  .ml-10 {
+    margin-left: 10px;
+  }
+  .mt-20 {
+    margin-top: 20px;
+  }
+
+  .align-center {
+    align-self: center;
+  }
+
+  .numeration {
+    width: 40px !important;
+  }
+
+  .excel {
+    margin: 0 10px 0 0;
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "appUrl": "http://16.170.235.89",
+  "calendarific_key": "0e057aad0d6252dbf2a5e2ab7d33df1cebf6a842",
+  "gmail_user": "sona@itsoft.co.il",
+  "gmail_pass": "xurlireujvtjllxb",
+  "gmail_cc": ["evgeny@itsoft.co.il", "sona@itsoft.co.il", "elen@commit-offshore.com"],
+  "gmail_hr": ["sona@itsoft.co.il", "elen@commit-offshore.com"],
+  "gmail_reminders": ["sona@itsoft.co.il", "Evgeny@commit-offshore.Com"],
+  "currentFeedbackQuestionsVersion": "v2",
+  "database": {
+    "dialect": "mysql",
+    "host": "hms-dev.cl4wmjxeyzoz.eu-north-1.rds.amazonaws.com",
+    "database": "hms-dev",
+    "username": "admin",
+    "password": "SomerandomPassA123456!",
+    "logging": false
+  }
+}
