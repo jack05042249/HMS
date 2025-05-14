@@ -3,8 +3,8 @@
   "currentFeedbackQuestionsVersion": "v2",
   "database": {
     "dialect": "mysql",
-    "host": "hms-stg1.cl4wmjxeyzoz.eu-north-1.rds.amazonaws.com",
-    "database": "hmsstg1",
+    "host": "localhost",
+    "database": "hms-dev",
     "username": "admin",
     "password": "SomerandomPassA123456!",
     "logging": false
