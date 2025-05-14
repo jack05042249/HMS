@@ -3,7 +3,7 @@
   "currentFeedbackQuestionsVersion": "v2",
   "database": {
     "dialect": "mysql",
-    "host": "localhost",
+    "host": "172.105.92.67",
     "database": "hms-dev",
     "username": "admin",
     "password": "SomerandomPassA123456!",
