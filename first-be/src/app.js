@@ -40,7 +40,7 @@ const run = async () => new Promise(async (resolve, reject) => {
 
     const port = process.env.PORT || config.port;
 
-    app.listen(port, () => {
+    app.listen(port, '0.0.0.0', () => {
       console.warn('Server is running on port: ', port);
       croneExecutor();
       resolve();
