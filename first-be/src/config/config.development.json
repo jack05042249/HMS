@@ -1,5 +1,5 @@
 {
-  "appUrl": "http://localhost:3000",
+  "appUrl": "http://172.105.92.67:3000",
   "currentFeedbackQuestionsVersion": "v2",
   "database": {
     "dialect": "mysql",
