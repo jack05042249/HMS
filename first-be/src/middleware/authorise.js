@@ -3,7 +3,7 @@ const talentService = require('../service/talentsService');
 const { GenericError } = require('../utils/customError')
 const {verifyToken} = require('../service/jwt');
 
-const exception = ['/', '/login',
+const exception = ['/api/', '/api/login',
     // '/signupnewmannager'
 ];
 
