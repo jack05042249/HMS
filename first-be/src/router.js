@@ -17,13 +17,13 @@ const feedbackHrController = require('./controller/hrFeedback');
 const tasksEmployeeController = require('./controller/tasksEmployee');
 const tasksCustomerController = require('./controller/tasksCustomer');
 
-router.get('/', (req, res) => {
+router.get('/api/', (req, res) => {
     res.send('Yep')
 })
 
 // Users
 router.get('/getUser',  userCntrl.getUser)
-router.post('/login', auth.login);
+router.post('/api/login', auth.login);
 router.get('/getAuthUser', auth.getAuthUser);
 
 router.post('/signupnewmannager', userCntrl.signup);
