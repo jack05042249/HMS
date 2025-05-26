@@ -459,7 +459,7 @@ function whereClauseForRecords() {
 }
 
 function createLink(token, authToken) {
-    return `${config.appUrl}/talent/feedback?token=${token}&auth=${authToken}`;
+    return `https://coms.commit-offshore.com/talent/feedback?token=${token}&auth=${authToken}`;
 }
 
 function loginTargetTalent(talentId) {
