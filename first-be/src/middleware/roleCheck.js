@@ -1,4 +1,4 @@
-const talentUrlWhiteList = ['/allTalents', '/getAggregatedTalents', '/talent', '/talent/:id'];
+const talentUrlWhiteList = ['/api/allTalents', '/api/getAggregatedTalents', '/api/talent', '/api/talent/:id'];
 
 const roleCheck = (req, res, next) => {
   const userType = req.user.type;
