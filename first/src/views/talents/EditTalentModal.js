@@ -110,7 +110,8 @@ const EditTalentModal = ({
     linkedinComment
   } = talent;
 
-  const customersForMainStakeholder = customers.filter(cus => !cus.inactive || `${cus.id}` === `${talentMainCustomer}`);
+  const customersForMainStakeholder = customers.filter(cus => !cus.inactive && cusIds.includes(cus.id));
+  const organizationIdsForMainStakeholder = customers.filter(cus => !cus.inactive && `${cus.id}` === `${talentMainCustomer}`).map(cus => cus.organizationId);
 
   const customersForStakeholdersDropdown = filter
     ? customers
@@ -466,9 +467,9 @@ const EditTalentModal = ({
 
             <SearchableField
               name='Customer'
-              data={allOrganizations.map(org => ({ key: `${org.id}`, value: org.name }))}
+              data={talent['talentMainCustomer'] ? allOrganizations.filter(org => organizationIdsForMainStakeholder.includes(org.id)).map(org => ({ key: `${org.id}`, value: org.name })) : []}
               selectedKeys={organizations?.length ? [`${organizations[0].id}`] : []}
-              emptyText='Select'
+              emptyText='Select Customer'
               onChangeSelectedKeys={selectedKeys => {
                 if (!selectedKeys.length) {
                   return;
