@@ -111,7 +111,9 @@ const EditTalentModal = ({
   } = talent;
 
   const customersForMainStakeholder = customers.filter(cus => !cus.inactive && cusIds.includes(cus.id));
-  const organizationIdsForMainStakeholder = customers.filter(cus => !cus.inactive && `${cus.id}` === `${talentMainCustomer}`).map(cus => cus.organizationId);
+  const organizationIdsForMainStakeholder = customers
+    .filter(cus => !cus.inactive && `${cus.id}` === `${talentMainCustomer}`)
+    .map(cus => cus.organizationId);
 
   const customersForStakeholdersDropdown = filter
     ? customers
@@ -464,12 +466,27 @@ const EditTalentModal = ({
                 });
               }}
             />
+            <label htmlFor='Customer' className='text-[#000] text-[14px] font-medium text-left'>
+              Customer
+            </label>
+            <input
+              id='Customer'
+              value={
+                talent['talentMainCustomer']
+                  ? allOrganizations
+                      .filter(org => organizationIdsForMainStakeholder.includes(org.id))
+                      .map(org => ({ key: `${org.id}`, value: org.name }))[0].value
+                  : 'None'
+              }
+              placeholder='Customer'
+              className='mb-4 border border-[#F5F0F0]  text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+            />
 
-            <SearchableField
+            {/* <SearchableField
               name='Customer'
               data={talent['talentMainCustomer'] ? allOrganizations.filter(org => organizationIdsForMainStakeholder.includes(org.id)).map(org => ({ key: `${org.id}`, value: org.name })) : []}
               selectedKeys={organizations?.length ? [`${organizations[0].id}`] : []}
-              emptyText='Select Customer'
+              emptyText= {talent['talentMainCustomer'] ? allOrganizations.filter(org => organizationIdsForMainStakeholder.includes(org.id)).map(org => ({ key: `${org.id}`, value: org.name }))[0].value : 'None'}
               onChangeSelectedKeys={selectedKeys => {
                 if (!selectedKeys.length) {
                   return;
@@ -485,7 +502,7 @@ const EditTalentModal = ({
                   }
                 });
               }}
-            />
+            /> */}
 
             <label htmlFor='email' className='text-[#000] text-[14px] mt-2 font-medium text-left'>
               E-mail
@@ -825,7 +842,7 @@ const EditTalentModal = ({
                   cv
                     ? () => {
                         return axios
-                          .get(`${API_URL}/talent/${id}/cv`, { responseType: 'blob'})
+                          .get(`${API_URL}/talent/${id}/cv`, { responseType: 'blob' })
                           .then(res => res.data)
                           .then(blob => {
                             const file = new File([blob], 'cv.pdf', { type: 'application/pdf' });
