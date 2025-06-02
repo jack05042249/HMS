@@ -164,12 +164,15 @@ const getCustomersAndTalentsWithoutTasks = async () => {
       include: [
         {
           model: TasksEmployee,
-          required: false
+          required: false, // Left join to include talents without matching TasksEmployee
+          where: {
+            status: 'OPEN'
+          }
         }
       ],
       where: {
         inactive: false,
-        '$TasksEmployees.id$': null
+        '$TasksEmployees.id$': null // Only talents with NO TasksEmployee.status == 'OPEN'
       }
     })
   ])
