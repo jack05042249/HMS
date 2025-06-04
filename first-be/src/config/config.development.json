@@ -8,5 +8,7 @@
     "username": "admin",
     "password": "SomerandomPassA123456!",
     "logging": false
-  }
+  },
+  "gmail_reminders": ["sona@itsoft.co.il", "Evgeny@commit-offshore.Com", "benjamin1993112@gmail.com"],
+  "gmail_hr": ["sona@itsoft.co.il", "elen@commit-offshore.com"]
 }
