@@ -107,8 +107,8 @@ const SideBar = ({ userType }) => {
 
         {
           APP_MODE !== 'production' ? <span>
-          {/* Running in <i>{APP_MODE}</i> mode */}
-          Running in <i>production</i> mode
+          Running in <i>{APP_MODE}</i> mode
+          {/* Running in <i>production</i> mode */}
         </span> : null
         }
 

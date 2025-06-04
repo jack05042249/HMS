@@ -139,25 +139,13 @@ const getCustomersAndTalentsWithoutTasks = async () => {
         {
           model: TasksCustomer,
           required: false,
-          attributes: ['id'] // Now included
-        },
-        {
-          model: Talent,
-          as: 'talents',
-          attributes: [],
-          required: true,
-          where: {
-            talentMainCustomer: sequelize.col('Customer.id'),
-            inactive: false
-          }
+          where: { status: 'OPEN' }
         }
       ],
       where: {
         inactive: false,
-        '$TasksCustomers.id$': null
-      },
-      group: ['Customer.id', 'TasksCustomers.id'], // Add this line
-      having: sequelize.literal('COUNT(`talents`.`id`) > 0')
+        '$TasksCustomers.id$': null // Only customers with NO open tasks
+      }
     }),
     Talent.findAll({
       attributes: { exclude: ['password'] },
