@@ -137,8 +137,18 @@ const getCustomersAndTalentsWithoutTasks = async () => {
       attributes: ['id', 'fullName'],
       include: [
         {
+          model: Talent,
+          as: 'talents',
+          required: true, // INNER JOIN: only customers with at least one active talent
+          attributes: [],
+          where: {
+            talentMainCustomer: sequelize.col('Customer.id'),
+            inactive: false
+          }
+        },
+        {
           model: TasksCustomer,
-          required: false,
+          required: false, // LEFT JOIN: for open tasks
           where: { status: 'OPEN' }
         }
       ],
