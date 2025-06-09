@@ -193,6 +193,9 @@ const Dashboard = () => {
               <th scope='col' className='px-6 py-3 font-medium'>
                 Total days
               </th>
+              <th scope='col' className='px-6 py-3 font-medium'>
+                Type of Leave
+              </th>
               <th scope='col' className='px-6 py-3 font-medium text-right'>
                 Employee Details
               </th>
@@ -216,6 +219,9 @@ const Dashboard = () => {
                     <td className='px-6 py-4 text-[#9197B3]'>{moment(leave.endDate).format('DD/MM/YYYY')}</td>
                     <td className='px-6 py-4 text-[#9197B3]'>
                       {moment(leave.endDate).diff(moment(leave.startDate), 'days') + 1}
+                    </td>
+                    <td className='px-6 py-4 text-[#9197B3]'>
+                      {leaveType.charAt(0).toUpperCase() + leaveType.slice(1).replace(/([A-Z])/g, ' $1')}
                     </td>
                     <td
                       className='px-6 py-4 text-[#4D4AEA] text-right text-[12px] pointer'

@@ -160,6 +160,64 @@ const getUpcomingBirthdaysIn3Days = async () => {
 };
 
 
+const getUpcomingBirthdaysIn1Month = async () => {
+    const today = moment().utc();
+    const endDate = today.clone().add(1, 'month');
+
+    // Get MM-DD for today and endDate
+    const startMMDD = today.format('MM-DD');
+    const endMMDD = endDate.format('MM-DD');
+
+    // If the period does not cross year boundary
+    let dateCondition;
+    if (startMMDD <= endMMDD) {
+        dateCondition = {
+            [Op.and]: [
+                Sequelize.where(
+                    Sequelize.fn('DATE_FORMAT', Sequelize.col('birthday'), '%m-%d'),
+                    { [Op.between]: [startMMDD, endMMDD] }
+                )
+            ]
+        };
+    } else {
+        // If the period crosses year boundary (e.g., Dec 15 to Jan 15)
+        dateCondition = {
+            [Op.or]: [
+                Sequelize.where(
+                    Sequelize.fn('DATE_FORMAT', Sequelize.col('birthday'), '%m-%d'),
+                    { [Op.gte]: startMMDD }
+                ),
+                Sequelize.where(
+                    Sequelize.fn('DATE_FORMAT', Sequelize.col('birthday'), '%m-%d'),
+                    { [Op.lte]: endMMDD }
+                )
+            ]
+        };
+    }
+
+    return await Talent.findAll({
+        where: {
+            inactive: false,
+            ...dateCondition
+        },
+        include: [
+            {
+                model: Agencies,
+                as: 'agency',
+                where: {
+                    name: { [Op.in]: ['Commit Offshore', 'ITSoft'] }
+                },
+                required: true
+            }
+        ],
+        order: [
+            [Sequelize.fn('MONTH', Sequelize.col('birthday')), 'ASC'],
+            [Sequelize.fn('DAY', Sequelize.col('birthday')), 'ASC']
+        ]
+    });
+};
+
+
 const getUpcomingBirthdaysIn1Days = async () => {
     const today = moment().utc();
     const targetDate = today.clone().add(1, 'days');
@@ -269,5 +327,6 @@ module.exports = {
     getHolidaysForNotification,
     getHolidaysForCustomers,
     getHolidaysForOnyDayNotification,
-    getUpcomingBirthdaysCustomersIn1Days
+    getUpcomingBirthdaysCustomersIn1Days,
+    getUpcomingBirthdaysIn1Month
 }

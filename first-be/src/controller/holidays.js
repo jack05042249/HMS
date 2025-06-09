@@ -1,9 +1,9 @@
 const { GenericError } = require("../utils/customError")
-const { getUpcomingBirthdaysIn3Days, getUpcomingAnniversaries, getUpcomingHolidays,  } = require('../service/holidayService');
+const { getUpcomingBirthdaysIn1Month, getUpcomingBirthdaysIn3Days, getUpcomingAnniversaries, getUpcomingHolidays,  } = require('../service/holidayService');
 
 const upcomingBirthdaysGet = async (req, res) => {
   try {
-    const upcomingBirthdays = await getUpcomingBirthdaysIn3Days();
+    const upcomingBirthdays = await getUpcomingBirthdaysIn1Month();
 
     return res.status(200).json(upcomingBirthdays)
 
