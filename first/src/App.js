@@ -6,6 +6,7 @@ import PageStartLoader from './views/loaders/PageStartLoader';
 import { useDefineHeaderToken } from './utils/useDefineHeaderToken';
 import axios from 'axios';
 import TalentLogin from './views/login/TalentLogin';
+import TalentResetPassword from './views/login/TalentResetPassword';
 import TalentLayout from './views/talentLayout/talentLayout';
 
 
@@ -21,7 +22,6 @@ function App() {
   });
   useDefineHeaderToken(axios)
 
-
   useLayoutEffect(() => history.listen(setState), []);
 
   return (
@@ -30,6 +30,7 @@ function App() {
         <React.Suspense fallback={<PageStartLoader />}>
           <Routes>
             <Route name="Talent login" path="/talent/login" element={<TalentLogin/>}/>
+            <Route name="Talent Reset Password" path="/talent/reset-password" element={<TalentResetPassword/>}/>
             <Route name="Talent home" path="/talent/*" element={<TalentLayout/>} />
             <Route exact path="/login" name="Login Page" element={<Login />} />
             <Route path="/*" name="Home" element={<DefaultLayout />} />

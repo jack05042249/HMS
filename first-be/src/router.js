@@ -24,6 +24,8 @@ router.get('/api/', (req, res) => {
 // Users
 router.get('/api/getUser',  userCntrl.getUser)
 router.post('/api/login', auth.login);
+router.post('/api/forgotPassword', auth.forgotPassword);
+router.post('/api/reset-password', auth.resetPassword);
 router.get('/api/getAuthUser', auth.getAuthUser);
 
 router.post('/api/signupnewmannager', userCntrl.signup);

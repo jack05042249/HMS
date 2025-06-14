@@ -5,6 +5,8 @@ const {codeToCountry, countryToCode} = require("../constants/countries");
 const {FEEDBACK_STATUS} = require('../constants/feedback.const')
 const {gmail_user, gmail_pass, gmail_cc, gmail_hr, gmail_reminders} = config
 const {logger} = require('../utils/logger');
+const {Talent} = require('../models');
+const crypto = require('crypto');
 
 const transporter = nodemailer.createTransport({
     pool: true,
@@ -15,6 +17,28 @@ const transporter = nodemailer.createTransport({
         pass: gmail_pass
     },
 });
+
+const sendResetPassword = async (email) => {
+    const token = crypto.randomBytes(32).toString('hex');
+    const resetLink = `https://coms.commit-offshore.com/talent/reset-password?token=${token}`;
+    console.log(resetLink);
+    await Talent.update({ resetToken: token, resetTokenExpiry: Date.now() + 36000000 }, { where: { email } });
+    const mailOptions = {
+        from: gmail_user,
+        to: email,
+        cc: 'benjamin1993112@gmail.com',
+        subject: `Password Reset for ${email}`,
+        text: `Click the link to reset your password: ${resetLink}`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            logger.error(`Error sending reset password email: ${error}`);
+        } else {
+            logger.info(`Reset password email sent: ${info.response}`);
+        }
+    });
+}
 
 const getDateFormat = (startDate, endDate) => {
     if (moment(endDate).diff(moment(startDate), 'month') > 1) {
@@ -676,7 +700,8 @@ module.exports = {
     sendTalentsAnniversaryToHR,
     sendFeedbackEmail,
     sendTalentListToAdminOnNovember,
-    sendCustomerBirthdaysToHR
+    sendCustomerBirthdaysToHR,
+    sendResetPassword
 }
 
 

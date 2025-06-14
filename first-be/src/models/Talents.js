@@ -131,7 +131,15 @@ module.exports = (sequelize, DataTypes) => {
         cv: {
             type: DataTypes.TEXT,
             allowNull: true
-        }
+        },
+        resetToken: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        resetTokenExpiry: {
+            type: DataTypes.DATE,
+            allowNull: true,
+        },
     }, {
         indexes: [
             {
