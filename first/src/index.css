@@ -17,3 +17,188 @@ code {
   /*  monospace;*/
   font-family: 'Poppins', sans-serif;
 }
+
+@media screen and (max-width: 1680px) {
+	section.w-full .shadow-md {
+		height: auto;
+		padding: 24px;
+	}
+}
+
+@media screen and (max-width: 1600px) {
+	section.w-full .shadow-md > .flex.justify-center {
+		justify-content: space-between;
+
+		> .relative[class*='h-'] {
+			height: 93px;
+		}
+
+		> .flex {
+			.relative[class*='right-'] {
+				right: 40px;
+			}
+
+			span:first-child {
+				svg {
+					max-width: 48px;
+					max-height: 48px;
+				}
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 1300px) {
+	aside.fixed {
+		width: 13rem;
+
+		& + section {
+			margin-left: 13rem;
+		}
+	}
+}
+
+@media screen and (max-width: 1210px) {
+	section.w-full .shadow-md > .flex.justify-center {
+		> .flex {
+			position: relative;
+			flex-direction: column;
+
+			.flex.flex-col {
+				margin-top: -24px;
+			}
+
+			.tracking-tight {
+				text-align: left;
+			}
+
+			h2 {
+				position: absolute;
+				right: 0;
+				top: 0;
+			}
+
+			.relative[class*='right-'] {
+				right: -8px;
+				top: -40px;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 920px) {
+	.App > .flex.min-h-screen {
+		display: block;
+	}
+
+	aside.fixed,
+	aside.fixed + section {
+		padding-left: 24px;
+		padding-right: 24px;
+	}
+
+	aside.fixed {
+		position: static;
+		height: auto;
+		width: auto;
+
+
+		.h-full {
+			display: grid;
+			grid: 64px 48px 36px / repeat(2, 50%);
+			gap: 8px;
+			padding: 0;
+
+			> * {
+				margin: 0;
+				align-self: center;
+			}
+
+			> .w-full {
+				display: none;
+			}
+
+			nav {
+				padding: 0;
+				display: flex;
+				justify-content: flex-end;
+
+				> div {
+					margin: 0;
+					display: inline-flex;
+				}
+			}
+
+			span {
+				grid-column-start: 1;
+				grid-column-end: 3;
+				grid-row-start: 3;
+				grid-row-end: 4;
+			}
+
+			> .flex.items-center {
+				grid-column-start: 2;
+				grid-column-end: 3;
+				justify-content: flex-end;
+			}
+		}
+
+		+ section {
+			margin-left: 0;
+		}
+	}
+}
+
+@media screen and (max-width: 720px) {
+	aside.fixed,
+	aside.fixed + section {
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+
+	section.w-full .shadow-md > .flex.justify-center {
+		flex-direction: column;
+		gap: 16px;
+
+		> .flex {
+			flex-direction: row;
+
+			.relative[class*=right-] {
+				right: 40px;
+				top: 8px;
+			}
+
+			.flex.flex-col {
+				margin-top: 0;
+			}
+		}
+
+
+		> .relative[class*='bg-'] {
+			height: 1px;
+			margin: 0;
+			width: 100%;
+			left: 0;
+		}
+	}
+
+	section.w-full .shadow-md {
+		padding-left: 16px;
+		padding-right: 16px;
+
+		input[class*='w-'] {
+			width: auto;
+		}
+	}
+
+	section.w-full .shadow-md + .shadow-md {
+		overflow-x: auto;
+	}
+
+	table .px-6 {
+		padding-left: .5rem;
+		padding-right: .5rem;
+	}
+
+}
+
