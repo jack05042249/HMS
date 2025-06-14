@@ -79,7 +79,7 @@ const CreateTalentModal = ({
     whatsup: '',
     feedbackFrequency: '',
     summary: '',
-    talentMainCustomer: activeCustomers[0]?.id,
+    talentMainCustomer: '',
     organizations: allOrganizations.length ? [{ id: allOrganizations[0].id, name: allOrganizations[0].name }] : [],
     hourlyRate: false,
     canWorkOnTwoPositions: false,
@@ -93,6 +93,10 @@ const CreateTalentModal = ({
 
   const { values } = formState;
   const { cusIds } = values;
+
+  const organizationIdsForMainStakeholder = customers
+    .filter(cus => !cus.inactive && `${cus.id}` === `${values.talentMainCustomer}`)
+    .map(cus => cus.organizationId);
 
   const createTalent = async sendMailFrequency => {
     try {
@@ -395,7 +399,7 @@ const CreateTalentModal = ({
 
             <SearchableField
               name='Main Stakeholder'
-              data={activeCustomers.map(customer => ({ key: `${customer.id}`, value: customer.fullName }))}
+              data={activeCustomers.map(customer => (cusIds.includes(customer.id) ? { key: `${customer.id}`, value: customer.fullName } : null)).filter(Boolean)}
               selectedKeys={values.talentMainCustomer ? [`${values.talentMainCustomer}`] : []}
               emptyText='Select Main Stakeholder'
               onChangeSelectedKeys={selectedKeys => {
@@ -408,7 +412,23 @@ const CreateTalentModal = ({
               }}
             />
 
-            <SearchableField
+             <label htmlFor='Customer' className='text-[#000] text-[14px] font-medium text-left'>
+              Customer
+            </label>
+            <input
+              id='Customer'
+              value={
+                values.talentMainCustomer && cusIds.length > 0
+                  ? allOrganizations
+                      .filter(org => organizationIdsForMainStakeholder.includes(org.id))
+                      .map(org => ({ key: `${org.id}`, value: org.name }))[0].value
+                  : 'None'
+              }
+              placeholder='Customer'
+              className='mb-4 border border-[#F5F0F0]  text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+            />
+
+            {/* <SearchableField
               name='Customer'
               data={allOrganizations.map(org => ({ key: `${org.id}`, value: org.name }))}
               selectedKeys={values.organizations?.length ? [`${values.organizations[0].id}`] : []}
@@ -427,7 +447,7 @@ const CreateTalentModal = ({
                   }
                 });
               }}
-            />
+            /> */}
 
             <label htmlFor='email' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
               E-mail

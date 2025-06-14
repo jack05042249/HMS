@@ -419,7 +419,7 @@ const sendTalentBirthdaysToHR = async (talentsList, {monthName, dayNumber}) => {
     const mailOptions = {
         from: {address: gmail_user, name: 'Commit Offshore  Holidays Reminder System'},
         to: gmail_reminders,
-        subject: 'Upcoming talent birthdays in 1 days',
+        subject: 'Upcoming talent birthdays in 1 day',
         cc: gmail_cc,
         html
     };
@@ -440,7 +440,7 @@ const sendCustomerBirthdaysToHR = async (customersList, {monthName, dayNumber}) 
     const mailOptions = {
         from: {address: gmail_user, name: 'Commit Offshore Holidays Reminder System'},
         to: gmail_reminders,
-        subject: `Upcoming talent birthdays for ${dayNumber} ${monthName}`,
+        subject: `Upcoming customer birthdays for in 1 day`,
         cc: gmail_cc,
         html
     };

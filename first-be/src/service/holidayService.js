@@ -279,17 +279,45 @@ const getUpcomingAnniversaries = async (type = '') => {
     const today = moment();
     const endDate = moment().add(type === '' ? 3 : 0, 'days');
 
-    // console.log('today', today.format('YYYY-MM-DD'), 'endDate', endDate.format('YYYY-MM-DD'));
+    const startMMDD = today.format('MM-DD');
+    const endMMDD = endDate.format('MM-DD');
 
-    const oneYearAgo = moment().subtract(1, 'year');
+    let dateCondition;
+    if (startMMDD <= endMMDD) {
+        // Period does not cross year boundary
+        dateCondition = {
+            [Op.and]: [
+                Sequelize.where(
+                    Sequelize.fn('DATE_FORMAT', Sequelize.col('startDate'), '%m-%d'),
+                    { [Op.between]: [startMMDD, endMMDD] }
+                )
+            ]
+        };
+    } else {
+        // Period crosses year boundary (e.g., Dec 30 to Jan 2)
+        dateCondition = {
+            [Op.or]: [
+                Sequelize.where(
+                    Sequelize.fn('DATE_FORMAT', Sequelize.col('startDate'), '%m-%d'),
+                    { [Op.gte]: startMMDD }
+                ),
+                Sequelize.where(
+                    Sequelize.fn('DATE_FORMAT', Sequelize.col('startDate'), '%m-%d'),
+                    { [Op.lte]: endMMDD }
+                )
+            ]
+        };
+    }
 
     const talents = await Talent.findAll({
         where: {
             [Op.and]: [
-                Sequelize.where(Sequelize.fn('DATE_FORMAT', Sequelize.col('startDate'), '%m-%d'),
-                  { [Op.between]: [today.format('MM-DD'), endDate.format('MM-DD')] }
-                ),
-                { startDate: { [Op.lte]: today.clone().subtract(1, 'year').add(type === '' ? 3 : 0, 'days').format('YYYY-MM-DD') } }
+                dateCondition,
+                {
+                    startDate: {
+                        [Op.lte]: today.clone().subtract(1, 'year').add(type === '' ? 3 : 0, 'days').format('YYYY-MM-DD')
+                    }
+                }
             ]
         },
         order: [['startDate', 'ASC']],

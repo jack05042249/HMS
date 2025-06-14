@@ -55,6 +55,10 @@ const Stakeholders = ({ API_URL }) => {
     setCustomerToDelete(customer);
   };
 
+  const handleEditIconClick = customer => {
+
+  }
+
   useLayoutEffect(() => {
     const { id } = get(history, 'location.state') || {};
     if (id) {
@@ -142,6 +146,7 @@ const Stakeholders = ({ API_URL }) => {
 
   const handleCustomer = async () => {
     try {
+      setEditNumberMode(false);
       removeError();
       setLoading(true);
       const { data } = getValuesFromElement('single_customer');
@@ -161,7 +166,7 @@ const Stakeholders = ({ API_URL }) => {
       if (typeof data.organizationId === 'string') {
         data.organizationId = parseInt(data.organizationId);
       }
-      data.birthday = birthdayDate ? moment(birthdayDate).format('YYYY-MM-DD') : '0000-00-00';
+      data.birthday = birthdayDate ? moment(birthdayDate).format('YYYY-MM-DD') : null;
       const isNew = editCustomerId < 0;
       if (isNew) {
         const {
@@ -503,7 +508,7 @@ const Stakeholders = ({ API_URL }) => {
                       ) : null}{' '}
                     </span>{' '}
                   </span>
-                  {editNumberMode && mobile ? (
+                  {/* {editNumberMode && mobile ? (
                     <div className='border border-[#F5F0F0] mb-4 w-[313px] rounded-lg h-[40px] px-[15px] flex justify-start items-center'>
                       <a
                         href={`https://wa.me/${mobile}`}
@@ -514,7 +519,7 @@ const Stakeholders = ({ API_URL }) => {
                         {mobile}{' '}
                       </a>
                     </div>
-                  ) : (
+                  ) : ( */}
                     <input
                       id='mobile'
                       type='text'
@@ -523,7 +528,7 @@ const Stakeholders = ({ API_URL }) => {
                       placeholder='Phone number'
                       className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
                     />
-                  )}
+                  {/* )} */}
                   <label htmlFor='location' className='text-[#000] text-[14px] font-medium text-left'>
                     Location
                   </label>
@@ -557,7 +562,7 @@ const Stakeholders = ({ API_URL }) => {
                     name='birthday'
                     showMonthDropdown
                     showYearDropdown
-                    selected={birthdayDate ?? undefined}
+                    selected={birthdayDate ?? null}
                     onChange={date => handleBirthdayChange(date)}
                     selectsStart
                     placeholderText={'DD/MM/YYYY'}
@@ -743,14 +748,14 @@ const Stakeholders = ({ API_URL }) => {
                       {codeToCountry[location]}
                     </th>
                     <th scope='row' className='px-6 py-4 font-medium text-[12px] '>
-                      {birthday && birthday !== '0000-00-00' ? moment(birthday).format('DD/MM/YYYY') || '-' : '-'}
+                      {birthday && birthday !== null ? moment(birthday).format('DD/MM/YYYY') || '-' : '-'}
                     </th>
                     <th scope='row' className='px-6 py-4 font-medium '>
                       {typeof inactive === 'boolean' ? (
                         <div
                           onClick={async () => {
                             const prevData = cus;
-                            const newData = { ...cus, inactive: !cus.inactive, birthday: cus.birthday || '0000-00-00' };
+                            const newData = { ...cus, inactive: !cus.inactive, birthday: cus.birthday || null };
                             dispatch(updateSingleCustomer(newData));
                             axios
                               .put(`${API_URL}/customer`, newData)
@@ -822,6 +827,12 @@ const Stakeholders = ({ API_URL }) => {
                       )}
                     </th>
                     <th scope='row' className='px-6 py-4 font-medium  relative left-[10px]'>
+                      <button
+                        onClick={() => setEditCustomerId(cus.id)}
+                        className="mr-3"
+                      >
+                          <icons.editIcon/>
+                      </button>
                       <button onClick={() => handleDeleteIconClick(cus)}>
                         <icons.deleteIcon />
                       </button>

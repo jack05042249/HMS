@@ -126,7 +126,7 @@ const createTalent = async (req, res) => {
         await Promise.all([
           createTaskEmployee({
             talentId: savedTalent.id,
-            comment: `Need to provide task for ${talent.fullName} `,
+            comment: `Check on ${talent.fullName} `,
             dueDate: nextWeekDate,
             risk: "LOW",
             status: "OPEN"

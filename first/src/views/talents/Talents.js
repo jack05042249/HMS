@@ -285,7 +285,25 @@ const Talents = ({ API_URL }) => {
                     )}
                   </th>
                   <th scope='row' className='px-6 py-4 font-medium '>
-                    {tal.summary ? `${tal.summary.substring(0, 100)}...` : '-'}
+                    {tal.summary ? (
+                      <div
+                        style={{
+                          maxHeight: '120px',
+                          maxWidth: '350px',
+                          overflowY: 'auto',
+                          background: '#f8fafc',
+                          border: '1px solid #e5e7eb',
+                          borderRadius: '8px',
+                          padding: '8px',
+                          fontSize: '13px',
+                          whiteSpace: 'pre-wrap'
+                        }}
+                      >
+                        {tal.summary}
+                      </div>
+                    ) : (
+                      '-'
+                    )}
                   </th>
                   <th scope='row' className='px-6 py-4 font-medium '>
                     {typeof tal.linkedinProfileChecked === 'boolean' ? (

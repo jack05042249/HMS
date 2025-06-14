@@ -15,6 +15,7 @@ const getCustomerByEmail = async (email) => {
 
 const updateCustomerService = async (updatedCustomer) => {
     const { id, ...data } = updatedCustomer
+    console.log('updateCustomer', updatedCustomer);
     if (data.email) {
         const existing = await getCustomerByEmail(data.email)
         if (existing && existing.id !== id) throw new GenericError(409, 'Customer with this email already exists')
