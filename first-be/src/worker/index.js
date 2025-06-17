@@ -5,6 +5,7 @@ const {Op} = require('sequelize');
 const {sendTalentBirthdaysNotification} = require('./cronNotification/birthdays');
 const {sendAnniversaryNotification} = require('./cronNotification/anniversary');
 const { sendNewFeedbackEmail, checkAndReSendFeedbackEmail, checkOverdueFeedbackEmail } = require('./cronFeedback/sendFeedback');
+const { linkedinStatusCheck } = require('./linkedinStatusCheck');
 const { logger } = require('./../utils/logger');
 const { checkNovemberTalentsGainedDays } = require('../service/vacationService')
 const { VacationBalance  } = require("../models")
@@ -83,6 +84,19 @@ const everyFirstOfNovemberCron = cron.schedule(everyFirstDayOfNovember, async ()
     await checkNovemberTalentsGainedDays()
 });
 
+// Run every day at 00:10
+const linkedinCron = cron.schedule('10 0 * * *', async () => {
+    const today = new Date();
+    const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
+    const todayDate = today.getDate();
+
+    // Check if today is the 23rd day before the end of the month
+    if (todayDate === lastDayOfMonth - 22) {
+        logger(`[CRON linkedinCron] started: `);
+        await linkedinStatusCheck();
+    }
+});
+
 const croneExecutor = () => {
     weeklyNotification.start();
     annualNotification.start();
@@ -97,6 +111,8 @@ const croneExecutor = () => {
     console.log('first system start cron [everyFriday945AM]');
     everyFridayCron.start();
     everyFirstOfNovemberCron.start();
+
+    linkedinCron.start();
 }
 
 module.exports = { croneExecutor }
