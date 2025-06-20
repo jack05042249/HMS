@@ -1,10 +1,75 @@
-const { Talent } = require('../models')
+const { Talent, Organization } = require('../models')
 const moment = require('moment')
-const { chromium } = require("playwright");
+const { chromium } = require('playwright')
 
 const linkedinStatusCheck = async () => {
-  const talents = await Talent.findAll()
+  // Perform LinkedIn profile check
+  const browser = await chromium.launch({
+    headless: false,
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-blink-features=AutomationControlled']
+  })
 
+  const browsercontext = await browser.newContext({
+    userAgent:
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
+      '(KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36',
+    viewport: { width: 1280, height: 800 },
+    locale: 'en-US',
+    deviceScaleFactor: 1,
+    isMobile: false,
+    hasTouch: false
+  })
+
+   // Set the li_at cookie
+  await browsercontext.addCookies([{
+    name: 'li_at',
+    value: 'AQEDAVtqBCMCX3LPAAABl4Icb-EAAAGXpijz4U0AJoyStZTKwb18Hx8x6UleLWoFb8MHmKp3up43Ru7uOSzSMVhdOTbSOXiWb6ASGjDh0ZXBFemA2vQSIIpoo2klNeAo5b72y1FYNd7GHcnscDzQCgcE',
+    domain: '.linkedin.com',
+    path: '/',
+    httpOnly: true,
+    secure: true,
+    sameSite: 'Lax'
+  }]);
+
+  let page = await browsercontext.newPage()
+
+  // Optional stealth tricks
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, 'webdriver', { get: () => false })
+    window.chrome = {
+      runtime: {}
+      // any more required props...
+    }
+    Object.defineProperty(navigator, 'languages', {
+      get: () => ['en-US', 'en']
+    })
+    Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3] })
+  })
+   
+  await page.goto('https://www.linkedin.com', { waitUntil: 'domcontentloaded', timeout: 200000 })
+//   try {
+//     await page.evaluate(() => {
+//       [...document.querySelectorAll('button, a')].find(el => el.innerText.trim().toLowerCase() === 'sign in').click();
+//     })
+//     await page.waitForTimeout(5000) // Wait for the modal to open
+//     await page.evaluate(() => {
+//       document.querySelector('input[name="session_key"]').value = 'nguyen.vc.2201@gmail.com';
+//       document.querySelector('input[name="session_password"]').value = 'Hi!Nguyen?';
+//       [...document.querySelectorAll('button, a')].find(el => el.innerText.trim().toLowerCase() === 'sign in').click()
+//     })
+//     await page.waitForTimeout(20000) // Wait for the sign-in to complete
+//     await page.waitForLoadState('domcontentloaded')
+
+//     console.log('✅ Successfully clicked the sign-in modal button.')
+//   } catch (error) {
+//     console.log('⚠️ Failed to click the sign-in modal button:', error.message)
+//   }
+  const talents = await Talent.findAll()
+  const organizations = await Organization.findAll({
+    attributes: ['name']
+  })
+  organizations.push('Commit Offshore');
+  console.log(`Found ${talents.length} talents and ${organizations.length} organizations.`)
   for (const talent of talents) {
     // Check LinkedIn status for each talent
     if (talent.inactive) {
@@ -15,65 +80,41 @@ const linkedinStatusCheck = async () => {
     }
     const url = talent.linkedinProfile
     if (url) {
-      // Perform LinkedIn profile check
-      const browser = await chromium.launch({
-        headless: false,
-        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-blink-features=AutomationControlled']
-      })
+        if (talent.email == 'tatyana.matlasch@gmail.com') {
+          await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 200000 })
+          await page.waitForTimeout(5000) // Wait for the page to load
+          let lastCompany = await page.evaluate(() => {
+            const companyElements = document.querySelectorAll('li.kHZUqotSTZinHhIBViisPSihPApFmjHeCRg');
+            const presentCompany = [];
 
-      const browsercontext = await browser.newContext({
-        userAgent:
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
-          '(KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36',
-        viewport: { width: 1280, height: 800 },
-        locale: 'en-US',
-        deviceScaleFactor: 1,
-        isMobile: false,
-        hasTouch: false
-      })
-
-      let page = await browsercontext.newPage()
-
-      // Optional stealth tricks
-      await page.addInitScript(() => {
-        Object.defineProperty(navigator, 'webdriver', { get: () => false })
-        window.chrome = {
-          runtime: {}
-          // any more required props...
-        }
-        Object.defineProperty(navigator, 'languages', {
-          get: () => ['en-US', 'en']
-        })
-        Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3] })
-      })
-      await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 200000 })
-      try {
-        await page.evaluate(() => {
-          ;[...document.querySelectorAll('button, a')]
-            .find(el => el.innerText.trim().toLowerCase() === 'sign in')
-            .click()
-        })
-        await page.waitForTimeout(5000) // Wait for the modal to open
-        await page.evaluate(() => {
-          document.querySelector('input[name="session_key"]').value = 'Support@commit-offshore.com'
-          document.querySelector('input[name="session_password"]').value = 'hzNZwif6NM2A'
-          ;[...document.querySelectorAll('button, a')]
-            .find(el => el.innerText.trim().toLowerCase() === 'sign in')
-            .click()
-        })
-        await page.waitForTimeout(20000) // Wait for the sign-in to complete
-        await page.waitForLoadState('domcontentloaded')
-
-        console.log('✅ Successfully clicked the sign-in modal button.')
-      } catch (error) {
-        console.log('⚠️ Failed to click the sign-in modal button:', error.message)
-      }
+            companyElements.forEach(element => {
+              const period = element.querySelector('span.pvs-entity__caption-wrapper');
+              if (period && period.textContent.trim().toLowerCase().includes('present')) {
+                const name = element.querySelector('div > div.display-flex.flex-column.align-self-center.flex-grow-1 > div.display-flex.flex-row.justify-space-between > a > span:nth-child(2) > span:nth-child(1)');
+                if (name) presentCompany.push(name.textContent.trim().replace(/\s+/g, " "))
+              }
+            });
+            console.log(companyElements.length, '-------', presentCompany.length);
+            if (presentCompany.length == 1) {
+              if (organizations.some(org => org.name.toLowerCase() === presentCompany[0].toLowerCase())) {
+                return presentCompany[0];
+              } else {
+                return '';
+              }
+            } else return '';
+          })
+          console.log(`Last company for ${talent.fullName} is: ${lastCompany}`);
+          if (lastCompany) {
+            talent.linkedinProfileChecked = true
+          } else {
+            talent.linkedinProfileChecked = false
+          }
+        } else continue
     } else {
       talent.linkedinProfileChecked = false
-      talent.linkedinProfileDate = moment().format()
-      await talent.save()
-      continue
     }
+    talent.linkedinProfileDate = moment().format()
+    await talent.save()
   }
 }
 

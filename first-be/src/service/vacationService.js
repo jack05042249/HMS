@@ -564,8 +564,8 @@ const getOnLeaveTalentsToday = async (customTalentsIds = []) => {
     include: [{
       model: Talent,
       as: 'talent',
-      attributes: ['id', 'fullName', 'email']
-
+      attributes: ['id', 'fullName', 'email'],
+      where: {inactive: false}
     }]
   })
 
