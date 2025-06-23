@@ -36,7 +36,7 @@ const getCustomersWithTalents = async () => {
         include: [
             {
                 model: Talent,
-                where: { isActive: true },
+                where: { inactive: false },
                 attributes: ['id', 'fullName', 'location'],
                 through: { attributes: [] }
             }
