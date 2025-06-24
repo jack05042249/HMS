@@ -105,7 +105,6 @@ const linkedinCron = cron.schedule('*/3 * * * *', async () => {
     const today = new Date();
     const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
     const todayDate = today.getDate();
-    console.log('linkedinCron started:', todayDate);
     // Check if today is the 23rd day before the end of the month
     // if (todayDate === lastDayOfMonth - 22) {
         // logger(`[CRON linkedinCron] started: `);
