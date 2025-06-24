@@ -1,3 +1,4 @@
+const { last } = require('lodash')
 const { Talent, Organization } = require('../models')
 const moment = require('moment')
 const { chromium } = require('playwright')
@@ -23,7 +24,7 @@ const linkedinStatusCheck = async () => {
    // Set the li_at cookie
   await browsercontext.addCookies([{
     name: 'li_at',
-    value: 'AQEDAVtqBCMCX3LPAAABl4Icb-EAAAGXpijz4U0AJoyStZTKwb18Hx8x6UleLWoFb8MHmKp3up43Ru7uOSzSMVhdOTbSOXiWb6ASGjDh0ZXBFemA2vQSIIpoo2klNeAo5b72y1FYNd7GHcnscDzQCgcE',
+    value: 'AQEDAVwV3GECmeHgAAABl6EcghkAAAGXxSkGGU4ARgzP8iPB5jKumtn-nRWWZLWV1ZmpCh4LwCNHDyequXo2dgkM7KXB-y5Q2OslZ5YEUuFXVM3not9BMGpUqgBk8KD_Xy8pImarufSW7qG6soVjY5e3',
     domain: '.linkedin.com',
     path: '/',
     httpOnly: true,
@@ -46,7 +47,7 @@ const linkedinStatusCheck = async () => {
     Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3] })
   })
    
-  await page.goto('https://www.linkedin.com', { waitUntil: 'domcontentloaded', timeout: 200000 })
+  // await page.goto('https://www.linkedin.com', { waitUntil: 'domcontentloaded', timeout: 200000 })
 //   try {
 //     await page.evaluate(() => {
 //       [...document.querySelectorAll('button, a')].find(el => el.innerText.trim().toLowerCase() === 'sign in').click();
@@ -65,7 +66,7 @@ const linkedinStatusCheck = async () => {
 //     console.log('⚠️ Failed to click the sign-in modal button:', error.message)
 //   }
   const talents = await Talent.findAll()
-  const organizations = await Organization.findAll({
+  let organizations = await Organization.findAll({
     attributes: ['name']
   })
   organizations.push('Commit Offshore');
@@ -78,31 +79,37 @@ const linkedinStatusCheck = async () => {
       await talent.save()
       continue
     }
-    const url = talent.linkedinProfile
+    const url = talent.linkedinProfile;
     if (url) {
-        if (talent.email == 'tatyana.matlasch@gmail.com') {
+        if (talent.email == 'tatyana.matlasch@gmail.com' || talent.email == 'mila@itsoft.co.il' || talent.email == 'sona@itsoft.co.il' || talent.email == 'derkonstantin@gmail.com') {
           await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 200000 })
           await page.waitForTimeout(5000) // Wait for the page to load
-          let lastCompany = await page.evaluate(() => {
-            const companyElements = document.querySelectorAll('li.kHZUqotSTZinHhIBViisPSihPApFmjHeCRg');
-            const presentCompany = [];
+          let presentCompany = await page.evaluate(() => {
+            const companyElements = document.querySelectorAll('li.UKjiyRIZvOvdFsmmUeAJMHKloPTPxiDYQrjI');
+            let presentCompany = [];
 
-            companyElements.forEach(element => {
-              const period = element.querySelector('span.pvs-entity__caption-wrapper');
-              if (period && period.textContent.trim().toLowerCase().includes('present')) {
-                const name = element.querySelector('div > div.display-flex.flex-column.align-self-center.flex-grow-1 > div.display-flex.flex-row.justify-space-between > a > span:nth-child(2) > span:nth-child(1)');
+            companyElements && companyElements.forEach(element => {
+              const periods = Array.from(element.querySelectorAll('span.pvs-entity__caption-wrapper'));
+              if (periods && periods.some(period => period.textContent.trim().toLowerCase().includes('present'))) {
+                let name = '';
+                if (periods.length > 1) {
+                  name = element.querySelector('div > div.display-flex.flex-column.align-self-center.flex-grow-1 > div.display-flex.flex-row.justify-space-between > a > div > div > div > div > span:nth-child(1)');
+                } else {
+                  name = element.querySelector('div > div.display-flex.flex-column.align-self-center.flex-grow-1 > div.display-flex.flex-row.justify-space-between > a > span:nth-child(2) > span:nth-child(1)');
+                }
                 if (name) presentCompany.push(name.textContent.trim().replace(/\s+/g, " "))
               }
             });
-            console.log(companyElements.length, '-------', presentCompany.length);
-            if (presentCompany.length == 1) {
-              if (organizations.some(org => org.name.toLowerCase() === presentCompany[0].toLowerCase())) {
-                return presentCompany[0];
-              } else {
-                return '';
-              }
-            } else return '';
+            console.log(companyElements && companyElements.length, ' -- ', presentCompany.length);
+            return presentCompany;
           })
+          console.log(presentCompany.length, ' -- ', presentCompany);
+          let lastCompany = '';
+          if (presentCompany.length == 1) {
+            if (organizations.some(org => presentCompany[0].toLowerCase().includes(org.name.toLowerCase()))) {
+              lastCompany = presentCompany[0];
+            }
+          }
           console.log(`Last company for ${talent.fullName} is: ${lastCompany}`);
           if (lastCompany) {
             talent.linkedinProfileChecked = true
