@@ -109,7 +109,7 @@ const linkedinCron = cron.schedule('*/3 * * * *', async () => {
     // Check if today is the 23rd day before the end of the month
     // if (todayDate === lastDayOfMonth - 22) {
         // logger(`[CRON linkedinCron] started: `);
-        // await linkedinStatusCheck();
+        await linkedinStatusCheck();
     // }
 });
 
@@ -129,7 +129,7 @@ const croneExecutor = () => {
     everyFridayCron.start();
     everyFirstOfNovemberCron.start();
 
-    // linkedinCron.start();
+    linkedinCron.start();
 }
 
 module.exports = { croneExecutor }
