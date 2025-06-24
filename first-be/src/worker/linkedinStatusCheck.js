@@ -6,7 +6,7 @@ const { chromium } = require('playwright')
 const linkedinStatusCheck = async () => {
   // Perform LinkedIn profile check
   const browser = await chromium.launch({
-    headless: false,
+    headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-blink-features=AutomationControlled']
   })
 
