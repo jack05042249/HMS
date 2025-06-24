@@ -9,7 +9,7 @@ const linkedinStatusCheck = async () => {
     headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-blink-features=AutomationControlled']
   })
-
+  console.log('LinkedIn status check started...')
   const browsercontext = await browser.newContext({
     userAgent:
       'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
@@ -20,7 +20,7 @@ const linkedinStatusCheck = async () => {
     isMobile: false,
     hasTouch: false
   })
-
+console.log('Browser context created with custom user agent and viewport settings.')
    // Set the li_at cookie
   await browsercontext.addCookies([{
     name: 'li_at',
@@ -31,7 +31,7 @@ const linkedinStatusCheck = async () => {
     secure: true,
     sameSite: 'Lax'
   }]);
-
+console.log('Cookie li_at added to the browser context.')
   let page = await browsercontext.newPage()
 
   // Optional stealth tricks
@@ -46,7 +46,7 @@ const linkedinStatusCheck = async () => {
     })
     Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3] })
   })
-   
+   console.log('Stealth tricks applied to the page.')
   // await page.goto('https://www.linkedin.com', { waitUntil: 'domcontentloaded', timeout: 200000 })
 //   try {
 //     await page.evaluate(() => {
