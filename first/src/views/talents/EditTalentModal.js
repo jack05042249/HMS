@@ -472,7 +472,7 @@ const EditTalentModal = ({
             <input
               id='Customer'
               value={
-                talent['talentMainCustomer'] & customersForMainStakeholder.length > 0
+                talent['talentMainCustomer'] && customersForMainStakeholder.length > 0
                   ? allOrganizations
                       .filter(org => organizationIdsForMainStakeholder.includes(org.id))
                       .map(org => ({ key: `${org.id}`, value: org.name }))[0].value

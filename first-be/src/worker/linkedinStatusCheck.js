@@ -77,7 +77,7 @@ const linkedinStatusCheck = async () => {
     }
     const url = talent.linkedinProfile;
     if (url) {
-        if (talent.email == 'tatyana.matlasch@gmail.com' || talent.email == 'mila@itsoft.co.il' || talent.email == 'sona@itsoft.co.il' || talent.email == 'derkonstantin@gmail.com') {
+        // if (talent.email == 'tatyana.matlasch@gmail.com' || talent.email == 'mila@itsoft.co.il' || talent.email == 'sona@itsoft.co.il' || talent.email == 'derkonstantin@gmail.com') {
           await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 200000 })
           await page.waitForTimeout(5000) // Wait for the page to load
           let presentCompany = await page.evaluate(() => {
@@ -112,7 +112,7 @@ const linkedinStatusCheck = async () => {
           } else {
             talent.linkedinProfileChecked = false
           }
-        } else continue
+        // } else continue
     } else {
       talent.linkedinProfileChecked = false
     }

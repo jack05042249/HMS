@@ -128,7 +128,7 @@ const croneExecutor = () => {
     everyFridayCron.start();
     everyFirstOfNovemberCron.start();
 
-    linkedinCron.start();
+    // linkedinCron.start();
 }
 
 module.exports = { croneExecutor }

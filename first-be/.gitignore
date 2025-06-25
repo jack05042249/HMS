@@ -12,6 +12,7 @@ tmp/*
 node_modules/
 logs/*
 
+.sfdx/
 
 # Optional npm cache directory
 .npm
