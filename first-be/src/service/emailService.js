@@ -202,7 +202,7 @@ const sendTalentCredentialMail = async (talent, password, mailCase) => {
     if (mailCase === "create") {
         html = `
      <div style='padding-top: 25px; margin: 0 auto; padding-left: 95px; padding-right: 95px; font-size: 14px; width: 600px;'>
-    <img src='cid:${cidLogo}' alt='ITSOFT_LOGO'>
+    <img style = 'width: 50%' src='cid:${cidLogo}' alt='COMMIT_LOGO'>
     <div style='margin: 0 auto;'>
         <img style='margin: 0 auto; display: block;'  src='cid:${cidStakeholderMail}' alt='ITSOFT_STAKEHOLDERMAIL'>
     </div>
