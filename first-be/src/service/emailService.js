@@ -194,7 +194,7 @@ const sendCustomersMail = async (toEmail, subject, text, file) => {
     await sendMail(mailOptions);
 };
 const sendTalentCredentialMail = async (talent, password, mailCase) => {
-    const cidLogo = 'itsoft_logo@unique';
+    const cidLogo = 'commit_logo@unique';
     const cidStakeholderMail = 'itsoft_stakeholderMail@unique';
     const itsoftMail = 'sales@itsoft.co.il'
     const itsoftLink = 'www.itsoft.co.il'
@@ -208,11 +208,11 @@ const sendTalentCredentialMail = async (talent, password, mailCase) => {
     </div>
     <div style='width: 600px; margin-top: 80px; font-family: "Poppins", sans-serif;'>
         <p style='margin-bottom: 20px'>Dear <strong>${talent.fullName}</strong>,</p>
-        <p style='margin-bottom: 20px'>Welcome to ITMS. Please see below the credentials to login to the system here:</p>
+        <p style='margin-bottom: 20px'>Welcome to COMS. Please see below the credentials to login to the system here:</p>
         <p style='margin-bottom: 5px;'>Login: ${talent.email}</p>
         <p style='margin-bottom: 1px'>Password: ${password}</p>
-        <p style='margin-bottom: 5px'> The link to the ITMS profile: <a style="text-decoration: underline; color: #15c" href="http://itms.itsoft.co.il/talent/login" target="_blank">http://itms.itsoft.co.il/talent/login</a>  </p>
-<!--        <p> Also, please find the ITMS tutorial by clicking <a href="#"> <strong> here </strong>  </a> </p>-->
+        <p style='margin-bottom: 5px'> The link to the COMS profile: <a style="text-decoration: underline; color: #15c" href="https://coms.commit-offshore.com/talent/login" target="_blank">https://coms.commit-offshore.com/talent/login</a>  </p>
+        <p style='margin-bottom: 5px'> You can find the COMS Tutorial <a style="text-decoration: underline; color: #15c" href="https://www.notion.so/commit-offshore/COMS-Tutorial-3a1d3c965ee741ff97f7be1381aa40d6?source=copy_link" target="_blank"> here </a> </p>
         <span style='margin-bottom: 1px'>Best regards</span>
         <p style='margin-bottom: 20px'> <strong> Commit Offshore team </strong> </span>
         <footer style='background-color: #4D4AEA; color: #F5F5F5; font-size: 12px;  width: 100%; height: 55px; text-align: center;'>
