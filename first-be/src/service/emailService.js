@@ -258,8 +258,8 @@ const sendTalentCredentialMail = async (talent, password, mailCase) => {
             attachments: [
                 {
                     contentDisposition: 'inline',
-                    filename: 'itsoft_logo.png',
-                    path: 'src/public/itsoft_logo.png',
+                    filename: 'commit_logo.png',
+                    path: 'src/public/commit_logo.png',
                     cid: cidLogo
                 },
                 {
