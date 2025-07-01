@@ -2,7 +2,7 @@ import moment from 'moment';
 const generateTableHeaders = (feedbacks, questions) => {
   const headers = [];
 
-  headers.push('Full Name', 'Project Name', 'Sent At', 'Agency Name');
+  headers.push('Full Name', 'Project Name', 'Sent At', 'Agency Name', 'Project Understanding', 'Role Clarity', 'Team Collaboration', 'Challenges', 'Leadership', 'Productivity', 'Overall Satisfaction', 'Vacation');
 
   for (const key in questions) {
     if (questions.hasOwnProperty(key)) {
@@ -29,8 +29,13 @@ const getTableRowData = (feedback) => {
     feedback.talent.agency.name
   );
 
-  for (let i = 1; i <= 6; i++) {
-    const answer = feedback.answers ? feedback.answers[`question${i}`] : null;
+  for (let i = 0; i <= 7; i++) {
+    let answer = null;
+    if (feedback.data) {
+      if (feedback.data[i] && feedback.data[i].answers && feedback.data[i].answers.length > 0) {
+        answer = feedback.data[i].answers[0].question + '\n' + feedback.data[i].answers[0].answer;
+      }
+    }
     rowData.push(answer !== null ? answer : 'No answer provided');
   }
 
