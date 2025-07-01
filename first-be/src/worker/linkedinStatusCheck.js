@@ -3,13 +3,27 @@ const moment = require('moment')
 const { chromium } = require('playwright')
 
 const axios = require('axios')
-const API_KEY = '685e3b2a640d9eec39199c4a'
-const apiUrl = 'https://api.scrapingdog.com/linkedIn'
+const API_KEY = '31d99944b8c9f9030fb18217f78f5c8f010dff1876c0a559f860c08ca872b5b5'
+const apiUrl = 'https://api.brightdata.com/datasets/v3/trigger?dataset_id=gd_l1viktl72bvl7bjuj0&include_errors=true'
+const MAX_RETRIES = 12 // 12 x 5 seconds = 60 seconds
+const DELAY_MS = 5000 // 5 seconds
 
-function getLinkIdFromLinkedInUrl(url) {
-  // This regex matches the part after '/in/' and before the next '/' or end of string
-  const match = url.match(/linkedin\.com\/in\/([^\/]+)/i);
-  return match ? match[1] : null;
+// 🔐 LinkedIn session cookie (li_at)
+const LI_AT = 'your_li_at_cookie_here'
+
+// 🌐 Bright Data proxy config
+const PROXY_HOST = 'brd.superproxy.io'
+const PROXY_PORT = 33335
+const PROXY_USER = 'brd-customer-hl_524d58d6-zone-profile_scraper'
+const PROXY_PASS = 'zogz04wmpsxr'
+
+function isLinkedInProfileUrl(url) {
+  // This regex matches LinkedIn profile URLs like https://www.linkedin.com/in/username
+  return /^https?:\/\/(www\.)?linkedin\.com\/in\/[a-zA-Z0-9\-_%]+\/?$/i.test(url)
+}
+
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
 }
 
 const linkedinStatusCheck = async () => {
@@ -19,6 +33,7 @@ const linkedinStatusCheck = async () => {
   })
   organizations.push('Commit Offshore')
   console.log(`Found ${talents.length} talents and ${organizations.length} organizations.`)
+  let proxyNeeded = []
   for (const talent of talents) {
     // Check LinkedIn status for each talent
     if (talent.inactive) {
@@ -28,74 +43,202 @@ const linkedinStatusCheck = async () => {
       continue
     }
     const url = talent.linkedinProfile
-    if (url) {
-      if (talent.email == 'samvelgharibyan1996@gmail.com') {
-        console.log(url, apiUrl)
-        let linkId = getLinkIdFromLinkedInUrl(url)
-        if (!linkId) {
-          console.log('No linkId found in URL:', url)
-          continue
-        }
+    if (url && isLinkedInProfileUrl(url)) {
+      // if (talent.email == 'zheniarudchik@gmail.com') {
+      console.log(url, '*******************************', apiUrl)
+      const data = JSON.stringify([{ url: url }])
+      let SNAPSHOT_ID = null
+      await axios
+        .post(apiUrl, data, {
+          headers: {
+            Authorization: 'Bearer ' + API_KEY,
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(function (response) {
+          SNAPSHOT_ID = response.data.snapshot_id
+        })
+        .catch(function (error) {
+          talent.linkedinProfileChecked = false
+          console.error('Error making the request: ' + error.message)
+        })
+      console.log('Snapshot ID:', SNAPSHOT_ID)
+      if (!SNAPSHOT_ID) {
+        console.error('❌ No snapshot ID found in response:', response.data)
+      } else {
+        for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+          try {
+            console.log(`⏳ Attempt ${attempt}: Fetching snapshot data...`)
 
-        console.log(linkId);
-        let presentNum = 0, lastCompany = '';
-
-        const params = {
-          api_key: API_KEY,
-          type: 'profile',
-          linkId: linkId,
-          private: 'false'
-        }
-
-        await axios
-          .get(apiUrl, { params: params })
-          .then(function (response) {
-            if (response.status === 200) {
-              const data = response.data;
-              const experience = data[0].experience || [];
-
-              console.log(experience);
-
-              experience.map(exp => {
-                if (exp.ends_at === null) {
-                  presentNum = -1;
-                  lastCompany = exp.company_name ? exp.company_name.replace(/[^a-zA-Z0-9\s]/g, '').trim() : '';
-                } else if (exp.ends_at === 'Present') {
-                  presentNum++;
-                  lastCompany = exp.company_name ? exp.company_name.replace(/[^a-zA-Z0-9\s]/g, '').trim() : '';
-                }
-              });
-              console.log('Present Number:', presentNum, 'Last Company:', lastCompany);
-
-              if (presentNum == 1 || presentNum == -1) {
-                if (organizations.some(org => lastCompany.toLowerCase().includes(org.name.toLowerCase()))) {
-                  talent.linkedinProfileChecked = true;
-                } else {
-                  talent.linkedinProfileChecked = false;
-                }
-              } else {
-                talent.linkedinProfileChecked = false;
+            const response = await axios.get(
+              `https://api.brightdata.com/datasets/v3/snapshot/${SNAPSHOT_ID}?format=json`,
+              {
+                headers: {
+                  Authorization: `Bearer ${API_KEY}`
+                },
+                timeout: 15000 // 15s timeout to avoid hanging
               }
-              console.log('LinkedIn profile checked:', talent.linkedinProfileChecked);
+            )
+
+            if (response.status === 200 && response.data.length > 0) {
+              console.log('✅ Snapshot is ready! Data:')
+              let data = response.data[0]
+
+              if (data.experience && data.experience.length > 0) {
+                let presentNum = 0
+                let lastCompany = ''
+                data.experience.forEach(exp => {
+                  if (exp.end_date === null || exp.end_date === 'Present') {
+                    presentNum++
+                    lastCompany = exp.company ? exp.company.replace(/[^a-zA-Z0-9\s]/g, '').trim() : ''
+                  }
+                })
+                console.log('Present Number:', presentNum, 'Last Company:', lastCompany)
+                if (presentNum === 1 || presentNum === -1) {
+                  let flag = 0
+                  organizations.map(org => {
+                    if (org.name) {
+                      org.name = org.name.replace(/[^a-zA-Z0-9\s]/g, '').trim()
+                      if (lastCompany.toLowerCase().includes(org.name.toLowerCase())) {
+                        flag = 1
+                      }
+                    }
+                  })
+                  if (flag) {
+                    talent.linkedinProfileChecked = true
+                  } else {
+                    talent.linkedinProfileChecked = false
+                  }
+                } else {
+                  talent.linkedinProfileChecked = false
+                }
+                console.log('Experience checked:', talent.linkedinProfileChecked)
+              } else if (data.current_company && data.current_company.name) {
+                let currentCompanyName = data.current_company.name.replace(/[^a-zA-Z0-9\s]/g, '').trim()
+                let flag = 1
+                organizations.map(org => {
+                  if (org.name) {
+                    org.name = org.name.replace(/[^a-zA-Z0-9\s]/g, '').trim()
+                    if (currentCompanyName.toLowerCase().includes(org.name.toLowerCase())) {
+                      flag = 0
+                    }
+                  }
+                })
+                if (flag) {
+                  talent.linkedinProfileChecked = false
+                  console.log('❌ Current company not found in organizations:', currentCompanyName)
+                } else {
+                  proxyNeeded.push(talent)
+                  console.log(proxyNeeded.length, talent.fullName, '--------------------', talent.linkedinProfile)
+                }
+              } else if (data.warning_code && data.warning_code === 'dead_page') {
+                talent.linkedinProfileChecked = false
+                console.log('⚠️ Dead Page:', talent.fullName, 'URL:', talent.url)
+              } else {
+                proxyNeeded.push(talent)
+                console.log(proxyNeeded.length, talent.fullName, '--------------------', talent.linkedinProfile)
+              }
+              break // Exit the retry loop on successs
             } else {
-              talent.linkedinProfileChecked = false;
-              console.log('Request failed with status code: ' + response)
+              console.log('⚠️ Snapshot not ready yet (empty response), retrying...')
             }
-          })
-          .catch(function (error) {
-            talent.linkedinProfileChecked = false;
-            console.error('Error making the request: ' + error.message)
-          })
-      } else continue
-    } else {
-      talent.linkedinProfileChecked = false
-    }
-    if (talent.email == 'samvelgharibyan1996@gmail.com') {
-      console.log(`Talent ${talent.name} LinkedIn profile checked: ${talent.linkedinProfileChecked}`);
+          } catch (err) {
+            console.log(`⚠️ Error on attempt ${attempt}: ${err.message}`)
+          }
+          // Wait before next try
+          await delay(DELAY_MS)
+        }
+      }
+      // } else continue
     }
     talent.linkedinProfileDate = moment().format()
     await talent.save()
   }
+  console.log(proxyNeeded.length, 'proxyNeeded.length')
+  proxyNeeded.map((i, talent) => {
+    const sessionId = `session-${i + 1}`
+
+    const browser = chromium.launch({
+      headless: true,
+      proxy: {
+        server: `http://${PROXY_HOST}:${PROXY_PORT}`,
+        username: `${PROXY_USER}-${sessionId}`,
+        password: PROXY_PASS
+      },
+      args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-blink-features=AutomationControlled']
+    })
+    const browsercontext = browser.newContext({
+      userAgent:
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
+        '(KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36',
+      viewport: { width: 1280, height: 800 },
+      locale: 'en-US',
+      deviceScaleFactor: 1,
+      isMobile: false,
+      hasTouch: false
+    })
+    browsercontext.addCookies([
+      {
+        name: 'li_at',
+        value: LI_AT,
+        domain: '.linkedin.com',
+        path: '/',
+        httpOnly: true,
+        secure: true,
+        sameSite: 'Lax'
+      }
+    ])
+    const page = browsercontext.newPage()
+    try {
+      console.log(`📄 Scraping ${url}`)
+      page.goto(url, { waitUntil: 'domcontentloaded', timeout: 200000 })
+      page.waitForTimeout(5000) // Wait for the page to load
+      let presentCompany = page.evaluate(() => {
+        const companyElements = document.querySelectorAll('li.UKjiyRIZvOvdFsmmUeAJMHKloPTPxiDYQrjI')
+        let presentCompany = []
+
+        companyElements &&
+          companyElements.forEach(element => {
+            const periods = Array.from(element.querySelectorAll('span.pvs-entity__caption-wrapper'))
+            if (periods && periods.some(period => period.textContent.trim().toLowerCase().includes('present'))) {
+              let name = ''
+              if (periods.length > 1) {
+                name = element.querySelector(
+                  'div > div.display-flex.flex-column.align-self-center.flex-grow-1 > div.display-flex.flex-row.justify-space-between > a > div > div > div > div > span:nth-child(1)'
+                )
+              } else {
+                name = element.querySelector(
+                  'div > div.display-flex.flex-column.align-self-center.flex-grow-1 > div.display-flex.flex-row.justify-space-between > a > span:nth-child(2) > span:nth-child(1)'
+                )
+              }
+              if (name) presentCompany.push(name.textContent.trim().replace(/\s+/g, ' '))
+            }
+          })
+        console.log(companyElements && companyElements.length, ' -- ', presentCompany.length)
+        return presentCompany
+      })
+      console.log(presentCompany.length, ' -- ', presentCompany)
+      let lastCompany = ''
+      if (presentCompany.length == 1) {
+        if (organizations.some(org => presentCompany[0].toLowerCase().includes(org.name.toLowerCase()))) {
+          lastCompany = presentCompany[0]
+        }
+      }
+      console.log(`Last company for ${talent.fullName} is: ${lastCompany}`)
+      if (lastCompany) {
+        talent.linkedinProfileChecked = true
+      } else {
+        talent.linkedinProfileChecked = false
+      }
+    } catch (err) {
+      console.error(`❌ Failed to scrape ${url}:`, err.message)
+    } finally {
+      browser.close()
+      new Promise(r => setTimeout(r, 3000)) // Sleep between requests
+    }
+    talent.linkedinProfileDate = moment().format()
+    talent.save()
+  })
 }
 
 module.exports = {

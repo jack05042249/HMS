@@ -117,10 +117,10 @@ const AnnualSituationTable = ({ startDate, endDate, currentYear, monthsArray, re
                   {record.totalUsed.usedVacationDays}
                 </td>
                 <td className='border border-[#F5F0F0] text-[#4D4AEA] py-2 text-center font-bold w-[100px]'>
-                  {record.totalGranted.vacationDays}
+                  {record.totalGranted.vacationDays + record.totalGranted.bonusDays}
                 </td>
                 <td className='border border-[#F5F0F0] text-[#4D4AEA] py-2 text-center font-bold w-[100px]'>
-                  {record.totalGranted.vacationDays - record.totalUsed.usedVacationDays}
+                  {record.totalGranted.vacationDays + record.totalGranted.bonusDays - record.totalUsed.usedVacationDays}
                 </td>
               </tr>
             ))}
