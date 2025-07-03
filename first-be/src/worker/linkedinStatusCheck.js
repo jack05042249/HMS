@@ -83,18 +83,33 @@ const linkedinStatusCheck = async () => {
             if (response.status === 200 && response.data.length > 0) {
               console.log('✅ Snapshot is ready! Data:')
               let data = response.data[0]
+              // console.log('Data:', data);
 
               if (data.experience && data.experience.length > 0) {
+                
                 let presentNum = 0
                 let lastCompany = ''
                 data.experience.forEach(exp => {
-                  if (exp.end_date === null || exp.end_date === 'Present') {
+                  // console.log('positions', exp.positions);
+                  let prePos = false;
+                  if (exp.end_date == null && exp.positions && exp.positions.length > 0) {
+                    exp.positions.forEach(pos => {
+                      if (pos.end_date != null && pos.end_date === 'Present') {
+                        prePos = true;
+                      }
+                    })
+                    if (prePos) {
+                      lastCompany = exp.company ? exp.company.replace(/[^a-zA-Z0-9\s]/g, '').trim() : ''
+                      presentNum ++;
+                    }
+                  }
+                  if (exp.end_date != null && exp.end_date === 'Present') {
                     presentNum++
                     lastCompany = exp.company ? exp.company.replace(/[^a-zA-Z0-9\s]/g, '').trim() : ''
                   }
                 })
                 console.log('Present Number:', presentNum, 'Last Company:', lastCompany)
-                if (presentNum === 1 || presentNum === -1) {
+                if (presentNum === 1) {
                   let flag = 0
                   organizations.map(org => {
                     if (org.name) {

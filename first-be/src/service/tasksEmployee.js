@@ -94,6 +94,13 @@ const updateEmployeeCommentByStatus = async (taskId, { comment, status, risk, du
 const getAllEmployeeTasks = async ({ status, risk, startDate, endDate, sortBy = 'dueDate', sortOrder = 'ASC', }) => {
   const queryOptions = {
     where: {}, // Initialize where clause as an empty object
+    include: [
+      {
+        model: Talent,
+        where: { inactive: false },
+        attributes: []
+      }
+    ],
   };
 
   queryOptions.order = [[sortBy, sortOrder]];

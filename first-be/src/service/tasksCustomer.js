@@ -107,7 +107,14 @@ const updateCustomerCommentByStatus = async (taskId, { comment, status, risk, du
 // Get all tasks with optional filters
 const getAllCustomerTasks = async ({ status, risk, startDate, endDate, sortBy = 'dueDate', sortOrder = 'ASC' }) => {
   const queryOptions = {
-    where: {} // Initialize where clause as an empty object
+    where: {}, // Initialize where clause as an empty object
+    include: [
+      {
+        model: Customer,
+        where: { inactive: false },
+        attributes: []
+      }
+    ],
   }
 
   queryOptions.order = [[sortBy, sortOrder]]

@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { useSelector } from 'react-redux';
 import moment from 'moment';
 
 import { RISK, STATUS, useGetCustomer, useGetTalent } from '../../utils';
@@ -18,6 +19,7 @@ const TasksTable = ({ tasks, onEdited, onDeleted }) => {
   const [taskToEdit, setTaskToEdit] = useState(null);
   const [taskToDelete, setTaskToDelete] = useState(null);
   const [isLoadingDelete, setIsLoadingDelete] = useState(false);
+  const organizations = useSelector(state => state.organizations);
 
   const getRelevantTalent = useGetTalent();
   const getRelevantCustomer = useGetCustomer();
@@ -60,6 +62,10 @@ const TasksTable = ({ tasks, onEdited, onDeleted }) => {
       });
   }, [taskToDelete, onDeleted]);
 
+  const getOrganizationName = (organizationId => {
+    return organizations.find(org => org.id === organizationId)?.name || '';
+  });
+
   return (
     <>
       <table className='w-full text-sm text-left rtl:text-right text-gray-500' id={`employees_table`}>
@@ -67,6 +73,7 @@ const TasksTable = ({ tasks, onEdited, onDeleted }) => {
           <tr>
             <TableHeaderItem>№</TableHeaderItem>
             <TableHeaderItem>Talent / Stakeholder</TableHeaderItem>
+            <TableHeaderItem>Agency / Customer</TableHeaderItem>
             <TableHeaderItem>Notes</TableHeaderItem>
             <TableHeaderItem>Status</TableHeaderItem>
             <TableHeaderItem>Risk</TableHeaderItem>
@@ -95,6 +102,7 @@ const TasksTable = ({ tasks, onEdited, onDeleted }) => {
                   >
                     {object.fullName}
                   </TableCell>
+                  <TableCell>{task.type === 'employee' ? object.agencyName : getOrganizationName(object.organizationId)}</TableCell>
                   <TableCell className='max-w-[200px] overflow-hidden overflow-ellipsis'>{commentCropped}</TableCell>
                   <TableCell>{STATUS[task.status].label}</TableCell>
                   <TableCell>{RISK[task.risk].label}</TableCell>
