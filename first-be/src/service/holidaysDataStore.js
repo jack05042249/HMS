@@ -14,6 +14,7 @@ const HOLIDAYS = new Map();
 const readFile = async () => {
     try {
         const data = await fs.promises.readFile(jsonFilePath, 'utf8');
+        if (!data.trim()) return {}; // Handle empty file gracefully
         return JSON.parse(data);
     } catch (e) {
         console.error(e);
@@ -105,9 +106,10 @@ function filterUkrainianHolidays(list) {
     let filteredList = [];
     list.forEach(hl => {
         if (hl.primary_type.includes('National')) {
+            let refinedDate = moment(hl.date.iso).day() === 0 ? moment(hl.date.iso).add(1, 'day') : moment(hl.date.iso).day() === 6 ? moment(hl.date.iso).add(2, 'day') : moment(hl.date.iso);
             filteredList.push({
                 name: hl.name.replace('(Suspended)', ''),
-                date: moment(hl.date.iso).day() === 0 ? moment(hl.date.iso).add(1, 'day').toDate() : moment(hl.date.iso).day() === 6 ? moment(hl.date.iso).add(2, 'day').toDate() : moment(hl.date.iso).toDate(),
+                date: {'iso' : refinedDate.format('YYYY-MM-DD'), 'datetime': {'year': parseInt(refinedDate.format('YYYY'), 10), 'month': parseInt(refinedDate.format('MM'), 10), 'day': parseInt(refinedDate.format('DD'), 10)}},
                 primary_type: hl.primary_type
             });
         }
