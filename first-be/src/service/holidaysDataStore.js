@@ -102,7 +102,17 @@ const getHolidaysForCountryCode = async (countryCode, isUkraine = false, year = 
 }
 
 function filterUkrainianHolidays(list) {
-    return list.filter(hl => hl.primary_type.includes('National'));
+    let filteredList = [];
+    list.forEach(hl => {
+        if (hl.primary_type.includes('National')) {
+            filteredList.push({
+                name: hl.name.replace('(Suspended)', ''),
+                date: moment(hl.date.iso).day() === 0 ? moment(hl.date.iso).add(1, 'day').toDate() : moment(hl.date.iso).day() === 6 ? moment(hl.date.iso).add(2, 'day').toDate() : moment(hl.date.iso).toDate(),
+                primary_type: hl.primary_type
+            });
+        }
+    });
+    return filteredList;
 }
 
 module.exports = {

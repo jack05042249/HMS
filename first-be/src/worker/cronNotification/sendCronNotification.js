@@ -8,7 +8,7 @@ const { delay } = require('../../utils/delay')
 
 const { getHolidaysForCountry } = require('../../service/holidayService')
 
-const sendCronNotification = async (year, startDate, endDate, weekly = '') => {
+const sendCronNotification = async (year, startDate, endDate) => {
   try {
     const holidaysPerCountry = {}
     const emailSendTo = {}
@@ -22,34 +22,17 @@ const sendCronNotification = async (year, startDate, endDate, weekly = '') => {
           holidaysPerCountry[location] = []
           const isUkraine = location === 'ua'
           let holidays = {}
-          if (weekly === 'Monday') {
-            if (isUkraine) {
-              holidays = await getHolidaysForCountry(location, isUkraine, year, true, weekly)
-              if (Object.keys(holidays).length) {
-                for (const date in holidays) {
-                  const hl = holidays[date]
-                  if (moment(date).isBetween(startDate, endDate)) {
-                    if (isUkraine && !hl.primary_type.includes('National')) continue
-                    holidaysPerCountry[location].push({
-                      name: isUkraine ? hl.name.replace('(Suspended)', '') : hl.name,
-                      date: moment.utc(date).toDate()
-                    })
-                  }
-                }
-              }
-            }
-          } else {
-            holidays = await getHolidaysForCountry(location, isUkraine, year, true)
-            if (Object.keys(holidays).length) {
-              for (const date in holidays) {
-                const hl = holidays[date]
-                if (moment(date).isBetween(startDate, endDate)) {
+
+          holidays = await getHolidaysForCountry(location, isUkraine, year, true)
+          if (Object.keys(holidays).length) {
+            for (const date in holidays) {
+              const hl = holidays[date]
+              if (moment(date).isBetween(startDate, endDate)) {
                   if (isUkraine && !hl.primary_type.includes('National')) continue
-                  holidaysPerCountry[location].push({
-                    name: isUkraine ? hl.name.replace('(Suspended)', '') : hl.name,
-                    date: moment.utc(date).toDate()
-                  })
-                }
+                holidaysPerCountry[location].push({
+                  name: isUkraine ? hl.name.replace('(Suspended)', '') : hl.name,
+                  date: moment.utc(date).toDate()
+                })
               }
             }
           }

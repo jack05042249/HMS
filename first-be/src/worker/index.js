@@ -36,26 +36,10 @@ const weeklyNotification = cron.schedule('0 0 12 * * 7', async () => {
     console.log('=== weeklyNotification launched ===')
     if (moment().isBetween(moment('26/12', 'DD/MM'), moment('26/12', 'DD/MM').add(7, 'days'))) return
     const currentYear = moment().format('YYYY')
-    const weekAfter = moment().startOf('d').add(1, 'week')
+    const weekAfter = moment().startOf('d').add(0, 'week')
     const twoWeeksAfter = moment().endOf('d').add(13, 'days')
     console.log(`***  ${moment().format('DD/MM/YYYY')}-${moment(twoWeeksAfter).format('DD/MM/YYYY')} ***`)
-    await sendCronNotification(currentYear, weekAfter, twoWeeksAfter, 'Sunday');
-})
-
-
-const weeklyNotificationforUkrainianHolidays = cron.schedule('0 0 12 * * 7', async () => {
-    /*
-        Don't send weekly notifications between the 26th of December and the 2nd of January.
-        Annual notifications will be send in this period of time.
-    */
-    console.log('=== weeklyNotification launched ===')
-    if (moment().isBetween(moment('26/12', 'DD/MM'), moment('26/12', 'DD/MM').add(7, 'days'))) return
-    const lastSunday = moment().subtract(1, 'day')
-    const currentYear = lastSunday.format('YYYY')
-    const weekAfter = lastSunday.startOf('d').add(1, 'week')
-    const twoWeeksAfter = lastSunday.endOf('d').add(13, 'days')
-    console.log(`***  ${lastSunday.format('DD/MM/YYYY')}-${moment(twoWeeksAfter).format('DD/MM/YYYY')} ***`)
-    await sendCronNotification(currentYear, weekAfter, twoWeeksAfter, 'Monday');
+    await sendCronNotification(currentYear, weekAfter, twoWeeksAfter);
 })
 
 const annualNotification = cron.schedule('0 0 26 12 *', async () => {
@@ -114,7 +98,6 @@ const linkedinCron = cron.schedule('58 0 * * *', async () => {
 
 const croneExecutor = () => {
     weeklyNotification.start();
-    weeklyNotificationforUkrainianHolidays.start();
     annualNotification.start();
     everyDayCron.start();
 
