@@ -114,7 +114,7 @@ const sendHolidaysEmail = async (data, startDate, endDate) => {
         from: {address: gmail_user, name: 'Commit Offshore Holidays Reminder System'},
         to: email,
         subject: `National Holidays from ${getDateFormat(startDate, endDate)}`,
-        cc: gmail_cc,
+        // cc: gmail_cc,
         html,
         contentDisposition: 'inline',
         attachments: [
