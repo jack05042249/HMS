@@ -140,6 +140,11 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.DATE,
             allowNull: true,
         },
+        ignoreLinkedinCheck: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            default: false
+        }
     }, {
         indexes: [
             {

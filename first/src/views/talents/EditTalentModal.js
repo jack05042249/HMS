@@ -105,6 +105,7 @@ const EditTalentModal = ({
     cv,
     canWorkOnTwoPositions,
     linkedinProfileChecked,
+    ignoreLinkedinCheck,
     linkedinProfile,
     linkedinProfileDate,
     linkedinComment
@@ -195,7 +196,7 @@ const EditTalentModal = ({
       }
       return;
     }
-    if (id === 'isActive' || id === 'hourlyRate' || id === 'canWorkOnTwoPositions' || id === 'linkedinProfileChecked') {
+    if (id === 'isActive' || id === 'hourlyRate' || id === 'canWorkOnTwoPositions' || id === 'ignoreLinkedinCheck') {
       setTalent(prev => ({ ...prev, [id]: checked }));
       return;
     }
@@ -482,28 +483,6 @@ const EditTalentModal = ({
               className='mb-4 border border-[#F5F0F0]  text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
             />
 
-            {/* <SearchableField
-              name='Customer'
-              data={talent['talentMainCustomer'] ? allOrganizations.filter(org => organizationIdsForMainStakeholder.includes(org.id)).map(org => ({ key: `${org.id}`, value: org.name })) : []}
-              selectedKeys={organizations?.length ? [`${organizations[0].id}`] : []}
-              emptyText= {talent['talentMainCustomer'] ? allOrganizations.filter(org => organizationIdsForMainStakeholder.includes(org.id)).map(org => ({ key: `${org.id}`, value: org.name }))[0].value : 'None'}
-              onChangeSelectedKeys={selectedKeys => {
-                if (!selectedKeys.length) {
-                  return;
-                }
-                const id = selectedKeys[selectedKeys.length - 1];
-                const org = allOrganizations.find(org => `${org.id}` === `${id}`);
-
-                onChangeHandler({
-                  target: {
-                    id: 'organizations',
-                    name: 'organizations',
-                    value: org ? [{ id: org.id, name: org.name }] : []
-                  }
-                });
-              }}
-            /> */}
-
             <label htmlFor='email' className='text-[#000] text-[14px] mt-2 font-medium text-left'>
               E-mail
             </label>
@@ -615,16 +594,16 @@ const EditTalentModal = ({
               placeholder='@telegram'
               className='mb-4 border border-[#F5F0F0]  text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
             />
-            <label htmlFor='linkedinProfileChecked' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Linkedin Checked
+            <label htmlFor='ignoreLinkedinCheck' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
+              Ignore Linkedin Check
             </label>
             <div className='flex items-center h-[40px] px-2'>
               <input
                 className='cursor-pointer w-4 h-4'
                 type='checkbox'
-                checked={linkedinProfileChecked}
-                id='linkedinProfileChecked'
-                name='linkedinProfileChecked'
+                checked={ignoreLinkedinCheck}
+                id='ignoreLinkedinCheck'
+                name='ignoreLinkedinCheck'
                 onChange={onChangeHandler}
               />
             </div>
@@ -791,14 +770,18 @@ const EditTalentModal = ({
                 </div>
               )}
             </div>
-            <label htmlFor='linkedinProfileDate' className='text-[#000] mb-[7px] text-[14px] font-medium text-left'>
-              Linkedin Checked Date
+            <label htmlFor='linkedinProfileChecked_Date' className='text-[#000] mb-[7px] text-[14px] font-medium text-left'>
+              Linkedin Status
             </label>
-            <span className='relative left-[280px] top-[25px] pointer-events-none z-50'>
+            <span className='badge-tooltip'>
+              {ignoreLinkedinCheck ? 'IGNORED' : linkedinProfileChecked ? 'TRUE': 'FALSE'}
+              <span className='tooltip-text'>{moment(linkedinProfileDate).format('YYYY-MM-DD')}</span>
+            </span>
+            {/* <span className='relative left-[280px] top-[25px] pointer-events-none z-50'>
               {' '}
               <icons.editIcon />{' '}
-            </span>
-            <DatePicker
+            </span> */}
+            {/* <DatePicker
               id='linkedinProfileDate'
               selected={formattedLinkedinProfileDate}
               onChange={date => onChangeHandler({ target: { id: 'linkedinProfileDate', value: date } })}
@@ -808,7 +791,7 @@ const EditTalentModal = ({
               placeholderText={'DD/MM/YYYY'}
               dateFormat='dd/MM/yyyy'
               className='border border-[#F5F0F0] text-[#9197B3] mb-4 w-[313px] rounded-lg h-[40px] px-[15px] outline-none'
-            />
+            /> */}
             <label htmlFor='linkedinComment' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
               Linkedin Comment
             </label>

@@ -84,6 +84,7 @@ const CreateTalentModal = ({
     hourlyRate: false,
     canWorkOnTwoPositions: false,
     linkedinProfileChecked: false,
+    ignoreLinkedinCheck: false,
     linkedinProfile: '',
     linkedinProfileDate: null,
     linkedinComment: ''
@@ -399,7 +400,11 @@ const CreateTalentModal = ({
 
             <SearchableField
               name='Main Stakeholder'
-              data={activeCustomers.map(customer => (cusIds.includes(customer.id) ? { key: `${customer.id}`, value: customer.fullName } : null)).filter(Boolean)}
+              data={activeCustomers
+                .map(customer =>
+                  cusIds.includes(customer.id) ? { key: `${customer.id}`, value: customer.fullName } : null
+                )
+                .filter(Boolean)}
               selectedKeys={values.talentMainCustomer ? [`${values.talentMainCustomer}`] : []}
               emptyText='Select Main Stakeholder'
               onChangeSelectedKeys={selectedKeys => {
@@ -412,7 +417,7 @@ const CreateTalentModal = ({
               }}
             />
 
-             <label htmlFor='Customer' className='text-[#000] text-[14px] font-medium text-left'>
+            <label htmlFor='Customer' className='text-[#000] text-[14px] font-medium text-left'>
               Customer
             </label>
             <input
@@ -526,18 +531,18 @@ const CreateTalentModal = ({
               placeholder='@telegram'
               className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
             />
-            <label htmlFor='linkedinProfileChecked' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Linkedin Checked
+            <label htmlFor='ignoreLinkedinCheck' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
+              Ignore Linkedin Check
             </label>
             <div className='flex items-center h-[40px] mb-4 px-2'>
               <input
                 className='cursor-pointer w-4 h-4'
                 type='checkbox'
-                checked={values.linkedinProfileChecked}
-                id='linkedinProfileChecked'
-                name='linkedinProfileChecked'
+                checked={values.ignoreLinkedinCheck}
+                id='ignoreLinkedinCheck'
+                name='ignoreLinkedinCheck'
                 onChange={event =>
-                  handleChangeForm({ target: { name: 'linkedinProfileChecked', value: event.target.checked } })
+                  handleChangeForm({ target: { name: 'ignoreLinkedinCheck', value: event.target.checked } })
                 }
               />
             </div>
@@ -672,19 +677,43 @@ const CreateTalentModal = ({
               placeholder='Linkedin Profile URL'
               className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
             />
-            <label htmlFor='linkedinProfileDate' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Linkedin Checked Date
-            </label>
-            <DatePicker
-              selected={values.linkedinProfileDate}
-              onChange={date => handleChangeForm({ target: { name: 'linkedinProfileDate', value: date } })}
-              selectsStart
-              showMonthDropdown
-              showYearDropdown
-              placeholderText={'DD/MM/YYYY'}
-              dateFormat='dd/MM/yyyy'
-              className='border border-[#F5F0F0] mb-4 w-[313px] rounded-lg h-[40px] px-[15px] outline-none'
-            />
+            {!values.ignoreLinkedinCheck ? (
+              <>
+                <label
+                  htmlFor='linkedinProfileChecked'
+                  className='text-[#000] text-[14px] font-medium text-left mb-[8px]'
+                >
+                  Linkedin Checked
+                </label>
+                <div className='flex items-center h-[40px] mb-4 px-2'>
+                  <input
+                    className='cursor-pointer w-4 h-4'
+                    type='checkbox'
+                    checked={values.linkedinProfileChecked}
+                    id='linkedinProfileChecked'
+                    name='linkedinProfileChecked'
+                    onChange={event =>
+                      handleChangeForm({ target: { name: 'linkedinProfileChecked', value: event.target.checked } })
+                    }
+                  />
+                </div>
+                <label htmlFor='linkedinProfileDate' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
+                  Linkedin Checked Date
+                </label>
+                <DatePicker
+                  selected={values.linkedinProfileDate}
+                  onChange={date => handleChangeForm({ target: { name: 'linkedinProfileDate', value: date } })}
+                  selectsStart
+                  showMonthDropdown
+                  showYearDropdown
+                  placeholderText={'DD/MM/YYYY'}
+                  dateFormat='dd/MM/yyyy'
+                  className='border border-[#F5F0F0] mb-4 w-[313px] rounded-lg h-[40px] px-[15px] outline-none'
+                />
+              </>
+            ) : (
+              ''
+            )}
             <label htmlFor='linkedinComment' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
               Linkedin Comment
             </label>

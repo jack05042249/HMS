@@ -208,7 +208,7 @@ const Talents = ({ API_URL }) => {
                 Summary
               </th>
               <th scope='col' className='px-6 py-3 font-medium whitespace-nowrap'>
-                Linkedin Checked
+                Linkedin Status
               </th>
               <th scope='col' className='px-6 py-3 font-medium whitespace-nowrap'>
                 Linkedin Profile

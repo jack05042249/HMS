@@ -5,7 +5,7 @@ const { chromium } = require('playwright')
 const axios = require('axios')
 const API_KEY = '31d99944b8c9f9030fb18217f78f5c8f010dff1876c0a559f860c08ca872b5b5'
 const apiUrl = 'https://api.brightdata.com/datasets/v3/trigger?dataset_id=gd_l1viktl72bvl7bjuj0&include_errors=true'
-const MAX_RETRIES = 12 // 12 x 5 seconds = 60 seconds
+const MAX_RETRIES = 200 // 200 x 5 seconds = 1000 seconds
 const DELAY_MS = 5000 // 5 seconds
 
 // 🔐 LinkedIn session cookie (li_at)
@@ -42,6 +42,7 @@ const linkedinStatusCheck = async () => {
       await talent.save()
       continue
     }
+    if (talent.ignored) continue;
     const url = talent.linkedinProfile
     if (url && isLinkedInProfileUrl(url)) {
       // if (talent.email == 'zheniarudchik@gmail.com') {
@@ -94,7 +95,7 @@ const linkedinStatusCheck = async () => {
                   let prePos = false;
                   if (exp.end_date == null && exp.positions && exp.positions.length > 0) {
                     exp.positions.forEach(pos => {
-                      if (pos.end_date != null && pos.end_date === 'Present') {
+                      if (pos.end_date == null && pos.end_date === 'Present') {
                         prePos = true;
                       }
                     })
@@ -103,7 +104,7 @@ const linkedinStatusCheck = async () => {
                       presentNum ++;
                     }
                   }
-                  if (exp.end_date != null && exp.end_date === 'Present') {
+                  if (exp.end_date == null && exp.end_date === 'Present') {
                     presentNum++
                     lastCompany = exp.company ? exp.company.replace(/[^a-zA-Z0-9\s]/g, '').trim() : ''
                   }
@@ -121,10 +122,13 @@ const linkedinStatusCheck = async () => {
                   })
                   if (flag) {
                     talent.linkedinProfileChecked = true
+                    talent.linkedinComment = 'Confirmed by COMS';
                   } else {
+                    talent.linkedinComment = 'NOT MATCHING by COMS'
                     talent.linkedinProfileChecked = false
                   }
                 } else {
+                  talent.linkedinComment = 'NOT MATCHING by COMS'
                   talent.linkedinProfileChecked = false
                 }
                 console.log('Experience checked:', talent.linkedinProfileChecked)
@@ -141,19 +145,23 @@ const linkedinStatusCheck = async () => {
                 })
                 if (flag) {
                   talent.linkedinProfileChecked = false
+                  talent.linkedinComment = 'NOT MATCHING by COMS'
                   console.log('❌ Current company not found in organizations:', currentCompanyName)
                 } else {
+                  talent.ignoreLinkedinCheck = true;
                   proxyNeeded.push(talent)
                   console.log(proxyNeeded.length, talent.fullName, '--------------------', talent.linkedinProfile)
                 }
               } else if (data.warning_code && data.warning_code === 'dead_page') {
                 talent.linkedinProfileChecked = false
+                talent.linkedinComment = "Can't read the profile"
                 console.log('⚠️ Dead Page:', talent.fullName, 'URL:', talent.url)
               } else {
+                talent.ignoreLinkedinCheck = true;
                 proxyNeeded.push(talent)
                 console.log(proxyNeeded.length, talent.fullName, '--------------------', talent.linkedinProfile)
               }
-              break // Exit the retry loop on successs
+              break // Exit the retry loop on success
             } else {
               console.log('⚠️ Snapshot not ready yet (empty response), retrying...')
             }
@@ -165,95 +173,98 @@ const linkedinStatusCheck = async () => {
         }
       }
       // } else continue
+    } else {
+      talent.linkedinComment = "Can't read the profile"
+      talent.linkedinProfileChecked = false
     }
     talent.linkedinProfileDate = moment().format()
     await talent.save()
   }
   console.log(proxyNeeded.length, 'proxyNeeded.length')
-  proxyNeeded.map((i, talent) => {
-    const sessionId = `session-${i + 1}`
+  // proxyNeeded.map((i, talent) => {
+  //   const sessionId = `session-${i + 1}`
 
-    const browser = chromium.launch({
-      headless: true,
-      proxy: {
-        server: `http://${PROXY_HOST}:${PROXY_PORT}`,
-        username: `${PROXY_USER}-${sessionId}`,
-        password: PROXY_PASS
-      },
-      args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-blink-features=AutomationControlled']
-    })
-    const browsercontext = browser.newContext({
-      userAgent:
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
-        '(KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36',
-      viewport: { width: 1280, height: 800 },
-      locale: 'en-US',
-      deviceScaleFactor: 1,
-      isMobile: false,
-      hasTouch: false
-    })
-    browsercontext.addCookies([
-      {
-        name: 'li_at',
-        value: LI_AT,
-        domain: '.linkedin.com',
-        path: '/',
-        httpOnly: true,
-        secure: true,
-        sameSite: 'Lax'
-      }
-    ])
-    const page = browsercontext.newPage()
-    try {
-      console.log(`📄 Scraping ${url}`)
-      page.goto(url, { waitUntil: 'domcontentloaded', timeout: 200000 })
-      page.waitForTimeout(5000) // Wait for the page to load
-      let presentCompany = page.evaluate(() => {
-        const companyElements = document.querySelectorAll('li.UKjiyRIZvOvdFsmmUeAJMHKloPTPxiDYQrjI')
-        let presentCompany = []
+  //   const browser = chromium.launch({
+  //     headless: true,
+  //     proxy: {
+  //       server: `http://${PROXY_HOST}:${PROXY_PORT}`,
+  //       username: `${PROXY_USER}-${sessionId}`,
+  //       password: PROXY_PASS
+  //     },
+  //     args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-blink-features=AutomationControlled']
+  //   })
+  //   const browsercontext = browser.newContext({
+  //     userAgent:
+  //       'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
+  //       '(KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36',
+  //     viewport: { width: 1280, height: 800 },
+  //     locale: 'en-US',
+  //     deviceScaleFactor: 1,
+  //     isMobile: false,
+  //     hasTouch: false
+  //   })
+  //   browsercontext.addCookies([
+  //     {
+  //       name: 'li_at',
+  //       value: LI_AT,
+  //       domain: '.linkedin.com',
+  //       path: '/',
+  //       httpOnly: true,
+  //       secure: true,
+  //       sameSite: 'Lax'
+  //     }
+  //   ])
+  //   const page = browsercontext.newPage()
+  //   try {
+  //     console.log(`📄 Scraping ${url}`)
+  //     page.goto(url, { waitUntil: 'domcontentloaded', timeout: 200000 })
+  //     page.waitForTimeout(5000) // Wait for the page to load
+  //     let presentCompany = page.evaluate(() => {
+  //       const companyElements = document.querySelectorAll('li.UKjiyRIZvOvdFsmmUeAJMHKloPTPxiDYQrjI')
+  //       let presentCompany = []
 
-        companyElements &&
-          companyElements.forEach(element => {
-            const periods = Array.from(element.querySelectorAll('span.pvs-entity__caption-wrapper'))
-            if (periods && periods.some(period => period.textContent.trim().toLowerCase().includes('present'))) {
-              let name = ''
-              if (periods.length > 1) {
-                name = element.querySelector(
-                  'div > div.display-flex.flex-column.align-self-center.flex-grow-1 > div.display-flex.flex-row.justify-space-between > a > div > div > div > div > span:nth-child(1)'
-                )
-              } else {
-                name = element.querySelector(
-                  'div > div.display-flex.flex-column.align-self-center.flex-grow-1 > div.display-flex.flex-row.justify-space-between > a > span:nth-child(2) > span:nth-child(1)'
-                )
-              }
-              if (name) presentCompany.push(name.textContent.trim().replace(/\s+/g, ' '))
-            }
-          })
-        console.log(companyElements && companyElements.length, ' -- ', presentCompany.length)
-        return presentCompany
-      })
-      console.log(presentCompany.length, ' -- ', presentCompany)
-      let lastCompany = ''
-      if (presentCompany.length == 1) {
-        if (organizations.some(org => presentCompany[0].toLowerCase().includes(org.name.toLowerCase()))) {
-          lastCompany = presentCompany[0]
-        }
-      }
-      console.log(`Last company for ${talent.fullName} is: ${lastCompany}`)
-      if (lastCompany) {
-        talent.linkedinProfileChecked = true
-      } else {
-        talent.linkedinProfileChecked = false
-      }
-    } catch (err) {
-      console.error(`❌ Failed to scrape ${url}:`, err.message)
-    } finally {
-      browser.close()
-      new Promise(r => setTimeout(r, 3000)) // Sleep between requests
-    }
-    talent.linkedinProfileDate = moment().format()
-    talent.save()
-  })
+  //       companyElements &&
+  //         companyElements.forEach(element => {
+  //           const periods = Array.from(element.querySelectorAll('span.pvs-entity__caption-wrapper'))
+  //           if (periods && periods.some(period => period.textContent.trim().toLowerCase().includes('present'))) {
+  //             let name = ''
+  //             if (periods.length > 1) {
+  //               name = element.querySelector(
+  //                 'div > div.display-flex.flex-column.align-self-center.flex-grow-1 > div.display-flex.flex-row.justify-space-between > a > div > div > div > div > span:nth-child(1)'
+  //               )
+  //             } else {
+  //               name = element.querySelector(
+  //                 'div > div.display-flex.flex-column.align-self-center.flex-grow-1 > div.display-flex.flex-row.justify-space-between > a > span:nth-child(2) > span:nth-child(1)'
+  //               )
+  //             }
+  //             if (name) presentCompany.push(name.textContent.trim().replace(/\s+/g, ' '))
+  //           }
+  //         })
+  //       console.log(companyElements && companyElements.length, ' -- ', presentCompany.length)
+  //       return presentCompany
+  //     })
+  //     console.log(presentCompany.length, ' -- ', presentCompany)
+  //     let lastCompany = ''
+  //     if (presentCompany.length == 1) {
+  //       if (organizations.some(org => presentCompany[0].toLowerCase().includes(org.name.toLowerCase()))) {
+  //         lastCompany = presentCompany[0]
+  //       }
+  //     }
+  //     console.log(`Last company for ${talent.fullName} is: ${lastCompany}`)
+  //     if (lastCompany) {
+  //       talent.linkedinProfileChecked = true
+  //     } else {
+  //       talent.linkedinProfileChecked = false
+  //     }
+  //   } catch (err) {
+  //     console.error(`❌ Failed to scrape ${url}:`, err.message)
+  //   } finally {
+  //     browser.close()
+  //     new Promise(r => setTimeout(r, 3000)) // Sleep between requests
+  //   }
+  //   talent.linkedinProfileDate = moment().format()
+  //   talent.save()
+  // })
 }
 
 module.exports = {
