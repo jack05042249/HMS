@@ -42,7 +42,7 @@ const linkedinStatusCheck = async () => {
       await talent.save()
       continue
     }
-    if (talent.ignored) continue;
+    // if (talent.ignoreLinkedinCheck) continue;
     const url = talent.linkedinProfile
     if (url && isLinkedInProfileUrl(url)) {
       // if (talent.email == 'zheniarudchik@gmail.com') {
@@ -65,6 +65,7 @@ const linkedinStatusCheck = async () => {
         })
       console.log('Snapshot ID:', SNAPSHOT_ID)
       if (!SNAPSHOT_ID) {
+        talent.ignoreLinkedinCheck = true;
         console.error('❌ No snapshot ID found in response:', response.data)
       } else {
         for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
@@ -87,7 +88,6 @@ const linkedinStatusCheck = async () => {
               // console.log('Data:', data);
 
               if (data.experience && data.experience.length > 0) {
-                
                 let presentNum = 0
                 let lastCompany = ''
                 data.experience.forEach(exp => {
@@ -95,7 +95,7 @@ const linkedinStatusCheck = async () => {
                   let prePos = false;
                   if (exp.end_date == null && exp.positions && exp.positions.length > 0) {
                     exp.positions.forEach(pos => {
-                      if (pos.end_date == null && pos.end_date === 'Present') {
+                      if (pos.end_date == null || pos.end_date === 'Present') {
                         prePos = true;
                       }
                     })
@@ -103,8 +103,7 @@ const linkedinStatusCheck = async () => {
                       lastCompany = exp.company ? exp.company.replace(/[^a-zA-Z0-9\s]/g, '').trim() : ''
                       presentNum ++;
                     }
-                  }
-                  if (exp.end_date == null && exp.end_date === 'Present') {
+                  } else if (exp.end_date == null || exp.end_date === 'Present') {
                     presentNum++
                     lastCompany = exp.company ? exp.company.replace(/[^a-zA-Z0-9\s]/g, '').trim() : ''
                   }
@@ -131,7 +130,7 @@ const linkedinStatusCheck = async () => {
                   talent.linkedinComment = 'NOT MATCHING by COMS'
                   talent.linkedinProfileChecked = false
                 }
-                console.log('Experience checked:', talent.linkedinProfileChecked)
+                console.log('Experience checked:', lastCompany);
               } else if (data.current_company && data.current_company.name) {
                 let currentCompanyName = data.current_company.name.replace(/[^a-zA-Z0-9\s]/g, '').trim()
                 let flag = 1
@@ -154,7 +153,7 @@ const linkedinStatusCheck = async () => {
                 }
               } else if (data.warning_code && data.warning_code === 'dead_page') {
                 talent.linkedinProfileChecked = false
-                talent.linkedinComment = "Can't read the profile"
+                talent.linkedinComment = "Profile is dead or not accessible"
                 console.log('⚠️ Dead Page:', talent.fullName, 'URL:', talent.url)
               } else {
                 talent.ignoreLinkedinCheck = true;
@@ -166,7 +165,10 @@ const linkedinStatusCheck = async () => {
               console.log('⚠️ Snapshot not ready yet (empty response), retrying...')
             }
           } catch (err) {
-            console.log(`⚠️ Error on attempt ${attempt}: ${err.message}`)
+            talent.ignoreLinkedinCheck = true;
+            proxyNeeded.push(talent)
+            console.log(`⚠️ Error on attempt ${attempt}: ${err.message}`);
+            break;
           }
           // Wait before next try
           await delay(DELAY_MS)
@@ -174,7 +176,7 @@ const linkedinStatusCheck = async () => {
       }
       // } else continue
     } else {
-      talent.linkedinComment = "Can't read the profile"
+      talent.linkedinComment = "Profile url is not valid"
       talent.linkedinProfileChecked = false
     }
     talent.linkedinProfileDate = moment().format()

@@ -211,6 +211,9 @@ const Talents = ({ API_URL }) => {
                 Linkedin Status
               </th>
               <th scope='col' className='px-6 py-3 font-medium whitespace-nowrap'>
+                Ignored
+              </th>
+              <th scope='col' className='px-6 py-3 font-medium whitespace-nowrap'>
                 Linkedin Profile
               </th>
               <th scope='col' className='px-6 py-3 font-medium whitespace-nowrap'>
@@ -307,7 +310,14 @@ const Talents = ({ API_URL }) => {
                   </th>
                   <th scope='row' className='px-6 py-4 font-medium '>
                     {typeof tal.linkedinProfileChecked === 'boolean' ? (
-                      <>{tal.linkedinProfileChecked ? <Checked /> : <NotChecked />}</>
+                      <>{!tal.ignoreLinkedinCheck && tal.linkedinProfileChecked ? <Checked /> : <NotChecked />}</>
+                    ) : (
+                      '-'
+                    )}
+                  </th>
+                  <th scope='row' className='px-6 py-4 font-medium '>
+                    {typeof tal.ignoreLinkedinCheck === 'boolean' ? (
+                      <>{tal.ignoreLinkedinCheck ? <Checked /> : <NotChecked />}</>
                     ) : (
                       '-'
                     )}

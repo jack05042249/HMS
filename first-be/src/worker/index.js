@@ -101,7 +101,7 @@ const everyFirstOfNovemberCron = cron.schedule(everyFirstDayOfNovember, async ()
 });
 
 // Run every day at 00:10
-const linkedinCron = cron.schedule('58 0 * * *', async () => {
+const linkedinCron = cron.schedule('6 20 * * *', async () => {
     const today = new Date();
     const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate();
     const todayDate = today.getDate();
