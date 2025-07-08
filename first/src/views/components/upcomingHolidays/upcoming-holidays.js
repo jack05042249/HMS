@@ -31,6 +31,8 @@ const UpcomingHolidays = () => {
 
   let displayedHolidays = upcomingHolidays;
 
+  console.log('Upcoming Holidays:', upcomingHolidays);
+
   if (!showAll && upcomingHolidays.length > 0) {
     displayedHolidays = [upcomingHolidays[0]];
   } else if (showAll && upcomingHolidays.length > 0) {

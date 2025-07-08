@@ -1,231 +1,4 @@
 {
-  "il": [
-    {
-      "name": "Passover (Day 1)",
-      "description": "During Passover, the Jewish people remember the liberation of the Israelites from slavery, their exodus from Egypt, and that their first-born children were spared during the 10th plague, as told in the Haggadah.",
-      "country": {
-        "id": "il",
-        "name": "Israel"
-      },
-      "date": {
-        "iso": "2025-04-13",
-        "datetime": {
-          "year": 2025,
-          "month": 4,
-          "day": 13
-        }
-      },
-      "type": [
-        "National holiday",
-        "Hebrew"
-      ],
-      "primary_type": "Hebrew",
-      "canonical_url": "https://calendarific.com/holiday/israel/pesach-i",
-      "urlid": "israel/pesach-i",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Passover (Day 7)",
-      "description": "The last day of Passover marks the end of the Passover period, which lasts for seven or eight days.",
-      "country": {
-        "id": "il",
-        "name": "Israel"
-      },
-      "date": {
-        "iso": "2025-04-19",
-        "datetime": {
-          "year": 2025,
-          "month": 4,
-          "day": 19
-        }
-      },
-      "type": [
-        "National holiday",
-        "Hebrew"
-      ],
-      "primary_type": "Hebrew",
-      "canonical_url": "https://calendarific.com/holiday/israel/pesach-vii",
-      "urlid": "israel/pesach-vii",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Yom HaAtzmaut",
-      "description": "Israel's Independence Day, also known as Yom Ha'atzmaut, marks the anniversary of the Declaration of Independence of Israel.",
-      "country": {
-        "id": "il",
-        "name": "Israel"
-      },
-      "date": {
-        "iso": "2025-05-01",
-        "datetime": {
-          "year": 2025,
-          "month": 5,
-          "day": 1
-        }
-      },
-      "type": [
-        "National holiday",
-        "Hebrew"
-      ],
-      "primary_type": "Hebrew",
-      "canonical_url": "https://calendarific.com/holiday/israel/yom-haatzmaut",
-      "urlid": "israel/yom-haatzmaut",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Shavuot",
-      "description": "Shavuot, sometimes known as the Festival of the Weeks, is a Jewish holiday to mark the end of the Counting of the Omer and the anniversary of the day when Jewish people received the Torah.",
-      "country": {
-        "id": "il",
-        "name": "Israel"
-      },
-      "date": {
-        "iso": "2025-06-02",
-        "datetime": {
-          "year": 2025,
-          "month": 6,
-          "day": 2
-        }
-      },
-      "type": [
-        "National holiday",
-        "Hebrew"
-      ],
-      "primary_type": "Hebrew",
-      "canonical_url": "https://calendarific.com/holiday/israel/shavuot",
-      "urlid": "israel/shavuot",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Rosh Hashana",
-      "description": "Rosh Hashana, commonly known as the Jewish New Year, is the first day of Tishrei, the seventh month in the Hebrew calendar.",
-      "country": {
-        "id": "il",
-        "name": "Israel"
-      },
-      "date": {
-        "iso": "2025-09-23",
-        "datetime": {
-          "year": 2025,
-          "month": 9,
-          "day": 23
-        }
-      },
-      "type": [
-        "National holiday",
-        "Hebrew"
-      ],
-      "primary_type": "Hebrew",
-      "canonical_url": "https://calendarific.com/holiday/israel/rosh-hashana",
-      "urlid": "israel/rosh-hashana",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Rosh Hashana (Day 2)",
-      "description": "Rosh Hashana (Day 2) is a national holiday and Jewish holiday in Israel",
-      "country": {
-        "id": "il",
-        "name": "Israel"
-      },
-      "date": {
-        "iso": "2025-09-24",
-        "datetime": {
-          "year": 2025,
-          "month": 9,
-          "day": 24
-        }
-      },
-      "type": [
-        "National holiday",
-        "Hebrew"
-      ],
-      "primary_type": "Hebrew",
-      "canonical_url": "https://calendarific.com/holiday/israel/rosh-hashana-ii",
-      "urlid": "israel/rosh-hashana-ii",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Yom Kippur",
-      "description": "Yom Kippur (Day of Atonement) is an important Jewish holiday that centers on the themes of atonement and repentance.",
-      "country": {
-        "id": "il",
-        "name": "Israel"
-      },
-      "date": {
-        "iso": "2025-10-02",
-        "datetime": {
-          "year": 2025,
-          "month": 10,
-          "day": 2
-        }
-      },
-      "type": [
-        "National holiday",
-        "Hebrew"
-      ],
-      "primary_type": "Hebrew",
-      "canonical_url": "https://calendarific.com/holiday/israel/yom-kippur",
-      "urlid": "israel/yom-kippur",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Sukkot (Day 1)",
-      "description": "The first day of Sukkot marks the start of the Sukkot festival, celebrated among Jewish communities worldwide.",
-      "country": {
-        "id": "il",
-        "name": "Israel"
-      },
-      "date": {
-        "iso": "2025-10-07",
-        "datetime": {
-          "year": 2025,
-          "month": 10,
-          "day": 7
-        }
-      },
-      "type": [
-        "National holiday",
-        "Hebrew"
-      ],
-      "primary_type": "Hebrew",
-      "canonical_url": "https://calendarific.com/holiday/israel/sukkot-i",
-      "urlid": "israel/sukkot-i",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Shemini Atzeret / Simchat Torah",
-      "description": "Shemini Atzeret (or Shmini Atzeret) is a Jewish holiday dedicated to the love of God, while Simchat Torah (Simchas Torah or Simhat Torah) and celebrates the completion of the annual reading of the Torah.",
-      "country": {
-        "id": "il",
-        "name": "Israel"
-      },
-      "date": {
-        "iso": "2025-10-14",
-        "datetime": {
-          "year": 2025,
-          "month": 10,
-          "day": 14
-        }
-      },
-      "type": [
-        "National holiday",
-        "Hebrew"
-      ],
-      "primary_type": "Hebrew",
-      "canonical_url": "https://calendarific.com/holiday/israel/shmini-atzeret",
-      "urlid": "israel/shmini-atzeret",
-      "locations": "All",
-      "states": "All"
-    }
-  ],
   "am": [
     {
       "name": "New Year's Day",
@@ -270,8 +43,8 @@
         "National holiday"
       ],
       "primary_type": "National holiday",
-      "canonical_url": "https://calendarific.com/holiday/armenia/new-year-day-2",
-      "urlid": "armenia/new-year-day-2",
+      "canonical_url": "https://calendarific.com/holiday/armenia/new-year-day",
+      "urlid": "armenia/new-year-day",
       "locations": "All",
       "states": "All"
     },
@@ -518,7 +291,7 @@
   ],
   "by": [
     {
-      "name": "New Year’s Day",
+      "name": "New Year's Day",
       "description": "New Year’s Day is the first day of the year, or January 1, in the Gregorian calendar.",
       "country": {
         "id": "by",
@@ -566,30 +339,6 @@
       "states": "All"
     },
     {
-      "name": "Orthodox Christmas Holiday",
-      "description": "Orthodox Christmas Holiday is a national holiday in Belarus",
-      "country": {
-        "id": "by",
-        "name": "Belarus"
-      },
-      "date": {
-        "iso": "2025-01-06",
-        "datetime": {
-          "year": 2025,
-          "month": 1,
-          "day": 6
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "National Holiday",
-      "canonical_url": "https://calendarific.com/holiday/belarus/public-holiday-january",
-      "urlid": "belarus/public-holiday-january",
-      "locations": "All",
-      "states": "All"
-    },
-    {
       "name": "Orthodox Christmas Day",
       "description": "Many Orthodox churches annually celebrate Christmas Day on or around January 7. This event commemorates the story of Jesus Christ’s birth, according to the Christian Bible.",
       "country": {
@@ -615,8 +364,8 @@
       "states": "All"
     },
     {
-      "name": "Women’s Day",
-      "description": "Women’s Day is a national holiday in Belarus",
+      "name": "Women's Day",
+      "description": "Women's Day is a national holiday in Belarus",
       "country": {
         "id": "by",
         "name": "Belarus"
@@ -635,54 +384,6 @@
       "primary_type": "National Holiday",
       "canonical_url": "https://calendarific.com/holiday/belarus/women-day",
       "urlid": "belarus/women-day",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Radonitsa Holiday",
-      "description": "Radonitsa Holiday is a national holiday in Belarus",
-      "country": {
-        "id": "by",
-        "name": "Belarus"
-      },
-      "date": {
-        "iso": "2025-04-28",
-        "datetime": {
-          "year": 2025,
-          "month": 4,
-          "day": 28
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "National Holiday",
-      "canonical_url": "https://calendarific.com/holiday/belarus/radonitsa-holiday",
-      "urlid": "belarus/radonitsa-holiday",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Radonitsa",
-      "description": "Radonitsa is a national holiday in Belarus",
-      "country": {
-        "id": "by",
-        "name": "Belarus"
-      },
-      "date": {
-        "iso": "2025-04-29",
-        "datetime": {
-          "year": 2025,
-          "month": 4,
-          "day": 29
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "National Holiday",
-      "canonical_url": "https://calendarific.com/holiday/belarus/radonitsa",
-      "urlid": "belarus/radonitsa",
       "locations": "All",
       "states": "All"
     },
@@ -735,6 +436,30 @@
       "states": "All"
     },
     {
+      "name": "Radonitsa",
+      "description": "Radonitsa is a national holiday in Belarus",
+      "country": {
+        "id": "by",
+        "name": "Belarus"
+      },
+      "date": {
+        "iso": "2025-05-14",
+        "datetime": {
+          "year": 2025,
+          "month": 5,
+          "day": 14
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National Holiday",
+      "canonical_url": "https://calendarific.com/holiday/belarus/radonitsa",
+      "urlid": "belarus/radonitsa",
+      "locations": "All",
+      "states": "All"
+    },
+    {
       "name": "Independence Day of the Republic of Belarus",
       "description": "Independence Day of the Republic of Belarus is a national holiday in Belarus",
       "country": {
@@ -755,30 +480,6 @@
       "primary_type": "National Holiday",
       "canonical_url": "https://calendarific.com/holiday/belarus/independence-day",
       "urlid": "belarus/independence-day",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Independence Day Holiday",
-      "description": "Independence Day Holiday is a national holiday in Belarus",
-      "country": {
-        "id": "by",
-        "name": "Belarus"
-      },
-      "date": {
-        "iso": "2025-07-04",
-        "datetime": {
-          "year": 2025,
-          "month": 7,
-          "day": 4
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "National Holiday",
-      "canonical_url": "https://calendarific.com/holiday/belarus/public-holiday-july",
-      "urlid": "belarus/public-holiday-july",
       "locations": "All",
       "states": "All"
     },
@@ -829,30 +530,6 @@
       "urlid": "belarus/catholic-christmas-day",
       "locations": "All",
       "states": "All"
-    },
-    {
-      "name": "Catholic Christmas Holiday",
-      "description": "Catholic Christmas Holiday is a national holiday in Belarus",
-      "country": {
-        "id": "by",
-        "name": "Belarus"
-      },
-      "date": {
-        "iso": "2025-12-26",
-        "datetime": {
-          "year": 2025,
-          "month": 12,
-          "day": 26
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "National Holiday",
-      "canonical_url": "https://calendarific.com/holiday/belarus/catholic-christmas-holiday",
-      "urlid": "belarus/catholic-christmas-holiday",
-      "locations": "All",
-      "states": "All"
     }
   ],
   "az": [
@@ -881,6 +558,30 @@
       "states": "All"
     },
     {
+      "name": "Day off for World Azerbaijanis Solidarity Day",
+      "description": "World Azerbaijanis Solidarity Day is a public holiday in Azerbaijan",
+      "country": {
+        "id": "az",
+        "name": "Azerbaijan"
+      },
+      "date": {
+        "iso": "2025-01-01",
+        "datetime": {
+          "year": 2025,
+          "month": 1,
+          "day": 1
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "Public holiday",
+      "canonical_url": "https://calendarific.com/holiday/azerbaijan/azerbaijanis-solidarity-day",
+      "urlid": "azerbaijan/azerbaijanis-solidarity-day",
+      "locations": "All",
+      "states": "All"
+    },
+    {
       "name": "New Year's Holiday",
       "description": "New Year's Holiday is a public holiday in Azerbaijan",
       "country": {
@@ -901,30 +602,6 @@
       "primary_type": "Public holiday",
       "canonical_url": "https://calendarific.com/holiday/azerbaijan/new-year-day-2",
       "urlid": "azerbaijan/new-year-day-2",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "New Year's Holiday",
-      "description": "New Year's Holiday is a public holiday in Azerbaijan",
-      "country": {
-        "id": "az",
-        "name": "Azerbaijan"
-      },
-      "date": {
-        "iso": "2025-01-03",
-        "datetime": {
-          "year": 2025,
-          "month": 1,
-          "day": 3
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "Public holiday",
-      "canonical_url": "https://calendarific.com/holiday/azerbaijan/new-year-day-3",
-      "urlid": "azerbaijan/new-year-day-3",
       "locations": "All",
       "states": "All"
     },
@@ -953,26 +630,26 @@
       "states": "All"
     },
     {
-      "name": "Municipal Elections",
-      "description": "Municipal Elections is a public holiday in Azerbaijan",
+      "name": "Day off for Martyrs’ Day",
+      "description": "Martyrs’ Day is a public holiday in Azerbaijan",
       "country": {
         "id": "az",
         "name": "Azerbaijan"
       },
       "date": {
-        "iso": "2025-01-29",
+        "iso": "2025-01-22",
         "datetime": {
           "year": 2025,
           "month": 1,
-          "day": 29
+          "day": 22
         }
       },
       "type": [
         "National holiday"
       ],
       "primary_type": "Public holiday",
-      "canonical_url": "https://calendarific.com/holiday/azerbaijan/municipal-elections",
-      "urlid": "azerbaijan/municipal-elections",
+      "canonical_url": "https://calendarific.com/holiday/azerbaijan/martyrs-day",
+      "urlid": "azerbaijan/martyrs-day",
       "locations": "All",
       "states": "All"
     },
@@ -1121,102 +798,6 @@
       "states": "All"
     },
     {
-      "name": "Day off for Nowruz/Spring Holiday",
-      "description": "Nowruz/Spring Holiday is a public holiday in Azerbaijan",
-      "country": {
-        "id": "az",
-        "name": "Azerbaijan"
-      },
-      "date": {
-        "iso": "2025-03-25",
-        "datetime": {
-          "year": 2025,
-          "month": 3,
-          "day": 25
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "Public holiday",
-      "canonical_url": "https://calendarific.com/holiday/azerbaijan/novruz-day-3",
-      "urlid": "azerbaijan/novruz-day-3",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Day off for Nowruz/Spring Holiday",
-      "description": "Nowruz/Spring Holiday is a public holiday in Azerbaijan",
-      "country": {
-        "id": "az",
-        "name": "Azerbaijan"
-      },
-      "date": {
-        "iso": "2025-03-26",
-        "datetime": {
-          "year": 2025,
-          "month": 3,
-          "day": 26
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "Public holiday",
-      "canonical_url": "https://calendarific.com/holiday/azerbaijan/novruz-day-4",
-      "urlid": "azerbaijan/novruz-day-4",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Nowruz/Spring Holiday",
-      "description": "Nowruz/Spring Holiday is a public holiday in Azerbaijan",
-      "country": {
-        "id": "az",
-        "name": "Azerbaijan"
-      },
-      "date": {
-        "iso": "2025-03-27",
-        "datetime": {
-          "year": 2025,
-          "month": 3,
-          "day": 27
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "Public holiday",
-      "canonical_url": "https://calendarific.com/holiday/azerbaijan/novruz-extra-day-1",
-      "urlid": "azerbaijan/novruz-extra-day-1",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Nowruz/Spring Holiday",
-      "description": "Nowruz/Spring Holiday is a public holiday in Azerbaijan",
-      "country": {
-        "id": "az",
-        "name": "Azerbaijan"
-      },
-      "date": {
-        "iso": "2025-03-28",
-        "datetime": {
-          "year": 2025,
-          "month": 3,
-          "day": 28
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "Public holiday",
-      "canonical_url": "https://calendarific.com/holiday/azerbaijan/novruz-extra-day-2",
-      "urlid": "azerbaijan/novruz-extra-day-2",
-      "locations": "All",
-      "states": "All"
-    },
-    {
       "name": "Ramadan holiday",
       "description": "Eid al-Fitr is a holiday to mark the end of the Islamic month of Ramadan, during which Muslims fast during the hours of daylight.",
       "country": {
@@ -1224,11 +805,11 @@
         "name": "Azerbaijan"
       },
       "date": {
-        "iso": "2025-03-30",
+        "iso": "2025-04-10",
         "datetime": {
           "year": 2025,
-          "month": 3,
-          "day": 30
+          "month": 4,
+          "day": 10
         }
       },
       "type": [
@@ -1248,11 +829,11 @@
         "name": "Azerbaijan"
       },
       "date": {
-        "iso": "2025-03-31",
+        "iso": "2025-04-11",
         "datetime": {
           "year": 2025,
-          "month": 3,
-          "day": 31
+          "month": 4,
+          "day": 11
         }
       },
       "type": [
@@ -1313,78 +894,6 @@
       "states": "All"
     },
     {
-      "name": "Feast of the Sacrifice",
-      "description": "Eid al-Adha (Id ul-Adha) is an Islamic festival falling on the 10th day of the month of Dhul Hijja (Thou al-Hijja) to commemorate the willingness of Ibrahim (Abraham) to sacrifice his son.",
-      "country": {
-        "id": "az",
-        "name": "Azerbaijan"
-      },
-      "date": {
-        "iso": "2025-06-06",
-        "datetime": {
-          "year": 2025,
-          "month": 6,
-          "day": 6
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "Public holiday",
-      "canonical_url": "https://calendarific.com/holiday/azerbaijan/gurban",
-      "urlid": "azerbaijan/gurban",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Feast of the Sacrifice Holiday",
-      "description": "Feast of the Sacrifice Holiday is a public holiday in Azerbaijan",
-      "country": {
-        "id": "az",
-        "name": "Azerbaijan"
-      },
-      "date": {
-        "iso": "2025-06-07",
-        "datetime": {
-          "year": 2025,
-          "month": 6,
-          "day": 7
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "Public holiday",
-      "canonical_url": "https://calendarific.com/holiday/azerbaijan/gurban-2",
-      "urlid": "azerbaijan/gurban-2",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Day off for Feast of the Sacrifice Holiday",
-      "description": "Feast of the Sacrifice Holiday is a public holiday in Azerbaijan",
-      "country": {
-        "id": "az",
-        "name": "Azerbaijan"
-      },
-      "date": {
-        "iso": "2025-06-09",
-        "datetime": {
-          "year": 2025,
-          "month": 6,
-          "day": 9
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "Public holiday",
-      "canonical_url": "https://calendarific.com/holiday/azerbaijan/gurban-2",
-      "urlid": "azerbaijan/gurban-2",
-      "locations": "All",
-      "states": "All"
-    },
-    {
       "name": "Day of National Salvation of the Azerbaijani People",
       "description": "Day of National Salvation of the Azerbaijani People is a public holiday in Azerbaijan",
       "country": {
@@ -1416,11 +925,11 @@
         "name": "Azerbaijan"
       },
       "date": {
-        "iso": "2025-06-16",
+        "iso": "2025-06-17",
         "datetime": {
           "year": 2025,
           "month": 6,
-          "day": 16
+          "day": 17
         }
       },
       "type": [
@@ -1429,6 +938,54 @@
       "primary_type": "Public holiday",
       "canonical_url": "https://calendarific.com/holiday/azerbaijan/national-salvation-day",
       "urlid": "azerbaijan/national-salvation-day",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Feast of the Sacrifice",
+      "description": "Eid al-Adha (Id ul-Adha) is an Islamic festival falling on the 10th day of the month of Dhul Hijja (Thou al-Hijja) to commemorate the willingness of Ibrahim (Abraham) to sacrifice his son.",
+      "country": {
+        "id": "az",
+        "name": "Azerbaijan"
+      },
+      "date": {
+        "iso": "2025-06-17",
+        "datetime": {
+          "year": 2025,
+          "month": 6,
+          "day": 17
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "Public holiday",
+      "canonical_url": "https://calendarific.com/holiday/azerbaijan/gurban",
+      "urlid": "azerbaijan/gurban",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Feast of the Sacrifice Holiday",
+      "description": "Feast of the Sacrifice Holiday is a public holiday in Azerbaijan",
+      "country": {
+        "id": "az",
+        "name": "Azerbaijan"
+      },
+      "date": {
+        "iso": "2025-06-18",
+        "datetime": {
+          "year": 2025,
+          "month": 6,
+          "day": 18
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "Public holiday",
+      "canonical_url": "https://calendarific.com/holiday/azerbaijan/gurban-2",
+      "urlid": "azerbaijan/gurban-2",
       "locations": "All",
       "states": "All"
     },
@@ -1512,11 +1069,11 @@
         "name": "Azerbaijan"
       },
       "date": {
-        "iso": "2025-11-10",
+        "iso": "2025-11-11",
         "datetime": {
           "year": 2025,
           "month": 11,
-          "day": 10
+          "day": 11
         }
       },
       "type": [
@@ -1525,30 +1082,6 @@
       "primary_type": "Public holiday",
       "canonical_url": "https://calendarific.com/holiday/azerbaijan/flag-day",
       "urlid": "azerbaijan/flag-day",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Day off for Victory Day of the Republic of Azerbaijan",
-      "description": "Victory Day of the Republic of Azerbaijan is a public holiday in Azerbaijan",
-      "country": {
-        "id": "az",
-        "name": "Azerbaijan"
-      },
-      "date": {
-        "iso": "2025-11-10",
-        "datetime": {
-          "year": 2025,
-          "month": 11,
-          "day": 10
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "Public holiday",
-      "canonical_url": "https://calendarific.com/holiday/azerbaijan/azerbaijan-victory-day",
-      "urlid": "azerbaijan/azerbaijan-victory-day",
       "locations": "All",
       "states": "All"
     },
@@ -1575,176 +1108,6 @@
       "urlid": "azerbaijan/azerbaijanis-solidarity-day",
       "locations": "All",
       "states": "All"
-    }
-  ],
-  "ua": [
-    {
-      "name": "New Year's Day ",
-      "date": {
-        "iso": "2025-01-01",
-        "datetime": {
-          "year": 2025,
-          "month": 1,
-          "day": 1
-        }
-      },
-      "primary_type": "Suspended National Holiday"
-    },
-    {
-      "name": "International Women's Day ",
-      "date": {
-        "iso": "2025-03-10",
-        "datetime": {
-          "year": 2025,
-          "month": 3,
-          "day": 10
-        }
-      },
-      "primary_type": "Suspended National Holiday"
-    },
-    {
-      "name": "International Women's Day  observed",
-      "date": {
-        "iso": "2025-03-10",
-        "datetime": {
-          "year": 2025,
-          "month": 3,
-          "day": 10
-        }
-      },
-      "primary_type": "Suspended National Holiday"
-    },
-    {
-      "name": "Orthodox Easter Day ",
-      "date": {
-        "iso": "2025-04-21",
-        "datetime": {
-          "year": 2025,
-          "month": 4,
-          "day": 21
-        }
-      },
-      "primary_type": "Suspended National Holiday"
-    },
-    {
-      "name": "Labor Day ",
-      "date": {
-        "iso": "2025-05-01",
-        "datetime": {
-          "year": 2025,
-          "month": 5,
-          "day": 1
-        }
-      },
-      "primary_type": "Suspended National Holiday"
-    },
-    {
-      "name": "Victory Day ",
-      "date": {
-        "iso": "2025-05-08",
-        "datetime": {
-          "year": 2025,
-          "month": 5,
-          "day": 8
-        }
-      },
-      "primary_type": "Suspended National Holiday"
-    },
-    {
-      "name": "Orthodox Pentecost ",
-      "date": {
-        "iso": "2025-06-09",
-        "datetime": {
-          "year": 2025,
-          "month": 6,
-          "day": 9
-        }
-      },
-      "primary_type": "Suspended National Holiday"
-    },
-    {
-      "name": "Constitution Day ",
-      "date": {
-        "iso": "2025-06-30",
-        "datetime": {
-          "year": 2025,
-          "month": 6,
-          "day": 30
-        }
-      },
-      "primary_type": "Suspended National Holiday"
-    },
-    {
-      "name": "Constitution Day  observed",
-      "date": {
-        "iso": "2025-06-30",
-        "datetime": {
-          "year": 2025,
-          "month": 6,
-          "day": 30
-        }
-      },
-      "primary_type": "Suspended National Holiday"
-    },
-    {
-      "name": "Ukrainian Statehood Day",
-      "date": {
-        "iso": "2025-07-15",
-        "datetime": {
-          "year": 2025,
-          "month": 7,
-          "day": 15
-        }
-      },
-      "primary_type": "Suspended National Holiday"
-    },
-    {
-      "name": "Independence Day ",
-      "date": {
-        "iso": "2025-08-25",
-        "datetime": {
-          "year": 2025,
-          "month": 8,
-          "day": 25
-        }
-      },
-      "primary_type": "Suspended National Holiday"
-    },
-    {
-      "name": "Independence Day  observed",
-      "date": {
-        "iso": "2025-08-25",
-        "datetime": {
-          "year": 2025,
-          "month": 8,
-          "day": 25
-        }
-      },
-      "primary_type": "Suspended National Holiday"
-    },
-    {
-      "name": "Day of Defenders and Defenders of Ukraine ",
-      "date": {
-        "iso": "2025-10-01",
-        "datetime": {
-          "year": 2025,
-          "month": 10,
-          "day": 1
-        }
-      },
-      "primary_type": "Suspended National Holiday"
-    },
-    {
-      "name": "Christmas Day",
-      "date": {
-        "iso": "2025-12-25",
-        "datetime": {
-          "year": 2025,
-          "month": 12,
-          "day": 25
-        }
-      },
-      "primary_type": "Suspended National Holiday"
     }
   ],
   "pl": [
@@ -1804,11 +1167,11 @@
         "name": "Poland"
       },
       "date": {
-        "iso": "2025-04-20",
+        "iso": "2025-03-31",
         "datetime": {
           "year": 2025,
-          "month": 4,
-          "day": 20
+          "month": 3,
+          "day": 31
         }
       },
       "type": [
@@ -1828,11 +1191,11 @@
         "name": "Poland"
       },
       "date": {
-        "iso": "2025-04-21",
+        "iso": "2025-04-01",
         "datetime": {
           "year": 2025,
           "month": 4,
-          "day": 21
+          "day": 1
         }
       },
       "type": [
@@ -1900,11 +1263,11 @@
         "name": "Poland"
       },
       "date": {
-        "iso": "2025-06-08",
+        "iso": "2025-05-19",
         "datetime": {
           "year": 2025,
-          "month": 6,
-          "day": 8
+          "month": 5,
+          "day": 19
         }
       },
       "type": [
@@ -1924,11 +1287,11 @@
         "name": "Poland"
       },
       "date": {
-        "iso": "2025-06-19",
+        "iso": "2025-05-30",
         "datetime": {
           "year": 2025,
-          "month": 6,
-          "day": 19
+          "month": 5,
+          "day": 30
         }
       },
       "type": [
@@ -2009,30 +1372,6 @@
       "primary_type": "National holiday",
       "canonical_url": "https://calendarific.com/holiday/poland/independence-day",
       "urlid": "poland/independence-day",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Christmas Eve",
-      "description": "Christmas Eve is the day before Christmas Day and falls on December 24 in the Gregorian calendar.",
-      "country": {
-        "id": "pl",
-        "name": "Poland"
-      },
-      "date": {
-        "iso": "2025-12-24",
-        "datetime": {
-          "year": 2025,
-          "month": 12,
-          "day": 24
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "National holiday",
-      "canonical_url": "https://calendarific.com/holiday/poland/christmas-eve",
-      "urlid": "poland/christmas-eve",
       "locations": "All",
       "states": "All"
     },
@@ -2135,30 +1474,6 @@
       "states": "All"
     },
     {
-      "name": "New Year Holiday",
-      "description": "New Year Holiday is a public holiday in Kazakhstan",
-      "country": {
-        "id": "kz",
-        "name": "Kazakhstan"
-      },
-      "date": {
-        "iso": "2025-01-03",
-        "datetime": {
-          "year": 2025,
-          "month": 1,
-          "day": 3
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "Public holiday",
-      "canonical_url": "https://calendarific.com/holiday/kazakhstan/new-year-day-holiday",
-      "urlid": "kazakhstan/new-year-day-holiday",
-      "locations": "All",
-      "states": "All"
-    },
-    {
       "name": "Orthodox Christmas Day",
       "description": "Many Orthodox churches annually celebrate Christmas Day on or around January 7. This event commemorates the story of Jesus Christ’s birth, according to the Christian Bible.",
       "country": {
@@ -2196,30 +1511,6 @@
           "year": 2025,
           "month": 3,
           "day": 8
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "Public holiday",
-      "canonical_url": "https://calendarific.com/holiday/kazakhstan/womens-day",
-      "urlid": "kazakhstan/womens-day",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Day off for International Women's Day",
-      "description": "International Women's Day is a public holiday in Kazakhstan",
-      "country": {
-        "id": "kz",
-        "name": "Kazakhstan"
-      },
-      "date": {
-        "iso": "2025-03-10",
-        "datetime": {
-          "year": 2025,
-          "month": 3,
-          "day": 10
         }
       },
       "type": [
@@ -2304,31 +1595,7 @@
       "states": "All"
     },
     {
-      "name": "Day off for Nauryz Holiday",
-      "description": "Nauryz Holiday is a public holiday in Kazakhstan",
-      "country": {
-        "id": "kz",
-        "name": "Kazakhstan"
-      },
-      "date": {
-        "iso": "2025-03-24",
-        "datetime": {
-          "year": 2025,
-          "month": 3,
-          "day": 24
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "Public holiday",
-      "canonical_url": "https://calendarific.com/holiday/kazakhstan/nauryz-day-2",
-      "urlid": "kazakhstan/nauryz-day-2",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Day off for Nauryz Holiday",
+      "name": "Nauryz Holiday observed",
       "description": "Nauryz Holiday is a public holiday in Kazakhstan",
       "country": {
         "id": "kz",
@@ -2431,11 +1698,11 @@
         "name": "Kazakhstan"
       },
       "date": {
-        "iso": "2025-06-06",
+        "iso": "2025-06-16",
         "datetime": {
           "year": 2025,
           "month": 6,
-          "day": 6
+          "day": 16
         }
       },
       "type": [
@@ -2479,11 +1746,11 @@
         "name": "Kazakhstan"
       },
       "date": {
-        "iso": "2025-07-07",
+        "iso": "2025-07-08",
         "datetime": {
           "year": 2025,
           "month": 7,
-          "day": 7
+          "day": 8
         }
       },
       "type": [
@@ -2520,30 +1787,6 @@
       "states": "All"
     },
     {
-      "name": "Day off for Constitution Day",
-      "description": "Constitution Day is a public holiday in Kazakhstan",
-      "country": {
-        "id": "kz",
-        "name": "Kazakhstan"
-      },
-      "date": {
-        "iso": "2025-09-01",
-        "datetime": {
-          "year": 2025,
-          "month": 9,
-          "day": 1
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "Public holiday",
-      "canonical_url": "https://calendarific.com/holiday/kazakhstan/constitution-day",
-      "urlid": "kazakhstan/constitution-day",
-      "locations": "All",
-      "states": "All"
-    },
-    {
       "name": "Republic Day",
       "description": "Republic Day is a public holiday in Kazakhstan",
       "country": {
@@ -2556,30 +1799,6 @@
           "year": 2025,
           "month": 10,
           "day": 25
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "Public holiday",
-      "canonical_url": "https://calendarific.com/holiday/kazakhstan/republic-day",
-      "urlid": "kazakhstan/republic-day",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Day off for Republic Day",
-      "description": "Republic Day is a public holiday in Kazakhstan",
-      "country": {
-        "id": "kz",
-        "name": "Kazakhstan"
-      },
-      "date": {
-        "iso": "2025-10-27",
-        "datetime": {
-          "year": 2025,
-          "month": 10,
-          "day": 27
         }
       },
       "type": [
@@ -2649,11 +1868,11 @@
         "name": "United Kingdom"
       },
       "date": {
-        "iso": "2025-04-18",
+        "iso": "2025-03-29",
         "datetime": {
           "year": 2025,
-          "month": 4,
-          "day": 18
+          "month": 3,
+          "day": 29
         }
       },
       "type": [
@@ -2674,11 +1893,11 @@
         "name": "United Kingdom"
       },
       "date": {
-        "iso": "2025-05-05",
+        "iso": "2025-05-06",
         "datetime": {
           "year": 2025,
           "month": 5,
-          "day": 5
+          "day": 6
         }
       },
       "type": [
@@ -2698,11 +1917,11 @@
         "name": "United Kingdom"
       },
       "date": {
-        "iso": "2025-05-26",
+        "iso": "2025-05-27",
         "datetime": {
           "year": 2025,
           "month": 5,
-          "day": 26
+          "day": 27
         }
       },
       "type": [
@@ -2808,8 +2027,8 @@
         "National holiday"
       ],
       "primary_type": "Public holiday",
-      "canonical_url": "https://calendarific.com/holiday/georgia/new-year-day-2",
-      "urlid": "georgia/new-year-day-2",
+      "canonical_url": "https://calendarific.com/holiday/georgia/new-year-day",
+      "urlid": "georgia/new-year-day",
       "locations": "All",
       "states": "All"
     },
@@ -2943,11 +2162,11 @@
         "name": "Georgia"
       },
       "date": {
-        "iso": "2025-04-18",
+        "iso": "2025-05-03",
         "datetime": {
           "year": 2025,
-          "month": 4,
-          "day": 18
+          "month": 5,
+          "day": 3
         }
       },
       "type": [
@@ -2968,11 +2187,11 @@
         "name": "Georgia"
       },
       "date": {
-        "iso": "2025-04-19",
+        "iso": "2025-05-04",
         "datetime": {
           "year": 2025,
-          "month": 4,
-          "day": 19
+          "month": 5,
+          "day": 4
         }
       },
       "type": [
@@ -2993,11 +2212,11 @@
         "name": "Georgia"
       },
       "date": {
-        "iso": "2025-04-20",
+        "iso": "2025-05-05",
         "datetime": {
           "year": 2025,
-          "month": 4,
-          "day": 20
+          "month": 5,
+          "day": 5
         }
       },
       "type": [
@@ -3018,11 +2237,11 @@
         "name": "Georgia"
       },
       "date": {
-        "iso": "2025-04-21",
+        "iso": "2025-05-06",
         "datetime": {
           "year": 2025,
-          "month": 4,
-          "day": 21
+          "month": 5,
+          "day": 6
         }
       },
       "type": [
@@ -3080,30 +2299,6 @@
       "primary_type": "Public holiday",
       "canonical_url": "https://calendarific.com/holiday/georgia/st-andrew-day",
       "urlid": "georgia/st-andrew-day",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Day of Family Purity And Respect for Parents",
-      "description": "Day of Family Purity And Respect for Parents is a public holiday in Georgia",
-      "country": {
-        "id": "ge",
-        "name": "Georgia"
-      },
-      "date": {
-        "iso": "2025-05-17",
-        "datetime": {
-          "year": 2025,
-          "month": 5,
-          "day": 17
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "Public holiday",
-      "canonical_url": "https://calendarific.com/holiday/georgia/day-of-family-purity-and-respect-for-parents",
-      "urlid": "georgia/day-of-family-purity-and-respect-for-parents",
       "locations": "All",
       "states": "All"
     },
@@ -3261,11 +2456,11 @@
         "name": "Cyprus"
       },
       "date": {
-        "iso": "2025-03-03",
+        "iso": "2025-03-18",
         "datetime": {
           "year": 2025,
           "month": 3,
-          "day": 3
+          "day": 18
         }
       },
       "type": [
@@ -3326,56 +2521,6 @@
       "states": "All"
     },
     {
-      "name": "Good Friday (Orthodox)",
-      "description": "Millions of Orthodox Christians around the world annually observe Good Friday to commemorate the events leading up to Jesus Christ's crucifixion.",
-      "country": {
-        "id": "cy",
-        "name": "Cyprus"
-      },
-      "date": {
-        "iso": "2025-04-18",
-        "datetime": {
-          "year": 2025,
-          "month": 4,
-          "day": 18
-        }
-      },
-      "type": [
-        "National holiday",
-        "Orthodox"
-      ],
-      "primary_type": "Orthodox",
-      "canonical_url": "https://calendarific.com/holiday/cyprus/orthodox-good-friday",
-      "urlid": "cyprus/orthodox-good-friday",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Easter Monday (Orthodox)",
-      "description": "Orthodox Easter Monday is the day after the Orthodox Easter Sunday.",
-      "country": {
-        "id": "cy",
-        "name": "Cyprus"
-      },
-      "date": {
-        "iso": "2025-04-21",
-        "datetime": {
-          "year": 2025,
-          "month": 4,
-          "day": 21
-        }
-      },
-      "type": [
-        "National holiday",
-        "Orthodox"
-      ],
-      "primary_type": "Orthodox",
-      "canonical_url": "https://calendarific.com/holiday/cyprus/orthodox-easter-monday",
-      "urlid": "cyprus/orthodox-easter-monday",
-      "locations": "All",
-      "states": "All"
-    },
-    {
       "name": "Labour Day/May Day",
       "description": "Labor Day, International Workers' Day, and May Day, is a day off for workers in many countries around the world.",
       "country": {
@@ -3400,6 +2545,56 @@
       "states": "All"
     },
     {
+      "name": "Good Friday (Orthodox)",
+      "description": "Millions of Orthodox Christians around the world annually observe Good Friday to commemorate the events leading up to Jesus Christ's crucifixion.",
+      "country": {
+        "id": "cy",
+        "name": "Cyprus"
+      },
+      "date": {
+        "iso": "2025-05-03",
+        "datetime": {
+          "year": 2025,
+          "month": 5,
+          "day": 3
+        }
+      },
+      "type": [
+        "National holiday",
+        "Orthodox"
+      ],
+      "primary_type": "Orthodox",
+      "canonical_url": "https://calendarific.com/holiday/cyprus/orthodox-good-friday",
+      "urlid": "cyprus/orthodox-good-friday",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Easter Monday (Orthodox)",
+      "description": "Orthodox Easter Monday is the day after the Orthodox Easter Sunday.",
+      "country": {
+        "id": "cy",
+        "name": "Cyprus"
+      },
+      "date": {
+        "iso": "2025-05-06",
+        "datetime": {
+          "year": 2025,
+          "month": 5,
+          "day": 6
+        }
+      },
+      "type": [
+        "National holiday",
+        "Orthodox"
+      ],
+      "primary_type": "Orthodox",
+      "canonical_url": "https://calendarific.com/holiday/cyprus/orthodox-easter-monday",
+      "urlid": "cyprus/orthodox-easter-monday",
+      "locations": "All",
+      "states": "All"
+    },
+    {
       "name": "Orthodox Pentecost Monday",
       "description": "Orthodox Pentecost Monday is a national holiday and Orthodox holiday in Cyprus",
       "country": {
@@ -3407,11 +2602,11 @@
         "name": "Cyprus"
       },
       "date": {
-        "iso": "2025-06-09",
+        "iso": "2025-06-24",
         "datetime": {
           "year": 2025,
           "month": 6,
-          "day": 9
+          "day": 24
         }
       },
       "type": [
@@ -3545,6 +2740,346 @@
       "states": "All"
     }
   ],
+  "ua": [
+    {
+      "name": "New Year's Day (Suspended)",
+      "description": "New Year’s Day is annually celebrated as a day off work in the Ukraine on January 1, marking the start of the New Year.",
+      "country": {
+        "id": "ua",
+        "name": "Ukraine"
+      },
+      "date": {
+        "iso": "2025-01-01",
+        "datetime": {
+          "year": 2025,
+          "month": 1,
+          "day": 1
+        }
+      },
+      "type": [
+        "Observance"
+      ],
+      "primary_type": "Suspended National Holiday",
+      "canonical_url": "https://calendarific.com/holiday/ukraine/new-year-day",
+      "urlid": "ukraine/new-year-day",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "International Women's Day (Suspended)",
+      "description": "International Women’s Day is a public holiday in Ukraine, celebrated on or around March 8 each year.",
+      "country": {
+        "id": "ua",
+        "name": "Ukraine"
+      },
+      "date": {
+        "iso": "2025-03-08",
+        "datetime": {
+          "year": 2025,
+          "month": 3,
+          "day": 8
+        }
+      },
+      "type": [
+        "Observance"
+      ],
+      "primary_type": "Suspended National Holiday",
+      "canonical_url": "https://calendarific.com/holiday/ukraine/international-women-day",
+      "urlid": "ukraine/international-women-day",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "International Women's Day (Suspended) observed",
+      "description": "International Women’s Day is a public holiday in Ukraine, celebrated on or around March 8 each year.",
+      "country": {
+        "id": "ua",
+        "name": "Ukraine"
+      },
+      "date": {
+        "iso": "2025-03-10",
+        "datetime": {
+          "year": 2025,
+          "month": 3,
+          "day": 10
+        }
+      },
+      "type": [
+        "Observance"
+      ],
+      "primary_type": "Suspended National Holiday",
+      "canonical_url": "https://calendarific.com/holiday/ukraine/international-women-day",
+      "urlid": "ukraine/international-women-day",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Orthodox Easter Day (Suspended)",
+      "description": "Easter is both a religious and a national holiday in Ukraine. The Easter date is based on the Orthodox Christian church’s calendar.",
+      "country": {
+        "id": "ua",
+        "name": "Ukraine"
+      },
+      "date": {
+        "iso": "2025-04-20",
+        "datetime": {
+          "year": 2025,
+          "month": 4,
+          "day": 20
+        }
+      },
+      "type": [
+        "Observance",
+        "Orthodox"
+      ],
+      "primary_type": "Suspended National Holiday",
+      "canonical_url": "https://calendarific.com/holiday/ukraine/easter-sunday",
+      "urlid": "ukraine/easter-sunday",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Labor Day (Suspended)",
+      "description": "Labor Day, International Workers' Day, and May Day, is a day off for workers in many countries around the world.",
+      "country": {
+        "id": "ua",
+        "name": "Ukraine"
+      },
+      "date": {
+        "iso": "2025-05-01",
+        "datetime": {
+          "year": 2025,
+          "month": 5,
+          "day": 1
+        }
+      },
+      "type": [
+        "Observance"
+      ],
+      "primary_type": "Suspended National Holiday",
+      "canonical_url": "https://calendarific.com/holiday/ukraine/labour-day",
+      "urlid": "ukraine/labour-day",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Victory Day (Suspended)",
+      "description": "Victory Day in Ukraine is celebrated as a public holiday on May 8 to commemorate the defeat of the Nazis in the Second World War.",
+      "country": {
+        "id": "ua",
+        "name": "Ukraine"
+      },
+      "date": {
+        "iso": "2025-05-08",
+        "datetime": {
+          "year": 2025,
+          "month": 5,
+          "day": 8
+        }
+      },
+      "type": [
+        "Observance"
+      ],
+      "primary_type": "Suspended National Holiday",
+      "canonical_url": "https://calendarific.com/holiday/ukraine/victory-day",
+      "urlid": "ukraine/victory-day",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Orthodox Pentecost (Suspended)",
+      "description": "Holy Trinity Day, or Triytsya in Ukrainian, is celebrated widely in Ukraine and is a day off work for Ukrainians.",
+      "country": {
+        "id": "ua",
+        "name": "Ukraine"
+      },
+      "date": {
+        "iso": "2025-06-08",
+        "datetime": {
+          "year": 2025,
+          "month": 6,
+          "day": 8
+        }
+      },
+      "type": [
+        "Observance",
+        "Orthodox"
+      ],
+      "primary_type": "Suspended National Holiday",
+      "canonical_url": "https://calendarific.com/holiday/ukraine/trinity",
+      "urlid": "ukraine/trinity",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Constitution Day (Suspended)",
+      "description": "Ukraine’s Constitution Day is a public holiday on June 28 to celebrate the country’s constitution.",
+      "country": {
+        "id": "ua",
+        "name": "Ukraine"
+      },
+      "date": {
+        "iso": "2025-06-28",
+        "datetime": {
+          "year": 2025,
+          "month": 6,
+          "day": 28
+        }
+      },
+      "type": [
+        "Observance"
+      ],
+      "primary_type": "Suspended National Holiday",
+      "canonical_url": "https://calendarific.com/holiday/ukraine/constitution-day",
+      "urlid": "ukraine/constitution-day",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Constitution Day (Suspended) observed",
+      "description": "Ukraine’s Constitution Day is a public holiday on June 28 to celebrate the country’s constitution.",
+      "country": {
+        "id": "ua",
+        "name": "Ukraine"
+      },
+      "date": {
+        "iso": "2025-06-30",
+        "datetime": {
+          "year": 2025,
+          "month": 6,
+          "day": 30
+        }
+      },
+      "type": [
+        "Observance"
+      ],
+      "primary_type": "Suspended National Holiday",
+      "canonical_url": "https://calendarific.com/holiday/ukraine/constitution-day",
+      "urlid": "ukraine/constitution-day",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Ukrainian Statehood Day",
+      "description": "Ukrainian Statehood Day is a suspended national holiday in Ukraine",
+      "country": {
+        "id": "ua",
+        "name": "Ukraine"
+      },
+      "date": {
+        "iso": "2025-07-15",
+        "datetime": {
+          "year": 2025,
+          "month": 7,
+          "day": 15
+        }
+      },
+      "type": [
+        "Observance"
+      ],
+      "primary_type": "Suspended National Holiday",
+      "canonical_url": "https://calendarific.com/holiday/ukraine/statehood-day",
+      "urlid": "ukraine/statehood-day",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Independence Day (Suspended)",
+      "description": "Ukraine’s Independence Day is annually celebrated on August 24 to mark the anniversary of the country’s declaration of independence in 1991.",
+      "country": {
+        "id": "ua",
+        "name": "Ukraine"
+      },
+      "date": {
+        "iso": "2025-08-24",
+        "datetime": {
+          "year": 2025,
+          "month": 8,
+          "day": 24
+        }
+      },
+      "type": [
+        "Observance"
+      ],
+      "primary_type": "Suspended National Holiday",
+      "canonical_url": "https://calendarific.com/holiday/ukraine/independence-day",
+      "urlid": "ukraine/independence-day",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Independence Day (Suspended) observed",
+      "description": "Ukraine’s Independence Day is annually celebrated on August 24 to mark the anniversary of the country’s declaration of independence in 1991.",
+      "country": {
+        "id": "ua",
+        "name": "Ukraine"
+      },
+      "date": {
+        "iso": "2025-08-25",
+        "datetime": {
+          "year": 2025,
+          "month": 8,
+          "day": 25
+        }
+      },
+      "type": [
+        "Observance"
+      ],
+      "primary_type": "Suspended National Holiday",
+      "canonical_url": "https://calendarific.com/holiday/ukraine/independence-day",
+      "urlid": "ukraine/independence-day",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Day of Defenders and Defenders of Ukraine (Suspended)",
+      "description": "Day of Defenders and Defenders of Ukraine is a national Ukrainian holiday that celebrates local heroes and supports nationalism.",
+      "country": {
+        "id": "ua",
+        "name": "Ukraine"
+      },
+      "date": {
+        "iso": "2025-10-01",
+        "datetime": {
+          "year": 2025,
+          "month": 10,
+          "day": 1
+        }
+      },
+      "type": [
+        "Observance"
+      ],
+      "primary_type": "Suspended National Holiday",
+      "canonical_url": "https://calendarific.com/holiday/ukraine/day-of-defenders-and-defenders-of-ukraine",
+      "urlid": "ukraine/day-of-defenders-and-defenders-of-ukraine",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Christmas Day",
+      "description": "",
+      "country": {
+        "id": "ua",
+        "name": "Ukraine"
+      },
+      "date": {
+        "iso": "2025-12-25",
+        "datetime": {
+          "year": 2025,
+          "month": 12,
+          "day": 25
+        }
+      },
+      "type": [
+        "Observance"
+      ],
+      "primary_type": "Suspended National Holiday",
+      "canonical_url": "https://calendarific.com/holiday/ukraine/christmas-day",
+      "urlid": "ukraine/christmas-day",
+      "locations": "All",
+      "states": "All"
+    }
+  ],
   "us": [
     {
       "name": "New Year's Day",
@@ -3571,30 +3106,6 @@
       "states": "All"
     },
     {
-      "name": "National Day of Mourning for Jimmy Carter",
-      "description": "National Day of Mourning for Jimmy Carter is a federal holiday in the USA",
-      "country": {
-        "id": "us",
-        "name": "United States"
-      },
-      "date": {
-        "iso": "2025-01-09",
-        "datetime": {
-          "year": 2025,
-          "month": 1,
-          "day": 9
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "Federal Holiday",
-      "canonical_url": "https://calendarific.com/holiday/us/jimmy-carter-national-day-of-mourning",
-      "urlid": "us/jimmy-carter-national-day-of-mourning",
-      "locations": "All",
-      "states": "All"
-    },
-    {
       "name": "Martin Luther King Jr. Day",
       "description": "Martin Luther King Day marks the anniversary of the date of birth of the influential American civil right leader of the same name.",
       "country": {
@@ -3602,11 +3113,11 @@
         "name": "United States"
       },
       "date": {
-        "iso": "2025-01-20",
+        "iso": "2025-01-15",
         "datetime": {
           "year": 2025,
           "month": 1,
-          "day": 20
+          "day": 15
         }
       },
       "type": [
@@ -3619,52 +3130,6 @@
       "states": "All"
     },
     {
-      "name": "Inauguration Day",
-      "description": "On Inauguration Day, the president and vice-president of the United States of America are sworn in and take office.",
-      "country": {
-        "id": "us",
-        "name": "United States"
-      },
-      "date": {
-        "iso": "2025-01-20",
-        "datetime": {
-          "year": 2025,
-          "month": 1,
-          "day": 20
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "Federal Holiday",
-      "canonical_url": "https://calendarific.com/holiday/us/inauguration-day",
-      "urlid": "us/inauguration-day",
-      "locations": "DC, MD (partly), VA (partly)",
-      "states": [
-        {
-          "id": 11,
-          "abbrev": "DC",
-          "name": "District of Columbia",
-          "exception": null,
-          "iso": "us-dc"
-        },
-        {
-          "id": 24,
-          "abbrev": "MD",
-          "name": "Maryland",
-          "exception": "partly",
-          "iso": "us-md"
-        },
-        {
-          "id": 52,
-          "abbrev": "VA",
-          "name": "Virginia",
-          "exception": "partly",
-          "iso": "us-va"
-        }
-      ]
-    },
-    {
       "name": "Presidents' Day",
       "description": "Washington's Birthday, or Presidents' Day, honors the life and work of the first president of the United States, George Washington.",
       "country": {
@@ -3672,11 +3137,11 @@
         "name": "United States"
       },
       "date": {
-        "iso": "2025-02-17",
+        "iso": "2025-02-19",
         "datetime": {
           "year": 2025,
           "month": 2,
-          "day": 17
+          "day": 19
         }
       },
       "type": [
@@ -3696,11 +3161,11 @@
         "name": "United States"
       },
       "date": {
-        "iso": "2025-05-26",
+        "iso": "2025-05-27",
         "datetime": {
           "year": 2025,
           "month": 5,
-          "day": 26
+          "day": 27
         }
       },
       "type": [
@@ -3768,11 +3233,11 @@
         "name": "United States"
       },
       "date": {
-        "iso": "2025-09-01",
+        "iso": "2025-09-02",
         "datetime": {
           "year": 2025,
           "month": 9,
-          "day": 1
+          "day": 2
         }
       },
       "type": [
@@ -3792,11 +3257,11 @@
         "name": "United States"
       },
       "date": {
-        "iso": "2025-10-13",
+        "iso": "2025-10-14",
         "datetime": {
           "year": 2025,
           "month": 10,
-          "day": 13
+          "day": 14
         }
       },
       "type": [
@@ -3840,11 +3305,11 @@
         "name": "United States"
       },
       "date": {
-        "iso": "2025-11-27",
+        "iso": "2025-11-28",
         "datetime": {
           "year": 2025,
           "month": 11,
-          "day": 27
+          "day": 28
         }
       },
       "type": [
@@ -3982,56 +3447,6 @@
       "states": "All"
     },
     {
-      "name": "Orthodox Easter Sunday",
-      "description": "Millions of Orthodox Christians around the world often celebrate Easter Sunday at a different time to the date set by many western churches.",
-      "country": {
-        "id": "md",
-        "name": "Moldova"
-      },
-      "date": {
-        "iso": "2025-04-20",
-        "datetime": {
-          "year": 2025,
-          "month": 4,
-          "day": 20
-        }
-      },
-      "type": [
-        "National holiday",
-        "Orthodox"
-      ],
-      "primary_type": "Orthodox",
-      "canonical_url": "https://calendarific.com/holiday/moldova/orthodox-easter-sunday",
-      "urlid": "moldova/orthodox-easter-sunday",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Orthodox Easter Monday",
-      "description": "Orthodox Easter Monday is the day after the Orthodox Easter Sunday.",
-      "country": {
-        "id": "md",
-        "name": "Moldova"
-      },
-      "date": {
-        "iso": "2025-04-21",
-        "datetime": {
-          "year": 2025,
-          "month": 4,
-          "day": 21
-        }
-      },
-      "type": [
-        "National holiday",
-        "Orthodox"
-      ],
-      "primary_type": "Orthodox",
-      "canonical_url": "https://calendarific.com/holiday/moldova/orthodox-easter-monday",
-      "urlid": "moldova/orthodox-easter-monday",
-      "locations": "All",
-      "states": "All"
-    },
-    {
       "name": "International Day of Solidarity of Workers",
       "description": "Labor Day, International Workers' Day, and May Day, is a day off for workers in many countries around the world.",
       "country": {
@@ -4056,6 +3471,56 @@
       "states": "All"
     },
     {
+      "name": "Orthodox Easter Sunday",
+      "description": "Millions of Orthodox Christians around the world often celebrate Easter Sunday at a different time to the date set by many western churches.",
+      "country": {
+        "id": "md",
+        "name": "Moldova"
+      },
+      "date": {
+        "iso": "2025-05-05",
+        "datetime": {
+          "year": 2025,
+          "month": 5,
+          "day": 5
+        }
+      },
+      "type": [
+        "National holiday",
+        "Orthodox"
+      ],
+      "primary_type": "Orthodox",
+      "canonical_url": "https://calendarific.com/holiday/moldova/orthodox-easter-sunday",
+      "urlid": "moldova/orthodox-easter-sunday",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Orthodox Easter Monday",
+      "description": "Orthodox Easter Monday is the day after the Orthodox Easter Sunday.",
+      "country": {
+        "id": "md",
+        "name": "Moldova"
+      },
+      "date": {
+        "iso": "2025-05-06",
+        "datetime": {
+          "year": 2025,
+          "month": 5,
+          "day": 6
+        }
+      },
+      "type": [
+        "National holiday",
+        "Orthodox"
+      ],
+      "primary_type": "Orthodox",
+      "canonical_url": "https://calendarific.com/holiday/moldova/orthodox-easter-monday",
+      "urlid": "moldova/orthodox-easter-monday",
+      "locations": "All",
+      "states": "All"
+    },
+    {
       "name": "Victory Day",
       "description": "Victory Day is a national holiday in Moldova",
       "country": {
@@ -4076,6 +3541,30 @@
       "primary_type": "National holiday",
       "canonical_url": "https://calendarific.com/holiday/moldova/victory-day",
       "urlid": "moldova/victory-day",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Memorial Day/Parents' Day",
+      "description": "Memorial Day/Parents' Day is a national holiday in Moldova",
+      "country": {
+        "id": "md",
+        "name": "Moldova"
+      },
+      "date": {
+        "iso": "2025-05-13",
+        "datetime": {
+          "year": 2025,
+          "month": 5,
+          "day": 13
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/moldova/memorial-day",
+      "urlid": "moldova/memorial-day",
       "locations": "All",
       "states": "All"
     },
@@ -4202,6 +3691,30 @@
       "states": "All"
     },
     {
+      "name": "Lunar New Year Holiday",
+      "description": "Lunar New Year Holiday is a special non-working holiday in Philippines",
+      "country": {
+        "id": "ph",
+        "name": "Philippines"
+      },
+      "date": {
+        "iso": "2025-02-09",
+        "datetime": {
+          "year": 2025,
+          "month": 2,
+          "day": 9
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "Special Non-working Holiday",
+      "canonical_url": "https://calendarific.com/holiday/philippines/lunar-new-year-holiday",
+      "urlid": "philippines/lunar-new-year-holiday",
+      "locations": "All",
+      "states": "All"
+    },
+    {
       "name": "Lunar New Year's Day",
       "description": "Lunar New Year is not considered an official holiday in the Philippines but it is widely celebrated, particularly in Chinese communities.",
       "country": {
@@ -4209,11 +3722,11 @@
         "name": "Philippines"
       },
       "date": {
-        "iso": "2025-01-29",
+        "iso": "2025-02-10",
         "datetime": {
           "year": 2025,
-          "month": 1,
-          "day": 29
+          "month": 2,
+          "day": 10
         }
       },
       "type": [
@@ -4226,26 +3739,74 @@
       "states": "All"
     },
     {
-      "name": "Eidul-Fitar Holiday",
-      "description": "Eid al-Fitr is a holiday to mark the end of the Islamic month of Ramadan, during which Muslims fast during the hours of daylight.",
+      "name": "Maundy Thursday",
+      "description": "Maundy Thursday is part of the Holy Week tradition observed by most Filipinos.",
       "country": {
         "id": "ph",
         "name": "Philippines"
       },
       "date": {
-        "iso": "2025-04-01",
+        "iso": "2025-03-28",
         "datetime": {
           "year": 2025,
-          "month": 4,
-          "day": 1
+          "month": 3,
+          "day": 28
         }
       },
       "type": [
         "National holiday"
       ],
       "primary_type": "Regular Holiday",
-      "canonical_url": "https://calendarific.com/holiday/philippines/eidul-fitar-holiday",
-      "urlid": "philippines/eidul-fitar-holiday",
+      "canonical_url": "https://calendarific.com/holiday/philippines/maundy-thursday",
+      "urlid": "philippines/maundy-thursday",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Good Friday",
+      "description": "Good Friday is part of the Holy Week holiday in the Philippines.",
+      "country": {
+        "id": "ph",
+        "name": "Philippines"
+      },
+      "date": {
+        "iso": "2025-03-29",
+        "datetime": {
+          "year": 2025,
+          "month": 3,
+          "day": 29
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "Regular Holiday",
+      "canonical_url": "https://calendarific.com/holiday/philippines/good-friday",
+      "urlid": "philippines/good-friday",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Black Saturday",
+      "description": "Holy Saturday is the day before Easter Sunday.",
+      "country": {
+        "id": "ph",
+        "name": "Philippines"
+      },
+      "date": {
+        "iso": "2025-03-30",
+        "datetime": {
+          "year": 2025,
+          "month": 3,
+          "day": 30
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "Special Non-working Holiday",
+      "canonical_url": "https://calendarific.com/holiday/philippines/easter-saturday",
+      "urlid": "philippines/easter-saturday",
       "locations": "All",
       "states": "All"
     },
@@ -4274,74 +3835,26 @@
       "states": "All"
     },
     {
-      "name": "Maundy Thursday",
-      "description": "Maundy Thursday is part of the Holy Week tradition observed by most Filipinos.",
+      "name": "Eidul-Fitar",
+      "description": "Eid al-Fitr is a holiday to mark the end of the Islamic month of Ramadan, during which Muslims fast during the hours of daylight.",
       "country": {
         "id": "ph",
         "name": "Philippines"
       },
       "date": {
-        "iso": "2025-04-17",
+        "iso": "2025-04-10",
         "datetime": {
           "year": 2025,
           "month": 4,
-          "day": 17
+          "day": 10
         }
       },
       "type": [
         "National holiday"
       ],
       "primary_type": "Regular Holiday",
-      "canonical_url": "https://calendarific.com/holiday/philippines/maundy-thursday",
-      "urlid": "philippines/maundy-thursday",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Good Friday",
-      "description": "Good Friday is part of the Holy Week holiday in the Philippines.",
-      "country": {
-        "id": "ph",
-        "name": "Philippines"
-      },
-      "date": {
-        "iso": "2025-04-18",
-        "datetime": {
-          "year": 2025,
-          "month": 4,
-          "day": 18
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "Regular Holiday",
-      "canonical_url": "https://calendarific.com/holiday/philippines/good-friday",
-      "urlid": "philippines/good-friday",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Black Saturday",
-      "description": "Holy Saturday is the day before Easter Sunday.",
-      "country": {
-        "id": "ph",
-        "name": "Philippines"
-      },
-      "date": {
-        "iso": "2025-04-19",
-        "datetime": {
-          "year": 2025,
-          "month": 4,
-          "day": 19
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "Special Non-working Holiday",
-      "canonical_url": "https://calendarific.com/holiday/philippines/easter-saturday",
-      "urlid": "philippines/easter-saturday",
+      "canonical_url": "https://calendarific.com/holiday/philippines/eidul-fitar",
+      "urlid": "philippines/eidul-fitar",
       "locations": "All",
       "states": "All"
     },
@@ -4370,30 +3883,6 @@
       "states": "All"
     },
     {
-      "name": "Eid al-Adha (Feast of the Sacrifice)",
-      "description": "Eid al-Adha (Id ul-Adha) is an Islamic festival falling on the 10th day of the month of Dhul Hijja (Thou al-Hijja) to commemorate the willingness of Ibrahim (Abraham) to sacrifice his son.",
-      "country": {
-        "id": "ph",
-        "name": "Philippines"
-      },
-      "date": {
-        "iso": "2025-06-07",
-        "datetime": {
-          "year": 2025,
-          "month": 6,
-          "day": 7
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "Regular Holiday",
-      "canonical_url": "https://calendarific.com/holiday/philippines/id-ul-adha",
-      "urlid": "philippines/id-ul-adha",
-      "locations": "All",
-      "states": "All"
-    },
-    {
       "name": "Independence Day",
       "description": "The Philippine’s Independence day is a large celebratory event held across the country on June 12 each year.",
       "country": {
@@ -4414,6 +3903,30 @@
       "primary_type": "Regular Holiday",
       "canonical_url": "https://calendarific.com/holiday/philippines/independence-day",
       "urlid": "philippines/independence-day",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Eid al-Adha (Feast of the Sacrifice)",
+      "description": "Eid al-Adha (Id ul-Adha) is an Islamic festival falling on the 10th day of the month of Dhul Hijja (Thou al-Hijja) to commemorate the willingness of Ibrahim (Abraham) to sacrifice his son.",
+      "country": {
+        "id": "ph",
+        "name": "Philippines"
+      },
+      "date": {
+        "iso": "2025-06-17",
+        "datetime": {
+          "year": 2025,
+          "month": 6,
+          "day": 17
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "Regular Holiday",
+      "canonical_url": "https://calendarific.com/holiday/philippines/id-ul-adha",
+      "urlid": "philippines/id-ul-adha",
       "locations": "All",
       "states": "All"
     },
@@ -4449,11 +3962,11 @@
         "name": "Philippines"
       },
       "date": {
-        "iso": "2025-08-25",
+        "iso": "2025-08-26",
         "datetime": {
           "year": 2025,
           "month": 8,
-          "day": 25
+          "day": 26
         }
       },
       "type": [
@@ -4462,30 +3975,6 @@
       "primary_type": "Regular Holiday",
       "canonical_url": "https://calendarific.com/holiday/philippines/national-heroes-day",
       "urlid": "philippines/national-heroes-day",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Special non-working Day",
-      "description": "Special non-working Day is a special non-working holiday in Philippines",
-      "country": {
-        "id": "ph",
-        "name": "Philippines"
-      },
-      "date": {
-        "iso": "2025-10-31",
-        "datetime": {
-          "year": 2025,
-          "month": 10,
-          "day": 31
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "Special Non-working Holiday",
-      "canonical_url": "https://calendarific.com/holiday/philippines/special-non-working-day",
-      "urlid": "philippines/special-non-working-day",
       "locations": "All",
       "states": "All"
     },
@@ -4514,6 +4003,30 @@
       "states": "All"
     },
     {
+      "name": "All Souls' Day",
+      "description": "All Souls’ Day falls on November 2 each year. It is a day of alms giving and prayers for the dead.",
+      "country": {
+        "id": "ph",
+        "name": "Philippines"
+      },
+      "date": {
+        "iso": "2025-11-02",
+        "datetime": {
+          "year": 2025,
+          "month": 11,
+          "day": 2
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "Special Non-working Holiday",
+      "canonical_url": "https://calendarific.com/holiday/philippines/all-souls-day",
+      "urlid": "philippines/all-souls-day",
+      "locations": "All",
+      "states": "All"
+    },
+    {
       "name": "Bonifacio Day",
       "description": "Bonifacio Day is a regular holiday in Philippines",
       "country": {
@@ -4534,30 +4047,6 @@
       "primary_type": "Regular Holiday",
       "canonical_url": "https://calendarific.com/holiday/philippines/bonifacio-day",
       "urlid": "philippines/bonifacio-day",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Feast of the Immaculate Conception",
-      "description": "The Feast of the Immaculate Conception is a Christian observance on December 8 each year.",
-      "country": {
-        "id": "ph",
-        "name": "Philippines"
-      },
-      "date": {
-        "iso": "2025-12-08",
-        "datetime": {
-          "year": 2025,
-          "month": 12,
-          "day": 8
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "Special Non-working Holiday",
-      "canonical_url": "https://calendarific.com/holiday/philippines/immaculate-conception",
-      "urlid": "philippines/immaculate-conception",
       "locations": "All",
       "states": "All"
     },
@@ -4708,98 +4197,26 @@
       "states": "All"
     },
     {
-      "name": "Good Friday",
-      "description": "Millions of Orthodox Christians around the world annually observe Good Friday to commemorate the events leading up to Jesus Christ's crucifixion.",
+      "name": "Day off for Liberation Day",
+      "description": "Liberation Day is a national holiday in Bulgaria",
       "country": {
         "id": "bg",
         "name": "Bulgaria"
       },
       "date": {
-        "iso": "2025-04-18",
+        "iso": "2025-03-04",
         "datetime": {
           "year": 2025,
-          "month": 4,
-          "day": 18
+          "month": 3,
+          "day": 4
         }
       },
       "type": [
         "National holiday"
       ],
       "primary_type": "National holiday",
-      "canonical_url": "https://calendarific.com/holiday/bulgaria/good-friday",
-      "urlid": "bulgaria/good-friday",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Holy Saturday",
-      "description": "The Saturday before Easter Sunday is also known as Holy Saturday for many Orthodox churches worldwide.",
-      "country": {
-        "id": "bg",
-        "name": "Bulgaria"
-      },
-      "date": {
-        "iso": "2025-04-19",
-        "datetime": {
-          "year": 2025,
-          "month": 4,
-          "day": 19
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "National holiday",
-      "canonical_url": "https://calendarific.com/holiday/bulgaria/holy-saturday",
-      "urlid": "bulgaria/holy-saturday",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Easter Sunday",
-      "description": "Millions of Orthodox Christians around the world often celebrate Easter Sunday at a different time to the date set by many western churches.",
-      "country": {
-        "id": "bg",
-        "name": "Bulgaria"
-      },
-      "date": {
-        "iso": "2025-04-20",
-        "datetime": {
-          "year": 2025,
-          "month": 4,
-          "day": 20
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "National holiday",
-      "canonical_url": "https://calendarific.com/holiday/bulgaria/easter",
-      "urlid": "bulgaria/easter",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Easter Monday",
-      "description": "Orthodox Easter Monday is the day after the Orthodox Easter Sunday.",
-      "country": {
-        "id": "bg",
-        "name": "Bulgaria"
-      },
-      "date": {
-        "iso": "2025-04-21",
-        "datetime": {
-          "year": 2025,
-          "month": 4,
-          "day": 21
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "National holiday",
-      "canonical_url": "https://calendarific.com/holiday/bulgaria/easter-monday",
-      "urlid": "bulgaria/easter-monday",
+      "canonical_url": "https://calendarific.com/holiday/bulgaria/liberation-day",
+      "urlid": "bulgaria/liberation-day",
       "locations": "All",
       "states": "All"
     },
@@ -4824,6 +4241,102 @@
       "primary_type": "National holiday",
       "canonical_url": "https://calendarific.com/holiday/bulgaria/labor-day",
       "urlid": "bulgaria/labor-day",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Good Friday",
+      "description": "Millions of Orthodox Christians around the world annually observe Good Friday to commemorate the events leading up to Jesus Christ's crucifixion.",
+      "country": {
+        "id": "bg",
+        "name": "Bulgaria"
+      },
+      "date": {
+        "iso": "2025-05-03",
+        "datetime": {
+          "year": 2025,
+          "month": 5,
+          "day": 3
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/bulgaria/good-friday",
+      "urlid": "bulgaria/good-friday",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Holy Saturday",
+      "description": "The Saturday before Easter Sunday is also known as Holy Saturday for many Orthodox churches worldwide.",
+      "country": {
+        "id": "bg",
+        "name": "Bulgaria"
+      },
+      "date": {
+        "iso": "2025-05-04",
+        "datetime": {
+          "year": 2025,
+          "month": 5,
+          "day": 4
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/bulgaria/holy-saturday",
+      "urlid": "bulgaria/holy-saturday",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Easter Sunday",
+      "description": "Millions of Orthodox Christians around the world often celebrate Easter Sunday at a different time to the date set by many western churches.",
+      "country": {
+        "id": "bg",
+        "name": "Bulgaria"
+      },
+      "date": {
+        "iso": "2025-05-05",
+        "datetime": {
+          "year": 2025,
+          "month": 5,
+          "day": 5
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/bulgaria/easter",
+      "urlid": "bulgaria/easter",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Easter Monday",
+      "description": "Orthodox Easter Monday is the day after the Orthodox Easter Sunday.",
+      "country": {
+        "id": "bg",
+        "name": "Bulgaria"
+      },
+      "date": {
+        "iso": "2025-05-06",
+        "datetime": {
+          "year": 2025,
+          "month": 5,
+          "day": 6
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/bulgaria/easter-monday",
+      "urlid": "bulgaria/easter-monday",
       "locations": "All",
       "states": "All"
     },
@@ -4876,30 +4389,6 @@
       "states": "All"
     },
     {
-      "name": "Day off for Culture and Literacy Day",
-      "description": "Culture and Literacy Day is a national holiday in Bulgaria",
-      "country": {
-        "id": "bg",
-        "name": "Bulgaria"
-      },
-      "date": {
-        "iso": "2025-05-26",
-        "datetime": {
-          "year": 2025,
-          "month": 5,
-          "day": 26
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "National holiday",
-      "canonical_url": "https://calendarific.com/holiday/bulgaria/culture-and-literacy-day",
-      "urlid": "bulgaria/culture-and-literacy-day",
-      "locations": "All",
-      "states": "All"
-    },
-    {
       "name": "Unification Day",
       "description": "Unification Day is a national holiday in Bulgaria",
       "country": {
@@ -4924,30 +4413,6 @@
       "states": "All"
     },
     {
-      "name": "Day off for Unification Day",
-      "description": "Unification Day is a national holiday in Bulgaria",
-      "country": {
-        "id": "bg",
-        "name": "Bulgaria"
-      },
-      "date": {
-        "iso": "2025-09-08",
-        "datetime": {
-          "year": 2025,
-          "month": 9,
-          "day": 8
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "National holiday",
-      "canonical_url": "https://calendarific.com/holiday/bulgaria/unification-day",
-      "urlid": "bulgaria/unification-day",
-      "locations": "All",
-      "states": "All"
-    },
-    {
       "name": "Independence Day",
       "description": "Independence Day is a national holiday in Bulgaria",
       "country": {
@@ -4960,6 +4425,30 @@
           "year": 2025,
           "month": 9,
           "day": 22
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/bulgaria/independence-day",
+      "urlid": "bulgaria/independence-day",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Day off for Independence Day",
+      "description": "Independence Day is a national holiday in Bulgaria",
+      "country": {
+        "id": "bg",
+        "name": "Bulgaria"
+      },
+      "date": {
+        "iso": "2025-09-23",
+        "datetime": {
+          "year": 2025,
+          "month": 9,
+          "day": 23
         }
       },
       "type": [
@@ -5077,11 +4566,11 @@
         "name": "Portugal"
       },
       "date": {
-        "iso": "2025-04-18",
+        "iso": "2025-03-29",
         "datetime": {
           "year": 2025,
-          "month": 4,
-          "day": 18
+          "month": 3,
+          "day": 29
         }
       },
       "type": [
@@ -5101,11 +4590,11 @@
         "name": "Portugal"
       },
       "date": {
-        "iso": "2025-04-20",
+        "iso": "2025-03-31",
         "datetime": {
           "year": 2025,
-          "month": 4,
-          "day": 20
+          "month": 3,
+          "day": 31
         }
       },
       "type": [
@@ -5166,6 +4655,30 @@
       "states": "All"
     },
     {
+      "name": "Corpus Christi",
+      "description": "Corpus Christi is a Christian feast in honor of the Holy Eucharist.",
+      "country": {
+        "id": "pt",
+        "name": "Portugal"
+      },
+      "date": {
+        "iso": "2025-05-30",
+        "datetime": {
+          "year": 2025,
+          "month": 5,
+          "day": 30
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/portugal/corpus-christi",
+      "urlid": "portugal/corpus-christi",
+      "locations": "All",
+      "states": "All"
+    },
+    {
       "name": "Portugal Day",
       "description": "Portugal Day is a national holiday in Portugal",
       "country": {
@@ -5186,30 +4699,6 @@
       "primary_type": "National holiday",
       "canonical_url": "https://calendarific.com/holiday/portugal/portugal-day",
       "urlid": "portugal/portugal-day",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Corpus Christi",
-      "description": "Corpus Christi is a Christian feast in honor of the Holy Eucharist.",
-      "country": {
-        "id": "pt",
-        "name": "Portugal"
-      },
-      "date": {
-        "iso": "2025-06-19",
-        "datetime": {
-          "year": 2025,
-          "month": 6,
-          "day": 19
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "National holiday",
-      "canonical_url": "https://calendarific.com/holiday/portugal/corpus-christi",
-      "urlid": "portugal/corpus-christi",
       "locations": "All",
       "states": "All"
     },
@@ -5354,6 +4843,443 @@
       "primary_type": "National holiday",
       "canonical_url": "https://calendarific.com/holiday/portugal/christmas-day",
       "urlid": "portugal/christmas-day",
+      "locations": "All",
+      "states": "All"
+    }
+  ],
+  "de": [
+    {
+      "name": "New Year's Day",
+      "description": "New Year’s Day is a public holiday in Germany.",
+      "country": {
+        "id": "de",
+        "name": "Germany"
+      },
+      "date": {
+        "iso": "2025-01-01",
+        "datetime": {
+          "year": 2025,
+          "month": 1,
+          "day": 1
+        }
+      },
+      "type": [
+        "Public holiday"
+      ],
+      "primary_type": "Public holiday",
+      "canonical_url": "https://calendarific.com/holiday/germany/new-year-day",
+      "urlid": "germany/new-year-day",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Unity Day",
+      "description": "Unity Day is celebrated in Germany on October 3 to commemorate German reunification.",
+      "country": {
+        "id": "de",
+        "name": "Germany"
+      },
+      "date": {
+        "iso": "2025-10-03",
+        "datetime": {
+          "year": 2025,
+          "month": 10,
+          "day": 3
+        }
+      },
+      "type": [
+        "Public holiday"
+      ],
+      "primary_type": "Public holiday",
+      "canonical_url": "https://calendarific.com/holiday/germany/unity-day",
+      "urlid": "germany/unity-day",
+      "locations": "All",
+      "states": "All"
+    }
+  ],
+  "ru": [
+    {
+      "name": "New Year's Day",
+      "description": "Russians celebrate New Year’s Day in accordance with the Gregorian calendar on January 1.",
+      "country": {
+        "id": "ru",
+        "name": "Russia"
+      },
+      "date": {
+        "iso": "2025-01-01",
+        "datetime": {
+          "year": 2025,
+          "month": 1,
+          "day": 1
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/russia/new-year-day",
+      "urlid": "russia/new-year-day",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "New Year Holiday",
+      "description": "New Year Holiday is a national holiday in Russia",
+      "country": {
+        "id": "ru",
+        "name": "Russia"
+      },
+      "date": {
+        "iso": "2025-01-02",
+        "datetime": {
+          "year": 2025,
+          "month": 1,
+          "day": 2
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/russia/new-year-holiday-2",
+      "urlid": "russia/new-year-holiday-2",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "New Year Holiday",
+      "description": "New Year Holiday is a national holiday in Russia",
+      "country": {
+        "id": "ru",
+        "name": "Russia"
+      },
+      "date": {
+        "iso": "2025-01-03",
+        "datetime": {
+          "year": 2025,
+          "month": 1,
+          "day": 3
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/russia/new-year-holiday-3",
+      "urlid": "russia/new-year-holiday-3",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "New Year Holiday",
+      "description": "New Year Holiday is a national holiday in Russia",
+      "country": {
+        "id": "ru",
+        "name": "Russia"
+      },
+      "date": {
+        "iso": "2025-01-06",
+        "datetime": {
+          "year": 2025,
+          "month": 1,
+          "day": 6
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/russia/new-year-holiday-6",
+      "urlid": "russia/new-year-holiday-6",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Orthodox Christmas Day",
+      "description": "Many Russians celebrate Christmas Day on January 7 in the Gregorian calendar, which corresponds to December 25 in the Julian calendar.",
+      "country": {
+        "id": "ru",
+        "name": "Russia"
+      },
+      "date": {
+        "iso": "2025-01-07",
+        "datetime": {
+          "year": 2025,
+          "month": 1,
+          "day": 7
+        }
+      },
+      "type": [
+        "National holiday",
+        "Orthodox"
+      ],
+      "primary_type": "Orthodox",
+      "canonical_url": "https://calendarific.com/holiday/russia/christmas-day",
+      "urlid": "russia/christmas-day",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "New Year Holiday",
+      "description": "New Year Holiday is a national holiday in Russia",
+      "country": {
+        "id": "ru",
+        "name": "Russia"
+      },
+      "date": {
+        "iso": "2025-01-08",
+        "datetime": {
+          "year": 2025,
+          "month": 1,
+          "day": 8
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/russia/new-year-holiday-8",
+      "urlid": "russia/new-year-holiday-8",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Defender of the Fatherland Day",
+      "description": "Many Russians celebrate Defender of the Fatherland Day on February 23, when they honor military forces and veterans.",
+      "country": {
+        "id": "ru",
+        "name": "Russia"
+      },
+      "date": {
+        "iso": "2025-02-23",
+        "datetime": {
+          "year": 2025,
+          "month": 2,
+          "day": 23
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/russia/fatherland-defender",
+      "urlid": "russia/fatherland-defender",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Day off for Defender of the Fatherland Day",
+      "description": "Many Russians celebrate Defender of the Fatherland Day on February 23, when they honor military forces and veterans.",
+      "country": {
+        "id": "ru",
+        "name": "Russia"
+      },
+      "date": {
+        "iso": "2025-02-24",
+        "datetime": {
+          "year": 2025,
+          "month": 2,
+          "day": 24
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/russia/fatherland-defender",
+      "urlid": "russia/fatherland-defender",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "International Women's Day",
+      "description": "Many Russians pay tribute to women’s role in Russian society by celebrating International Women’s Day on March 8.",
+      "country": {
+        "id": "ru",
+        "name": "Russia"
+      },
+      "date": {
+        "iso": "2025-03-08",
+        "datetime": {
+          "year": 2025,
+          "month": 3,
+          "day": 8
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/russia/women-day",
+      "urlid": "russia/women-day",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Day off for International Women's Day",
+      "description": "Many Russians pay tribute to women’s role in Russian society by celebrating International Women’s Day on March 8.",
+      "country": {
+        "id": "ru",
+        "name": "Russia"
+      },
+      "date": {
+        "iso": "2025-03-10",
+        "datetime": {
+          "year": 2025,
+          "month": 3,
+          "day": 10
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/russia/women-day",
+      "urlid": "russia/women-day",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Spring and Labor Day",
+      "description": "For many Russians, Spring and Labor Day, which falls on May 1, is a family holiday and a time for relaxation.",
+      "country": {
+        "id": "ru",
+        "name": "Russia"
+      },
+      "date": {
+        "iso": "2025-05-01",
+        "datetime": {
+          "year": 2025,
+          "month": 5,
+          "day": 1
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/russia/spring-and-labor-day",
+      "urlid": "russia/spring-and-labor-day",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Spring and Labor Day Holiday",
+      "description": "A 2012 decree has changed the number of days, and the dates for the Spring and Labor Day Holidays.",
+      "country": {
+        "id": "ru",
+        "name": "Russia"
+      },
+      "date": {
+        "iso": "2025-05-02",
+        "datetime": {
+          "year": 2025,
+          "month": 5,
+          "day": 2
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/russia/spring-and-labor-day-weekend",
+      "urlid": "russia/spring-and-labor-day-weekend",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Victory Day",
+      "description": "One of the biggest Russian holidays, Victory Day, marks Germany’s surrender to the Soviet Union in 1945, ending one of the bloodiest wars in Russia’s history.",
+      "country": {
+        "id": "ru",
+        "name": "Russia"
+      },
+      "date": {
+        "iso": "2025-05-09",
+        "datetime": {
+          "year": 2025,
+          "month": 5,
+          "day": 9
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/russia/victory-day",
+      "urlid": "russia/victory-day",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Russia Day",
+      "description": "Russia Day, annually celebrated on June 12, marks the beginning of democratic reforms in Russia and is one of the newest holidays in the Russian Federation.",
+      "country": {
+        "id": "ru",
+        "name": "Russia"
+      },
+      "date": {
+        "iso": "2025-06-12",
+        "datetime": {
+          "year": 2025,
+          "month": 6,
+          "day": 12
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/russia/russia-day",
+      "urlid": "russia/russia-day",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Russia Day Weekend",
+      "description": "Russia Day Weekend is a national holiday in Russia",
+      "country": {
+        "id": "ru",
+        "name": "Russia"
+      },
+      "date": {
+        "iso": "2025-06-13",
+        "datetime": {
+          "year": 2025,
+          "month": 6,
+          "day": 13
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/russia/russia-day-weekend",
+      "urlid": "russia/russia-day-weekend",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Unity Day",
+      "description": "Unity Day, which is on November 4, is one of the newest and the most controversial holidays in Russia.",
+      "country": {
+        "id": "ru",
+        "name": "Russia"
+      },
+      "date": {
+        "iso": "2025-11-04",
+        "datetime": {
+          "year": 2025,
+          "month": 11,
+          "day": 4
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/russia/unity-day",
+      "urlid": "russia/unity-day",
       "locations": "All",
       "states": "All"
     }
@@ -5642,7 +5568,7 @@
       "primary_type": "Statutory Holiday",
       "canonical_url": "https://calendarific.com/holiday/canada/thanksgiving-day",
       "urlid": "canada/thanksgiving-day",
-      "locations": "All except NS, PE",
+      "locations": "All except NB, NS, PE",
       "states": [
         {
           "id": 57,
@@ -5664,13 +5590,6 @@
           "name": "Manitoba",
           "exception": null,
           "iso": "ca-mb"
-        },
-        {
-          "id": 60,
-          "abbrev": "NB",
-          "name": "New Brunswick",
-          "exception": null,
-          "iso": "ca-nb"
         },
         {
           "id": 61,
@@ -5888,641 +5807,6 @@
           "iso": "ca-on"
         }
       ]
-    }
-  ],
-  "de": [
-    {
-      "name": "New Year's Day",
-      "description": "New Year's Day, which is on January 1, or the first day of the year in the Gregorian Calendar, is a public holiday in Germany.",
-      "country": {
-        "id": "de",
-        "name": "Germany"
-      },
-      "date": {
-        "iso": "2025-01-01",
-        "datetime": {
-          "year": 2025,
-          "month": 1,
-          "day": 1
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "National holiday",
-      "canonical_url": "https://calendarific.com/holiday/germany/new-year-day",
-      "urlid": "germany/new-year-day",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Good Friday",
-      "description": "Many Christians in Germany observe the Good Friday public holiday to mark the crucifixion of Jesus Christ.",
-      "country": {
-        "id": "de",
-        "name": "Germany"
-      },
-      "date": {
-        "iso": "2025-04-18",
-        "datetime": {
-          "year": 2025,
-          "month": 4,
-          "day": 18
-        }
-      },
-      "type": [
-        "National holiday",
-        "Christian"
-      ],
-      "primary_type": "Christian",
-      "canonical_url": "https://calendarific.com/holiday/germany/good-friday",
-      "urlid": "germany/good-friday",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Easter Monday",
-      "description": "Many people in Germany annually observe Easter Monday on the day after Easter Sunday. It is a public holiday in all states.",
-      "country": {
-        "id": "de",
-        "name": "Germany"
-      },
-      "date": {
-        "iso": "2025-04-21",
-        "datetime": {
-          "year": 2025,
-          "month": 4,
-          "day": 21
-        }
-      },
-      "type": [
-        "National holiday",
-        "Christian"
-      ],
-      "primary_type": "Christian",
-      "canonical_url": "https://calendarific.com/holiday/germany/easter-monday",
-      "urlid": "germany/easter-monday",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "May Day",
-      "description": "May Day in Germany is a holiday to celebrate the start of spring and to campaign for workers' rights. It is always on May 1.",
-      "country": {
-        "id": "de",
-        "name": "Germany"
-      },
-      "date": {
-        "iso": "2025-05-01",
-        "datetime": {
-          "year": 2025,
-          "month": 5,
-          "day": 1
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "National holiday",
-      "canonical_url": "https://calendarific.com/holiday/germany/may-day",
-      "urlid": "germany/may-day",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Ascension Day",
-      "description": "Ascension Day in Germany is on a Thursday 39 days after Easter Sunday.",
-      "country": {
-        "id": "de",
-        "name": "Germany"
-      },
-      "date": {
-        "iso": "2025-05-29",
-        "datetime": {
-          "year": 2025,
-          "month": 5,
-          "day": 29
-        }
-      },
-      "type": [
-        "National holiday",
-        "Christian"
-      ],
-      "primary_type": "Christian",
-      "canonical_url": "https://calendarific.com/holiday/germany/ascension",
-      "urlid": "germany/ascension",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Whit Monday",
-      "description": "The Second Day of Pentecost is, which is on the Monday after Pentecost (or Whitsunday), is a public holiday in Germany.",
-      "country": {
-        "id": "de",
-        "name": "Germany"
-      },
-      "date": {
-        "iso": "2025-06-09",
-        "datetime": {
-          "year": 2025,
-          "month": 6,
-          "day": 9
-        }
-      },
-      "type": [
-        "National holiday",
-        "Christian"
-      ],
-      "primary_type": "Christian",
-      "canonical_url": "https://calendarific.com/holiday/germany/pentecost-monday",
-      "urlid": "germany/pentecost-monday",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Day of German Unity",
-      "description": "German Unity Day celebrates Germany's unification in 1990. It is on October 3 each year.",
-      "country": {
-        "id": "de",
-        "name": "Germany"
-      },
-      "date": {
-        "iso": "2025-10-03",
-        "datetime": {
-          "year": 2025,
-          "month": 10,
-          "day": 3
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "National holiday",
-      "canonical_url": "https://calendarific.com/holiday/germany/german-unity-day",
-      "urlid": "germany/german-unity-day",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Christmas Day",
-      "description": "Christmas Day marks the birth of Jesus Christ and is a public holiday in Germany. It is on December 25 each year.",
-      "country": {
-        "id": "de",
-        "name": "Germany"
-      },
-      "date": {
-        "iso": "2025-12-25",
-        "datetime": {
-          "year": 2025,
-          "month": 12,
-          "day": 25
-        }
-      },
-      "type": [
-        "National holiday",
-        "Christian"
-      ],
-      "primary_type": "Christian",
-      "canonical_url": "https://calendarific.com/holiday/germany/christmas-day",
-      "urlid": "germany/christmas-day",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Boxing Day",
-      "description": "The Second Day of Christmas is a public holiday in Germany. It always falls on December 26.",
-      "country": {
-        "id": "de",
-        "name": "Germany"
-      },
-      "date": {
-        "iso": "2025-12-26",
-        "datetime": {
-          "year": 2025,
-          "month": 12,
-          "day": 26
-        }
-      },
-      "type": [
-        "National holiday",
-        "Christian"
-      ],
-      "primary_type": "Christian",
-      "canonical_url": "https://calendarific.com/holiday/germany/second-day-of-christmas",
-      "urlid": "germany/second-day-of-christmas",
-      "locations": "All",
-      "states": "All"
-    }
-  ],
-  "ru": [
-    {
-      "name": "New Year's Day",
-      "description": "Russians celebrate New Year’s Day in accordance with the Gregorian calendar on January 1.",
-      "country": {
-        "id": "ru",
-        "name": "Russia"
-      },
-      "date": {
-        "iso": "2025-01-01",
-        "datetime": {
-          "year": 2025,
-          "month": 1,
-          "day": 1
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "National holiday",
-      "canonical_url": "https://calendarific.com/holiday/russia/new-year-day",
-      "urlid": "russia/new-year-day",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "New Year Holiday",
-      "description": "New Year Holiday is a national holiday in Russia",
-      "country": {
-        "id": "ru",
-        "name": "Russia"
-      },
-      "date": {
-        "iso": "2025-01-02",
-        "datetime": {
-          "year": 2025,
-          "month": 1,
-          "day": 2
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "National holiday",
-      "canonical_url": "https://calendarific.com/holiday/russia/new-year-holiday-2",
-      "urlid": "russia/new-year-holiday-2",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "New Year Holiday",
-      "description": "New Year Holiday is a national holiday in Russia",
-      "country": {
-        "id": "ru",
-        "name": "Russia"
-      },
-      "date": {
-        "iso": "2025-01-03",
-        "datetime": {
-          "year": 2025,
-          "month": 1,
-          "day": 3
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "National holiday",
-      "canonical_url": "https://calendarific.com/holiday/russia/new-year-holiday-3",
-      "urlid": "russia/new-year-holiday-3",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "New Year Holiday",
-      "description": "New Year Holiday is a national holiday in Russia",
-      "country": {
-        "id": "ru",
-        "name": "Russia"
-      },
-      "date": {
-        "iso": "2025-01-06",
-        "datetime": {
-          "year": 2025,
-          "month": 1,
-          "day": 6
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "National holiday",
-      "canonical_url": "https://calendarific.com/holiday/russia/new-year-holiday-6",
-      "urlid": "russia/new-year-holiday-6",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Orthodox Christmas Day",
-      "description": "Many Russians celebrate Christmas Day on January 7 in the Gregorian calendar, which corresponds to December 25 in the Julian calendar.",
-      "country": {
-        "id": "ru",
-        "name": "Russia"
-      },
-      "date": {
-        "iso": "2025-01-07",
-        "datetime": {
-          "year": 2025,
-          "month": 1,
-          "day": 7
-        }
-      },
-      "type": [
-        "National holiday",
-        "Orthodox"
-      ],
-      "primary_type": "Orthodox",
-      "canonical_url": "https://calendarific.com/holiday/russia/christmas-day",
-      "urlid": "russia/christmas-day",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "New Year Holiday",
-      "description": "New Year Holiday is a national holiday in Russia",
-      "country": {
-        "id": "ru",
-        "name": "Russia"
-      },
-      "date": {
-        "iso": "2025-01-08",
-        "datetime": {
-          "year": 2025,
-          "month": 1,
-          "day": 8
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "National holiday",
-      "canonical_url": "https://calendarific.com/holiday/russia/new-year-holiday-8",
-      "urlid": "russia/new-year-holiday-8",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Defender of the Fatherland Day",
-      "description": "Many Russians celebrate Defender of the Fatherland Day on February 23, when they honor military forces and veterans.",
-      "country": {
-        "id": "ru",
-        "name": "Russia"
-      },
-      "date": {
-        "iso": "2025-02-23",
-        "datetime": {
-          "year": 2025,
-          "month": 2,
-          "day": 23
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "National holiday",
-      "canonical_url": "https://calendarific.com/holiday/russia/fatherland-defender",
-      "urlid": "russia/fatherland-defender",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "International Women's Day",
-      "description": "Many Russians pay tribute to women’s role in Russian society by celebrating International Women’s Day on March 8.",
-      "country": {
-        "id": "ru",
-        "name": "Russia"
-      },
-      "date": {
-        "iso": "2025-03-08",
-        "datetime": {
-          "year": 2025,
-          "month": 3,
-          "day": 8
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "National holiday",
-      "canonical_url": "https://calendarific.com/holiday/russia/women-day",
-      "urlid": "russia/women-day",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Spring and Labor Day",
-      "description": "For many Russians, Spring and Labor Day, which falls on May 1, is a family holiday and a time for relaxation.",
-      "country": {
-        "id": "ru",
-        "name": "Russia"
-      },
-      "date": {
-        "iso": "2025-05-01",
-        "datetime": {
-          "year": 2025,
-          "month": 5,
-          "day": 1
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "National holiday",
-      "canonical_url": "https://calendarific.com/holiday/russia/spring-and-labor-day",
-      "urlid": "russia/spring-and-labor-day",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Substitute Holiday for New Year Holiday",
-      "description": "Substitute Holiday for New Year Holiday is a substitute holiday in Russia",
-      "country": {
-        "id": "ru",
-        "name": "Russia"
-      },
-      "date": {
-        "iso": "2025-05-02",
-        "datetime": {
-          "year": 2025,
-          "month": 5,
-          "day": 2
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "Substitute Holiday",
-      "canonical_url": "https://calendarific.com/holiday/russia/new-year-holiday-substitute",
-      "urlid": "russia/new-year-holiday-substitute",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Substitute Holiday for Defender of the Fatherland Day",
-      "description": "Substitute Holiday for Defender of the Fatherland Day is a substitute holiday in Russia",
-      "country": {
-        "id": "ru",
-        "name": "Russia"
-      },
-      "date": {
-        "iso": "2025-05-08",
-        "datetime": {
-          "year": 2025,
-          "month": 5,
-          "day": 8
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "Substitute Holiday",
-      "canonical_url": "https://calendarific.com/holiday/russia/fatherland-defender-holiday",
-      "urlid": "russia/fatherland-defender-holiday",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Victory Day",
-      "description": "One of the biggest Russian holidays, Victory Day, marks Germany’s surrender to the Soviet Union in 1945, ending one of the bloodiest wars in Russia’s history.",
-      "country": {
-        "id": "ru",
-        "name": "Russia"
-      },
-      "date": {
-        "iso": "2025-05-09",
-        "datetime": {
-          "year": 2025,
-          "month": 5,
-          "day": 9
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "National holiday",
-      "canonical_url": "https://calendarific.com/holiday/russia/victory-day",
-      "urlid": "russia/victory-day",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Russia Day",
-      "description": "Russia Day, annually celebrated on June 12, marks the beginning of democratic reforms in Russia and is one of the newest holidays in the Russian Federation.",
-      "country": {
-        "id": "ru",
-        "name": "Russia"
-      },
-      "date": {
-        "iso": "2025-06-12",
-        "datetime": {
-          "year": 2025,
-          "month": 6,
-          "day": 12
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "National holiday",
-      "canonical_url": "https://calendarific.com/holiday/russia/russia-day",
-      "urlid": "russia/russia-day",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Substitute Holiday for International Women's Day",
-      "description": "Substitute Holiday for International Women's Day is a substitute holiday in Russia",
-      "country": {
-        "id": "ru",
-        "name": "Russia"
-      },
-      "date": {
-        "iso": "2025-06-13",
-        "datetime": {
-          "year": 2025,
-          "month": 6,
-          "day": 13
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "Substitute Holiday",
-      "canonical_url": "https://calendarific.com/holiday/russia/women-day-substitute-holiday",
-      "urlid": "russia/women-day-substitute-holiday",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Unity Day Holiday",
-      "description": "Unity Day Holiday is a national holiday in Russia",
-      "country": {
-        "id": "ru",
-        "name": "Russia"
-      },
-      "date": {
-        "iso": "2025-11-03",
-        "datetime": {
-          "year": 2025,
-          "month": 11,
-          "day": 3
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "National holiday",
-      "canonical_url": "https://calendarific.com/holiday/russia/unity-day-holiday",
-      "urlid": "russia/unity-day-holiday",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Unity Day",
-      "description": "Unity Day, which is on November 4, is one of the newest and the most controversial holidays in Russia.",
-      "country": {
-        "id": "ru",
-        "name": "Russia"
-      },
-      "date": {
-        "iso": "2025-11-04",
-        "datetime": {
-          "year": 2025,
-          "month": 11,
-          "day": 4
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "National holiday",
-      "canonical_url": "https://calendarific.com/holiday/russia/unity-day",
-      "urlid": "russia/unity-day",
-      "locations": "All",
-      "states": "All"
-    },
-    {
-      "name": "Substitute Holiday for New Year Holiday",
-      "description": "Substitute Holiday for New Year Holiday is a substitute holiday in Russia",
-      "country": {
-        "id": "ru",
-        "name": "Russia"
-      },
-      "date": {
-        "iso": "2025-12-31",
-        "datetime": {
-          "year": 2025,
-          "month": 12,
-          "day": 31
-        }
-      },
-      "type": [
-        "National holiday"
-      ],
-      "primary_type": "Substitute Holiday",
-      "canonical_url": "https://calendarific.com/holiday/russia/new-year-holiday-substitute-2",
-      "urlid": "russia/new-year-holiday-substitute-2",
-      "locations": "All",
-      "states": "All"
     }
   ],
   "hr": [
@@ -7002,7 +6286,7 @@
       "type": [
         "National holiday"
       ],
-      "primary_type": "Autonomous Community Holiday",
+      "primary_type": "National holiday",
       "canonical_url": "https://calendarific.com/holiday/spain/hispanic-day-observed",
       "urlid": "spain/hispanic-day-observed",
       "locations": "AN, EX, AR, O, CL",
@@ -8424,6 +7708,233 @@
       "primary_type": "National holiday",
       "canonical_url": "https://calendarific.com/holiday/greece/synaxis-of-the-mother-of-god",
       "urlid": "greece/synaxis-of-the-mother-of-god",
+      "locations": "All",
+      "states": "All"
+    }
+  ],
+  "il": [
+    {
+      "name": "Passover (Day 1)",
+      "description": "During Passover, the Jewish people remember the liberation of the Israelites from slavery, their exodus from Egypt, and that their first-born children were spared during the 10th plague, as told in the Haggadah.",
+      "country": {
+        "id": "il",
+        "name": "Israel"
+      },
+      "date": {
+        "iso": "2025-04-13",
+        "datetime": {
+          "year": 2025,
+          "month": 4,
+          "day": 13
+        }
+      },
+      "type": [
+        "National holiday",
+        "Hebrew"
+      ],
+      "primary_type": "Hebrew",
+      "canonical_url": "https://calendarific.com/holiday/israel/pesach-i",
+      "urlid": "israel/pesach-i",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Passover (Day 7)",
+      "description": "The last day of Passover marks the end of the Passover period, which lasts for seven or eight days.",
+      "country": {
+        "id": "il",
+        "name": "Israel"
+      },
+      "date": {
+        "iso": "2025-04-19",
+        "datetime": {
+          "year": 2025,
+          "month": 4,
+          "day": 19
+        }
+      },
+      "type": [
+        "National holiday",
+        "Hebrew"
+      ],
+      "primary_type": "Hebrew",
+      "canonical_url": "https://calendarific.com/holiday/israel/pesach-vii",
+      "urlid": "israel/pesach-vii",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Yom HaAtzmaut",
+      "description": "Israel's Independence Day, also known as Yom Ha'atzmaut, marks the anniversary of the Declaration of Independence of Israel.",
+      "country": {
+        "id": "il",
+        "name": "Israel"
+      },
+      "date": {
+        "iso": "2025-05-01",
+        "datetime": {
+          "year": 2025,
+          "month": 5,
+          "day": 1
+        }
+      },
+      "type": [
+        "National holiday",
+        "Hebrew"
+      ],
+      "primary_type": "Hebrew",
+      "canonical_url": "https://calendarific.com/holiday/israel/yom-haatzmaut",
+      "urlid": "israel/yom-haatzmaut",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Shavuot",
+      "description": "Shavuot, sometimes known as the Festival of the Weeks, is a Jewish holiday to mark the end of the Counting of the Omer and the anniversary of the day when Jewish people received the Torah.",
+      "country": {
+        "id": "il",
+        "name": "Israel"
+      },
+      "date": {
+        "iso": "2025-06-02",
+        "datetime": {
+          "year": 2025,
+          "month": 6,
+          "day": 2
+        }
+      },
+      "type": [
+        "National holiday",
+        "Hebrew"
+      ],
+      "primary_type": "Hebrew",
+      "canonical_url": "https://calendarific.com/holiday/israel/shavuot",
+      "urlid": "israel/shavuot",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Rosh Hashana",
+      "description": "Rosh Hashana, commonly known as the Jewish New Year, is the first day of Tishrei, the seventh month in the Hebrew calendar.",
+      "country": {
+        "id": "il",
+        "name": "Israel"
+      },
+      "date": {
+        "iso": "2025-09-23",
+        "datetime": {
+          "year": 2025,
+          "month": 9,
+          "day": 23
+        }
+      },
+      "type": [
+        "National holiday",
+        "Hebrew"
+      ],
+      "primary_type": "Hebrew",
+      "canonical_url": "https://calendarific.com/holiday/israel/rosh-hashana",
+      "urlid": "israel/rosh-hashana",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Rosh Hashana (Day 2)",
+      "description": "Rosh Hashana (Day 2) is a national holiday and Jewish holiday in Israel",
+      "country": {
+        "id": "il",
+        "name": "Israel"
+      },
+      "date": {
+        "iso": "2025-09-24",
+        "datetime": {
+          "year": 2025,
+          "month": 9,
+          "day": 24
+        }
+      },
+      "type": [
+        "National holiday",
+        "Hebrew"
+      ],
+      "primary_type": "Hebrew",
+      "canonical_url": "https://calendarific.com/holiday/israel/rosh-hashana-ii",
+      "urlid": "israel/rosh-hashana-ii",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Yom Kippur",
+      "description": "Yom Kippur (Day of Atonement) is an important Jewish holiday that centers on the themes of atonement and repentance.",
+      "country": {
+        "id": "il",
+        "name": "Israel"
+      },
+      "date": {
+        "iso": "2025-10-02",
+        "datetime": {
+          "year": 2025,
+          "month": 10,
+          "day": 2
+        }
+      },
+      "type": [
+        "National holiday",
+        "Hebrew"
+      ],
+      "primary_type": "Hebrew",
+      "canonical_url": "https://calendarific.com/holiday/israel/yom-kippur",
+      "urlid": "israel/yom-kippur",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Sukkot (Day 1)",
+      "description": "The first day of Sukkot marks the start of the Sukkot festival, celebrated among Jewish communities worldwide.",
+      "country": {
+        "id": "il",
+        "name": "Israel"
+      },
+      "date": {
+        "iso": "2025-10-07",
+        "datetime": {
+          "year": 2025,
+          "month": 10,
+          "day": 7
+        }
+      },
+      "type": [
+        "National holiday",
+        "Hebrew"
+      ],
+      "primary_type": "Hebrew",
+      "canonical_url": "https://calendarific.com/holiday/israel/sukkot-i",
+      "urlid": "israel/sukkot-i",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Shemini Atzeret / Simchat Torah",
+      "description": "Shemini Atzeret (or Shmini Atzeret) is a Jewish holiday dedicated to the love of God, while Simchat Torah (Simchas Torah or Simhat Torah) and celebrates the completion of the annual reading of the Torah.",
+      "country": {
+        "id": "il",
+        "name": "Israel"
+      },
+      "date": {
+        "iso": "2025-10-14",
+        "datetime": {
+          "year": 2025,
+          "month": 10,
+          "day": 14
+        }
+      },
+      "type": [
+        "National holiday",
+        "Hebrew"
+      ],
+      "primary_type": "Hebrew",
+      "canonical_url": "https://calendarific.com/holiday/israel/shmini-atzeret",
+      "urlid": "israel/shmini-atzeret",
       "locations": "All",
       "states": "All"
     }

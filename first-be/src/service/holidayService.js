@@ -11,14 +11,30 @@ const { getHolidaysForCountryCode } = require('./holidaysDataStore')
 const { isWeekend } = require('../utils/util')
 
 
-const getHolidaysForCountry = async (countryCode, isUkraine, year = moment().year(), filterWeekend = false) => {
+const getHolidaysForCountry = async (countryCode, isUkraine, year = moment().year(), filterWeekend = false, weekly = '') => {
     if (!countryCode) {
         throw new Error('Location must be provided!')
     }
     const holidaysResponse = await getHolidaysForCountryCode(countryCode, isUkraine, year);
 
+    if (weekly === 'Monday') {
+        return holidaysResponse.reduce( (acc, nextHl) => {
+            if (isWeekend(nextHl.date.iso)) {
+                acc[nextHl.date.iso] = {
+                    name: nextHl.name,
+                    primary_type: nextHl.primary_type
+                }
+            } else {
+                return acc;
+            }
+            return acc;
+        }, {});
+    }
+
     return holidaysResponse.reduce( (acc, nextHl) => {
-       {
+       if (filterWeekend && isWeekend(nextHl.date.iso)) {
+           return acc;
+       } else {
            acc[nextHl.date.iso] = {
                name: nextHl.name,
                primary_type: nextHl.primary_type
