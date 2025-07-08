@@ -73,7 +73,8 @@ const TasksTable = ({ tasks, onEdited, onDeleted }) => {
           <tr>
             <TableHeaderItem>№</TableHeaderItem>
             <TableHeaderItem>Talent / Stakeholder</TableHeaderItem>
-            <TableHeaderItem>Agency / Customer</TableHeaderItem>
+            <TableHeaderItem>Customer</TableHeaderItem>
+            <TableHeaderItem>Agency</TableHeaderItem>
             <TableHeaderItem>Notes</TableHeaderItem>
             <TableHeaderItem>Status</TableHeaderItem>
             <TableHeaderItem>Risk</TableHeaderItem>
@@ -102,7 +103,8 @@ const TasksTable = ({ tasks, onEdited, onDeleted }) => {
                   >
                     {object.fullName}
                   </TableCell>
-                  <TableCell>{task.type === 'employee' ? object.agencyName : getOrganizationName(object.organizationId)}</TableCell>
+                  <TableCell>{task.type === 'employee' ? object.talentMainCustomer ? getOrganizationName(getRelevantCustomer(object.talentMainCustomer).organizationId) : '' : getOrganizationName(object.organizationId)}</TableCell>
+                  <TableCell>{task.type === 'employee' ? object.agencyName : ''}</TableCell>
                   <TableCell className='max-w-[200px] overflow-hidden overflow-ellipsis'>{commentCropped}</TableCell>
                   <TableCell>{STATUS[task.status].label}</TableCell>
                   <TableCell>{RISK[task.risk].label}</TableCell>

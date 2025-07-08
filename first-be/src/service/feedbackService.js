@@ -447,7 +447,8 @@ function whereClauseForRecords() {
         where: {
             feedbackFrequency: {
                 [Op.not]: null
-            }
+            },
+            inactive: false
         },
         attributes: ['id', 'fullName', 'feedbackFrequency', 'email'],
         include: [{

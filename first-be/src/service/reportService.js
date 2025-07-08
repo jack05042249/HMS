@@ -96,7 +96,7 @@ const getReport = async (payload) => {
     endDate = moment.utc(endDate).endOf('day').toDate();
 
     const whereConditions = {
-        inactive: false,
+        // inactive: false,
     };
 
     if (tal && tal.length) {
