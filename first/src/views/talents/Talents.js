@@ -19,6 +19,7 @@ import axios from 'axios';
 import { updateSingleAggregatedTalent } from '../../store/actionCreator';
 import { showNotificationSuccess } from '../../utils/notifications';
 import { objectToFormData } from '../../utils/objectToFormData';
+import GenericModal from '../components/modal/GenericModal';
 
 const Talents = ({ API_URL }) => {
   const { aggregatedTalents, organizations, customers, agencies } = useSelector(state => state);
@@ -467,13 +468,7 @@ const Talents = ({ API_URL }) => {
         />
       )}
       {showInactiveConfirm && (
-        <ConfirmModal
-          isTalent={true}
-          talentData={talentToToggleInactive}
-          API_URL={API_URL}
-          isVisible={showInactiveConfirm}
-          onClose={() => setShowInactiveConfirm(false)}
-        >
+        <GenericModal displayModal={showInactiveConfirm} closeModal={() => setShowInactiveConfirm(false)}>
           <div className='p-6'>
             <h2 className='text-lg font-semibold mb-4'>Confirm Inactivation</h2>
             <p>
@@ -504,7 +499,7 @@ const Talents = ({ API_URL }) => {
               </button>
             </div>
           </div>
-        </ConfirmModal>
+        </GenericModal>
       )}
     </div>
   );
