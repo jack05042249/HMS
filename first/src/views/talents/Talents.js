@@ -31,6 +31,8 @@ const Talents = ({ API_URL }) => {
   const [talentToDelete, setTalentToDelete] = useState(null);
   const [createTalentModal, setCreateTalentModal] = useState(false);
   // const [showTooltip, setShowTooltip] = useState(false);
+  const [showInactiveConfirm, setShowInactiveConfirm] = useState(false);
+  const [talentToToggleInactive, setTalentToToggleInactive] = useState(null);
   const getRelevantTalent = id => {
     return aggregatedTalents.find(cus => +cus.id === +id) || {};
   };
@@ -339,19 +341,8 @@ const Talents = ({ API_URL }) => {
                     {typeof tal.inactive === 'boolean' ? (
                       <div
                         onClick={async () => {
-                          const prevData = tal;
-                          const newData = { ...tal, inactive: !tal.inactive };
-                          dispatch(updateSingleAggregatedTalent(newData));
-
-                          const formData = objectToFormData(newData);
-                          axios
-                            .put(`${API_URL}/talent`, formData)
-                            .then(() => {
-                              showNotificationSuccess('Updated successfully.');
-                            })
-                            .catch(() => {
-                              dispatch(updateSingleAggregatedTalent(prevData));
-                            });
+                          setTalentToToggleInactive(tal);
+                          setShowInactiveConfirm(true);
                         }}
                       >
                         {tal.inactive ? (
@@ -474,6 +465,46 @@ const Talents = ({ API_URL }) => {
           isVisible={isConfirmModalVisible}
           onClose={() => setIsConfirmModalVisible(false)}
         />
+      )}
+      {showInactiveConfirm && (
+        <ConfirmModal
+          isTalent={true}
+          talentData={talentToToggleInactive}
+          API_URL={API_URL}
+          isVisible={showInactiveConfirm}
+          onClose={() => setShowInactiveConfirm(false)}
+        >
+          <div className='p-6'>
+            <h2 className='text-lg font-semibold mb-4'>Confirm Inactivation</h2>
+            <p>
+              Are you sure you want to mark this talent as {talentToToggleInactive?.inactive ? 'active' : 'inactive'}?
+            </p>
+            <div className='flex justify-end gap-4 mt-6'>
+              <button className='px-4 py-2 bg-gray-200 rounded' onClick={() => setShowInactiveConfirm(false)}>
+                Cancel
+              </button>
+              <button
+                className='px-4 py-2 bg-[#4D4AEA] text-white rounded'
+                onClick={async () => {
+                  const prevData = talentToToggleInactive;
+                  const newData = { ...talentToToggleInactive, inactive: !talentToToggleInactive.inactive };
+                  dispatch(updateSingleAggregatedTalent(newData));
+                  const formData = objectToFormData(newData);
+                  try {
+                    await axios.put(`${API_URL}/talent`, formData);
+                    showNotificationSuccess('Updated successfully.');
+                  } catch {
+                    dispatch(updateSingleAggregatedTalent(prevData));
+                  }
+                  setShowInactiveConfirm(false);
+                  setTalentToToggleInactive(null);
+                }}
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </ConfirmModal>
       )}
     </div>
   );

@@ -50,14 +50,15 @@ const Stakeholders = ({ API_URL }) => {
   const [editNumberMode, setEditNumberMode] = useState(true);
   const [isEmailProcessed, setIsEmailProcessed] = useState(false);
 
+  const [showInactiveConfirm, setShowInactiveConfirm] = useState(false);
+  const [customerToToggleInactive, setCustomerToToggleInactive] = useState(null);
+
   const handleDeleteIconClick = customer => {
     setIsConfirmModalVisible(true);
     setCustomerToDelete(customer);
   };
 
-  const handleEditIconClick = customer => {
-
-  }
+  const handleEditIconClick = customer => {};
 
   useLayoutEffect(() => {
     const { id } = get(history, 'location.state') || {};
@@ -520,14 +521,14 @@ const Stakeholders = ({ API_URL }) => {
                       </a>
                     </div>
                   ) : ( */}
-                    <input
-                      id='mobile'
-                      type='text'
-                      name='mobile'
-                      defaultValue={mobile}
-                      placeholder='Phone number'
-                      className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-                    />
+                  <input
+                    id='mobile'
+                    type='text'
+                    name='mobile'
+                    defaultValue={mobile}
+                    placeholder='Phone number'
+                    className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                  />
                   {/* )} */}
                   <label htmlFor='location' className='text-[#000] text-[14px] font-medium text-left'>
                     Location
@@ -754,17 +755,8 @@ const Stakeholders = ({ API_URL }) => {
                       {typeof inactive === 'boolean' ? (
                         <div
                           onClick={async () => {
-                            const prevData = cus;
-                            const newData = { ...cus, inactive: !cus.inactive, birthday: cus.birthday || null };
-                            dispatch(updateSingleCustomer(newData));
-                            axios
-                              .put(`${API_URL}/customer`, newData)
-                              .then(() => {
-                                showNotificationSuccess('Updated successfully.');
-                              })
-                              .catch(() => {
-                                dispatch(updateSingleCustomer(prevData));
-                              });
+                            setCustomerToToggleInactive(cus);
+                            setShowInactiveConfirm(true);
                           }}
                         >
                           {cus.inactive ? (
@@ -827,11 +819,8 @@ const Stakeholders = ({ API_URL }) => {
                       )}
                     </th>
                     <th scope='row' className='px-6 py-4 font-medium  relative left-[10px]'>
-                      <button
-                        onClick={() => setEditCustomerId(cus.id)}
-                        className="mr-3"
-                      >
-                          <icons.editIcon/>
+                      <button onClick={() => setEditCustomerId(cus.id)} className='mr-3'>
+                        <icons.editIcon />
                       </button>
                       <button onClick={() => handleDeleteIconClick(cus)}>
                         <icons.deleteIcon />
@@ -869,6 +858,44 @@ const Stakeholders = ({ API_URL }) => {
           isVisible={isConfirmModalVisible}
           onClose={() => setIsConfirmModalVisible(false)}
         />
+      )}
+      {showInactiveConfirm && (
+        <GenericModal displayModal={showInactiveConfirm} closeModal={() => setShowInactiveConfirm(false)}>
+          <div className='p-6'>
+            <h2 className='text-lg font-semibold mb-4'>Confirm Inactivation</h2>
+            <p>
+              Are you sure you want to mark this customer as{' '}
+              {customerToToggleInactive?.inactive ? 'active' : 'inactive'}?
+            </p>
+            <div className='flex justify-end gap-4 mt-6'>
+              <button className='px-4 py-2 bg-gray-200 rounded' onClick={() => setShowInactiveConfirm(false)}>
+                Cancel
+              </button>
+              <button
+                className='px-4 py-2 bg-[#4D4AEA] text-white rounded'
+                onClick={async () => {
+                  const prevData = customerToToggleInactive;
+                  const newData = {
+                    ...customerToToggleInactive,
+                    inactive: !customerToToggleInactive.inactive,
+                    birthday: customerToToggleInactive.birthday || null
+                  };
+                  dispatch(updateSingleCustomer(newData));
+                  try {
+                    await axios.put(`${API_URL}/customer`, newData);
+                    showNotificationSuccess('Updated successfully.');
+                  } catch {
+                    dispatch(updateSingleCustomer(prevData));
+                  }
+                  setShowInactiveConfirm(false);
+                  setCustomerToToggleInactive(null);
+                }}
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </GenericModal>
       )}
     </div>
   );

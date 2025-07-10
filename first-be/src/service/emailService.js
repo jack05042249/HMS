@@ -12,8 +12,8 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-const TELEGRAM_BOT_TOKEN = '7572606364:AAEgFn_iA5Y8XbwwTb8fAh5GZzs2nL1JRIE'
-const CHAT_ID = -4837183328
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN
+const CHAT_ID = process.env.CHAT_ID
 const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`
 
 const { OpenAI } = require('openai')
@@ -22,54 +22,64 @@ const openai = new OpenAI({ apiKey: process.env.openaiKey })
 async function generatePostcardBackground(fullName, years, type) {
   const prompt =
     type === 'birthday'
-      ? `Generate a birthday greeting card in a professional and warm tone, featuring the following elements:
+      ? `Create a professional birthday greeting card with the following design elements:
 
-Company Branding:
+Layout: Split vertically into two sections:
 
-Company logo (top-left)
+Left side: white background
 
-Company name: “Commit Offshore”
+Right side: solid red background (#C32C1D)
 
-Brand colors: Red (#C8102E) and White
+Top-Left: Company logo with bold black and red text ("COMMIT" in black and "OFFSHORE" in a red box beneath it).
 
-Greeting Title:
+Left Side Content:
 
-Bold header: “Happy Birthday!”
+Centered square headshot image of the employee
 
-Employee Details:
+Below the image: Large, bold employee name (black text)
 
-Full name: ${fullName}
+Thin light gray horizontal line under the name
 
-Professional photograph: [Insert Image]
+Right Side Content:
 
-Personalized Message:
+Top-right corner: “Happy Birthday!” in large, bold, white text
 
-Start with: “Dear [First Name],”
+Below: A birthday message, starting with “Dear [First Name],” in bold white text
 
-Write a cheerful and heartfelt birthday message.
+Message should use a friendly, professional tone, in white text, left-aligned, using a clean sans-serif font
 
-Mention things like:
+Styling Details:
 
-Being surrounded by great company and good times
+Subtle drop shadow around the photo and text for depth
 
-Wishing for new achievements and exciting opportunities
+Generous padding and spacing to avoid visual clutter
 
-Encouragement for success, happiness, and rest
-
-Tone:
-
-Positive, encouraging, and appreciative
-
-Suitable for corporate/internal team culture
-
-Ensure the layout is clean and readable, with a clear visual separation between the photo/name block and the message.`
+Font should be modern sans-serif (e.g., Montserrat or Lato)`
       : `Design a professional work anniversary postcard using Commit Offshore brand colors (blue and white). Include the text: “🎉 Congratulations on ${years} years with Commit Offshore, ${firstName}! #CommitOffshore” overlaid on the design. Keep the layout celebratory and clean.`
+  const chatResponse = await openai.chat.completions.create({
+      model: 'gpt-4o',
+      messages: [
+        {
+          role: 'system',
+          content: 'You are a professional prompt engineer. Refine the user\'s image prompt to be highly detailed and well-structured for DALL·E 3 image generation.',
+        },
+        {
+          role: 'user',
+          content: prompt,
+        }
+      ],
+      temperature: 0.7,
+    });
 
+    console.log(`Refined prompt: ${chatResponse.choices[0].message.content}`);
+
+  const refinedPrompt = chatResponse.choices[0].message.content.trim();
   const res = await openai.images.generate({
     model: 'dall-e-3',
-    prompt,
+    prompt : refinedPrompt,
     size: '1024x1024',
-    n: 1
+    n: 1,
+    quality: 'standard',
   })
 
   return res.data[0].url
