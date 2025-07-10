@@ -476,12 +476,14 @@ const EditTalentModal = ({
                 talent['talentMainCustomer'] && customersForMainStakeholder.length > 0
                   ? allOrganizations
                       .filter(org => organizationIdsForMainStakeholder.includes(org.id))
-                      .map(org => ({ key: `${org.id}`, value: org.name }))[0].value
+                      .map(org => ({ key: `${org.id}`, value: org.name }))[0]?.value
                   : 'None'
               }
               placeholder='Customer'
               className='mb-4 border border-[#F5F0F0]  text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
             />
+
+            {email === 'tsimur.pazniakou@innowise.com' && console.log(talent['talentMainCustomer'], '--', customersForMainStakeholder, '--', organizationIdsForMainStakeholder)}
 
             <label htmlFor='email' className='text-[#000] text-[14px] mt-2 font-medium text-left'>
               E-mail
