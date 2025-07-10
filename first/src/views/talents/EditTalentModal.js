@@ -395,9 +395,9 @@ const EditTalentModal = ({
                   onClick={toggleCustomers}
                 >
                   {cusIds.map((id, i) => {
-                    const { fullName } = getRelevantCustomer(id);
+                    const { fullName, inactive } = getRelevantCustomer(id);
                     return (
-                      <div key={id} className={`flex items-center${i === 0 ? '' : 'ml-10'}`}>
+                      !inactive && <div key={id} className={`flex items-center${i === 0 ? '' : 'ml-10'}`}>
                         <span>{fullName}</span>
                         {i < cusIds.length - 1 && <span>,&nbsp;</span>}
                       </div>
