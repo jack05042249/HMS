@@ -98,7 +98,8 @@ async function composePostcard(aiBackgroundBuffer, talentPhotoBase64, logoPath) 
   ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 
   // Load company logo
-  const logo = await loadImage(path.join(__dirname, logoPath));
+  const logo_Path = path.resolve(__dirname, logoPath);
+  const logo = await loadImage(logo_Path);
   ctx.drawImage(logo, canvas.width - 180, 30, 150, 75);
 
   // Load talent photo from base64
@@ -140,7 +141,7 @@ async function generateFinalPostcard({
   const finalBuffer = await composePostcard(
     bgBuffer,
     photoBase64,
-    'public/commit_logo.png'
+    '../public/commit_logo.png'
   );
 
   const uploadedUrl = savePostcardToPublic(
