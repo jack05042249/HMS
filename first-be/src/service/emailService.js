@@ -105,8 +105,9 @@ async function composePostcard(aiBackgroundBuffer, talentPhotoBase64, logoPath) 
   ctx.drawImage(logo, canvas.width - 180, 30, 150, 75);
 
   // Load talent photo from base64
-  const talentBuffer = Buffer.from(talentPhotoBase64, 'base64');
-  console.log('talentPhotpo', talentBuffer);
+  const base64Data = talentPhotoBase64.split(',')[1]; // remove "data:image/jpeg;base64,"
+  const talentBuffer = Buffer.from(base64Data, 'base64');
+  console.log('talentPhoto', talentBuffer);
   const talentImg = await loadImage(talentBuffer);
   console.log('talentImg', talentImg);
   ctx.drawImage(talentImg, 40, canvas.height - 240, 180, 180); // bottom-left corner
