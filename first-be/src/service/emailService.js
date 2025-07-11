@@ -59,24 +59,64 @@ Generous padding and spacing to avoid visual clutter
 
 Font should be modern sans-serif (e.g., Montserrat or Lato)`
       : `Design a professional work anniversary postcard using Commit Offshore brand colors (blue and white). Include the text: “🎉 Congratulations on ${years} years with Commit Offshore, ${firstName}! #CommitOffshore” overlaid on the design. Keep the layout celebratory and clean.`
-  const chatResponse = await openai.chat.completions.create({
-      model: 'gpt-4o',
-      messages: [
-        {
-          role: 'system',
-          content: 'You are a professional prompt engineer. Refine the user\'s image prompt to be highly detailed and well-structured for DALL·E 3 image generation.',
-        },
-        {
-          role: 'user',
-          content: prompt,
-        }
-      ],
-      temperature: 0.7,
-    });
+  // const chatResponse = await openai.chat.completions.create({
+  //     model: 'gpt-4o',
+  //     messages: [
+  //       {
+  //         role: 'system',
+  //         content: 'You are a professional prompt engineer. Refine the user\'s image prompt to be highly detailed and well-structured for DALL·E 3 image generation.',
+  //       },
+  //       {
+  //         role: 'user',
+  //         content: prompt,
+  //       }
+  //     ],
+  //     temperature: 0.7,
+  //   });
 
-    console.log(`Refined prompt: ${chatResponse.choices[0].message.content}`);
+  //   console.log(`Refined prompt: ${chatResponse.choices[0].message.content}`);
 
-  const refinedPrompt = chatResponse.choices[0].message.content.trim();
+  // const refinedPrompt = chatResponse.choices[0].message.content.trim();
+  const refinedPrompt = `Design a professional square birthday greeting card, 1024×1024 pixels.
+
+Layout: Vertically split into two equal halves:
+
+Left side (white background, 512px wide):
+
+In the top-left corner, reserve space (do not render any text or image) for a company logo. Size of reserved box: 180×60 pixels, positioned at 40px from the top and 40px from the left.
+
+In the center of the left panel, place a gray placeholder box to represent a photo. The placeholder should be a rounded rectangle (250×250 pixels), positioned at 240px from the top and 131px from the left, with a subtle drop shadow to show depth.
+
+Below the photo placeholder, write the employee name: ${fullName} in large bold black font, centered horizontally.
+
+Add a thin light-gray horizontal line under the name, about 312px wide, aligned with the center, placed at 560px from the top.
+
+Right side (solid red background: #C32C1D, 512px wide):
+
+In the top-right corner, display the greeting:
+“Happy Birthday!” in large bold white text.
+
+Below, left-aligned white text with spacing and padding:
+
+rust
+Dear ${fullName},
+Wishing you a wonderful birthday and a fantastic year ahead.
+
+Thank you for your hard work and dedication.  
+We're grateful to have you on our team!
+Use a clean, professional sans-serif font (like Montserrat or Lato).
+
+Ensure generous padding, good line spacing, and visually balanced layout. All text should remain within the 512px right panel.
+
+Style notes:
+
+Use flat design with subtle drop shadows only on the photo placeholder.
+
+No decorative elements, no real photo, and no logo — placeholders only.
+
+Prioritize clarity, alignment, and modern typography.
+
+`
   const res = await openai.images.generate({
     model: 'dall-e-3',
     prompt : refinedPrompt,
