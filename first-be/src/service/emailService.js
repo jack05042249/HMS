@@ -108,6 +108,7 @@ async function composePostcard(aiBackgroundBuffer, talentPhotoBase64, logoPath) 
   const talentBuffer = Buffer.from(talentPhotoBase64, 'base64');
   console.log('talentPhotpo', talentBuffer);
   const talentImg = await loadImage(talentBuffer);
+  console.log('talentImg', talentImg);
   ctx.drawImage(talentImg, 40, canvas.height - 240, 180, 180); // bottom-left corner
 
   return canvas.toBuffer('image/png');
@@ -122,7 +123,9 @@ async function downloadImageToBuffer(imageUrl) {
 
 
 function savePostcardToPublic(buffer, filename) {
+  console.log(buffer, ' --- ', filename);
   const filePath = path.join(__dirname, 'public', filename);
+  console.log('filePath', filePath);
 
   // Make sure folder exists
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
