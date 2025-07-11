@@ -29,8 +29,8 @@ const run = async () => new Promise(async (resolve, reject) => {
       origin: config.appUrl,
     }
      */
-    app.use('/public', express.static(__dirname + '/public'));// Serve static files
-    app.use('/postcards', express.static(__dirname + 'public/postcards'));
+    app.use('/public/', express.static(path.join(__dirname, 'public')));// Serve static files
+    app.use('/postcards/', express.static(path.join(__dirname, 'public/postcards')));
     app.use(express.static('public'))
     // app.use(cors());
     app.use(cors({ origin: '*'}));
