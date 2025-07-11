@@ -98,8 +98,10 @@ async function composePostcard(aiBackgroundBuffer, talentPhotoBase64, logoPath) 
   ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 
   // Load company logo
+  console.log('dirname ---> ', __dirname);
   const logo_Path = path.resolve(__dirname, logoPath);
-  const logo = await loadImage(logo_Path);
+  console.log('logo_path --> ', logo_Path);
+  const logo = await loadImage('/home/hms/HMS/first-be/src/public/commit_logo.png');
   ctx.drawImage(logo, canvas.width - 180, 30, 150, 75);
 
   // Load talent photo from base64
