@@ -8,6 +8,7 @@ const { router } = require('./router')
 const db = require('./models')
 const { authorize } = require('./middleware/authorise');
 const { croneExecutor } = require('./worker');
+const path = require('path');
 
 const APP_ENV = process.env.NODE_ENV || 'development'
 
