@@ -125,7 +125,7 @@ async function downloadImageToBuffer(imageUrl) {
 
 function savePostcardToPublic(buffer, filename) {
   console.log(buffer, ' --- ', filename);
-  const filePath = path.join(__dirname, '../public', filename, '.png');
+  const filePath = path.join(__dirname, '../public', `${filename}.png`);
   console.log('filePath', filePath);
 
   // Make sure folder exists
