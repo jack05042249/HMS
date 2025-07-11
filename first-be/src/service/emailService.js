@@ -125,14 +125,14 @@ async function downloadImageToBuffer(imageUrl) {
 
 function savePostcardToPublic(buffer, filename) {
   console.log(buffer, ' --- ', filename);
-  const filePath = path.join(__dirname, 'public', filename);
+  const filePath = path.join(__dirname, '../public', filename, '.png');
   console.log('filePath', filePath);
 
   // Make sure folder exists
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
 
   fs.writeFileSync(filePath, buffer);
-  return `https://coms.commitoffshore.com/public/${filename}`;
+  return `https://coms.commitoffshore.com/public/${filename}.png`;
 }
 
 async function generateFinalPostcard({
