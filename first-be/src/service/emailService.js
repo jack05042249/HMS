@@ -140,7 +140,7 @@ async function generateFinalPostcard({
   const finalBuffer = await composePostcard(
     bgBuffer,
     photoBase64,
-    '../public/commit_logo.png'
+    'public/commit_logo.png'
   );
 
   const uploadedUrl = savePostcardToPublic(
