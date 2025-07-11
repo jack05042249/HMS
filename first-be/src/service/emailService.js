@@ -9,6 +9,9 @@ const { Talent } = require('../models')
 const crypto = require('crypto')
 const axios = require('axios')
 const dotenv = require('dotenv');
+const { createCanvas, loadImage } = require('canvas');
+const fs = require('fs');
+const path = require('path');
 
 dotenv.config();
 
@@ -83,6 +86,65 @@ Font should be modern sans-serif (e.g., Montserrat or Lato)`
   })
 
   return res.data[0].url
+}
+
+async function composePostcard(aiBackgroundBuffer, talentPhotoBase64, logoPath) {
+  const canvas = createCanvas(1024, 1024);
+  const ctx = canvas.getContext('2d');
+
+  // Load background (AI generated)
+  const background = await loadImage(aiBackgroundBuffer);
+  ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+
+  // Load company logo
+  const logo = await loadImage(logoPath);
+  ctx.drawImage(logo, canvas.width - 180, 30, 150, 75);
+
+  // Load talent photo from base64
+  const talentBuffer = Buffer.from(talentPhotoBase64, 'base64');
+  const talentImg = await loadImage(talentBuffer);
+  ctx.drawImage(talentImg, 40, canvas.height - 240, 180, 180); // bottom-left corner
+
+  return canvas.toBuffer('image/png');
+}
+
+async function downloadImageToBuffer(imageUrl) {
+  const response = await axios.get(imageUrl, { responseType: 'arraybuffer' });
+  return Buffer.from(response.data, 'binary');
+}
+
+
+function savePostcardToPublic(buffer, filename) {
+  const filePath = path.join(__dirname, 'public/postcards', filename);
+
+  // Make sure folder exists
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+
+  fs.writeFileSync(filePath, buffer);
+  return `https://coms.commitoffshore.com/api/postcards/${filename}`;
+}
+
+async function generateFinalPostcard({
+  firstName,
+  years,
+  type,
+  photoBase64,
+}) {
+  const aiUrl = await generatePostcardBackground(firstName, years, type);
+  const bgBuffer = await downloadImageToBuffer(aiUrl);
+
+  const finalBuffer = await composePostcard(
+    bgBuffer,
+    photoBase64,
+    '../public/commit_logo.png'
+  );
+
+  const uploadedUrl = savePostcardToPublic(
+    finalBuffer,
+    `postcard_${firstName}_${Date.now()}`
+  );
+
+  return uploadedUrl;
 }
 
 const transporter = nodemailer.createTransport({
@@ -521,7 +583,12 @@ const sendTalentBirthdaysToHR = async (talentsList, { monthName, dayNumber }) =>
   const talentsBlock = talentsList
     .map(async (user, i) => {
         console.log('name', user.fullName)
-      const imageUrl = await generatePostcardBackground(user.fullName, 0, 'birthday')
+      const imageUrl = await generateFinalPostcard({
+        firstName: user.fullName,
+        years: 0,
+        type: 'birthday',
+        photoBase64: user.picture
+      })
 
       const payload = {
         chat_id: CHAT_ID,
