@@ -47,7 +47,7 @@ Right Side Content:
 
 Top-right corner: “Happy Birthday!” in large, bold, white text
 
-Below: A birthday message, starting with “Dear [First Name],” in bold white text
+Below: A birthday message, starting with “Dear ${fullName},” in bold white text
 
 Message should use a friendly, professional tone, in white text, left-aligned, using a clean sans-serif font
 
@@ -94,6 +94,7 @@ async function composePostcard(aiBackgroundBuffer, talentPhotoBase64, logoPath) 
 
   // Load background (AI generated)
   const background = await loadImage(aiBackgroundBuffer);
+  console.log('background', background);
   ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 
   // Load company logo
@@ -102,6 +103,7 @@ async function composePostcard(aiBackgroundBuffer, talentPhotoBase64, logoPath) 
 
   // Load talent photo from base64
   const talentBuffer = Buffer.from(talentPhotoBase64, 'base64');
+  console.log('talentPhotpo', talentBuffer);
   const talentImg = await loadImage(talentBuffer);
   ctx.drawImage(talentImg, 40, canvas.height - 240, 180, 180); // bottom-left corner
 
@@ -109,19 +111,21 @@ async function composePostcard(aiBackgroundBuffer, talentPhotoBase64, logoPath) 
 }
 
 async function downloadImageToBuffer(imageUrl) {
+  console.log('imageUrl', imageUrl);
   const response = await axios.get(imageUrl, { responseType: 'arraybuffer' });
+  console.log('downloaded image', response);
   return Buffer.from(response.data, 'binary');
 }
 
 
 function savePostcardToPublic(buffer, filename) {
-  const filePath = path.join(__dirname, 'public/postcards', filename);
+  const filePath = path.join(__dirname, 'public', filename);
 
   // Make sure folder exists
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
 
   fs.writeFileSync(filePath, buffer);
-  return `https://coms.commitoffshore.com/api/postcards/${filename}`;
+  return `https://coms.commitoffshore.com/public/${filename}`;
 }
 
 async function generateFinalPostcard({
@@ -136,7 +140,7 @@ async function generateFinalPostcard({
   const finalBuffer = await composePostcard(
     bgBuffer,
     photoBase64,
-    '../public/commit_logo.png'
+    'https://coms.commitoffshore.com/public/commit_logo.png'
   );
 
   const uploadedUrl = savePostcardToPublic(
