@@ -38,7 +38,7 @@ const run = async () => new Promise(async (resolve, reject) => {
     // router api/auth/login
     app.use(authorize);
 
-    app.use('/', router);
+    app.use('/api/', router);
 
     const port = process.env.PORT || config.port;
 
