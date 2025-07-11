@@ -152,7 +152,7 @@ async function generateFinalPostcard({
 
   const uploadedUrl = savePostcardToPublic(
     finalBuffer,
-    `postcard_${firstName}_${Date.now()}`
+    `postcard_${firstName.replace(/\s+/g, '_')}_${Date.now()}`
   );
 
   return uploadedUrl;
