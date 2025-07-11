@@ -132,7 +132,7 @@ function savePostcardToPublic(buffer, filename) {
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
 
   fs.writeFileSync(filePath, buffer);
-  return `https://coms.commitoffshore.com/public/${filename}.png`;
+  return `https://coms.commit-offshore.com/public/${filename}.png`;
 }
 
 async function generateFinalPostcard({
