@@ -125,6 +125,8 @@ Prioritize clarity, alignment, and modern typography.
     quality: 'medium',
   })
 
+  console.log(res);
+
   return res.data[0].url
 }
 
