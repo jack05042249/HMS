@@ -125,9 +125,7 @@ Prioritize clarity, alignment, and modern typography.
     quality: 'medium',
   })
 
-  console.log(res);
-
-  return res.data[0].url
+  return res.data[0].b64_json;
 }
 
 async function composePostcard(aiBackgroundBuffer, talentPhotoBase64, logoPath) {
@@ -183,8 +181,8 @@ async function generateFinalPostcard({
   type,
   photoBase64,
 }) {
-  const aiUrl = await generatePostcardBackground(firstName, years, type);
-  const bgBuffer = await downloadImageToBuffer(aiUrl);
+  const bgBuffer = await generatePostcardBackground(firstName, years, type);
+  // const bgBuffer = await downloadImageToBuffer(aiUrl);
 
   const finalBuffer = await composePostcard(
     bgBuffer,
