@@ -122,7 +122,7 @@ Prioritize clarity, alignment, and modern typography.
     prompt : refinedPrompt,
     size: '1024x1024',
     n: 1,
-    quality: 'standard',
+    quality: 'medium',
   })
 
   return res.data[0].url
