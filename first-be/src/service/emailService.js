@@ -163,19 +163,9 @@ async function composePostcard(aiBackgroundBuffer, talentPhotoBase64, logoPath) 
   console.log('dirname ---> ', __dirname)
   const logo_Path = path.resolve(__dirname, logoPath)
   console.log('logo_path --> ', logo_Path)
-  const logo = await loadImage('/home/hms/HMS/first-be/src/public/commit_logo.png')
+  const logo = await loadImage(logo_Path)
   // ...existing code...
-  // Calculate cropping for center square if needed
-  let iw = logo.width
-  let ih = logo.height
-  let size = Math.min(iw, ih)
-  let sx = (iw - size) / 2
-  let sy = (ih - size) / 2
-
-  // Draw cropped and resized image
-  ctx.drawImage(logo, sx, sy, size, size, 110, 90, 200, 100)
-  // ...existing code...
-  // ctx.drawImage(logo, 110, 90, 200, 100)
+  ctx.drawImage(logo, 110, 90, 250, 125)
 
   // Load talent photo from base64
   const base64Data = talentPhotoBase64.split(',')[1] // remove "data:image/jpeg;base64,"
@@ -184,17 +174,7 @@ async function composePostcard(aiBackgroundBuffer, talentPhotoBase64, logoPath) 
   const talentImg = await loadImage(talentBuffer)
   console.log('talentImg', talentImg)
   // ...existing code...
-  // Calculate cropping for center square if needed
-  iw = talentImg.width
-  ih = talentImg.height
-  size = Math.min(iw, ih)
-  sx = (iw - size) / 2
-  sy = (ih - size) / 2
-
-  // Draw cropped and resized image
-  ctx.drawImage(talentImg, sx, sy, size, size, 110, 235, 260, 260)
-  // ...existing code...
-  // ctx.drawImage(talentImg, 110, 235, 260, 260); // bottom-left corner
+  ctx.drawImage(talentImg, 110, 240, 320, 320); // bottom-left corner
 
   return canvas.toBuffer('image/png')
 }
