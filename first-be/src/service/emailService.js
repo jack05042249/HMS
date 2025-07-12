@@ -133,7 +133,7 @@ async function composePostcard(aiBackgroundBuffer, talentPhotoBase64, logoPath) 
   const ctx = canvas.getContext('2d');
 
   // Load background (AI generated)
-  const background = await loadImage(aiBackgroundBuffer);
+  const background = await loadImage(Buffer.from(aiBackgroundBuffer, 'base64'));
   console.log('background', background);
   ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 
