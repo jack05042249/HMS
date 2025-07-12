@@ -79,42 +79,64 @@ Font should be modern sans-serif (e.g., Montserrat or Lato)`
   // const refinedPrompt = chatResponse.choices[0].message.content.trim();
   const refinedPrompt = `Design a professional square birthday greeting card, 1024×1024 pixels.
 
-Layout: Vertically split into two equal halves:
+Layout: Vertically split into two uneven sections:
 
-Left side (white background, 512px wide):
+Left side: white background, 480px wide
 
-In the top-left corner, reserve space (do not render any text or image) for a company logo. Size of reserved box: 180×60 pixels, positioned at 40px from the top and 40px from the left.
+Right side: solid red background (#C32C1D), 544px wide
 
-In the center of the left panel, place a gray placeholder box to represent a photo. The placeholder should be a rounded rectangle (250×250 pixels), positioned at 240px from the top and 131px from the left, with a subtle drop shadow to show depth.
+Left panel (480px wide):
 
-Below the photo placeholder, write the employee name: ${fullName} in large bold black font, centered horizontally.
+In the center of the left panel, place a default developer portrait (not a blank box).
+The photo should:
 
-Add a thin light-gray horizontal line under the name, about 312px wide, aligned with the center, placed at 560px from the top.
+Show a professional-looking male or female software developer according to the employee name
 
-Right side (solid red background: #C32C1D, 512px wide):
+Be realistic or semi-realistic, square
 
-In the top-right corner, display the greeting:
-“Happy Birthday!” in large bold white text.
+Size: 250×250 pixels
 
-Below, left-aligned white text with spacing and padding:
+Position: 240px from the top, 115px from the left (to center inside 480px panel)
 
-rust
-Dear ${fullName},
-Wishing you a wonderful birthday and a fantastic year ahead.
+Have rounded corners and a subtle drop shadow for depth
+
+Below the photo, write the employee name: ${fullName} in large bold black font, centered horizontally
+
+Add a thin light-gray horizontal line under the name:
+
+Width: 312px
+
+Position: 560px from the top, centered
+
+Right panel (544px wide):
+
+In the top-right corner, show the greeting:
+“Happy Birthday!” in large, bold white text
+
+Below, add a left-aligned birthday message in white text:
+"Dear ${fullName},  
+Wishing you a wonderful birthday and a fantastic year ahead.  
 
 Thank you for your hard work and dedication.  
-We're grateful to have you on our team!
-Use a clean, professional sans-serif font (like Montserrat or Lato).
+We're grateful to have you on our team!"
 
-Ensure generous padding, good line spacing, and visually balanced layout. All text should remain within the 512px right panel.
+Use a clean sans-serif font (Montserrat or Lato)
 
-Style notes:
+Ensure ample padding, clear line spacing, and a balanced visual layout within the 544px red panel
 
-Use flat design with subtle drop shadows only on the photo placeholder.
+Styling & Decorative Elements:
 
-No decorative elements, no real photo, and no logo — placeholders only.
+Add a simple decorative border around the entire postcard
 
-Prioritize clarity, alignment, and modern typography.
+The border should be subtle, modern, and clean — not ornate
+
+Can be a thin gray or black line that encloses both left and right sections together
+
+Keep overall style flat and professional
+
+Use subtle drop shadows only under the photo
+
+Do not include a company logo — only the default developer image as the placeholder
 
 `
   const res = await openai.images.generate({
@@ -142,7 +164,7 @@ async function composePostcard(aiBackgroundBuffer, talentPhotoBase64, logoPath) 
   const logo_Path = path.resolve(__dirname, logoPath);
   console.log('logo_path --> ', logo_Path);
   const logo = await loadImage('/home/hms/HMS/first-be/src/public/commit_logo.png');
-  ctx.drawImage(logo, canvas.width - 180, 30, 150, 75);
+  ctx.drawImage(logo, 110, 90, 200, 100);
 
   // Load talent photo from base64
   const base64Data = talentPhotoBase64.split(',')[1]; // remove "data:image/jpeg;base64,"
@@ -150,7 +172,7 @@ async function composePostcard(aiBackgroundBuffer, talentPhotoBase64, logoPath) 
   console.log('talentPhoto', talentBuffer);
   const talentImg = await loadImage(talentBuffer);
   console.log('talentImg', talentImg);
-  ctx.drawImage(talentImg, 40, canvas.height - 240, 180, 180); // bottom-left corner
+  ctx.drawImage(talentImg, 110, 235, 260, 260); // bottom-left corner
 
   return canvas.toBuffer('image/png');
 }
