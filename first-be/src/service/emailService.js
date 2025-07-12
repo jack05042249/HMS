@@ -117,8 +117,8 @@ No decorative elements, no real photo, and no logo — placeholders only.
 Prioritize clarity, alignment, and modern typography.
 
 `
-  const res = await openai.images.generate({
-    model: 'dall-e-3',
+  const res = await openai.images.edit({
+    model: 'gpt-image-1',
     prompt : refinedPrompt,
     size: '1024x1024',
     n: 1,
