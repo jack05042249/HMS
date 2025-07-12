@@ -8,12 +8,12 @@ const { logger } = require('../utils/logger')
 const { Talent } = require('../models')
 const crypto = require('crypto')
 const axios = require('axios')
-const dotenv = require('dotenv');
-const { createCanvas, loadImage } = require('canvas');
-const fs = require('fs');
-const path = require('path');
+const dotenv = require('dotenv')
+const { createCanvas, loadImage } = require('canvas')
+const fs = require('fs')
+const path = require('path')
 
-dotenv.config();
+dotenv.config()
 
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN
 const CHAT_ID = process.env.CHAT_ID
@@ -141,83 +141,92 @@ Do not include a company logo — only the default developer image as the placeh
 `
   const res = await openai.images.generate({
     model: 'gpt-image-1',
-    prompt : refinedPrompt,
+    prompt: refinedPrompt,
     size: '1024x1024',
     n: 1,
-    quality: 'medium',
+    quality: 'medium'
   })
 
-  return res.data[0].b64_json;
+  return res.data[0].b64_json
 }
 
 async function composePostcard(aiBackgroundBuffer, talentPhotoBase64, logoPath) {
-  const canvas = createCanvas(1024, 1024);
-  const ctx = canvas.getContext('2d');
+  const canvas = createCanvas(1024, 1024)
+  const ctx = canvas.getContext('2d')
 
   // Load background (AI generated)
-  const background = await loadImage(Buffer.from(aiBackgroundBuffer, 'base64'));
-  console.log('background', background);
-  ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+  const background = await loadImage(Buffer.from(aiBackgroundBuffer, 'base64'))
+  console.log('background', background)
+  ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
 
   // Load company logo
-  console.log('dirname ---> ', __dirname);
-  const logo_Path = path.resolve(__dirname, logoPath);
-  console.log('logo_path --> ', logo_Path);
-  const logo = await loadImage('/home/hms/HMS/first-be/src/public/commit_logo.png');
-  ctx.drawImage(logo, 110, 90, 200, 100);
+  console.log('dirname ---> ', __dirname)
+  const logo_Path = path.resolve(__dirname, logoPath)
+  console.log('logo_path --> ', logo_Path)
+  const logo = await loadImage('/home/hms/HMS/first-be/src/public/commit_logo.png')
+  // ...existing code...
+  // Calculate cropping for center square if needed
+  let iw = logo.width
+  let ih = logo.height
+  let size = Math.min(iw, ih)
+  let sx = (iw - size) / 2
+  let sy = (ih - size) / 2
+
+  // Draw cropped and resized image
+  ctx.drawImage(logo, sx, sy, size, size, 110, 90, 200, 100)
+  // ...existing code...
+  // ctx.drawImage(logo, 110, 90, 200, 100)
 
   // Load talent photo from base64
-  const base64Data = talentPhotoBase64.split(',')[1]; // remove "data:image/jpeg;base64,"
-  const talentBuffer = Buffer.from(base64Data, 'base64');
-  console.log('talentPhoto', talentBuffer);
-  const talentImg = await loadImage(talentBuffer);
-  console.log('talentImg', talentImg);
-  ctx.drawImage(talentImg, 110, 235, 260, 260); // bottom-left corner
+  const base64Data = talentPhotoBase64.split(',')[1] // remove "data:image/jpeg;base64,"
+  const talentBuffer = Buffer.from(base64Data, 'base64')
+  console.log('talentPhoto', talentBuffer)
+  const talentImg = await loadImage(talentBuffer)
+  console.log('talentImg', talentImg)
+  // ...existing code...
+  // Calculate cropping for center square if needed
+  iw = talentImg.width
+  ih = talentImg.height
+  size = Math.min(iw, ih)
+  sx = (iw - size) / 2
+  sy = (ih - size) / 2
 
-  return canvas.toBuffer('image/png');
+  // Draw cropped and resized image
+  ctx.drawImage(talentImg, sx, sy, size, size, 110, 235, 260, 260)
+  // ...existing code...
+  // ctx.drawImage(talentImg, 110, 235, 260, 260); // bottom-left corner
+
+  return canvas.toBuffer('image/png')
 }
 
 async function downloadImageToBuffer(imageUrl) {
-  console.log('imageUrl', imageUrl);
-  const response = await axios.get(imageUrl, { responseType: 'arraybuffer' });
-  console.log('downloaded image', response);
-  return Buffer.from(response.data, 'binary');
+  console.log('imageUrl', imageUrl)
+  const response = await axios.get(imageUrl, { responseType: 'arraybuffer' })
+  console.log('downloaded image', response)
+  return Buffer.from(response.data, 'binary')
 }
-
 
 function savePostcardToPublic(buffer, filename) {
-  console.log(buffer, ' --- ', filename);
-  const filePath = path.join(__dirname, '../public', `${filename}.png`);
-  console.log('filePath', filePath);
+  console.log(buffer, ' --- ', filename)
+  const filePath = path.join(__dirname, '../public', `${filename}.png`)
+  console.log('filePath', filePath)
 
   // Make sure folder exists
-  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  fs.mkdirSync(path.dirname(filePath), { recursive: true })
 
-  fs.writeFileSync(filePath, buffer);
-  return `https://coms.commit-offshore.com/public/${filename}.png`;
+  fs.writeFileSync(filePath, buffer)
+  return `https://coms.commit-offshore.com/public/${filename}.png`
 }
 
-async function generateFinalPostcard({
-  firstName,
-  years,
-  type,
-  photoBase64,
-}) {
-  const bgBuffer = await generatePostcardBackground(firstName, years, type);
+async function generateFinalPostcard({ firstName, years, type, photoBase64 }) {
+  const bgBuffer = await generatePostcardBackground(firstName, years, type)
   // const bgBuffer = await downloadImageToBuffer(aiUrl);
 
-  const finalBuffer = await composePostcard(
-    bgBuffer,
-    photoBase64,
-    '../public/commit_logo.png'
-  );
+  const finalBuffer = await composePostcard(bgBuffer, photoBase64, '../public/commit_logo.png')
 
-  const uploadedUrl = savePostcardToPublic(
-    finalBuffer,
-    `postcard_${firstName.replace(/\s+/g, '_')}_${Date.now()}`
-  );
+  const uploadedUrl = savePostcardToPublic(finalBuffer, `postcard_${firstName.replace(/\s+/g, '_')}_${Date.now()}`)
 
-  return uploadedUrl;
+  return uploadedUrl
 }
 
 const transporter = nodemailer.createTransport({
@@ -655,7 +664,7 @@ const sendMailToEmployeeOnChangeVacationBalance = async (toEmail, balanceData, t
 const sendTalentBirthdaysToHR = async (talentsList, { monthName, dayNumber }) => {
   const talentsBlock = talentsList
     .map(async (user, i) => {
-        console.log('name', user.fullName)
+      console.log('name', user.fullName)
       const imageUrl = await generateFinalPostcard({
         firstName: user.fullName,
         years: 0,
@@ -669,7 +678,7 @@ const sendTalentBirthdaysToHR = async (talentsList, { monthName, dayNumber }) =>
         photo: imageUrl // Must be publicly accessible
       }
 
-      console.log('payload', payload);
+      console.log('payload', payload)
 
       try {
         const res = await axios.post(url, payload)
