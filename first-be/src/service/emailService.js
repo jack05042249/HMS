@@ -395,7 +395,8 @@ const isTelegramUsername = telegram => {
 const getChatId = async (user) => {
   const data = await fs.promises.readFile(ChatIdPath, 'utf8');
   console.log('data', data);
-  const telegram_users = JSON.parse(data);
+  const lines = data.trim().split('\n');
+  const telegram_users = lines.map(line => JSON.parse(line));
   console.log('telegram_users  --> ',  telegram_users);
   telegram_users.map(t_user => {
     if (isTelegramUsername(user.telegram) && `@${t_user.username}` == user.telegram) {
