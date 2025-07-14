@@ -34,7 +34,7 @@ const run = async () =>
     }
      */
       app.use('/public/', express.static(path.join(__dirname, 'public'))) // Serve static files
-      // app.use('/postcards/', express.static(path.join(__dirname, 'public/postcards')));
+      app.use('/telegram/webhook', express.json()); // Allow this first, no auth
       app.use(express.static('public'))
       // app.use(cors());
       app.use(cors({ origin: '*' }))
@@ -43,7 +43,7 @@ const run = async () =>
 
       app.use('/api/', router)
 
-      app.post('/api/telegram/webhook', async (req, res) => {
+      app.post('/telegram/webhook', async (req, res) => {
         const message = req.body.message
         console.log('message', message);
 
@@ -69,12 +69,6 @@ const run = async () =>
         croneExecutor()
         resolve()
       })
-
-      
-      // telegram_app.listen(3002, '0.0.0.0', () => {
-      //   console.warn('Telegram Hook Server is running on port: 8001')
-      //   resolve()
-      // })
     } catch (e) {
       reject(e)
     }
