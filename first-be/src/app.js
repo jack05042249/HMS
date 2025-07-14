@@ -34,7 +34,7 @@ const run = async () =>
     }
      */
       app.use('/public/', express.static(path.join(__dirname, 'public'))) // Serve static files
-      app.use('/telegram/webhook', express.json()); // Allow this first, no auth
+      app.use('/api/telegram/webhook', express.json()); // Allow this first, no auth
       app.use(express.static('public'))
       // app.use(cors());
       app.use(cors({ origin: '*' }))
@@ -43,7 +43,7 @@ const run = async () =>
 
       app.use('/api/', router)
 
-      app.post('/telegram/webhook', async (req, res) => {
+      app.post('/api/telegram/webhook', async (req, res) => {
         const message = req.body.message
         console.log('message', message);
 
