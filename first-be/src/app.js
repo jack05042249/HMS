@@ -45,6 +45,7 @@ const run = async () =>
 
       app.post('/api/telegram/webhook', async (req, res) => {
         const message = req.body.message
+        console.log('message', message);
 
         if (message && message.text === '/start') {
           const chatId = message.chat.id
