@@ -397,10 +397,12 @@ const getChatId = async (user) => {
   const telegram_users = JSON.parse(data);
   console.log('telegram_users  --> ',  telegram_users);
   telegram_users.map(t_user => {
-    if (isTelegramUsername(user.telegram) && t_user.username == user.telegram) {
+    if (isTelegramUsername(user.telegram) && `@${t_user.username}` == user.telegram) {
+      console.log('isTelUser : true  --> ', t_user.chatId);
       return t_user.chatId;
     } else {
       if (user.fullName.toLowerCase().includes(t_user.firstName.toLowerCase()) && user.fullName.toLowerCase().includes(t_user.lastName.toLowerCase())) {
+        console.log('isTelUser : false --> ', t_user.chatId);
         return t_user.chatId;
       }
     }
