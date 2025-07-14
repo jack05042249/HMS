@@ -789,7 +789,7 @@ const sendTalentBirthdaysToHR = async (talentsList, { monthName, dayNumber }) =>
         photoBase64: user.picture
       })
 
-      const chatID = getChatId(user);
+      const chatID = await getChatId(user);
 
       const payload = {
         chat_id: chatID,
