@@ -12,7 +12,7 @@ const dotenv = require('dotenv')
 const { createCanvas, loadImage } = require('canvas')
 const fs = require('fs')
 const path = require('path')
-const {Blob} = require('buffer');
+const {Blob, File} = require('buffer');
 const { OpenAI } = require('openai')
 const { getMonthCountFromDateTillEndOfYear } = require('../utils/date.func')
 
