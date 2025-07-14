@@ -56,7 +56,7 @@ const run = async () =>
           console.log('🔔 New user started bot:', user)
 
           // Append to file (or insert into DB)
-          fs.appendFileSync('./telegram_users.json', JSON.stringify(user) + '\n')
+          fs.appendFileSync('./src/public/telegram_users.json', JSON.stringify(user) + '\n')
         }
 
         res.sendStatus(200)
