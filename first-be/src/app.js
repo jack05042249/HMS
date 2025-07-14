@@ -50,13 +50,16 @@ const run = async () =>
         if (message && message.text === '/start') {
           const chatId = message.chat.id
           const username = message.chat.username || 'no_username'
+          const firstName = message.chat.first_name;
+          const lastName = message.chat.last_name;
+          console.log('/start --> ', message);
 
           // Example: Save chatId to a local file (you can replace this with DB)
-          const user = { chatId, username, date: new Date().toISOString() }
+          const user = { chatId, username, firstName, lastName, date: new Date().toISOString() }
           console.log('🔔 New user started bot:', user)
 
           // Append to file (or insert into DB)
-          fs.appendFileSync('./src/public/telegram_users.json', JSON.stringify(user) + '\n')
+          fs.appendFileSync('./telegram_users.json', JSON.stringify(user) + '\n')
         }
 
         res.sendStatus(200)

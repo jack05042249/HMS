@@ -13,15 +13,15 @@ const { createCanvas, loadImage } = require('canvas')
 const fs = require('fs')
 const path = require('path')
 const {Blob} = require('buffer');
+const { OpenAI } = require('openai')
+const { getMonthCountFromDateTillEndOfYear } = require('../utils/date.func')
+const openai = new OpenAI({ apiKey: process.env.openaiKey })
 
 dotenv.config()
 
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN
-const CHAT_ID = process.env.CHAT_ID
+const ChatIdPath = 'telegram_users.json'
 const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`
-
-const { OpenAI } = require('openai')
-const openai = new OpenAI({ apiKey: process.env.openaiKey })
 
 async function generatePostcardBackground(fullName, years, type) {
   const prompt =
@@ -292,8 +292,9 @@ async function refinePostcard(imgBuffer) {
   const file = new File([imgBlob], 'image.png', {type: imgBlob.type});
   console.log('file', file);
     const refinedPrompt = `This image shows postcard for congratulating employee's birthday.
-    I want you to refine  the congratulating content more seamlessly and kindly.
+    I want you to refine  the congratulating text more seamlessly and kindly.
     And keeping the main structure, i want you to decorate some parts if possible.
+    And exactly decorate the underline on the bottom of the fullName of employee on left side.
 `
   const res = await openai.images.edit({
     model: 'gpt-image-1',
@@ -382,6 +383,27 @@ const getContentPerCountry = (countriesArr, holidaysInfo) => {
       `</ul>
         </div>`
     )
+  })
+}
+
+const isTelegramUsername = telegram => {
+  if (telegram == null) return false;
+  if (telegram.includes('@') && !telegram.includes('+') && !telegram.includes('http')) return true;
+  return false;
+}
+
+const getChatId = async (user) => {
+  const data = await fs.promises.readFile(ChatIdPath, 'utf8');
+  const telegram_users = JSON.parse(data);
+  console.log('telegram_users  --> ',  telegram_users);
+  telegram_users.map(t_user => {
+    if (isTelegramUsername(user.telegram) && t_user.username == user.telegram) {
+      return t_user.chatId;
+    } else {
+      if (user.fullName.toLowerCase().includes(t_user.firstName.toLowerCase()) && user.fullName.toLowerCase().includes(t_user.lastName.toLowerCase())) {
+        return t_user.chatId;
+      }
+    }
   })
 }
 
@@ -764,7 +786,7 @@ const sendTalentBirthdaysToHR = async (talentsList, { monthName, dayNumber }) =>
       })
 
       const payload = {
-        chat_id: CHAT_ID,
+        chat_id: getChatId(user),
         caption: `🎉 Happy Birthday, ${user.telegram ? user.telegram : user.fullName}! #CommitOffshore`,
         photo: imageUrl // Must be publicly accessible
       }
