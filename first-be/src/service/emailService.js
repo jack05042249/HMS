@@ -394,6 +394,7 @@ const isTelegramUsername = telegram => {
 
 const getChatId = async (user) => {
   const data = await fs.promises.readFile(ChatIdPath, 'utf8');
+  console.log('data', data);
   const telegram_users = JSON.parse(data);
   console.log('telegram_users  --> ',  telegram_users);
   telegram_users.map(t_user => {
@@ -787,8 +788,10 @@ const sendTalentBirthdaysToHR = async (talentsList, { monthName, dayNumber }) =>
         photoBase64: user.picture
       })
 
+      const chatID = getChatId(user);
+
       const payload = {
-        chat_id: getChatId(user),
+        chat_id: chatID,
         caption: `🎉 Happy Birthday, ${user.telegram ? user.telegram : user.fullName}! #CommitOffshore`,
         photo: imageUrl // Must be publicly accessible
       }
