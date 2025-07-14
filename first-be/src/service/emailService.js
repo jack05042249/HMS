@@ -398,7 +398,7 @@ const getChatId = async (user) => {
   const lines = data.trim().split('\n');
   const telegram_users = lines.map(line => JSON.parse(line));
   console.log('telegram_users  --> ',  telegram_users);
-  telegram_users.map(t_user => {
+  for (const t_user of telegram_users) {
     if (isTelegramUsername(user.telegram) && `@${t_user.username}` == user.telegram) {
       console.log('isTelUser : true  --> ', t_user.chatId);
       return t_user.chatId;
@@ -408,7 +408,7 @@ const getChatId = async (user) => {
         return t_user.chatId;
       }
     }
-  })
+  }
 }
 
 const sendHolidaysEmail = async (data, startDate, endDate) => {
