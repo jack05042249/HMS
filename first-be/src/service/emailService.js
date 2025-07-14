@@ -12,6 +12,7 @@ const dotenv = require('dotenv')
 const { createCanvas, loadImage } = require('canvas')
 const fs = require('fs')
 const path = require('path')
+const {Blob} = require('buffer');
 
 dotenv.config()
 
@@ -78,66 +79,30 @@ Font should be modern sans-serif (e.g., Montserrat or Lato)`
 
   // const refinedPrompt = chatResponse.choices[0].message.content.trim();
   const refinedPrompt = `Design a professional square birthday greeting card, 1024×1024 pixels.
+Left panel (white background, 480px wide):
 
-Layout: Vertically split into two uneven sections:
+  In the left panel, place a photo professional-looking male or female software developer according to the employee name : ${fullName}.
+  The photo is positioned 1100pixels from the top, 80pixels from the left and its size is 320×320 pixels.
+  The photo is realistic or semi-realistic, square and has rounded corners and a subtle drop shadow for depth
 
-Left side: white background, 480px wide
+  Below the photo, write the employee name: ${fullName} in large bold black font, centered horizontally
+  Add a thin light-gray horizontal line (width: 312px) under the name.
 
-Right side: solid red background (#C32C1D), 544px wide
+Right panel (solid red background (#C32C1D), (544px wide)):
 
-Left panel (480px wide):
+  In the top-right corner, show the greeting:
+    “Happy Birthday!” in large, bold white English text
 
-In the center of the left panel, place a default developer portrait (not a blank box).
-The photo should:
+    Below, add a left-aligned birthday message in white English text:
+    “Dear ${fullName},  
+    Wishing you a wonderful birthday and a fantastic year ahead.  
 
-Show a professional-looking male or female software developer according to the employee name
+    Thank you for your hard work and dedication.  
+    We're grateful to have you on our team!”
 
-Be realistic or semi-realistic, square
+  Use a clean sans-serif font (Montserrat or Lato)
 
-Size: 250×250 pixels
-
-Position: 240px from the top, 115px from the left (to center inside 480px panel)
-
-Have rounded corners and a subtle drop shadow for depth
-
-Below the photo, write the employee name: ${fullName} in large bold black font, centered horizontally
-
-Add a thin light-gray horizontal line under the name:
-
-Width: 312px
-
-Position: 560px from the top, centered
-
-Right panel (544px wide):
-
-In the top-right corner, show the greeting:
-“Happy Birthday!” in large, bold white text
-
-Below, add a left-aligned birthday message in white text:
-"Dear ${fullName},  
-Wishing you a wonderful birthday and a fantastic year ahead.  
-
-Thank you for your hard work and dedication.  
-We're grateful to have you on our team!"
-
-Use a clean sans-serif font (Montserrat or Lato)
-
-Ensure ample padding, clear line spacing, and a balanced visual layout within the 544px red panel
-
-Styling & Decorative Elements:
-
-Add a simple decorative border around the entire postcard
-
-The border should be subtle, modern, and clean — not ornate
-
-Can be a thin gray or black line that encloses both left and right sections together
-
-Keep overall style flat and professional
-
-Use subtle drop shadows only under the photo
-
-Do not include a company logo — only the default developer image as the placeholder
-
+  Ensure ample padding, clear line spacing, and a balanced visual layout within the 544px red panel
 `
   const res = await openai.images.generate({
     model: 'gpt-image-1',
@@ -150,14 +115,19 @@ Do not include a company logo — only the default developer image as the placeh
   return res.data[0].b64_json
 }
 
-async function composePostcard(aiBackgroundBuffer, talentPhotoBase64, logoPath) {
-  const canvas = createCanvas(1024, 1024)
+async function composePostcard(talentPhotoBase64, logoPath, fullName) {
+  const canvas = createCanvas(900, 1024)
   const ctx = canvas.getContext('2d')
 
   // Load background (AI generated)
-  const background = await loadImage(Buffer.from(aiBackgroundBuffer, 'base64'))
-  console.log('background', background)
-  ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
+  // const background = await loadImage(Buffer.from(aiBackgroundBuffer, 'base64'))
+  // console.log('background', background)
+  // ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
+
+  ctx.fillStyle = 'lightgray'
+  ctx.fillRect(0, 0, 420, 1024)
+  ctx.fillStyle = '#C32C1D'
+  ctx.fillRect(420, 0, 480, 1024)
 
   // Load company logo
   console.log('dirname ---> ', __dirname)
@@ -165,7 +135,7 @@ async function composePostcard(aiBackgroundBuffer, talentPhotoBase64, logoPath) 
   console.log('logo_path --> ', logo_Path)
   const logo = await loadImage(logo_Path)
   // ...existing code...
-  ctx.drawImage(logo, 110, 90, 250, 125)
+  ctx.drawImage(logo, 60, 80, 300, 150)
 
   // Load talent photo from base64
   const base64Data = talentPhotoBase64.split(',')[1] // remove "data:image/jpeg;base64,"
@@ -174,7 +144,124 @@ async function composePostcard(aiBackgroundBuffer, talentPhotoBase64, logoPath) 
   const talentImg = await loadImage(talentBuffer)
   console.log('talentImg', talentImg)
   // ...existing code...
-  ctx.drawImage(talentImg, 110, 240, 320, 320); // bottom-left corner
+
+  // Draw drop shadow (optional)
+  ctx.save()
+  ctx.shadowColor = 'rgba(244, 244, 248, 1)' // soft blue shadow
+  ctx.shadowBlur = 16
+  ctx.shadowOffsetX = 0
+  ctx.shadowOffsetY = 8
+
+  // Draw rounded rectangle background for the image
+  const x = 100,
+    y = 300,
+    width = 360,
+    height = 360,
+    radius = 32
+  ctx.beginPath()
+  ctx.moveTo(x + radius, y)
+  ctx.lineTo(x + width - radius, y)
+  ctx.quadraticCurveTo(x + width, y, x + width, y + radius)
+  ctx.lineTo(x + width, y + height - radius)
+  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height)
+  ctx.lineTo(x + radius, y + height)
+  ctx.quadraticCurveTo(x, y + height, x, y + height - radius)
+  ctx.lineTo(x, y + radius)
+  ctx.quadraticCurveTo(x, y, x + radius, y)
+  ctx.closePath()
+  ctx.fillStyle = '#fff' // white background
+  ctx.fill()
+  ctx.restore()
+
+  // Draw border (optional)
+  ctx.save()
+  ctx.beginPath()
+  ctx.moveTo(x + radius, y)
+  ctx.lineTo(x + width - radius, y)
+  ctx.quadraticCurveTo(x + width, y, x + width, y + radius)
+  ctx.lineTo(x + width, y + height - radius)
+  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height)
+  ctx.lineTo(x + radius, y + height)
+  ctx.quadraticCurveTo(x, y + height, x, y + height - radius)
+  ctx.lineTo(x, y + radius)
+  ctx.quadraticCurveTo(x, y, x + radius, y)
+  ctx.closePath()
+  ctx.lineWidth = 6
+  ctx.strokeStyle = '#fff' // Commit blue border
+  ctx.stroke()
+  ctx.restore()
+
+  // Draw the talent image clipped to rounded rectangle
+  ctx.save()
+  ctx.beginPath()
+  ctx.moveTo(x + radius, y)
+  ctx.lineTo(x + width - radius, y)
+  ctx.quadraticCurveTo(x + width, y, x + width, y + radius)
+  ctx.lineTo(x + width, y + height - radius)
+  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height)
+  ctx.lineTo(x + radius, y + height)
+  ctx.quadraticCurveTo(x, y + height, x, y + height - radius)
+  ctx.lineTo(x, y + radius)
+  ctx.quadraticCurveTo(x, y, x + radius, y)
+  ctx.closePath()
+  ctx.clip()
+  ctx.drawImage(talentImg, x, y, width, height)
+  ctx.restore()
+  // end of drawing talent photo
+
+  // drawing fullName of talent Name
+
+  // Split fullName
+  const [firstLine, ...rest] = fullName.split(' ')
+  const secondLine = rest.join(' ')
+
+  // Draw first part (first line)
+  ctx.font = 'bold 50px Montserrat, sans-serif'
+  ctx.fillStyle = 'black'
+  ctx.fillText(firstLine, 120, 750)
+
+  // Draw second part (second line, only if exists)
+  if (secondLine) {
+    ctx.fillText(secondLine, 120, 810)
+
+    // Draw underline under the second line
+    ctx.lineWidth = 2
+    ctx.strokeStyle = 'gray'
+    ctx.beginPath()
+    ctx.moveTo(100, 850) // start X, Y
+    ctx.lineTo(395, 850) // end X, Y
+    ctx.stroke()
+  } else {
+    // If no second line, draw underline under the first line
+    ctx.lineWidth = 2
+    ctx.strokeStyle = 'gray'
+    ctx.beginPath()
+    ctx.moveTo(100, 790)
+    ctx.lineTo(395, 790)
+    ctx.stroke()
+  }
+  // end of drawing talent's fullName
+
+  ctx.font = 'bold 60px Impact, Verdana, sans-serif'
+  ctx.fillStyle = 'white'
+  ctx.fillText(`Happy`, 520, 200)
+  ctx.fillText(`Birthday!`, 520, 280)
+  ctx.font = 'bold 35px Impact, Verdana, sans-serif'
+  ctx.fillText(`Dear ${fullName.split(' ')[0]},`, 520, 380)
+  ctx.font = '30px Impact, Verdana, sans-serif'
+  const message1 = `Wishing you a&wonderful birthday&and a fantastic&year ahead.`
+  const lines1 = message1.split('&')
+  lines1.forEach((line, i) => {
+    ctx.fillText(line, 520, 425 + i * 46) // 40px vertical spacing between lines
+  })
+
+  const message2 = `Thank you for your&hard work and&dedication. We're&grateful to have you&on our team!`
+  const lines2 = message2.split('&')
+  lines2.forEach((line, i) => {
+    ctx.fillText(line, 520, 625 + i * 46) // 40px vertical spacing between lines
+  })
+  // ctx.fillText(`Best regards,`, 540, 830)
+  // ctx.fillText(`ITSOFT team`, 540, 860)
 
   return canvas.toBuffer('image/png')
 }
@@ -198,13 +285,37 @@ function savePostcardToPublic(buffer, filename) {
   return `https://coms.commit-offshore.com/public/${filename}.png`
 }
 
+
+async function refinePostcard(imgBuffer) {
+  const imgBlob = new Blob([imgBuffer], { type: 'image/png' });
+  console.log('imgBlob', imgBlob);
+  const file = new File([imgBlob], 'image.png', {type: imgBlob.type});
+  console.log('file', file);
+    const refinedPrompt = `This image shows postcard for congratulating employee's birthday.
+    I want you to refine  the congratulating content more seamlessly and kindly.
+    And keeping the main structure, i want you to decorate some parts if possible.
+`
+  const res = await openai.images.edit({
+    model: 'gpt-image-1',
+    prompt: refinedPrompt,
+    size: '1024x1024',
+    n: 1,
+    quality: 'high',
+    image: file
+  })
+
+  return Buffer.from(res.data[0].b64_json, 'base64');
+}
+
 async function generateFinalPostcard({ firstName, years, type, photoBase64 }) {
-  const bgBuffer = await generatePostcardBackground(firstName, years, type)
+  // const bgBuffer = await generatePostcardBackground(firstName, years, type)
   // const bgBuffer = await downloadImageToBuffer(aiUrl);
 
-  const finalBuffer = await composePostcard(bgBuffer, photoBase64, '../public/commit_logo.png')
+  const finalBuffer = await composePostcard(photoBase64, '../public/commit_logo.png', firstName)
+  console.log('finalBuffer', finalBuffer);
+  const refinedBuffer = await refinePostcard(finalBuffer);
 
-  const uploadedUrl = savePostcardToPublic(finalBuffer, `postcard_${firstName.replace(/\s+/g, '_')}_${Date.now()}`)
+  const uploadedUrl = savePostcardToPublic(refinedBuffer, `postcard_${firstName.replace(/\s+/g, '_')}_${Date.now()}`)
 
   return uploadedUrl
 }
@@ -314,7 +425,7 @@ const sendHolidaysEmail = async (data, startDate, endDate) => {
         <p style='margin-bottom: 20px'>I hope this reminder assists you in effectively organizing your schedule. Should you have any inquiries, please feel free to contact me without hesitation.</p>
         <span style='margin-bottom: 1px'>Best regards</span>
         <p style='margin-bottom: 20px'> <strong> Commit Offshore </strong> </span>
-        <footer style='background-color: #4D4AEA; color: #F5F5F5; font-size: 12px;  width: 100%; height: 55px; text-align: center;'>
+        <footer style='background-color: #4D4AEA; color: #F5F5F5; font-size: 12px;  width: 2%; height: 55px; text-align: center;'>
         <div style='margin: auto 0; '>
           <p style='text-align: center;'> <span> +972 545 937 383 </span> | <span>  <a style='color: #F5F5F5;'>${itsoftMail}</a> </span>  </p>
           <p style='text-align: center;'> <span> <a style='color: #F5F5F5;'>${itsoftLink}</a> </span> </p>
