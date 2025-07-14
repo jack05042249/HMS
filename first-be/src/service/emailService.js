@@ -15,9 +15,9 @@ const path = require('path')
 const {Blob} = require('buffer');
 const { OpenAI } = require('openai')
 const { getMonthCountFromDateTillEndOfYear } = require('../utils/date.func')
-const openai = new OpenAI({ apiKey: process.env.openaiKey })
 
 dotenv.config()
+const openai = new OpenAI({ apiKey: process.env.openaiKey })
 
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN
 const ChatIdPath = 'telegram_users.json'
