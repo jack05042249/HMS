@@ -12,11 +12,11 @@ const sendTalentBirthdaysNotification = async () => {
         console.log('====== No birthdays in 1 day ======');
     }
 
-    // if (customers.length > 0) {
-    //     await sendCustomerBirthdaysToHR(customers, data);
-    // } else {
-    //     console.log('====== No birthdays in 1 day ======');
-    // }
+    if (customers.length > 0) {
+        await sendCustomerBirthdaysToHR(customers, data);
+    } else {
+        console.log('====== No birthdays in 1 day ======');
+    }
 }
 
 module.exports = {

@@ -12,7 +12,7 @@ const dotenv = require('dotenv')
 const { createCanvas, loadImage } = require('canvas')
 const fs = require('fs')
 const path = require('path')
-const {Blob, File} = require('buffer');
+const { Blob, File } = require('buffer')
 const { OpenAI } = require('openai')
 const { getMonthCountFromDateTillEndOfYear } = require('../utils/date.func')
 
@@ -23,106 +23,9 @@ const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN
 const ChatIdPath = 'telegram_users.json'
 const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`
 
-async function generatePostcardBackground(fullName, years, type) {
-  const prompt =
-    type === 'birthday'
-      ? `Create a professional birthday greeting card with the following design elements:
-
-Layout: Split vertically into two sections:
-
-Left side: white background
-
-Right side: solid red background (#C32C1D)
-
-Top-Left: Company logo with bold black and red text ("COMMIT" in black and "OFFSHORE" in a red box beneath it).
-
-Left Side Content:
-
-Centered square headshot image of the employee
-
-Below the image: Large, bold employee name (black text)
-
-Thin light gray horizontal line under the name
-
-Right Side Content:
-
-Top-right corner: “Happy Birthday!” in large, bold, white text
-
-Below: A birthday message, starting with “Dear ${fullName},” in bold white text
-
-Message should use a friendly, professional tone, in white text, left-aligned, using a clean sans-serif font
-
-Styling Details:
-
-Subtle drop shadow around the photo and text for depth
-
-Generous padding and spacing to avoid visual clutter
-
-Font should be modern sans-serif (e.g., Montserrat or Lato)`
-      : `Design a professional work anniversary postcard using Commit Offshore brand colors (blue and white). Include the text: “🎉 Congratulations on ${years} years with Commit Offshore, ${firstName}! #CommitOffshore” overlaid on the design. Keep the layout celebratory and clean.`
-  // const chatResponse = await openai.chat.completions.create({
-  //     model: 'gpt-4o',
-  //     messages: [
-  //       {
-  //         role: 'system',
-  //         content: 'You are a professional prompt engineer. Refine the user\'s image prompt to be highly detailed and well-structured for DALL·E 3 image generation.',
-  //       },
-  //       {
-  //         role: 'user',
-  //         content: prompt,
-  //       }
-  //     ],
-  //     temperature: 0.7,
-  //   });
-
-  //   console.log(`Refined prompt: ${chatResponse.choices[0].message.content}`);
-
-  // const refinedPrompt = chatResponse.choices[0].message.content.trim();
-  const refinedPrompt = `Design a professional square birthday greeting card, 1024×1024 pixels.
-Left panel (white background, 480px wide):
-
-  In the left panel, place a photo professional-looking male or female software developer according to the employee name : ${fullName}.
-  The photo is positioned 1100pixels from the top, 80pixels from the left and its size is 320×320 pixels.
-  The photo is realistic or semi-realistic, square and has rounded corners and a subtle drop shadow for depth
-
-  Below the photo, write the employee name: ${fullName} in large bold black font, centered horizontally
-  Add a thin light-gray horizontal line (width: 312px) under the name.
-
-Right panel (solid red background (#C32C1D), (544px wide)):
-
-  In the top-right corner, show the greeting:
-    “Happy Birthday!” in large, bold white English text
-
-    Below, add a left-aligned birthday message in white English text:
-    “Dear ${fullName},  
-    Wishing you a wonderful birthday and a fantastic year ahead.  
-
-    Thank you for your hard work and dedication.  
-    We're grateful to have you on our team!”
-
-  Use a clean sans-serif font (Montserrat or Lato)
-
-  Ensure ample padding, clear line spacing, and a balanced visual layout within the 544px red panel
-`
-  const res = await openai.images.generate({
-    model: 'gpt-image-1',
-    prompt: refinedPrompt,
-    size: '1024x1024',
-    n: 1,
-    quality: 'medium'
-  })
-
-  return res.data[0].b64_json
-}
-
-async function composePostcard(talentPhotoBase64, logoPath, fullName) {
+async function composePostcard(talentPhotoBase64, logoPath, fullName, years, type) {
   const canvas = createCanvas(900, 1024)
   const ctx = canvas.getContext('2d')
-
-  // Load background (AI generated)
-  // const background = await loadImage(Buffer.from(aiBackgroundBuffer, 'base64'))
-  // console.log('background', background)
-  // ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
 
   ctx.fillStyle = 'lightgray'
   ctx.fillRect(0, 0, 420, 1024)
@@ -244,8 +147,13 @@ async function composePostcard(talentPhotoBase64, logoPath, fullName) {
 
   ctx.font = 'bold 60px Impact, Verdana, sans-serif'
   ctx.fillStyle = 'white'
-  ctx.fillText(`Happy`, 520, 200)
-  ctx.fillText(`Birthday!`, 520, 280)
+  if (type == 'birthday') {
+    ctx.fillText(`Happy`, 520, 200)
+    ctx.fillText(`Birthday!`, 520, 280)
+  } else {
+    ctx.fillText(`Cheers`, 520, 200)
+    ctx.fillText(`Anniversary!`, 520, 280)
+  }
   ctx.font = 'bold 35px Impact, Verdana, sans-serif'
   ctx.fillText(`Dear ${fullName.split(' ')[0]},`, 520, 380)
   ctx.font = '30px Impact, Verdana, sans-serif'
@@ -260,23 +168,11 @@ async function composePostcard(talentPhotoBase64, logoPath, fullName) {
   lines2.forEach((line, i) => {
     ctx.fillText(line, 520, 625 + i * 46) // 40px vertical spacing between lines
   })
-  // ctx.fillText(`Best regards,`, 540, 830)
-  // ctx.fillText(`ITSOFT team`, 540, 860)
 
   return canvas.toBuffer('image/png')
 }
-
-async function downloadImageToBuffer(imageUrl) {
-  console.log('imageUrl', imageUrl)
-  const response = await axios.get(imageUrl, { responseType: 'arraybuffer' })
-  console.log('downloaded image', response)
-  return Buffer.from(response.data, 'binary')
-}
-
 function savePostcardToPublic(buffer, filename) {
-  console.log(buffer, ' --- ', filename)
   const filePath = path.join(__dirname, '../public', `${filename}.png`)
-  console.log('filePath', filePath)
 
   // Make sure folder exists
   fs.mkdirSync(path.dirname(filePath), { recursive: true })
@@ -285,13 +181,19 @@ function savePostcardToPublic(buffer, filename) {
   return `https://coms.commit-offshore.com/public/${filename}.png`
 }
 
-
-async function refinePostcard(imgBuffer) {
-  const imgBlob = new Blob([imgBuffer], { type: 'image/png' });
-  console.log('imgBlob', imgBlob);
-  const file = new File([imgBlob], 'image.png', {type: imgBlob.type});
-  console.log('file', file);
-    const refinedPrompt = `This image shows postcard for congratulating employee's birthday.
+async function refinePostcard(imgBuffer, type) {
+  const imgBlob = new Blob([imgBuffer], { type: 'image/png' })
+  console.log('imgBlob', imgBlob)
+  const file = new File([imgBlob], 'image.png', { type: imgBlob.type })
+  console.log('file', file)
+  const refinedPrompt =
+    type == 'birthday'
+      ? `This image shows postcard for congratulating employee's birthday.
+    I want you to refine  the congratulating text more seamlessly and kindly.
+    And keeping the main structure, i want you to decorate some parts if possible.
+    And exactly decorate the underline on the bottom of the fullName of employee on left side.
+`
+      : `This image shows postcard for celebrating employee's work anniversary.
     I want you to refine  the congratulating text more seamlessly and kindly.
     And keeping the main structure, i want you to decorate some parts if possible.
     And exactly decorate the underline on the bottom of the fullName of employee on left side.
@@ -305,18 +207,18 @@ async function refinePostcard(imgBuffer) {
     image: file
   })
 
-  return Buffer.from(res.data[0].b64_json, 'base64');
+  return Buffer.from(res.data[0].b64_json, 'base64')
 }
 
 async function generateFinalPostcard({ firstName, years, type, photoBase64 }) {
-  // const bgBuffer = await generatePostcardBackground(firstName, years, type)
-  // const bgBuffer = await downloadImageToBuffer(aiUrl);
+  const finalBuffer = await composePostcard(photoBase64, '../public/commit_logo.png', firstName, years, type)
+  console.log('finalBuffer', finalBuffer)
+  const refinedBuffer = await refinePostcard(finalBuffer, type)
 
-  const finalBuffer = await composePostcard(photoBase64, '../public/commit_logo.png', firstName)
-  console.log('finalBuffer', finalBuffer);
-  const refinedBuffer = await refinePostcard(finalBuffer);
-
-  const uploadedUrl = savePostcardToPublic(refinedBuffer, `postcard_${firstName.replace(/\s+/g, '_')}_${Date.now()}`)
+  const uploadedUrl = savePostcardToPublic(
+    refinedBuffer,
+    `${type}_postcard_${firstName.replace(/\s+/g, '_')}_${Date.now()}`
+  )
 
   return uploadedUrl
 }
@@ -387,25 +289,24 @@ const getContentPerCountry = (countriesArr, holidaysInfo) => {
 }
 
 const isTelegramUsername = telegram => {
-  if (telegram == null) return false;
-  if (telegram.includes('@') && !telegram.includes('+') && !telegram.includes('http')) return true;
-  return false;
+  if (telegram == null) return false
+  if (telegram.includes('@') && !telegram.includes('+') && !telegram.includes('http')) return true
+  return false
 }
 
-const getChatId = async (user) => {
-  const data = await fs.promises.readFile(ChatIdPath, 'utf8');
-  console.log('data', data);
-  const lines = data.trim().split('\n');
-  const telegram_users = lines.map(line => JSON.parse(line));
-  console.log('telegram_users  --> ',  telegram_users);
+const getChatId = async user => {
+  const data = await fs.promises.readFile(ChatIdPath, 'utf8')
+  const lines = data.trim().split('\n')
+  const telegram_users = lines.map(line => JSON.parse(line))
   for (const t_user of telegram_users) {
     if (isTelegramUsername(user.telegram) && `@${t_user.username}` == user.telegram) {
-      console.log('isTelUser : true  --> ', t_user.chatId);
-      return t_user.chatId;
+      return t_user.chatId
     } else {
-      if (user.fullName.toLowerCase().includes(t_user.firstName.toLowerCase()) && user.fullName.toLowerCase().includes(t_user.lastName.toLowerCase())) {
-        console.log('isTelUser : false --> ', t_user.chatId);
-        return t_user.chatId;
+      if (
+        user.fullName.toLowerCase().includes(t_user.firstName.toLowerCase()) &&
+        user.fullName.toLowerCase().includes(t_user.lastName.toLowerCase())
+      ) {
+        return t_user.chatId
       }
     }
   }
@@ -414,18 +315,6 @@ const getChatId = async (user) => {
 const sendHolidaysEmail = async (data, startDate, endDate) => {
   const { fullName, email, ...rest } = data
   const countriesArr = Object.keys(rest).map(code => codeToCountry[code])
-  // const html = `<div>
-  //     <p>Dear ${fullName},</p>
-  //     <p>
-  //         I hope this email finds you well. This is a reminder about the upcoming national holidays in <strong>${countriesArr.join(', ')}</strong>.
-  //     </p>
-  //     ${getContentPerCountry(countriesArr, rest).join(' ')}
-  //     <p>
-  //         Please note that these holidays are observed nationwide, and most businesses and government offices will be closed on these days. <br />
-  //         I hope this reminder assists you in effectively organizing your schedule. Should you have any inquiries, please feel free to contact me without hesitation.
-  //     </p>
-  //     <p>Best regards, ITSOFT team.</p>
-  // </div>`;
   const cidLogo = 'itsoft_logo@unique'
   const cidStakeholderMail = 'itsoft_stakeholderMail@unique'
   const itsoftMail = 'sales@itsoft.co.il'
@@ -781,7 +670,6 @@ const sendMailToEmployeeOnChangeVacationBalance = async (toEmail, balanceData, t
 const sendTalentBirthdaysToHR = async (talentsList, { monthName, dayNumber }) => {
   const talentsBlock = talentsList
     .map(async (user, i) => {
-      console.log('name', user.fullName)
       const imageUrl = await generateFinalPostcard({
         firstName: user.fullName,
         years: 0,
@@ -789,15 +677,13 @@ const sendTalentBirthdaysToHR = async (talentsList, { monthName, dayNumber }) =>
         photoBase64: user.picture
       })
 
-      const chatID = await getChatId(user);
+      const chatID = await getChatId(user)
 
       const payload = {
         chat_id: chatID,
         caption: `🎉 Happy Birthday, ${user.telegram ? user.telegram : user.fullName}! #CommitOffshore`,
         photo: imageUrl // Must be publicly accessible
       }
-
-      console.log('payload', payload)
 
       try {
         const res = await axios.post(url, payload)
@@ -868,10 +754,17 @@ const sendTalentsAnniversaryToHR = async talentsList => {
 
       const count = years + 1
 
-      const imageUrl = `https://example.com/path/to/image/${talent.id}.png`
+      const imageUrl = await generateFinalPostcard({
+        firstName: user.fullName,
+        years: count,
+        type: 'anniversary',
+        photoBase64: user.picture
+      })
+
+      const chatID = await getChatId(talent)
 
       const payload = {
-        chat_id: CHAT_ID,
+        chat_id: chatID,
         caption: `🎉 Congratulations on ${count} years with Commit Offshore, ${
           talent.telegram ? talent.telegram : talent.fullName
         }! #CommitOffshore`,
