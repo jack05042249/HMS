@@ -755,10 +755,10 @@ const sendTalentsAnniversaryToHR = async talentsList => {
       const count = years + 1
 
       const imageUrl = await generateFinalPostcard({
-        firstName: user.fullName,
+        firstName: talent.fullName,
         years: count,
         type: 'anniversary',
-        photoBase64: user.picture
+        photoBase64: talent.picture
       })
 
       const chatID = await getChatId(talent)
