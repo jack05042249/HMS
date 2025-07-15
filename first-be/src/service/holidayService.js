@@ -335,7 +335,7 @@ const getUpcomingAnniversaries = async (type = '') => {
             ]
         },
         order: [['startDate', 'ASC']],
-        attributes: ['id', 'fullName', 'startDate', 'email'],
+        attributes: ['id', 'fullName', 'startDate', 'email', 'picture', 'telegram'],
         raw: true,
     });
 
