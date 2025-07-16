@@ -199,6 +199,7 @@ async function refinePostcard(imgBuffer, type) {
     In the left bottom side, there is a employee's name and if on top of the name there is white rectangle, not photo, please attach in the white square a default photo of developer (male or female concerning to below full Name).
     And decorate the underline on the bottom of the fullName of employee on left side.
     Add tasteful and festive birthday-themed decorations such as balloons, confetti, ribbons, and subtle sparkles around the edges and corners of the postcard. Make sure the design remains professional and clean, with a celebratory but not overly childish look. Use a color palette that matches our company branding. Keep the greeting content clearly readable and do not obstruct the logo or the main image.
+    Add a small note tag in the bottom right corner inside a light semi-transparent rounded rectangle. The tag should say: 'Note: We appreciate your hard work and dedication. Have a wonderful year ahead!' in a clean, sans-serif font. Ensure it complements the overall design and does not cover the logo or greeting.
 `
       : `This image shows postcard for celebrating employee's work anniversary.
     I want you to refine  the congratulating text more seamlessly and kindly.
