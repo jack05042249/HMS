@@ -197,6 +197,7 @@ async function refinePostcard(imgBuffer, type) {
       ? `This image shows postcard for congratulating employee's birthday.
     I want you to refine  the congratulating text more seamlessly and kindly.
     In the left bottom side, there is a employee's name and if on top of the name there is white rectangle, not photo, please attach in the white square a default photo of developer (male or female concerning to below full Name).
+    Enhance the employee photo by adjusting lighting and contrast for a clear, professional appearance. Center the face naturally, crop the photo to focus on the upper body or shoulders and head, and smooth out harsh shadows or glare. Use a soft, neutral background that blends well with the postcard’s design, and subtly blur it if needed to keep the focus on the person.
     And decorate the underline on the bottom of the fullName of employee on left side.
     Add tasteful and festive birthday-themed decorations such as balloons, confetti, ribbons, and subtle sparkles around the edges and corners of the postcard. Make sure the design remains professional and clean, with a celebratory but not overly childish look. Use a color palette that matches our company branding. Keep the greeting content clearly readable and do not obstruct the logo or the main image.
     Add a small note tag in the bottom right corner inside a light semi-transparent rounded rectangle. The tag should say: 'Note: We appreciate your hard work and dedication. Have a wonderful year ahead!' in a clean, sans-serif font. Ensure it complements the overall design and does not cover the logo or greeting.
@@ -692,14 +693,14 @@ const sendTalentBirthdaysToHR = async (talentsList, { monthName, dayNumber }) =>
         messages: [
           {
             role: 'user',
-            content: `Write a short birthday blessing for ${user.fullName.split(' ')[0]} as 2 sentences. Make it warm and friendly, but not too formal.`
+            content: `Write a short birthday blessing for ${user.fullName.split(' ')[0]} as 2 sentences starting with "🎉 Happy Birthday, ${user.fullName.split(' ')[0]}!". Make it warm and friendly, but not too formal.`
           }
         ]
       });
 
       const payload = {
         chat_id: chatID,
-        caption: `🎉 Happy Birthday, ${user.fullName.split(' ')[0]}! ${shortBlessing.choices[0].message.content}`,
+        caption: `${shortBlessing.choices[0].message.content}`,
         photo: imageUrl // Must be publicly accessible
       }
 
