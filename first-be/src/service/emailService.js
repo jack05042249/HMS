@@ -197,7 +197,9 @@ async function refinePostcard(imgBuffer, type) {
       ? `This image shows postcard for congratulating employee's birthday.
     I want you to refine  the congratulating text more seamlessly and kindly.
     In the left bottom side, there is a employee's name and if on top of the name there is white rectangle, not photo, please attach in the white square a default photo of developer (male or female concerning to below full Name).
-    And decorate the underline on the bottom of the fullName of employee on left side and the around of employee's photo and the background.
+    And decorate the underline on the bottom of the fullName of employee on left side.
+    Decorate the around of employee's photo.
+    Decorate the whole background.
 `
       : `This image shows postcard for celebrating employee's work anniversary.
     I want you to refine  the congratulating text more seamlessly and kindly.
@@ -690,7 +692,7 @@ const sendTalentBirthdaysToHR = async (talentsList, { monthName, dayNumber }) =>
         messages: [
           {
             role: 'user',
-            content: `Write a short birthday blessing for ${user.fullName.split(' ')[0]}`
+            content: `Write a short birthday blessing for ${user.fullName.split(' ')[0]} as 2 sentences. Make it warm and friendly, but not too formal.`
           }
         ]
       });
