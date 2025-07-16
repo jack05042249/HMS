@@ -43,27 +43,27 @@ const run = async () =>
 
       app.use('/api/', router)
 
-      app.post('/api/telegram/webhook', async (req, res) => {
-        const message = req.body.message
-        console.log('message', message);
+      // app.post('/api/telegram/webhook', async (req, res) => {
+      //   const message = req.body.message
+      //   console.log('message', message);
 
-        if (message && message.text === '/start') {
-          const chatId = message.chat.id
-          const username = message.chat.username || 'no_username'
-          const firstName = message.chat.first_name;
-          const lastName = message.chat.last_name;
-          console.log('/start --> ', message);
+      //   if (message && message.text === '/start') {
+      //     const chatId = message.chat.id
+      //     const username = message.chat.username || 'no_username'
+      //     const firstName = message.chat.first_name;
+      //     const lastName = message.chat.last_name;
+      //     console.log('/start --> ', message);
 
-          // Example: Save chatId to a local file (you can replace this with DB)
-          const user = { chatId, username, firstName, lastName, date: new Date().toISOString() }
-          console.log('🔔 New user started bot:', user)
+      //     // Example: Save chatId to a local file (you can replace this with DB)
+      //     const user = { chatId, username, firstName, lastName, date: new Date().toISOString() }
+      //     console.log('🔔 New user started bot:', user)
 
-          // Append to file (or insert into DB)
-          fs.appendFileSync('./telegram_users.json', JSON.stringify(user) + '\n')
-        }
+      //     // Append to file (or insert into DB)
+      //     fs.appendFileSync('./telegram_users.json', JSON.stringify(user) + '\n')
+      //   }
 
-        res.sendStatus(200)
-      })
+      //   res.sendStatus(200)
+      // })
 
       const port = process.env.PORT || config.port
 

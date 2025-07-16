@@ -68,12 +68,12 @@ const annualNotification = cron.schedule('0 0 26 12 *', async () => {
 
 const frequency1Min = '* * * * *' // every minute
 // const frequency = '*/5 * * * * *'; // every 5 sec
-const everyDay9AM = '29 12 * * *' // every day at 09:00 am
+const everyDay9AM = '28 17 * * *' // every day at 09:00 am
 
 const everyDayCron = cron.schedule(
   everyDay9AM,
   async () => {
-    // await sendTalentBirthdaysNotification()
+    await sendTalentBirthdaysNotification()
     await sendAnniversaryNotification()
   },
   {

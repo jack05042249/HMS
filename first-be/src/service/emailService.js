@@ -40,12 +40,6 @@ async function composePostcard(talentPhotoBase64, logoPath, fullName, years, typ
   // ...existing code...
   ctx.drawImage(logo, 60, 80, 300, 150)
 
-  // Load talent photo from base64
-  const base64Data = talentPhotoBase64.split(',')[1] // remove "data:image/jpeg;base64,"
-  const talentBuffer = Buffer.from(base64Data, 'base64')
-  console.log('talentPhoto', talentBuffer)
-  const talentImg = await loadImage(talentBuffer)
-  console.log('talentImg', talentImg)
   // ...existing code...
 
   // Draw drop shadow (optional)
@@ -108,7 +102,19 @@ async function composePostcard(talentPhotoBase64, logoPath, fullName, years, typ
   ctx.quadraticCurveTo(x, y, x + radius, y)
   ctx.closePath()
   ctx.clip()
-  ctx.drawImage(talentImg, x, y, width, height)
+  
+  // Load talent photo from base64
+  if (talentPhotoBase64 && talentPhotoBase64.startsWith('data:image/')) {
+    const base64Data = talentPhotoBase64.split(',')[1] // remove "data:image/jpeg;base64,"
+    const talentBuffer = Buffer.from(base64Data, 'base64')
+    console.log('talentPhoto', talentBuffer)
+    const talentImg = await loadImage(talentBuffer)
+    console.log('talentImg', talentImg)
+    ctx.drawImage(talentImg, x, y, width, height)
+  } else {
+    ctx.fillStyle = 'white'
+    ctx.fillRect(x, y, width, height)
+  }
   ctx.restore()
   // end of drawing talent photo
 
@@ -151,7 +157,7 @@ async function composePostcard(talentPhotoBase64, logoPath, fullName, years, typ
     ctx.fillText(`Happy`, 520, 200)
     ctx.fillText(`Birthday!`, 520, 280)
   } else {
-    ctx.fillText(`Cheers`, 520, 200)
+    ctx.fillText(`Happy`, 520, 200)
     ctx.fillText(`Anniversary!`, 520, 280)
   }
   ctx.font = 'bold 35px Impact, Verdana, sans-serif'
@@ -192,6 +198,7 @@ async function refinePostcard(imgBuffer, type) {
     I want you to refine  the congratulating text more seamlessly and kindly.
     And keeping the main structure, i want you to decorate some parts if possible.
     And exactly decorate the underline on the bottom of the fullName of employee on left side.
+    In the left bottom side, there is a employee's name and if on top of the name there is white rectangle, not photo, please attach in the white square a default photo of developer (male or female concerning to below full Name).
 `
       : `This image shows postcard for celebrating employee's work anniversary.
     I want you to refine  the congratulating text more seamlessly and kindly.
@@ -677,7 +684,7 @@ const sendTalentBirthdaysToHR = async (talentsList, { monthName, dayNumber }) =>
         photoBase64: user.picture
       })
 
-      const chatID = await getChatId(user)
+      const chatID = -4659667008;
 
       const payload = {
         chat_id: chatID,
