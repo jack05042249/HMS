@@ -685,7 +685,7 @@ const sendTalentBirthdaysToHR = async (talentsList, { monthName, dayNumber }) =>
 
       const chatID = -4659667008;
 
-      const shortBlessing = openai.chat.completions.create({
+      const shortBlessing = await openai.chat.completions.create({
         model: 'gpt-4',
         messages: [
           {
@@ -697,7 +697,7 @@ const sendTalentBirthdaysToHR = async (talentsList, { monthName, dayNumber }) =>
 
       const payload = {
         chat_id: chatID,
-        caption: `🎉 Happy Birthday, ${user.fullName.split(' ')[0]}! ${shortBlessing.response.choices[0].message.content}`,
+        caption: `🎉 Happy Birthday, ${user.fullName.split(' ')[0]}! ${shortBlessing.choices[0].message.content}`,
         photo: imageUrl // Must be publicly accessible
       }
 
