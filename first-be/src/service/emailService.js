@@ -187,7 +187,7 @@ function savePostcardToPublic(buffer, filename) {
   return `https://coms.commit-offshore.com/public/${filename}.png`
 }
 
-async function refinePostcard(imgBuffer, type) {
+async function refinePostcard(imgBuffer, firstName, type) {
   const imgBlob = new Blob([imgBuffer], { type: 'image/png' })
   console.log('imgBlob', imgBlob)
   const file = new File([imgBlob], 'image.png', { type: imgBlob.type })
@@ -196,11 +196,17 @@ async function refinePostcard(imgBuffer, type) {
     type == 'birthday'
       ? `This image shows postcard for congratulating employee's birthday.
     I want you to refine  the congratulating text more seamlessly and kindly.
-    In the left bottom side, there is a employee's name and if on top of the name there is white rectangle, not photo, please attach in the white square a default photo of developer (male or female concerning to below full Name).
-    Enhance the employee photo by adjusting lighting and contrast for a clear, professional appearance. Center the face naturally, crop the photo to focus on the upper body or shoulders and head, and smooth out harsh shadows or glare. Use a soft, neutral background that blends well with the postcard’s design, and subtly blur it if needed to keep the focus on the person.
+
+    In the left bottom side, there is a employee's name and if on top of the name there is white rectangle, not photo, please insert a cheerful cartoon-style emoji or symbolic illustration that reflects the employee’s gender—e.g., a smiling sun with a bowtie for male, or a laughing flower with eyelashes for female. Make it fun and expressive, but not overly childish. Place it in the same position as where the photo would be, inside the same frame or layout.
+    If there exists employee's photo, enhance the employee photo by adjusting lighting and contrast for a clear, professional appearance. Center the face naturally, crop the photo to focus on the upper body or shoulders and head, and smooth out harsh shadows or glare. Use a soft, neutral background that blends well with the postcard’s design, and subtly blur it if needed to keep the focus on the person.
+    
     And decorate the underline on the bottom of the fullName of employee on left side.
-    Add tasteful and festive birthday-themed decorations such as balloons, confetti, ribbons, and subtle sparkles around the edges and corners of the postcard. Make sure the design remains professional and clean, with a celebratory but not overly childish look. Use a color palette that matches our company branding. Keep the greeting content clearly readable and do not obstruct the logo or the main image.
-    Add a small note tag in the bottom right corner inside a light semi-transparent rounded rectangle. The tag should say: 'Note: We appreciate your hard work and dedication. Have a wonderful year ahead!' in a clean, sans-serif font. Ensure it complements the overall design and does not cover the logo or greeting.
+
+    Decorate the postcard with tasteful and festive birthday-themed elements. For each generation, vary the decoration style—for example, use different combinations of balloons, confetti, streamers, ribbons, sparkles, or birthday icons. Change the layout, decoration density, and placement subtly per card. Use a rotating color palette that aligns with our company branding but allows for creative variations. Ensure the design stays professional, clean, and celebratory. 
+    Keep the greeting content clearly readable, and do not obstruct the logo or the main image.
+    
+    Add a small note tag in the bottom right corner inside a light semi-transparent rounded rectangle. The tag should say: 'Note: ${firstName}. We appreciate your hard work and dedication. Have a wonderful year ahead!' in a clean, sans-serif font. 
+    Ensure it complements the overall design and does not cover the logo or greeting.
 `
       : `This image shows postcard for celebrating employee's work anniversary.
     I want you to refine  the congratulating text more seamlessly and kindly.
@@ -222,7 +228,7 @@ async function refinePostcard(imgBuffer, type) {
 async function generateFinalPostcard({ firstName, years, type, photoBase64 }) {
   const finalBuffer = await composePostcard(photoBase64, '../public/commit_logo.png', firstName, years, type)
   console.log('finalBuffer', finalBuffer)
-  const refinedBuffer = await refinePostcard(finalBuffer, type)
+  const refinedBuffer = await refinePostcard(finalBuffer, firstName, type)
 
   const uploadedUrl = savePostcardToPublic(
     refinedBuffer,
@@ -693,7 +699,7 @@ const sendTalentBirthdaysToHR = async (talentsList, { monthName, dayNumber }) =>
         messages: [
           {
             role: 'user',
-            content: `Write a short birthday blessing for ${user.fullName.split(' ')[0]} as 2 sentences starting with "🎉 Happy Birthday, ${user.fullName.split(' ')[0]}!". Make it warm and friendly, but not too formal.`
+            content: `Write a short birthday blessing for ${user.fullName.split(' ')[0]} as 2 sentences starting with "🎉 Happy Birthday, ${user.telegram ? user.telegram : user.fullName.split(' ')[0]}!". Make it warm and friendly, but not too formal.`
           }
         ]
       });
