@@ -196,9 +196,8 @@ async function refinePostcard(imgBuffer, type) {
     type == 'birthday'
       ? `This image shows postcard for congratulating employee's birthday.
     I want you to refine  the congratulating text more seamlessly and kindly.
-    And keeping the main structure, i want you to decorate some parts if possible.
-    And exactly decorate the underline on the bottom of the fullName of employee on left side.
     In the left bottom side, there is a employee's name and if on top of the name there is white rectangle, not photo, please attach in the white square a default photo of developer (male or female concerning to below full Name).
+    And decorate the underline on the bottom of the fullName of employee on left side and the around of employee's photo and the background.
 `
       : `This image shows postcard for celebrating employee's work anniversary.
     I want you to refine  the congratulating text more seamlessly and kindly.
@@ -686,9 +685,19 @@ const sendTalentBirthdaysToHR = async (talentsList, { monthName, dayNumber }) =>
 
       const chatID = -4659667008;
 
+      const shortBlessing = openai.chat.completions.create({
+        model: 'gpt-4',
+        messages: [
+          {
+            role: 'user',
+            content: `Write a short birthday blessing for ${user.fullName.split(' ')[0]}`
+          }
+        ]
+      });
+
       const payload = {
         chat_id: chatID,
-        caption: `🎉 Happy Birthday, ${user.telegram ? user.telegram : user.fullName}! #CommitOffshore`,
+        caption: `🎉 Happy Birthday, ${user.fullName.split(' ')[0]}! ${shortBlessing.response.choices[0].message.content}`,
         photo: imageUrl // Must be publicly accessible
       }
 
