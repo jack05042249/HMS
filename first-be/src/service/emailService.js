@@ -809,9 +809,9 @@ const sendTalentsAnniversaryToHR = async (talents, talentsForToday) => {
           {
             role: 'user',
             content: `Write a short anniversary blessing for ${
-              user.fullName.split(' ')[0]
-            } as 2 sentences starting exactly with "🎉 Happy Anniversary ${user.fullName.split(' ')[0]} ! ${
-              user.email ? user.email + ',' : ''
+              talent.fullName.split(' ')[0]
+            } as 2 sentences starting exactly with "🎉 Happy Anniversary ${talent.fullName.split(' ')[0]} ! ${
+              talent.email ? talent.email + ',' : ''
             }". Make it warm and friendly, but not too formal.`
           }
         ]
@@ -821,7 +821,7 @@ const sendTalentsAnniversaryToHR = async (talents, talentsForToday) => {
   <div style="font-family: 'Poppins', Arial, sans-serif; background: #f8fafc; padding: 32px 0;">
     <div style="max-width: 520px; margin: 0 auto; background: #fff; border-radius: 16px; box-shadow: 0 4px 24px rgba(77,74,234,0.08); padding: 32px 32px 24px 32px;">
       <h2 style="margin-top: 0; color: #4D4AEA; font-size: 28px; font-weight: 700; margin-bottom: 12px;">
-        Hi, ${user.fullName.split(' ')[0]}!
+        Hi, ${talent.fullName.split(' ')[0]}!
       </h2>
       <p style="font-size: 18px; color: #333; margin-bottom: 28px;">
         ${shortBlessing.choices[0].message.content}
@@ -835,7 +835,7 @@ const sendTalentsAnniversaryToHR = async (talents, talentsForToday) => {
 
 const mailOptionsForTalent = {
     from: { address: gmail_user, name: 'Commit Offshore Holidays Reminder System' },
-    to: user.email,
+    to: talent.email,
     subject: `Happy Anniversary!`,
     // cc: gmail_hr,
     html
