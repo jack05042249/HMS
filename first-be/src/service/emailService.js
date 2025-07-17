@@ -163,7 +163,7 @@ async function composePostcard(talentPhotoBase64, logoPath, fullName, years, typ
   ctx.font = 'bold 35px Impact, Verdana, sans-serif'
   ctx.fillText(`Dear ${fullName.split(' ')[0]},`, 520, 380)
   ctx.font = '30px Impact, Verdana, sans-serif'
-  const message1 = `Wishing you a&wonderful birthday&and a fantastic&year ahead.`
+  const message1 = type === 'birthday' ? `Wishing you a&wonderful birthday&and a fantastic&year ahead.` : `Wishing you ${years} years&work anniversary&and continued success.`;
   const lines1 = message1.split('&')
   lines1.forEach((line, i) => {
     ctx.fillText(line, 520, 425 + i * 46) // 40px vertical spacing between lines
@@ -187,19 +187,21 @@ function savePostcardToPublic(buffer, filename) {
   return `https://coms.commit-offshore.com/public/${filename}.png`
 }
 
-async function refinePostcard(imgBuffer, firstName, type) {
+async function refinePostcard(imgBuffer, firstName, type, photoBase64) {
   const imgBlob = new Blob([imgBuffer], { type: 'image/png' })
   console.log('imgBlob', imgBlob)
   const file = new File([imgBlob], 'image.png', { type: imgBlob.type })
   console.log('file', file)
+  let isImageFile = false;
+  if (photoBase64 && photoBase64.startsWith('data:image/')) isImageFile = true
   const refinedPrompt =
     type == 'birthday'
       ? `This image shows postcard for congratulating employee's birthday.
     I want you to refine  the congratulating text more seamlessly and kindly.
 
-    In the left bottom side, there is a employee's name and if on top of the name there is white rectangle, not photo, please insert a cheerful 25-year-old male/female cartoon Starfleet officer celebrating him/her birthday, in a simplified Star Trek: Enterprise-inspired uniform with colored piping randomly with orange/blue bg. 
-    He/She is smiling with a colorful party hat, surrounded by confetti and birthday decorations. Style: playful, modern 2D cartoon illustration. but not overly childish. Place it in the same position as where the photo would be, inside the same frame or layout.
-    If there exists employee's photo, enhance the employee photo by adjusting lighting and contrast for a clear, professional appearance. Center the face naturally, crop the photo to focus on the upper body or shoulders and head, and smooth out harsh shadows or glare. Use a soft, neutral background that blends well with the postcard’s design, and subtly blur it if needed to keep the focus on the person.
+    If ${isImageFile} is false, please insert a cheerful 25-year-old male/female cartoon Starfleet officer(concerning to fullName : ${firstName}) celebrating him/her birthday, in a simplified Star Trek: Enterprise-inspired uniform with colored piping randomly with orange/blue bg. 
+    Then the cartoon Starfleet officer is smiling with a colorful party hat, surrounded by confetti and birthday decorations. Style: playful, modern 2D cartoon illustration. but not overly childish. Place it in the white square in the middle of left panel as where the photo would be, inside the same frame or layout.
+    If ${isImageFile} is true, enhance the employee photo by adjusting lighting and contrast for a clear, professional appearance. Center the face naturally, crop the photo to focus on the upper body or shoulders and head, and smooth out harsh shadows or glare. Use a soft, neutral background that blends well with the postcard’s design, and subtly blur it if needed to keep the focus on the person.
     
     And decorate the underline on the bottom of the fullName of employee on left side.
 
@@ -212,13 +214,13 @@ async function refinePostcard(imgBuffer, firstName, type) {
       : `This image shows postcard for celebrating employee's work anniversary.
     I want you to refine  the congratulating text more seamlessly and kindly.
 
-    In the left bottom side, there is a employee's name and if on top of the name there is white rectangle, not photo, please insert a cheerful 25-year-old male/female cartoon Starfleet officer celebrating him/her birthday, in a simplified Star Trek: Enterprise-inspired uniform with colored piping randomly with orange/blue bg.
-    He/She is smiling with a colorful party hat, surrounded by confetti and  anniversary decorations. Style: playful, modern 2D cartoon illustration. but not overly childish. Place it in the same position as where the photo would be, inside the same frame or layout.
-    If there exists employee's photo, enhance the employee photo by adjusting lighting and contrast for a clear, professional appearance. Center the face naturally, crop the photo to focus on the upper body or shoulders and head, and smooth out harsh shadows or glare. Use a soft, neutral background that blends well with the postcard’s design, and subtly blur it if needed to keep the focus on the person.
+    If ${isImageFile} is false, please insert a cheerful 25-year-old male/female cartoon Starfleet officer(concerning to fullName : ${firstName}) celebrating him/her anniversary, in a simplified Star Trek: Enterprise-inspired uniform with colored piping randomly with orange/blue bg. 
+    Then the cartoon Starfleet officer is smiling with a colorful party hat, surrounded by confetti and anniversary decorations. Style: playful, modern 2D cartoon illustration. but not overly childish. Place it in the white square in the middle of left panel as where the photo would be, inside the same frame or layout.
+    If ${isImageFile} is true, enhance the employee photo by adjusting lighting and contrast for a clear, professional appearance. Center the face naturally, crop the photo to focus on the upper body or shoulders and head, and smooth out harsh shadows or glare. Use a soft, neutral background that blends well with the postcard’s design, and subtly blur it if needed to keep the focus on the person.
     
     And decorate the underline on the bottom of the fullName of employee on left side.
 
-    Decorate the postcard with tasteful and festive anniversary-themed elements. For each generation, vary the decoration style—for example, use different combinations of balloons, confetti, streamers, ribbons, sparkles, or birthday icons. Change the layout, decoration density, and placement subtly per card. Use a rotating color palette that aligns with our company branding but allows for creative variations. Ensure the design stays professional, clean, and celebratory. 
+    Decorate the postcard with tasteful and festive anniversary-themed elements. For each generation, vary the decoration style—for example, use different combinations of balloons, confetti, streamers, ribbons, sparkles, or anniversary icons. Change the layout, decoration density, and placement subtly per card. Use a rotating color palette that aligns with our company branding but allows for creative variations. Ensure the design stays professional, clean, and celebratory. 
     Keep the greeting content clearly readable, and do not obstruct the logo or the main image.
     
     Add a small note tag in the bottom right corner inside a light semi-transparent rounded rectangle. The tag should say: 'Note: ${firstName}. We appreciate your hard work and dedication. Have a wonderful year ahead!' in a clean, sans-serif font. 
@@ -239,7 +241,7 @@ async function refinePostcard(imgBuffer, firstName, type) {
 async function generateFinalPostcard({ firstName, years, type, photoBase64 }) {
   const finalBuffer = await composePostcard(photoBase64, '../public/commit_logo.png', firstName, years, type)
   console.log('finalBuffer', finalBuffer)
-  const refinedBuffer = await refinePostcard(finalBuffer, firstName, type)
+  const refinedBuffer = await refinePostcard(finalBuffer, firstName, type, photoBase64)
 
   const uploadedUrl = savePostcardToPublic(
     refinedBuffer,
