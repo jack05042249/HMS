@@ -710,7 +710,7 @@ const sendTalentBirthdaysToHR = async (talentsList, talentsListForToday, { month
         messages: [
           {
             role: 'user',
-            content: `Write a short birthday blessing for ${user.fullName.split(' ')[0]} as 2 sentences starting with "🎉 Happy Birthday, ${user.telegram ? user.telegram : user.fullName.split(' ')[0]}!". Make it warm and friendly, but not too formal.`
+            content: `Write a short birthday blessing for ${user.fullName.split(' ')[0]} as 2 sentences starting with "🎉 Happy Birthday ${user.fullName.split(' ')[0]} !, ${user.telegram ? user.telegram : ''}". Make it warm and friendly, but not too formal.`
           }
         ]
       });
