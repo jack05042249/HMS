@@ -197,7 +197,7 @@ async function refinePostcard(imgBuffer, firstName, type) {
       ? `This image shows postcard for congratulating employee's birthday.
     I want you to refine  the congratulating text more seamlessly and kindly.
 
-    In the left bottom side, there is a employee's name and if on top of the name there is white rectangle, not photo, please insert a cheerful 25-year-old male/female cartoon Starfleet officer celebrating him/her birthday, in a simplified Star Trek: Enterprise-inspired blue uniform with colored piping. 
+    In the left bottom side, there is a employee's name and if on top of the name there is white rectangle, not photo, please insert a cheerful 25-year-old male/female cartoon Starfleet officer celebrating him/her birthday, in a simplified Star Trek: Enterprise-inspired uniform with colored piping randomly with orange/blue bg. 
     He/She is smiling with a colorful party hat, surrounded by confetti and birthday decorations. Style: playful, modern 2D cartoon illustration. but not overly childish. Place it in the same position as where the photo would be, inside the same frame or layout.
     If there exists employee's photo, enhance the employee photo by adjusting lighting and contrast for a clear, professional appearance. Center the face naturally, crop the photo to focus on the upper body or shoulders and head, and smooth out harsh shadows or glare. Use a soft, neutral background that blends well with the postcard’s design, and subtly blur it if needed to keep the focus on the person.
     
@@ -710,7 +710,7 @@ const sendTalentBirthdaysToHR = async (talentsList, talentsListForToday, { month
         messages: [
           {
             role: 'user',
-            content: `Write a short birthday blessing for ${user.fullName.split(' ')[0]} as 2 sentences starting with "🎉 Happy Birthday ${user.fullName.split(' ')[0]} !, ${user.telegram ? user.telegram : ''}". Make it warm and friendly, but not too formal.`
+            content: `Write a short birthday blessing for ${user.fullName.split(' ')[0]} as 2 sentences starting exactly with "🎉 Happy Birthday ${user.fullName.split(' ')[0]} ! ${user.telegram ? user.telegram + ',' : ''}". Make it warm and friendly, but not too formal.`
           }
         ]
       });
