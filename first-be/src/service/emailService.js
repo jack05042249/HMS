@@ -102,7 +102,7 @@ async function composePostcard(talentPhotoBase64, logoPath, fullName, years, typ
   ctx.quadraticCurveTo(x, y, x + radius, y)
   ctx.closePath()
   ctx.clip()
-  
+
   // Load talent photo from base64
   if (talentPhotoBase64 && talentPhotoBase64.startsWith('data:image/')) {
     const base64Data = talentPhotoBase64.split(',')[1] // remove "data:image/jpeg;base64,"
@@ -212,7 +212,7 @@ async function refinePostcard(imgBuffer, firstName, type) {
       : `This image shows postcard for celebrating employee's work anniversary.
     I want you to refine  the congratulating text more seamlessly and kindly.
 
-    In the left bottom side, there is a employee's name and if on top of the name there is white rectangle, not photo, please insert a cheerful 25-year-old male/female cartoon Starfleet officer celebrating him/her birthday, in a simplified Star Trek: Enterprise-inspired blue uniform with colored piping. 
+    In the left bottom side, there is a employee's name and if on top of the name there is white rectangle, not photo, please insert a cheerful 25-year-old male/female cartoon Starfleet officer celebrating him/her birthday, in a simplified Star Trek: Enterprise-inspired uniform with colored piping randomly with orange/blue bg.
     He/She is smiling with a colorful party hat, surrounded by confetti and  anniversary decorations. Style: playful, modern 2D cartoon illustration. but not overly childish. Place it in the same position as where the photo would be, inside the same frame or layout.
     If there exists employee's photo, enhance the employee photo by adjusting lighting and contrast for a clear, professional appearance. Center the face naturally, crop the photo to focus on the upper body or shoulders and head, and smooth out harsh shadows or glare. Use a soft, neutral background that blends well with the postcard’s design, and subtly blur it if needed to keep the focus on the person.
     
@@ -267,7 +267,6 @@ const sendResetPassword = async email => {
   const mailOptions = {
     from: gmail_user,
     to: email,
-    cc: 'benjamin1993112@gmail.com',
     subject: `Password Reset for ${email}`,
     text: `Click the link to reset your password: ${resetLink}`
   }
@@ -694,40 +693,43 @@ const sendMailToEmployeeOnChangeVacationBalance = async (toEmail, balanceData, t
 }
 
 const sendTalentBirthdaysToHR = async (talentsList, talentsListForToday, { monthName, dayNumber }) => {
-  talentsListForToday
-    .map(async (user, i) => {
-      const imageUrl = await generateFinalPostcard({
-        firstName: user.fullName,
-        years: 0,
-        type: 'birthday',
-        photoBase64: user.picture
-      })
-
-      const chatID = -4659667008;
-
-      const shortBlessing = await openai.chat.completions.create({
-        model: 'gpt-4',
-        messages: [
-          {
-            role: 'user',
-            content: `Write a short birthday blessing for ${user.fullName.split(' ')[0]} as 2 sentences starting exactly with "🎉 Happy Birthday ${user.fullName.split(' ')[0]} ! ${user.telegram ? user.telegram + ',' : ''}". Make it warm and friendly, but not too formal.`
-          }
-        ]
-      });
-
-      const payload = {
-        chat_id: chatID,
-        caption: `${shortBlessing.choices[0].message.content}`,
-        photo: imageUrl // Must be publicly accessible
-      }
-
-      try {
-        const res = await axios.post(url, payload)
-        console.log('Postcard sent:', res.data)
-      } catch (err) {
-        console.error('Telegram error:', err.response?.data || err.message)
-      }
+  talentsListForToday.map(async (user, i) => {
+    const imageUrl = await generateFinalPostcard({
+      firstName: user.fullName,
+      years: 0,
+      type: 'birthday',
+      photoBase64: user.picture
     })
+
+    const chatID = 7173168684
+
+    const shortBlessing = await openai.chat.completions.create({
+      model: 'gpt-4',
+      messages: [
+        {
+          role: 'user',
+          content: `Write a short birthday blessing for ${
+            user.fullName.split(' ')[0]
+          } as 2 sentences starting exactly with "🎉 Happy Birthday ${user.fullName.split(' ')[0]} ! ${
+            user.telegram ? user.telegram + ',' : ''
+          }". Make it warm and friendly, but not too formal.`
+        }
+      ]
+    })
+
+    const payload = {
+      chat_id: chatID,
+      caption: `${shortBlessing.choices[0].message.content}`,
+      photo: imageUrl // Must be publicly accessible
+    }
+
+    try {
+      const res = await axios.post(url, payload)
+      console.log('Postcard sent:', res.data)
+    } catch (err) {
+      console.error('Telegram error:', err.response?.data || err.message)
+    }
+  })
   const talentsBlock = talentsList
     .map(async (user, i) => {
       return `<div>${i + 1}.&nbsp;${user.fullName} (Birthday: ${moment(user.birthday).format('D MMMM')})<br />Email: ${
@@ -751,7 +753,7 @@ const sendTalentBirthdaysToHR = async (talentsList, talentsListForToday, { month
     html
   }
 
-    // await sendMail(mailOptions)
+  // await sendMail(mailOptions)
 }
 
 const sendCustomerBirthdaysToHR = async (customersList, { monthName, dayNumber }) => {
@@ -799,22 +801,68 @@ const sendTalentsAnniversaryToHR = async talentsList => {
         photoBase64: talent.picture
       })
 
-      const chatID = await getChatId(talent)
+      // const chatID = 7173168684;
 
-      const payload = {
-        chat_id: chatID,
-        caption: `🎉 Congratulations on ${count} years with Commit Offshore, ${
-          talent.telegram ? talent.telegram : talent.fullName
-        }! #CommitOffshore`,
-        photo: imageUrl // Must be publicly accessible
-      }
+      const shortBlessing = await openai.chat.completions.create({
+        model: 'gpt-4',
+        messages: [
+          {
+            role: 'user',
+            content: `Write a short anniversary blessing for ${
+              user.fullName.split(' ')[0]
+            } as 2 sentences starting exactly with "🎉 Happy Anniversary ${user.fullName.split(' ')[0]} ! ${
+              user.email ? user.email + ',' : ''
+            }". Make it warm and friendly, but not too formal.`
+          }
+        ]
+      })
 
-      try {
-        const res = await axios.post(url, payload)
-        console.log('Postcard sent:', res.data)
-      } catch (err) {
-        console.error('Telegram error:', err.response?.data || err.message)
-      }
+      const htmlToTalent = `
+  <div style="font-family: 'Poppins', Arial, sans-serif; background: #f8fafc; padding: 32px 0;">
+    <div style="max-width: 520px; margin: 0 auto; background: #fff; border-radius: 16px; box-shadow: 0 4px 24px rgba(77,74,234,0.08); padding: 32px 32px 24px 32px;">
+      <h2 style="margin-top: 0; color: #4D4AEA; font-size: 28px; font-weight: 700; margin-bottom: 12px;">
+        Hi, ${user.fullName.split(' ')[0]}!
+      </h2>
+      <p style="font-size: 18px; color: #333; margin-bottom: 28px;">
+        ${shortBlessing.choices[0].message.content}
+      </p>
+      <div style="text-align: center; margin-bottom: 8px;">
+        <img src="${imageUrl}" alt="Personalized Postcard" style="max-width: 100%; border-radius: 12px; box-shadow: 0 2px 12px rgba(77,74,234,0.10);" />
+      </div>
+    </div>
+  </div>
+`
+
+const mailOptionsForTalent = {
+    from: { address: gmail_user, name: 'Commit Offshore Holidays Reminder System' },
+    to: user.email,
+    subject: `Happy Anniversary!`,
+    // cc: gmail_hr,
+    html
+  }
+
+  sendMail(mailOptionsForTalent);
+
+      // const payload = {
+      //   chat_id: chatID,
+      //   caption: `${shortBlessing.choices[0].message.content}`,
+      //   photo: imageUrl // Must be publicly accessible
+      // }
+
+      // const payload = {
+      //   chat_id: chatID,
+      //   caption: `🎉 Congratulations on ${count} years with Commit Offshore, ${
+      //     talent.telegram ? talent.telegram : talent.fullName
+      //   }! #CommitOffshore`,
+      //   photo: imageUrl // Must be publicly accessible
+      // }
+
+      // try {
+      //   const res = await axios.post(url, payload)
+      //   console.log('Postcard sent:', res.data)
+      // } catch (err) {
+      //   console.error('Telegram error:', err.response?.data || err.message)
+      // }
 
       return `
             <tr>

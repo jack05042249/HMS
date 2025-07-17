@@ -5,7 +5,7 @@ const sendTalentBirthdaysNotification = async () => {
     console.log('====== Check upcoming birthdays ======');
     const { talents, talentsForToday, ...dateData} = await getHolidaysForOnyDayNotification();
     console.log(talents);
-    // const { customers, ...data} = await getHolidaysForCustomers();
+    const { customers, ...data} = await getHolidaysForCustomers();
     if (talents.length > 0 || talentsForToday.length > 0) {
         await sendTalentBirthdaysToHR(talents, talentsForToday, dateData);
     } else {
@@ -13,7 +13,7 @@ const sendTalentBirthdaysNotification = async () => {
     }
 
     if (customers.length > 0) {
-        // await sendCustomerBirthdaysToHR(customers, data);
+        await sendCustomerBirthdaysToHR(customers, data);
     } else {
         console.log('====== No birthdays in 1 day ======');
     }
