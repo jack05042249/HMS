@@ -4,9 +4,10 @@ const { sendTalentsAnniversaryToHR } = require('../../service/emailService');
 
 const sendAnniversaryNotification = async () => {
     console.log('====== Check anniversaries today ======');
-    const talents = await getUpcomingAnniversaries('today');
-    if (talents.length) {
-        await sendTalentsAnniversaryToHR(talents);
+    const talentsForToday = await getUpcomingAnniversaries('today');
+    const talents = await getUpcomingAnniversaries('tomorrow');
+    if (talents.length || talentsForToday.length) {
+        await sendTalentsAnniversaryToHR(talents, talentsForToday);
     } else {
         console.log('====== No anniversaries today ======');
     }

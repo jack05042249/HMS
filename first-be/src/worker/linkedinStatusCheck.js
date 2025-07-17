@@ -1,21 +1,10 @@
 const { Talent, Organization } = require('../models')
 const moment = require('moment')
-const { chromium } = require('playwright')
-
 const axios = require('axios')
 const API_KEY = '31d99944b8c9f9030fb18217f78f5c8f010dff1876c0a559f860c08ca872b5b5'
 const apiUrl = 'https://api.brightdata.com/datasets/v3/trigger?dataset_id=gd_l1viktl72bvl7bjuj0&include_errors=true'
 const MAX_RETRIES = 200 // 200 x 5 seconds = 1000 seconds
 const DELAY_MS = 5000 // 5 seconds
-
-// 🔐 LinkedIn session cookie (li_at)
-const LI_AT = 'your_li_at_cookie_here'
-
-// 🌐 Bright Data proxy config
-const PROXY_HOST = 'brd.superproxy.io'
-const PROXY_PORT = 33335
-const PROXY_USER = 'brd-customer-hl_524d58d6-zone-profile_scraper'
-const PROXY_PASS = 'zogz04wmpsxr'
 
 function isLinkedInProfileUrl(url) {
   // This regex matches LinkedIn profile URLs like https://www.linkedin.com/in/username

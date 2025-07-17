@@ -197,7 +197,8 @@ async function refinePostcard(imgBuffer, firstName, type) {
       ? `This image shows postcard for congratulating employee's birthday.
     I want you to refine  the congratulating text more seamlessly and kindly.
 
-    In the left bottom side, there is a employee's name and if on top of the name there is white rectangle, not photo, please insert a cheerful cartoon-style emoji or symbolic illustration that reflects the employee’s gender—e.g., a smiling sun with a bowtie for male, or a laughing flower with eyelashes for female. Make it fun and expressive, but not overly childish. Place it in the same position as where the photo would be, inside the same frame or layout.
+    In the left bottom side, there is a employee's name and if on top of the name there is white rectangle, not photo, please insert a cheerful 25-year-old male/female cartoon Starfleet officer celebrating him/her birthday, in a simplified Star Trek: Enterprise-inspired blue uniform with colored piping. 
+    He/She is smiling with a colorful party hat, surrounded by confetti and birthday decorations. Style: playful, modern 2D cartoon illustration. but not overly childish. Place it in the same position as where the photo would be, inside the same frame or layout.
     If there exists employee's photo, enhance the employee photo by adjusting lighting and contrast for a clear, professional appearance. Center the face naturally, crop the photo to focus on the upper body or shoulders and head, and smooth out harsh shadows or glare. Use a soft, neutral background that blends well with the postcard’s design, and subtly blur it if needed to keep the focus on the person.
     
     And decorate the underline on the bottom of the fullName of employee on left side.
@@ -206,12 +207,22 @@ async function refinePostcard(imgBuffer, firstName, type) {
     Keep the greeting content clearly readable, and do not obstruct the logo or the main image.
     
     Add a small note tag in the bottom right corner inside a light semi-transparent rounded rectangle. The tag should say: 'Note: ${firstName}. We appreciate your hard work and dedication. Have a wonderful year ahead!' in a clean, sans-serif font. 
-    Ensure it complements the overall design and does not cover the logo or greeting.
+    When decorating and adding not tag, Ensure the overall design is kept and the logo or greeting text is not obstructed.
 `
       : `This image shows postcard for celebrating employee's work anniversary.
     I want you to refine  the congratulating text more seamlessly and kindly.
-    And keeping the main structure, i want you to decorate some parts if possible.
-    And exactly decorate the underline on the bottom of the fullName of employee on left side.
+
+    In the left bottom side, there is a employee's name and if on top of the name there is white rectangle, not photo, please insert a cheerful 25-year-old male/female cartoon Starfleet officer celebrating him/her birthday, in a simplified Star Trek: Enterprise-inspired blue uniform with colored piping. 
+    He/She is smiling with a colorful party hat, surrounded by confetti and  anniversary decorations. Style: playful, modern 2D cartoon illustration. but not overly childish. Place it in the same position as where the photo would be, inside the same frame or layout.
+    If there exists employee's photo, enhance the employee photo by adjusting lighting and contrast for a clear, professional appearance. Center the face naturally, crop the photo to focus on the upper body or shoulders and head, and smooth out harsh shadows or glare. Use a soft, neutral background that blends well with the postcard’s design, and subtly blur it if needed to keep the focus on the person.
+    
+    And decorate the underline on the bottom of the fullName of employee on left side.
+
+    Decorate the postcard with tasteful and festive anniversary-themed elements. For each generation, vary the decoration style—for example, use different combinations of balloons, confetti, streamers, ribbons, sparkles, or birthday icons. Change the layout, decoration density, and placement subtly per card. Use a rotating color palette that aligns with our company branding but allows for creative variations. Ensure the design stays professional, clean, and celebratory. 
+    Keep the greeting content clearly readable, and do not obstruct the logo or the main image.
+    
+    Add a small note tag in the bottom right corner inside a light semi-transparent rounded rectangle. The tag should say: 'Note: ${firstName}. We appreciate your hard work and dedication. Have a wonderful year ahead!' in a clean, sans-serif font. 
+    When decorating and adding not tag, Ensure the overall design is kept and the logo or greeting text is not obstructed.
 `
   const res = await openai.images.edit({
     model: 'gpt-image-1',
@@ -682,8 +693,8 @@ const sendMailToEmployeeOnChangeVacationBalance = async (toEmail, balanceData, t
   }
 }
 
-const sendTalentBirthdaysToHR = async (talentsList, { monthName, dayNumber }) => {
-  const talentsBlock = talentsList
+const sendTalentBirthdaysToHR = async (talentsList, talentsListForToday, { monthName, dayNumber }) => {
+  talentsListForToday
     .map(async (user, i) => {
       const imageUrl = await generateFinalPostcard({
         firstName: user.fullName,
@@ -716,7 +727,9 @@ const sendTalentBirthdaysToHR = async (talentsList, { monthName, dayNumber }) =>
       } catch (err) {
         console.error('Telegram error:', err.response?.data || err.message)
       }
-
+    })
+  const talentsBlock = talentsList
+    .map(async (user, i) => {
       return `<div>${i + 1}.&nbsp;${user.fullName} (Birthday: ${moment(user.birthday).format('D MMMM')})<br />Email: ${
         user.email
       }</div>`
@@ -738,7 +751,7 @@ const sendTalentBirthdaysToHR = async (talentsList, { monthName, dayNumber }) =>
     html
   }
 
-  //   await sendMail(mailOptions)
+    // await sendMail(mailOptions)
 }
 
 const sendCustomerBirthdaysToHR = async (customersList, { monthName, dayNumber }) => {
