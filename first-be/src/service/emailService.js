@@ -838,7 +838,7 @@ const mailOptionsForTalent = {
     to: talent.email,
     subject: `Happy Anniversary!`,
     // cc: gmail_hr,
-    html
+    html: htmlToTalent
   }
 
   sendMail(mailOptionsForTalent);
