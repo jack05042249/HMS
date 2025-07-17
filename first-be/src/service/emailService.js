@@ -779,10 +779,10 @@ const sendCustomerBirthdaysToHR = async (customersList, { monthName, dayNumber }
   //   await sendMail(mailOptions);
 }
 
-const sendTalentsAnniversaryToHR = async talentsList => {
+const sendTalentsAnniversaryToHR = async (talents, talentsForToday) => {
   const today = moment()
 
-  const talentsBlock = talentsList
+  const talentsBlock = talentsForToday
     .map(async (talent, i) => {
       const start = moment(talent.startDate)
       const today = moment()
