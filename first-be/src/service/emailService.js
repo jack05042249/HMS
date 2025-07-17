@@ -14,13 +14,11 @@ const fs = require('fs')
 const path = require('path')
 const { Blob, File } = require('buffer')
 const { OpenAI } = require('openai')
-const { getMonthCountFromDateTillEndOfYear } = require('../utils/date.func')
 
 dotenv.config()
 const openai = new OpenAI({ apiKey: process.env.openaiKey })
 
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN
-const ChatIdPath = 'telegram_users.json'
 const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`
 
 async function composePostcard(talentPhotoBase64, logoPath, fullName, years, type) {
@@ -33,14 +31,9 @@ async function composePostcard(talentPhotoBase64, logoPath, fullName, years, typ
   ctx.fillRect(420, 0, 480, 1024)
 
   // Load company logo
-  console.log('dirname ---> ', __dirname)
   const logo_Path = path.resolve(__dirname, logoPath)
-  console.log('logo_path --> ', logo_Path)
   const logo = await loadImage(logo_Path)
-  // ...existing code...
   ctx.drawImage(logo, 60, 80, 300, 150)
-
-  // ...existing code...
 
   // Draw drop shadow (optional)
   ctx.save()
@@ -107,9 +100,7 @@ async function composePostcard(talentPhotoBase64, logoPath, fullName, years, typ
   if (talentPhotoBase64 && talentPhotoBase64.startsWith('data:image/')) {
     const base64Data = talentPhotoBase64.split(',')[1] // remove "data:image/jpeg;base64,"
     const talentBuffer = Buffer.from(base64Data, 'base64')
-    console.log('talentPhoto', talentBuffer)
     const talentImg = await loadImage(talentBuffer)
-    console.log('talentImg', talentImg)
     ctx.drawImage(talentImg, x, y, width, height)
   } else {
     ctx.fillStyle = 'white'
@@ -189,9 +180,7 @@ function savePostcardToPublic(buffer, filename) {
 
 async function refinePostcard(imgBuffer, firstName, type, photoBase64) {
   const imgBlob = new Blob([imgBuffer], { type: 'image/png' })
-  console.log('imgBlob', imgBlob)
   const file = new File([imgBlob], 'image.png', { type: imgBlob.type })
-  console.log('file', file)
   let isImageFile = false;
   if (photoBase64 && photoBase64.startsWith('data:image/')) isImageFile = true
   const refinedPrompt =
@@ -240,7 +229,6 @@ async function refinePostcard(imgBuffer, firstName, type, photoBase64) {
 
 async function generateFinalPostcard({ firstName, years, type, photoBase64 }) {
   const finalBuffer = await composePostcard(photoBase64, '../public/commit_logo.png', firstName, years, type)
-  console.log('finalBuffer', finalBuffer)
   const refinedBuffer = await refinePostcard(finalBuffer, firstName, type, photoBase64)
 
   const uploadedUrl = savePostcardToPublic(
@@ -264,7 +252,6 @@ const transporter = nodemailer.createTransport({
 const sendResetPassword = async email => {
   const token = crypto.randomBytes(32).toString('hex')
   const resetLink = `https://coms.commit-offshore.com/talent/reset-password?token=${token}`
-  console.log(resetLink)
   await Talent.update({ resetToken: token, resetTokenExpiry: Date.now() + 36000000 }, { where: { email } })
   const mailOptions = {
     from: gmail_user,
@@ -313,30 +300,6 @@ const getContentPerCountry = (countriesArr, holidaysInfo) => {
         </div>`
     )
   })
-}
-
-const isTelegramUsername = telegram => {
-  if (telegram == null) return false
-  if (telegram.includes('@') && !telegram.includes('+') && !telegram.includes('http')) return true
-  return false
-}
-
-const getChatId = async user => {
-  const data = await fs.promises.readFile(ChatIdPath, 'utf8')
-  const lines = data.trim().split('\n')
-  const telegram_users = lines.map(line => JSON.parse(line))
-  for (const t_user of telegram_users) {
-    if (isTelegramUsername(user.telegram) && `@${t_user.username}` == user.telegram) {
-      return t_user.chatId
-    } else {
-      if (
-        user.fullName.toLowerCase().includes(t_user.firstName.toLowerCase()) &&
-        user.fullName.toLowerCase().includes(t_user.lastName.toLowerCase())
-      ) {
-        return t_user.chatId
-      }
-    }
-  }
 }
 
 const sendHolidaysEmail = async (data, startDate, endDate) => {
@@ -755,7 +718,7 @@ const sendTalentBirthdaysToHR = async (talentsList, talentsListForToday, { month
     html
   }
 
-  // await sendMail(mailOptions)
+  await sendMail(mailOptions)
 }
 
 const sendCustomerBirthdaysToHR = async (customersList, { monthName, dayNumber }) => {
@@ -803,8 +766,6 @@ const sendTalentsAnniversaryToHR = async (talents, talentsForToday) => {
         photoBase64: talent.picture
       })
 
-      // const chatID = 7173168684;
-
       const shortBlessing = await openai.chat.completions.create({
         model: 'gpt-4',
         messages: [
@@ -844,27 +805,6 @@ const mailOptionsForTalent = {
   }
 
   sendMail(mailOptionsForTalent);
-
-      // const payload = {
-      //   chat_id: chatID,
-      //   caption: `${shortBlessing.choices[0].message.content}`,
-      //   photo: imageUrl // Must be publicly accessible
-      // }
-
-      // const payload = {
-      //   chat_id: chatID,
-      //   caption: `🎉 Congratulations on ${count} years with Commit Offshore, ${
-      //     talent.telegram ? talent.telegram : talent.fullName
-      //   }! #CommitOffshore`,
-      //   photo: imageUrl // Must be publicly accessible
-      // }
-
-      // try {
-      //   const res = await axios.post(url, payload)
-      //   console.log('Postcard sent:', res.data)
-      // } catch (err) {
-      //   console.error('Telegram error:', err.response?.data || err.message)
-      // }
 
       return `
             <tr>
@@ -906,7 +846,7 @@ const mailOptionsForTalent = {
     html
   }
 
-  //   await sendMail(mailOptions)
+    await sendMail(mailOptions)
 }
 
 const sendFeedbackEmail = async (talent, link, type) => {

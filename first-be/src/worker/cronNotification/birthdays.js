@@ -4,7 +4,6 @@ const { getHolidaysForOnyDayNotification, getHolidaysForCustomers } = require('.
 const sendTalentBirthdaysNotification = async () => {
     console.log('====== Check upcoming birthdays ======');
     const { talents, talentsForToday, ...dateData} = await getHolidaysForOnyDayNotification();
-    console.log(talents);
     const { customers, ...data} = await getHolidaysForCustomers();
     if (talents.length > 0 || talentsForToday.length > 0) {
         await sendTalentBirthdaysToHR(talents, talentsForToday, dateData);
