@@ -667,7 +667,6 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
       const imageUrl = data.imageUrl;
       const blessingText = data.blessing;
       const chatID = 7173168684; // Replace with your actual chat ID
-      const url = `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendPhoto`;
       const payload = {
         chat_id: chatID,
         caption: `${blessingText}`,
@@ -721,7 +720,8 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
         const blessingText = shortBlessing.choices[0].message.content
         birthdayDataArr.push({ imageUrl, blessing: blessingText })
 
-        console.log('url : ', imageUrl)
+        console.log('url : ', imageUrl);
+        console.log('blessingText : ', blessingText);
 
         const chatID = 7173168684
         const payload = {
