@@ -154,7 +154,10 @@ async function composePostcard(talentPhotoBase64, logoPath, fullName, years, typ
   ctx.font = 'bold 35px Impact, Verdana, sans-serif'
   ctx.fillText(`Dear ${fullName.split(' ')[0]},`, 520, 380)
   ctx.font = '30px Impact, Verdana, sans-serif'
-  const message1 = type === 'birthday' ? `Wishing you a&wonderful birthday&and a fantastic&year ahead.` : `Wishing you ${years} years&work anniversary&and continued success.`;
+  const message1 =
+    type === 'birthday'
+      ? `Wishing you a&wonderful birthday&and a fantastic&year ahead.`
+      : `Wishing you ${years} years&work anniversary&and continued success.`
   const lines1 = message1.split('&')
   lines1.forEach((line, i) => {
     ctx.fillText(line, 520, 425 + i * 46) // 40px vertical spacing between lines
@@ -181,7 +184,7 @@ function savePostcardToPublic(buffer, filename) {
 async function refinePostcard(imgBuffer, firstName, type, photoBase64) {
   const imgBlob = new Blob([imgBuffer], { type: 'image/png' })
   const file = new File([imgBlob], 'image.png', { type: imgBlob.type })
-  let isImageFile = false;
+  let isImageFile = false
   if (photoBase64 && photoBase64.startsWith('data:image/')) isImageFile = true
   const refinedPrompt =
     type == 'birthday'
@@ -657,68 +660,76 @@ const sendMailToEmployeeOnChangeVacationBalance = async (toEmail, balanceData, t
   }
 }
 
-const sendTalentBirthdaysToHR = async (talentsList, talentsListForToday, { monthName, dayNumber }) => {
-  talentsListForToday.map(async (user, i) => {
-    const imageUrl = await generateFinalPostcard({
-      firstName: user.fullName,
-      years: 0,
-      type: 'birthday',
-      photoBase64: user.picture
+const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, dayNumber }) => {
+  if (talentsForToday.length > 0) {
+    talentsForToday.map(async (user, i) => {
+      const imageUrl = await generateFinalPostcard({
+        firstName: user.fullName,
+        years: 0,
+        type: 'birthday',
+        photoBase64: user.picture
+      })
+
+      const chatID = 7173168684
+
+      const shortBlessing = await openai.chat.completions.create({
+        model: 'gpt-4',
+        messages: [
+          {
+            role: 'user',
+            content: `Write a short birthday blessing for ${
+              user.fullName.split(' ')[0]
+            } as 2 sentences starting exactly with "🎉 Happy Birthday ${user.fullName.split(' ')[0]} ! ${
+              user.telegram ? user.telegram + ',' : ''
+            }". Make it warm and friendly, but not too formal.`
+          }
+        ]
+      })
+
+      const payload = {
+        chat_id: chatID,
+        caption: `${shortBlessing.choices[0].message.content}`,
+        photo: imageUrl // Must be publicly accessible
+      }
+
+      try {
+        const res = await axios.post(url, payload)
+        console.log('Postcard sent:', res.data)
+      } catch (err) {
+        console.error('Telegram error:', err.response?.data || err.message)
+      }
     })
+  }
+  if (talents.length > 0) {
+    const talentsBlockArr = await Promise.all(
+      talents.map(async (user, i) => {
+        // ...async code...
+        return `<div>${i + 1}.&nbsp;${user.fullName} (Birthday: ${moment(user.birthday).format(
+          'D MMMM'
+        )})<br />Email: ${user.email}</div>`
+      })
+    )
+    const talentsBlock = talentsBlockArr.join('')
 
-    const chatID = 7173168684
-
-    const shortBlessing = await openai.chat.completions.create({
-      model: 'gpt-4',
-      messages: [
-        {
-          role: 'user',
-          content: `Write a short birthday blessing for ${
-            user.fullName.split(' ')[0]
-          } as 2 sentences starting exactly with "🎉 Happy Birthday ${user.fullName.split(' ')[0]} ! ${
-            user.telegram ? user.telegram + ',' : ''
-          }". Make it warm and friendly, but not too formal.`
-        }
-      ]
-    })
-
-    const payload = {
-      chat_id: chatID,
-      caption: `${shortBlessing.choices[0].message.content}`,
-      photo: imageUrl // Must be publicly accessible
-    }
-
-    try {
-      const res = await axios.post(url, payload)
-      console.log('Postcard sent:', res.data)
-    } catch (err) {
-      console.error('Telegram error:', err.response?.data || err.message)
-    }
-  })
-  const talentsBlock = talentsList
-    .map(async (user, i) => {
-      return `<div>${i + 1}.&nbsp;${user.fullName} (Birthday: ${moment(user.birthday).format('D MMMM')})<br />Email: ${
-        user.email
-      }</div>`
-    })
-    .join('')
-
-  const html = `
+    const html = `
     <div>
     <p>Hi, Sona!</p>
     <p>These employees have theirs birthdays in 1 day:</p>
     ${talentsBlock}
     </div>`
 
-  const mailOptions = {
-    from: { address: gmail_user, name: 'Commit Offshore  Holidays Reminder System' },
-    to: gmail_reminders,
-    subject: 'Upcoming talent birthdays in 1 day',
-    cc: gmail_cc,
-    html
-  }
+    console.log(html)
 
-  await sendMail(mailOptions)
+    const mailOptions = {
+      from: { address: gmail_user, name: 'Commit Offshore  Holidays Reminder System' },
+      to: gmail_reminders,
+      subject: 'Upcoming talent birthdays in 1 day',
+      cc: gmail_cc,
+      html
+    }
+
+    await sendMail(mailOptions)
+  }
 }
 
 const sendCustomerBirthdaysToHR = async (customersList, { monthName, dayNumber }) => {
@@ -741,7 +752,7 @@ const sendCustomerBirthdaysToHR = async (customersList, { monthName, dayNumber }
     html
   }
 
-  //   await sendMail(mailOptions);
+    await sendMail(mailOptions);
 }
 
 const sendTalentsAnniversaryToHR = async (talents, talentsForToday) => {
@@ -796,15 +807,15 @@ const sendTalentsAnniversaryToHR = async (talents, talentsForToday) => {
   </div>
 `
 
-const mailOptionsForTalent = {
-    from: { address: gmail_user, name: 'Commit Offshore Holidays Reminder System' },
-    to: talent.email,
-    subject: `Happy Anniversary!`,
-    // cc: gmail_hr,
-    html: htmlToTalent
-  }
+      const mailOptionsForTalent = {
+        from: { address: gmail_user, name: 'Commit Offshore Holidays Reminder System' },
+        to: talent.email,
+        subject: `Happy Anniversary!`,
+        // cc: gmail_hr,
+        html: htmlToTalent
+      }
 
-  sendMail(mailOptionsForTalent);
+      sendMail(mailOptionsForTalent)
 
       return `
             <tr>
@@ -846,7 +857,7 @@ const mailOptionsForTalent = {
     html
   }
 
-    await sendMail(mailOptions)
+  await sendMail(mailOptions)
 }
 
 const sendFeedbackEmail = async (talent, link, type) => {
