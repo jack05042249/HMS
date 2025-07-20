@@ -702,6 +702,7 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
   }
   // ...existing code...
 
+  console.log('talents : ', talents.length);
   if (talents.length > 0) {
     const talentsBlockArr = await Promise.all(
       talents.map(async (user, i) => {
