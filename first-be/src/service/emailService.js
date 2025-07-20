@@ -662,7 +662,7 @@ const sendMailToEmployeeOnChangeVacationBalance = async (toEmail, balanceData, t
 
 const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, dayNumber }) => {
   console.log('talentsForToday : ', talentsForToday.length);
-  const raw = JSON.parse(fs.readFileSync('birthdayData.json', 'utf-8'));
+  const raw = fs.readFileSync('birthdayData.json', 'utf-8');
   const savedBirthdayData = raw ? JSON.parse(raw) : [];
   console.log('savedBirthdayData : ', savedBirthdayData);
   await Promise.all(
