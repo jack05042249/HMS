@@ -669,9 +669,7 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
       //   type: 'birthday',
       //   photoBase64: user.picture
       // })
-
       // const chatID = 7173168684
-
       // const shortBlessing = await openai.chat.completions.create({
       //   model: 'gpt-4',
       //   messages: [
@@ -685,13 +683,11 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
       //     }
       //   ]
       // })
-
       // const payload = {
       //   chat_id: chatID,
       //   caption: `${shortBlessing.choices[0].message.content}`,
       //   photo: imageUrl // Must be publicly accessible
       // }
-
       // try {
       //   const res = await axios.post(url, payload)
       //   console.log('Postcard sent:', res.data)
@@ -702,7 +698,7 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
   }
   // ...existing code...
 
-  console.log('talents : ', talents.length);
+  console.log('talents : ', talents.length)
   if (talents.length > 0) {
     const talentsBlockArr = await Promise.all(
       talents.map(async (user, i) => {
@@ -714,6 +710,7 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
     )
     const talentsBlock = talentsBlockArr.join('')
     // Await all postcard blocks
+    const birthdayDataArr = [];
     const cardsHtmlArr = await Promise.all(
       talents.map(async user => {
         const imageUrl = await generateFinalPostcard({
@@ -737,7 +734,12 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
           ]
         })
         
-        fs.writeFileSync(`birthdayData.json`, JSON.stringify({ imageUrl, shortBlessing }))
+
+
+        const blessingText = shortBlessing.choices[0].message.content;
+        birthdayDataArr.push({ imageUrl, blessing: blessingText });
+
+        console.log('url : ', imageUrl)
 
         return `
         <div style="background: #fff; border-radius: 16px; box-shadow: 0 4px 24px rgba(77,74,234,0.08); padding: 32px; margin: 16px; max-width: 420px; display: flex; flex-direction: column; align-items: center;">
@@ -753,6 +755,7 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
       })
     )
     const cardsHtml = cardsHtmlArr.join('')
+    fs.writeFileSync('birthdayData.json', JSON.stringify(birthdayDataArr, null, 2));
 
     // Email HTML with talentsBlock and postcard grid
     const html = `
@@ -766,6 +769,8 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
       </div>
     </div>
   `
+
+  console.log(html);
 
     const mailOptions = {
       from: { address: gmail_user, name: 'Commit Offshore Holidays Reminder System' },
