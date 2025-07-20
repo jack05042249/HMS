@@ -696,6 +696,28 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
       })
     )
     const talentsBlock = talentsBlockArr.join('')
+    // Email HTML with talentsBlock and postcard grid
+    const html = `
+    <div style="font-family: 'Poppins', Arial, sans-serif; background: #f8fafc; padding: 32px;">
+      <p style="font-size: 20px; color: #333; margin-bottom: 32px;">Hi, Sona!<br>These employees have birthdays in 1 day:</p>
+      <div style="margin-bottom: 32px;">
+        ${talentsBlock}
+      </div>
+    </div>
+  `
+
+    // console.log(html);
+
+    const mailOptions = {
+      from: { address: gmail_user, name: 'Commit Offshore Holidays Reminder System' },
+      to: gmail_reminders,
+      subject: 'Upcoming talent birthdays in 1 day',
+      cc: gmail_cc,
+      html
+    }
+
+    await sendMail(mailOptions)
+
     // Await all postcard blocks
     let birthdayDataArr = []
     await Promise.all(
@@ -742,28 +764,6 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
       })
     )
     fs.writeFileSync('birthdayData.json', JSON.stringify(birthdayDataArr, null, 2))
-
-    // Email HTML with talentsBlock and postcard grid
-    const html = `
-    <div style="font-family: 'Poppins', Arial, sans-serif; background: #f8fafc; padding: 32px;">
-      <p style="font-size: 20px; color: #333; margin-bottom: 32px;">Hi, Sona!<br>These employees have birthdays in 1 day:</p>
-      <div style="margin-bottom: 32px;">
-        ${talentsBlock}
-      </div>
-    </div>
-  `
-
-    // console.log(html);
-
-    const mailOptions = {
-      from: { address: gmail_user, name: 'Commit Offshore Holidays Reminder System' },
-      to: gmail_reminders,
-      subject: 'Upcoming talent birthdays in 1 day',
-      cc: gmail_cc,
-      html
-    }
-
-    await sendMail(mailOptions)
   }
 
   // ...existing code...
