@@ -662,10 +662,13 @@ const sendMailToEmployeeOnChangeVacationBalance = async (toEmail, balanceData, t
 
 const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, dayNumber }) => {
   const savedBirthdayData = JSON.parse(fs.readFileSync('birthdayData.json', 'utf-8'));
+  console.log('savedBirthdayData : ', savedBirthdayData);
   await Promise.all(
     savedBirthdayData.map(async (data, i) => {
       const imageUrl = data.imageUrl;
       const blessingText = data.blessing;
+      console.log('imageUrl ---> : ', imageUrl);
+      console.log('blessingText ---> : ', blessingText);
       const chatID = 7173168684; // Replace with your actual chat ID
       const payload = {
         chat_id: chatID,
