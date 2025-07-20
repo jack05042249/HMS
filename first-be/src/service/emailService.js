@@ -749,7 +749,7 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
         console.log('url : ', imageUrl);
         console.log('blessingText : ', blessingText);
 
-        const chatID = 7173168684
+        const chatID = 622544436
         const payload = {
           chat_id: chatID,
           caption: `${blessingText}`,
@@ -765,8 +765,6 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
     )
     fs.writeFileSync('birthdayData.json', JSON.stringify(birthdayDataArr, null, 2))
   }
-
-  // ...existing code...
 }
 
 const sendCustomerBirthdaysToHR = async (customersList, { monthName, dayNumber }) => {
