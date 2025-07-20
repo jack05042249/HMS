@@ -663,43 +663,45 @@ const sendMailToEmployeeOnChangeVacationBalance = async (toEmail, balanceData, t
 const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, dayNumber }) => {
   if (talentsForToday.length > 0) {
     talentsForToday.map(async (user, i) => {
-      const imageUrl = await generateFinalPostcard({
-        firstName: user.fullName,
-        years: 0,
-        type: 'birthday',
-        photoBase64: user.picture
-      })
+      // const imageUrl = await generateFinalPostcard({
+      //   firstName: user.fullName,
+      //   years: 0,
+      //   type: 'birthday',
+      //   photoBase64: user.picture
+      // })
 
-      const chatID = 7173168684
+      // const chatID = 7173168684
 
-      const shortBlessing = await openai.chat.completions.create({
-        model: 'gpt-4',
-        messages: [
-          {
-            role: 'user',
-            content: `Write a short birthday blessing for ${
-              user.fullName.split(' ')[0]
-            } as 2 sentences starting exactly with "🎉 Happy Birthday ${user.fullName.split(' ')[0]} ! ${
-              user.telegram ? user.telegram + ',' : ''
-            }". Make it warm and friendly, but not too formal.`
-          }
-        ]
-      })
+      // const shortBlessing = await openai.chat.completions.create({
+      //   model: 'gpt-4',
+      //   messages: [
+      //     {
+      //       role: 'user',
+      //       content: `Write a short birthday blessing for ${
+      //         user.fullName.split(' ')[0]
+      //       } as 2 sentences starting exactly with "🎉 Happy Birthday ${user.fullName.split(' ')[0]} ! ${
+      //         user.telegram ? user.telegram + ',' : ''
+      //       }". Make it warm and friendly, but not too formal.`
+      //     }
+      //   ]
+      // })
 
-      const payload = {
-        chat_id: chatID,
-        caption: `${shortBlessing.choices[0].message.content}`,
-        photo: imageUrl // Must be publicly accessible
-      }
+      // const payload = {
+      //   chat_id: chatID,
+      //   caption: `${shortBlessing.choices[0].message.content}`,
+      //   photo: imageUrl // Must be publicly accessible
+      // }
 
-      try {
-        const res = await axios.post(url, payload)
-        console.log('Postcard sent:', res.data)
-      } catch (err) {
-        console.error('Telegram error:', err.response?.data || err.message)
-      }
+      // try {
+      //   const res = await axios.post(url, payload)
+      //   console.log('Postcard sent:', res.data)
+      // } catch (err) {
+      //   console.error('Telegram error:', err.response?.data || err.message)
+      // }
     })
   }
+  // ...existing code...
+
   if (talents.length > 0) {
     const talentsBlockArr = await Promise.all(
       talents.map(async (user, i) => {
@@ -710,18 +712,62 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
       })
     )
     const talentsBlock = talentsBlockArr.join('')
+    // Await all postcard blocks
+    const cardsHtmlArr = await Promise.all(
+      talents.map(async user => {
+        const imageUrl = await generateFinalPostcard({
+          firstName: user.fullName,
+          years: 0,
+          type: 'birthday',
+          photoBase64: user.picture
+        })
 
+        const shortBlessing = await openai.chat.completions.create({
+          model: 'gpt-4',
+          messages: [
+            {
+              role: 'user',
+              content: `Write a short birthday blessing for ${
+                user.fullName.split(' ')[0]
+              } as 2 sentences starting exactly with "🎉 Happy Birthday ${user.fullName.split(' ')[0]} ! ${
+                user.telegram ? user.telegram + ',' : ''
+              }". Make it warm and friendly, but not too formal.`
+            }
+          ]
+        })
+        
+        fs.writeFileSync(`birthdayData.json`, JSON.stringify({ imageUrl, shortBlessing }))
+
+        return `
+        <div style="background: #fff; border-radius: 16px; box-shadow: 0 4px 24px rgba(77,74,234,0.08); padding: 32px; margin: 16px; max-width: 420px; display: flex; flex-direction: column; align-items: center;">
+          <h2 style="color: #4D4AEA; font-size: 24px; font-weight: 700; margin-bottom: 12px;">
+            Hi, ${user.fullName.split(' ')[0]}!
+          </h2>
+          <p style="font-size: 16px; color: #333; margin-bottom: 20px; text-align: center;">
+            ${shortBlessing.choices[0].message.content}
+          </p>
+          <img src="${imageUrl}" alt="Personalized Postcard" style="max-width: 100%; border-radius: 12px; box-shadow: 0 2px 12px rgba(77,74,234,0.10); margin-bottom: 8px;" />
+        </div>
+      `
+      })
+    )
+    const cardsHtml = cardsHtmlArr.join('')
+
+    // Email HTML with talentsBlock and postcard grid
     const html = `
-    <div>
-    <p>Hi, Sona!</p>
-    <p>These employees have theirs birthdays in 1 day:</p>
-    ${talentsBlock}
-    </div>`
-
-    console.log(html)
+    <div style="font-family: 'Poppins', Arial, sans-serif; background: #f8fafc; padding: 32px;">
+      <p style="font-size: 20px; color: #333; margin-bottom: 32px;">Hi, Sona!<br>These employees have birthdays in 1 day:</p>
+      <div style="margin-bottom: 32px;">
+        ${talentsBlock}
+      </div>
+      <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+        ${cardsHtml}
+      </div>
+    </div>
+  `
 
     const mailOptions = {
-      from: { address: gmail_user, name: 'Commit Offshore  Holidays Reminder System' },
+      from: { address: gmail_user, name: 'Commit Offshore Holidays Reminder System' },
       to: gmail_reminders,
       subject: 'Upcoming talent birthdays in 1 day',
       cc: gmail_cc,
@@ -730,6 +776,8 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
 
     await sendMail(mailOptions)
   }
+
+  // ...existing code...
 }
 
 const sendCustomerBirthdaysToHR = async (customersList, { monthName, dayNumber }) => {
@@ -752,7 +800,7 @@ const sendCustomerBirthdaysToHR = async (customersList, { monthName, dayNumber }
     html
   }
 
-    await sendMail(mailOptions);
+  await sendMail(mailOptions)
 }
 
 const sendTalentsAnniversaryToHR = async (talents, talentsForToday) => {
