@@ -661,17 +661,13 @@ const sendMailToEmployeeOnChangeVacationBalance = async (toEmail, balanceData, t
 }
 
 const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, dayNumber }) => {
-  console.log('talentsForToday : ', talentsForToday.length);
   const raw = fs.readFileSync('birthdayData.json', 'utf-8');
   const savedBirthdayData = raw ? JSON.parse(raw) : [];
-  console.log('savedBirthdayData : ', savedBirthdayData);
   await Promise.all(
     savedBirthdayData.map(async (data, i) => {
       const imageUrl = data.imageUrl;
       const blessingText = data.blessing;
-      console.log('imageUrl ---> : ', imageUrl);
-      console.log('blessingText ---> : ', blessingText);
-      const chatID = 7173168684; // Replace with your actual chat ID
+      const chatID = -687487949; // Replace with your actual chat ID
       const payload = {
         chat_id: chatID,
         caption: `${blessingText}`,
@@ -685,7 +681,6 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
       }
     })
   )
-  console.log('talents : ', talents.length)
   if (talents.length > 0) {
     const talentsBlockArr = await Promise.all(
       talents.map(async (user, i) => {
@@ -705,8 +700,6 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
       </div>
     </div>
   `
-
-    // console.log(html);
 
     const mailOptions = {
       from: { address: gmail_user, name: 'Commit Offshore Holidays Reminder System' },
@@ -745,9 +738,6 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
 
         const blessingText = shortBlessing.choices[0].message.content
         birthdayDataArr.push({ imageUrl, blessing: blessingText })
-
-        console.log('url : ', imageUrl);
-        console.log('blessingText : ', blessingText);
 
         const chatID = 622544436
         const payload = {
