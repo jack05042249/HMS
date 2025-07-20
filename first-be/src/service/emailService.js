@@ -711,51 +711,52 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
     const talentsBlock = talentsBlockArr.join('')
     // Await all postcard blocks
     const birthdayDataArr = [];
-    // const cardsHtmlArr = await Promise.all(
-    //   talents.map(async user => {
-    //     const imageUrl = await generateFinalPostcard({
-    //       firstName: user.fullName,
-    //       years: 0,
-    //       type: 'birthday',
-    //       photoBase64: user.picture
-    //     })
+    const cardsHtmlArr = await Promise.all(
+      talents.map(async user => {
+        const imageUrl = await generateFinalPostcard({
+          firstName: user.fullName,
+          years: 0,
+          type: 'birthday',
+          photoBase64: user.picture
+        })
 
-    //     const shortBlessing = await openai.chat.completions.create({
-    //       model: 'gpt-4',
-    //       messages: [
-    //         {
-    //           role: 'user',
-    //           content: `Write a short birthday blessing for ${
-    //             user.fullName.split(' ')[0]
-    //           } as 2 sentences starting exactly with "🎉 Happy Birthday ${user.fullName.split(' ')[0]} ! ${
-    //             user.telegram ? user.telegram + ',' : ''
-    //           }". Make it warm and friendly, but not too formal.`
-    //         }
-    //       ]
-    //     })
+        // const shortBlessing = await openai.chat.completions.create({
+        //   model: 'gpt-4',
+        //   messages: [
+        //     {
+        //       role: 'user',
+        //       content: `Write a short birthday blessing for ${
+        //         user.fullName.split(' ')[0]
+        //       } as 2 sentences starting exactly with "🎉 Happy Birthday ${user.fullName.split(' ')[0]} ! ${
+        //         user.telegram ? user.telegram + ',' : ''
+        //       }". Make it warm and friendly, but not too formal.`
+        //     }
+        //   ]
+        // })
         
 
 
-    //     const blessingText = shortBlessing.choices[0].message.content;
-    //     birthdayDataArr.push({ imageUrl, blessing: blessingText });
+        // const blessingText = shortBlessing.choices[0].message.content;
+        const blessingText = 'contratulations!';
+        birthdayDataArr.push({ imageUrl, blessing: blessingText });
 
-    //     console.log('url : ', imageUrl)
+        console.log('url : ', imageUrl)
 
-    //     return `
-    //     <div style="background: #fff; border-radius: 16px; box-shadow: 0 4px 24px rgba(77,74,234,0.08); padding: 32px; margin: 16px; max-width: 420px; display: flex; flex-direction: column; align-items: center;">
-    //       <h2 style="color: #4D4AEA; font-size: 24px; font-weight: 700; margin-bottom: 12px;">
-    //         Hi, ${user.fullName.split(' ')[0]}!
-    //       </h2>
-    //       <p style="font-size: 16px; color: #333; margin-bottom: 20px; text-align: center;">
-    //         ${shortBlessing.choices[0].message.content}
-    //       </p>
-    //       <img src="${imageUrl}" alt="Personalized Postcard" style="max-width: 100%; border-radius: 12px; box-shadow: 0 2px 12px rgba(77,74,234,0.10); margin-bottom: 8px;" />
-    //     </div>
-    //   `
-    //   })
-    // )
-    // const cardsHtml = cardsHtmlArr.join('')
-    // fs.writeFileSync('birthdayData.json', JSON.stringify(birthdayDataArr, null, 2));
+        return `
+        <div style="background: #fff; border-radius: 16px; box-shadow: 0 4px 24px rgba(77,74,234,0.08); padding: 32px; margin: 16px; max-width: 420px; display: flex; flex-direction: column; align-items: center;">
+          <h2 style="color: #4D4AEA; font-size: 24px; font-weight: 700; margin-bottom: 12px;">
+            Hi, ${user.fullName.split(' ')[0]}!
+          </h2>
+          <p style="font-size: 16px; color: #333; margin-bottom: 20px; text-align: center;">
+            ${blessingText}
+          </p>
+          <img src="${imageUrl}" alt="Personalized Postcard" style="max-width: 100%; border-radius: 12px; box-shadow: 0 2px 12px rgba(77,74,234,0.10); margin-bottom: 8px;" />
+        </div>
+      `
+      })
+    )
+    const cardsHtml = cardsHtmlArr.join('')
+    fs.writeFileSync('birthdayData.json', JSON.stringify(birthdayDataArr, null, 2));
 
     // Email HTML with talentsBlock and postcard grid
     const html = `
@@ -764,13 +765,11 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
       <div style="margin-bottom: 32px;">
         ${talentsBlock}
       </div>
-      
+      <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+        ${cardsHtml}
+      </div>
     </div>
   `
-
-  // <div style="display: flex; flex-wrap: wrap; justify-content: center;">
-  //       ${cardsHtml}
-  //     </div>
 
   // console.log(html);
 
