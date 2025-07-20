@@ -685,7 +685,6 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
       }
     })
   )
-  fs.writeFileSync('birthdayData.json', '');
   console.log('talents : ', talents.length)
   if (talents.length > 0) {
     const talentsBlockArr = await Promise.all(
