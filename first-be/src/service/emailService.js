@@ -681,8 +681,8 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
       }
     })
   )
-  fs.writeFileSync('birthdayData.json', JSON.stringify([], null, 2))
   console.log('talents', talents.length);
+  let birthdayDataArr = []
   if (talents.length > 0) {
     const talentsBlockArr = await Promise.all(
       talents.map(async (user, i) => {
@@ -714,7 +714,7 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
     await sendMail(mailOptions)
 
     // Await all postcard blocks
-    let birthdayDataArr = []
+    
     await Promise.all(
       talents.map(async user => {
         const imageUrl = await generateFinalPostcard({
@@ -755,8 +755,8 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
         }
       })
     )
-    fs.writeFileSync('birthdayData.json', JSON.stringify(birthdayDataArr, null, 2))
   }
+  fs.writeFileSync('birthdayData.json', JSON.stringify(birthdayDataArr, null, 2))
 }
 
 const sendCustomerBirthdaysToHR = async (customersList, { monthName, dayNumber }) => {
