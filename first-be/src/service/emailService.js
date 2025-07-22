@@ -681,7 +681,6 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
       }
     })
   )
-  console.log('talents', talents.length);
   let birthdayDataArr = []
   if (talents.length > 0) {
     const talentsBlockArr = await Promise.all(
