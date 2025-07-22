@@ -682,6 +682,7 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
     })
   )
   fs.writeFileSync('birthdayData.json', JSON.stringify([], null, 2))
+  console.log('talents', talents.length);
   if (talents.length > 0) {
     const talentsBlockArr = await Promise.all(
       talents.map(async (user, i) => {
