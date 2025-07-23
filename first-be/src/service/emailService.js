@@ -189,7 +189,7 @@ async function refinePostcard(imgBuffer, firstName, type, photoBase64) {
   const refinedPrompt =
     type == 'birthday'
       ? `This image shows postcard for congratulating employee's birthday.
-    I want you to refine  the congratulating text more seamlessly and kindly.
+    I want you to refine  the congratulating text more seamlessly and kindly and make the each text row as almost wide as the title.
 
     If ${isImageFile} is false, please insert a cheerful 25-year-old male/female cartoon Starfleet officer(concerning to fullName : ${firstName}) celebrating him/her birthday, in a simplified Star Trek: Enterprise-inspired uniform with colored piping randomly with orange/blue bg. 
     Then the cartoon Starfleet officer is smiling with a colorful party hat, surrounded by confetti and birthday decorations. Style: playful, modern 2D cartoon illustration. but not overly childish. Place it in the white square in the middle of left panel as where the photo would be, inside the same frame or layout.
@@ -667,7 +667,7 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
     savedBirthdayData.map(async (data, i) => {
       const imageUrl = data.imageUrl;
       const blessingText = data.blessing;
-      const chatID = -687487949; // Replace with your actual chat ID
+      const chatID = 7173168684; // Replace with your actual chat ID
       const payload = {
         chat_id: chatID,
         caption: `${blessingText}`,
@@ -740,7 +740,7 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
         const blessingText = shortBlessing.choices[0].message.content
         birthdayDataArr.push({ imageUrl, blessing: blessingText })
 
-        const chatID = 622544436
+        const chatID = -4659667008
         const payload = {
           chat_id: chatID,
           caption: `${blessingText}`,

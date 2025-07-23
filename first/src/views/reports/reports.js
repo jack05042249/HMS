@@ -3,6 +3,7 @@ import icons from '../../icons';
 import LeavesAndAnnualSituation from './leavesAndAnnualSituation';
 import { TasksReport } from './TasksReport';
 import { SatisfactionReport } from './SatisfactionReport';
+import { NoLinkedinReport } from './NoLinkedinReport';
 import { getIsAdmin } from '../../utils';
 
 const Types = ({ type, onChange }) => {
@@ -36,6 +37,12 @@ const Types = ({ type, onChange }) => {
           >
             Satisfaction
           </button>
+          <button
+            onClick={() => onChange('linkedin')}
+            className={type === 'linkedin' ? 'text-[#fff] bg-[#4D4AEA]  px-9 py-3' : 'px-9 py-3 text-[#4D4AEA]'}
+          >
+            No Linkedin
+          </button>
         </>
       )}
     </div>
@@ -43,7 +50,7 @@ const Types = ({ type, onChange }) => {
 };
 
 const Reports = () => {
-  const [type, setType] = useState('monthly');
+  const [type, setType] = useState('linkedin');
 
   const ref = useRef();
 
@@ -59,7 +66,8 @@ const Reports = () => {
       monthly: <LeavesAndAnnualSituation type={type} ref={ref} />,
       year: <LeavesAndAnnualSituation type={type} ref={ref} />,
       tasks: <TasksReport />,
-      satisfaction: <SatisfactionReport />
+      satisfaction: <SatisfactionReport />,
+      linkedin: <NoLinkedinReport />,
     };
     return map[type];
   };
