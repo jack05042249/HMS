@@ -661,13 +661,16 @@ const sendMailToEmployeeOnChangeVacationBalance = async (toEmail, balanceData, t
 }
 
 const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, dayNumber }) => {
-  const raw = fs.readFileSync('birthdayData.json', 'utf-8');
-  const savedBirthdayData = raw ? JSON.parse(raw) : [];
+  let raw = ''
+  if (fs.existsSync('birthdayData.json')) {
+    raw = fs.readFileSync('birthdayData.json', 'utf-8')
+  }
+  const savedBirthdayData = raw ? JSON.parse(raw) : []
   await Promise.all(
     savedBirthdayData.map(async (data, i) => {
-      const imageUrl = data.imageUrl;
-      const blessingText = data.blessing;
-      const chatID = 7173168684; // Replace with your actual chat ID
+      const imageUrl = data.imageUrl
+      const blessingText = data.blessing
+      const chatID = 7173168684 // Replace with your actual chat ID
       const payload = {
         chat_id: chatID,
         caption: `${blessingText}`,
@@ -713,7 +716,7 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
     await sendMail(mailOptions)
 
     // Await all postcard blocks
-    
+
     await Promise.all(
       talents.map(async user => {
         const imageUrl = await generateFinalPostcard({
