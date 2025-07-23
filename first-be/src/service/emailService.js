@@ -22,13 +22,13 @@ const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN
 const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`
 
 async function composePostcard(talentPhotoBase64, logoPath, fullName, years, type) {
-  const canvas = createCanvas(900, 1024)
+  const canvas = createCanvas(900, 1150)
   const ctx = canvas.getContext('2d')
 
   ctx.fillStyle = 'lightgray'
-  ctx.fillRect(0, 0, 420, 1024)
+  ctx.fillRect(0, 0, 420, 1150)
   ctx.fillStyle = '#C32C1D'
-  ctx.fillRect(420, 0, 480, 1024)
+  ctx.fillRect(420, 0, 480, 1150)
 
   // Load company logo
   const logo_Path = path.resolve(__dirname, logoPath)
@@ -201,7 +201,7 @@ async function refinePostcard(imgBuffer, firstName, type, photoBase64) {
     Keep the greeting content clearly readable, and do not obstruct the logo or the main image.
     
     Add a small note tag in the bottom right corner inside a light semi-transparent rounded rectangle. The tag should say: 'Note: ${firstName}. We appreciate your hard work and dedication. Have a wonderful year ahead!' in a clean, sans-serif font. 
-    When decorating and adding not tag, Ensure the overall design is kept and the logo or greeting text is not obstructed.
+    When decorating and adding not tag, ensure the note tag's bottom is touched with the bottom of the card and the overall design is kept and the logo or greeting text is not obstructed.
 `
       : `This image shows postcard for celebrating employee's work anniversary.
     I want you to refine  the congratulating text more seamlessly and kindly.
