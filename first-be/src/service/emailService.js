@@ -199,8 +199,9 @@ async function refinePostcard(imgBuffer, firstName, type, photoBase64) {
 
     Decorate the postcard with tasteful and festive birthday-themed elements. For each generation, vary the decoration style—for example, use different combinations of balloons, confetti, streamers, ribbons, sparkles, or birthday icons. Change the layout, decoration density, and placement subtly per card. Use a rotating color palette that aligns with our company branding but allows for creative variations. Ensure the design stays professional, clean, and celebratory. 
     Keep the greeting content clearly readable, and do not obstruct the logo or the main image.
-    
-    Add a small note tag in the bottom right corner inside a light semi-transparent rounded rectangle. The tag should say: 'Note: ${firstName}. We appreciate your hard work and dedication. Have a wonderful year ahead!' in a clean, sans-serif font. 
+
+    Add a small note tag in the bottom right corner inside a light semi-transparent rounded rectangle. The tag should say: 'Note: ${firstName}. We appreciate your hard work and dedication. Have a wonderful year ahead!' in a clean, sans-serif font and if the content is cut via low height, please increase the height more containing the whole texts of note tag.
+
     When decorating and adding not tag, ensure the note tag's bottom is touched with the bottom of the card and the overall design is kept and the logo or greeting text is not obstructed.
 `
       : `This image shows postcard for celebrating employee's work anniversary.
@@ -743,7 +744,7 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
         const blessingText = shortBlessing.choices[0].message.content
         birthdayDataArr.push({ imageUrl, blessing: blessingText })
 
-        const chatID = -4659667008
+        const chatID = 7173168684
         const payload = {
           chat_id: chatID,
           caption: `${blessingText}`,
