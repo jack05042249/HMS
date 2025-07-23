@@ -189,7 +189,7 @@ async function refinePostcard(imgBuffer, firstName, type, photoBase64) {
   const refinedPrompt =
     type == 'birthday'
       ? `This image shows postcard for congratulating employee's birthday.
-    I want you to refine  the congratulating text more seamlessly and kindly and make the each text row as almost wide as the title.
+    Please redesign this birthday greeting image so that the text block is consistently aligned and constrained to the same width as the 'Happy Birthday!' title. Maintain a clean, balanced look by adjusting line breaks so that each line fills the same approximate width, avoiding short or overly long lines. Ensure the overall design (balloons, background color, and confetti) stays festive and professional.
 
     If ${isImageFile} is false, please insert a cheerful 25-year-old male/female cartoon Starfleet officer(concerning to fullName : ${firstName}) celebrating him/her birthday, in a simplified Star Trek: Enterprise-inspired uniform with colored piping randomly with orange/blue bg. 
     Then the cartoon Starfleet officer is smiling with a colorful party hat, surrounded by confetti and birthday decorations. Style: playful, modern 2D cartoon illustration. but not overly childish. Place it in the white square in the middle of left panel as where the photo would be, inside the same frame or layout.
