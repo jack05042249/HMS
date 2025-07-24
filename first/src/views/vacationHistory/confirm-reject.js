@@ -13,6 +13,7 @@ import { localStorageHelper } from '../../utils/localStorage';
 import moment from 'moment';
 import { useState } from 'react';
 import SmallLoader from '../loaders/SmallLoader';
+import { DateHelper } from '../../utils/dateHelper';
 
 const ConfirmReject = ({ requestData, API_URL, onClose }) => {
   const [loading, setLoading] = useState(false);
@@ -45,7 +46,7 @@ const ConfirmReject = ({ requestData, API_URL, onClose }) => {
             })
           );
 
-          const diffInDays = isHalfDay ? 0.5 : moment(endDate).diff(moment(startDate), 'days') + 1;
+          const diffInDays = isHalfDay ? 0.5 : DateHelper.calculateRangeOfUsedDays(startDate, endDate);
           if (type === 'vacation') {
             updatedUsedDays = {
               ...usedDays,
