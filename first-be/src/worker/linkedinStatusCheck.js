@@ -25,8 +25,10 @@ const linkedinStatusCheck = async () => {
   let proxyNeeded = []
   for (const talent of talents) {
     // Check LinkedIn status for each talent
+    talent.ignoreLinkedinCheck = false
     if (talent.inactive) {
       talent.linkedinProfileChecked = false
+      talent.linkedinComment = 'Talent is inactive'
       talent.linkedinProfileDate = moment().format()
       await talent.save()
       continue
@@ -82,7 +84,7 @@ const linkedinStatusCheck = async () => {
                 data.experience.forEach(exp => {
                   // console.log('positions', exp.positions);
                   let prePos = false;
-                  if (exp.end_date == null && exp.positions && exp.positions.length > 0) {
+                  if (exp.start_date == null && exp.positions && exp.positions.length > 0) {
                     exp.positions.forEach(pos => {
                       if (pos.end_date == null || pos.end_date === 'Present') {
                         prePos = true;
@@ -92,7 +94,7 @@ const linkedinStatusCheck = async () => {
                       lastCompany = exp.company ? exp.company.replace(/[^a-zA-Z0-9\s]/g, '').trim() : ''
                       presentNum ++;
                     }
-                  } else if (exp.end_date == null || exp.end_date === 'Present') {
+                  } else if (exp.start_date != null &&  (exp.end_date == null || exp.end_date === 'Present')) {
                     presentNum++
                     lastCompany = exp.company ? exp.company.replace(/[^a-zA-Z0-9\s]/g, '').trim() : ''
                   }
@@ -116,7 +118,7 @@ const linkedinStatusCheck = async () => {
                     talent.linkedinProfileChecked = false
                   }
                 } else {
-                  talent.linkedinComment = 'NOT MATCHING by COMS'
+                  presentNum == 0 ? talent.linkedinComment = 'NOT Employed' : talent.linkedinComment = 'More than one present company'
                   talent.linkedinProfileChecked = false
                 }
                 console.log('Experience checked:', lastCompany);
@@ -163,10 +165,9 @@ const linkedinStatusCheck = async () => {
           await delay(DELAY_MS)
         }
       }
-      // } else continue
     } else {
       talent.linkedinComment = "Profile url is not valid"
-      talent.linkedinProfileChecked = false
+      talent.ignoreLinkedinCheck = true
     }
     talent.linkedinProfileDate = moment().format()
     await talent.save()
