@@ -7,10 +7,9 @@ const MAX_RETRIES = 200 // 200 x 5 seconds = 1000 seconds
 const DELAY_MS = 5000 // 5 seconds
 
 function isLinkedInProfileUrl(url) {
-  // This regex matches LinkedIn profile URLs like https://www.linkedin.com/in/username
-  return /^https?:\/\/(www\.)?linkedin\.com\/in\/[a-zA-Z0-9\-_%]+\/?$/i.test(url)
+  // This regex matches LinkedIn profile URLs with Unicode characters in the username
+  return /^https?:\/\/(www\.)?linkedin\.com\/in\/[\w\-À-ÿ\u00C0-\u024F\u1E00-\u1EFF%]+\/?$/iu.test(url);
 }
-
 function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
@@ -24,8 +23,12 @@ const linkedinStatusCheck = async () => {
   console.log(`Found ${talents.length} talents and ${organizations.length} organizations.`)
   let proxyNeeded = []
   for (const talent of talents) {
+    if (talent.linkedinProfileChecked) continue;
     // Check LinkedIn status for each talent
-    talent.ignoreLinkedinCheck = false
+
+
+    if (talent.linkedinComment !== 'Profile url is not valid') continue;
+    console.log('````````````````````````````````');
     if (talent.inactive) {
       talent.linkedinProfileChecked = false
       talent.linkedinComment = 'Talent is inactive'
@@ -33,7 +36,6 @@ const linkedinStatusCheck = async () => {
       await talent.save()
       continue
     }
-    // if (talent.ignoreLinkedinCheck) continue;
     const url = talent.linkedinProfile
     if (url && isLinkedInProfileUrl(url)) {
       // if (talent.email == 'zheniarudchik@gmail.com') {
@@ -56,7 +58,8 @@ const linkedinStatusCheck = async () => {
         })
       console.log('Snapshot ID:', SNAPSHOT_ID)
       if (!SNAPSHOT_ID) {
-        talent.ignoreLinkedinCheck = true;
+        talent.linkedinProfileChecked = false;
+        talent.linkedinComment = 'No snapshot ID found in response';
         console.error('❌ No snapshot ID found in response:', response.data)
       } else {
         for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
@@ -138,7 +141,8 @@ const linkedinStatusCheck = async () => {
                   talent.linkedinComment = 'NOT MATCHING by COMS'
                   console.log('❌ Current company not found in organizations:', currentCompanyName)
                 } else {
-                  talent.ignoreLinkedinCheck = true;
+                  talent.linkedinProfileChecked = false;
+                  talent.linkedinComment = 'Profile is not public'
                   proxyNeeded.push(talent)
                   console.log(proxyNeeded.length, talent.fullName, '--------------------', talent.linkedinProfile)
                 }
@@ -147,7 +151,8 @@ const linkedinStatusCheck = async () => {
                 talent.linkedinComment = "Profile is dead or not accessible"
                 console.log('⚠️ Dead Page:', talent.fullName, 'URL:', talent.url)
               } else {
-                talent.ignoreLinkedinCheck = true;
+                talent.linkedinProfileChecked = false
+                talent.linkedinComment = "Profile is not public"
                 proxyNeeded.push(talent)
                 console.log(proxyNeeded.length, talent.fullName, '--------------------', talent.linkedinProfile)
               }
@@ -156,7 +161,8 @@ const linkedinStatusCheck = async () => {
               console.log('⚠️ Snapshot not ready yet (empty response), retrying...')
             }
           } catch (err) {
-            talent.ignoreLinkedinCheck = true;
+            talent.linkedinProfileChecked = false
+            talent.linkedinComment = 'Profile is not public'
             proxyNeeded.push(talent)
             console.log(`⚠️ Error on attempt ${attempt}: ${err.message}`);
             break;
@@ -167,7 +173,7 @@ const linkedinStatusCheck = async () => {
       }
     } else {
       talent.linkedinComment = "Profile url is not valid"
-      talent.ignoreLinkedinCheck = true
+      talent.linkedinProfileChecked = false
     }
     talent.linkedinProfileDate = moment().format()
     await talent.save()

@@ -37,7 +37,7 @@ const NoLinkedinReport = () => {
         </thead>
         <tbody className='text-[12px]'>
           {aggregatedTalents && aggregatedTalents.length > 0 ? (aggregatedTalents
-            .filter(item => (!item.linkedinProfileChecked || !item.linkedinProfile) && item.agencyName === 'Commit Offshore' && item.inactive === false)
+            .filter(item => (!item.linkedinProfileChecked || !item.linkedinProfile) && item.agencyName === 'Commit Offshore' && item.inactive === false && item.ignoreLinkedinCheck === false)
             .map((item, index) => (
               <tr key={item.id} className='bg-white border-b border-gray-100 text-[#9197B3]'>
                 <TableCell className='whitespace-nowrap'>{index + 1}</TableCell>
