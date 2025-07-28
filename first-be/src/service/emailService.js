@@ -204,8 +204,8 @@ async function refinePostcard(imgBuffer, firstName, type, photoBase64) {
 
     You must ensure the note tag's rounded rectangle is fully inside of the whole square by reducing the content of tag and font size.
 `
-      : `This image shows postcard for celebrating employee's work anniversary.
-    I want you to refine  the congratulating text more seamlessly and kindly.
+      : `This image shows postcard for congratulating employee's anniversary.
+    Please redesign this anniversary greeting image so that the text block is consistently aligned and constrained to the same width as the 'Happy anniversary!' title. Maintain a clean, balanced look by adjusting line breaks so that each line fills the same approximate width, avoiding short or overly long lines. Ensure the overall design (balloons, background color, and confetti) stays festive and professional.
 
     If ${isImageFile} is false, please insert a cheerful 25-year-old male/female cartoon Starfleet officer(concerning to fullName : ${firstName}) celebrating him/her anniversary, in a simplified Star Trek: Enterprise-inspired uniform with colored piping randomly with orange/blue bg. 
     Then the cartoon Starfleet officer is smiling with a colorful party hat, surrounded by confetti and anniversary decorations. Style: playful, modern 2D cartoon illustration. but not overly childish. Place it in the white square in the middle of left panel as where the photo would be, inside the same frame or layout.
@@ -215,9 +215,10 @@ async function refinePostcard(imgBuffer, firstName, type, photoBase64) {
 
     Decorate the postcard with tasteful and festive anniversary-themed elements. For each generation, vary the decoration style—for example, use different combinations of balloons, confetti, streamers, ribbons, sparkles, or anniversary icons. Change the layout, decoration density, and placement subtly per card. Use a rotating color palette that aligns with our company branding but allows for creative variations. Ensure the design stays professional, clean, and celebratory. 
     Keep the greeting content clearly readable, and do not obstruct the logo or the main image.
-    
-    Add a small note tag in the bottom right corner inside a light semi-transparent rounded rectangle. The tag should say: 'Note: ${firstName}. We appreciate your hard work and dedication. Have a wonderful year ahead!' in a clean, sans-serif font. 
-    When decorating and adding not tag, Ensure the overall design is kept and the logo or greeting text is not obstructed.
+
+    Add a small note tag in the bottom right corner inside a light semi-transparent rounded rectangle. The tag should say: 'Note: ${firstName}. We appreciate your hard work and dedication. Have a wonderful year ahead!' in a clean, sans-serif font and if the content is cut via low height, please increase the height more containing the whole texts of note tag.
+
+    You must ensure the note tag's rounded rectangle is fully inside of the whole square by reducing the content of tag and font size.
 `
   const res = await openai.images.edit({
     model: 'gpt-image-1',
@@ -714,7 +715,7 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
       html
     }
 
-    // await sendMail(mailOptions)
+    await sendMail(mailOptions)
 
     // Await all postcard blocks
 
