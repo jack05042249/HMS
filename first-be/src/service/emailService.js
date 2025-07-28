@@ -202,7 +202,7 @@ async function refinePostcard(imgBuffer, firstName, type, photoBase64) {
 
     Add a small note tag in the bottom right corner inside a light semi-transparent rounded rectangle. The tag should say: 'Note: ${firstName}. We appreciate your hard work and dedication. Have a wonderful year ahead!' in a clean, sans-serif font and if the content is cut via low height, please increase the height more containing the whole texts of note tag.
 
-    When decorating and adding not tag, ensure the note tag's bottom is touched with the bottom of the card and the overall design is kept and the logo or greeting text is not obstructed.
+    When decorating and adding not tag, ensure the note tag's rounded rectangle is fully inside of the whole square by controlling the content of tag and letter size.
 `
       : `This image shows postcard for celebrating employee's work anniversary.
     I want you to refine  the congratulating text more seamlessly and kindly.
@@ -222,7 +222,7 @@ async function refinePostcard(imgBuffer, firstName, type, photoBase64) {
   const res = await openai.images.edit({
     model: 'gpt-image-1',
     prompt: refinedPrompt,
-    size: '1024x1024',
+    size: '1024x1536',
     n: 1,
     quality: 'high',
     image: file
@@ -671,7 +671,7 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
     savedBirthdayData.map(async (data, i) => {
       const imageUrl = data.imageUrl
       const blessingText = data.blessing
-      const chatID = -687487949 // Replace with your actual chat ID
+      const chatID = 7173168684 // Replace with your actual chat ID
       const payload = {
         chat_id: chatID,
         caption: `${blessingText}`,
@@ -744,7 +744,7 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
         const blessingText = shortBlessing.choices[0].message.content
         birthdayDataArr.push({ imageUrl, blessing: blessingText })
 
-        const chatID = 622544436
+        const chatID = 7173168684
         const payload = {
           chat_id: chatID,
           caption: `${blessingText}`,
