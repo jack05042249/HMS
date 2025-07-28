@@ -202,7 +202,7 @@ async function refinePostcard(imgBuffer, firstName, type, photoBase64) {
 
     Add a small note tag in the bottom right corner inside a light semi-transparent rounded rectangle. The tag should say: 'Note: ${firstName}. We appreciate your hard work and dedication. Have a wonderful year ahead!' in a clean, sans-serif font and if the content is cut via low height, please increase the height more containing the whole texts of note tag.
 
-    When decorating and adding not tag, ensure the note tag's rounded rectangle is fully inside of the whole square by controlling the content of tag and letter size.
+    You must ensure the note tag's rounded rectangle is fully inside of the whole square by reducing the content of tag and font size.
 `
       : `This image shows postcard for celebrating employee's work anniversary.
     I want you to refine  the congratulating text more seamlessly and kindly.
@@ -735,7 +735,7 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
               content: `Write a short birthday blessing for ${
                 user.fullName.split(' ')[0]
               } as 2 sentences starting exactly with "🎉 Happy Birthday ${user.fullName.split(' ')[0]} ! ${
-                user.telegram ? user.telegram + ',' : ''
+                user.telegram ? user.telegram[0] == '@' ? user.telegram : '' : ''
               }". Make it warm and friendly, but not too formal.`
             }
           ]
