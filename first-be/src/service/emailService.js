@@ -671,7 +671,7 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
     savedBirthdayData.map(async (data, i) => {
       const imageUrl = data.imageUrl
       const blessingText = data.blessing
-      const chatID = 7173168684 // Replace with your actual chat ID
+      const chatID = -687487949 // Replace with your actual chat ID
       const payload = {
         chat_id: chatID,
         caption: `${blessingText}`,
@@ -744,7 +744,7 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
         const blessingText = shortBlessing.choices[0].message.content
         birthdayDataArr.push({ imageUrl, blessing: blessingText })
 
-        const chatID = 7173168684
+        const chatID = 622544436
         const payload = {
           chat_id: chatID,
           caption: `${blessingText}`,
