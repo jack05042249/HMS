@@ -714,7 +714,7 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
       html
     }
 
-    await sendMail(mailOptions)
+    // await sendMail(mailOptions)
 
     // Await all postcard blocks
 
