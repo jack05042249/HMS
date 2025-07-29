@@ -45,7 +45,7 @@ const getTasksForCustomer = async ({ customerId, sortBy = 'dueDate', sortOrder =
     where: { customerId },
     include: [
       {
-        model: TasksCustomer,
+        model: Customer,
         where: { inactive: false },
         required: false
       }
@@ -76,7 +76,7 @@ const getTaskCustomerHistory = async customerId => {
     order: [['dueDate', 'ASC']],
     include: [
       {
-        model: TasksCustomer,
+        model: Customer,
         where: { inactive: false },
         required: false
       }

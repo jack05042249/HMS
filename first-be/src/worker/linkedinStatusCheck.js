@@ -26,9 +26,6 @@ const linkedinStatusCheck = async () => {
     if (talent.linkedinProfileChecked) continue;
     // Check LinkedIn status for each talent
 
-
-    if (talent.linkedinComment !== 'Profile url is not valid') continue;
-    console.log('````````````````````````````````');
     if (talent.inactive) {
       talent.linkedinProfileChecked = false
       talent.linkedinComment = 'Talent is inactive'
