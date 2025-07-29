@@ -109,15 +109,9 @@ const everyFirstOfNovemberCron = cron.schedule(everyFirstDayOfNovember, async ()
 })
 
 // Run every day at 00:10
-const linkedinCron = cron.schedule('40 2 * * *', async () => {
-  const today = new Date()
-  const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate()
-  const todayDate = today.getDate()
-  // Check if today is the 23rd day before the end of the month
-  // if (todayDate === lastDayOfMonth - 22) {
+const linkedinCron = cron.schedule('0 10 20 * *', async () => {
   // logger(`[CRON linkedinCron] started: `);
   // await linkedinStatusCheck();
-  // }
 })
 
 const croneExecutor = () => {
