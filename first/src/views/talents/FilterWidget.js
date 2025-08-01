@@ -1,9 +1,11 @@
 import { FilterItem, FilteredByItem } from '../components/filter';
 
 const FilterWidget = ({
+  ignoreValues,
   inactiveValues,
   linkedinProfileCheckedValues,
   canWorkOnTwoPositionsValues,
+  onApplyIgnoreValues,
   onApplyCanWorkOnTwoPositions,
   onApplyInactiveValues,
   onApplyLinkedinProfileCheckedValues
@@ -25,17 +27,6 @@ const FilterWidget = ({
 
         <FilterItem
           isSelected={false}
-          label='Inactive'
-          options={[
-            { value: true, label: 'Checked' },
-            { value: false, label: 'Not Checked' }
-          ]}
-          selectedOptions={inactiveValues}
-          onApplyFilter={onApplyInactiveValues}
-        />
-
-        <FilterItem
-          isSelected={false}
           label='Linkedin Checked'
           options={[
             { value: true, label: 'Checked' },
@@ -44,6 +35,29 @@ const FilterWidget = ({
           selectedOptions={linkedinProfileCheckedValues}
           onApplyFilter={onApplyLinkedinProfileCheckedValues}
         />
+
+        <FilterItem
+          isSelected={false}
+          label='Inactive'
+          options={[
+            { value: true, label: 'Checked' },
+            { value: false, label: 'Not Checked' }
+          ]}
+          selectedOptions={inactiveValues}
+          onApplyFilter={onApplyInactiveValues}
+        />
+        
+        <FilterItem
+          isSelected={false}
+          label='Ignore'
+          options={[
+            { value: true, label: 'Checked' },
+            { value: false, label: 'Not Checked' }
+          ]}
+          selectedOptions={ignoreValues}
+          onApplyFilter={onApplyIgnoreValues}
+        />
+
       </div>
       <div className='flex justify-start mt-2.5 items-center'>
         <div className='flex whitespace-nowrap'>
@@ -55,14 +69,19 @@ const FilterWidget = ({
               label='Can Work On Two Positions'
             />
             <FilteredByItem
+              selectedItems={linkedinProfileCheckedValues}
+              getLabel={item => (item ? 'Checked' : 'Not Checked')}
+              label='Linkedin Checked'
+            />
+            <FilteredByItem
               selectedItems={inactiveValues}
               getLabel={item => (item ? 'Checked' : 'Not Checked')}
               label='Inactive'
             />
             <FilteredByItem
-              selectedItems={linkedinProfileCheckedValues}
+              selectedItems={ignoreValues}
               getLabel={item => (item ? 'Checked' : 'Not Checked')}
-              label='Linkedin Checked'
+              label='Ignore'
             />
           </div>
         </div>

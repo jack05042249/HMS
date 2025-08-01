@@ -86,6 +86,7 @@ const Talents = ({ API_URL }) => {
     : aggregatedTalents;
   const [canWorkOnTwoPositionsValues, setCanWorkOnTwoPositionsValues] = useState([true, false]);
   const [inactiveValues, setInactiveValues] = useState([false]);
+  const [ignoreValues, setIgnoreValues] = useState([false]);
   const [linkedinProfileCheckedValues, setLinkedinProfileCheckedValues] = useState([true, false]);
   const sortedTalents = sortArr(filteredTalents, sortBy).filter(item => {
     const canWorkOnTwoPositionsFilter =
@@ -95,12 +96,14 @@ const Talents = ({ API_URL }) => {
 
     const inactiveFilter = typeof item.inactive === 'boolean' ? inactiveValues.includes(item.inactive) : true;
 
+    const ignoreFilter = typeof item.ignoreLinkedinCheck === 'boolean' ? ignoreValues.includes(item.ignoreLinkedinCheck) : true;
+
     const linkedinProfileCheckedFilter =
       typeof item.linkedinProfileChecked === 'boolean'
         ? linkedinProfileCheckedValues.includes(item.linkedinProfileChecked)
         : true;
 
-    return canWorkOnTwoPositionsFilter && inactiveFilter && linkedinProfileCheckedFilter;
+    return canWorkOnTwoPositionsFilter && inactiveFilter && linkedinProfileCheckedFilter && ignoreFilter;
   });
 
   const isTalentNotFound = !sortedTalents.length && filteredTalents.length;
@@ -146,9 +149,11 @@ const Talents = ({ API_URL }) => {
             </div>
             <FilterWidget
               canWorkOnTwoPositionsValues={canWorkOnTwoPositionsValues}
+              ignoreValues={ignoreValues}
               inactiveValues={inactiveValues}
               linkedinProfileCheckedValues={linkedinProfileCheckedValues}
               onApplyCanWorkOnTwoPositions={setCanWorkOnTwoPositionsValues}
+              onApplyIgnoreValues={setIgnoreValues}
               onApplyInactiveValues={setInactiveValues}
               onApplyLinkedinProfileCheckedValues={setLinkedinProfileCheckedValues}
             />

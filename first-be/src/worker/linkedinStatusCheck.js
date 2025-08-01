@@ -19,7 +19,7 @@ const linkedinStatusCheck = async () => {
   let organizations = await Organization.findAll({
     attributes: ['name']
   })
-  organizations.push('Commit Offshore')
+  organizations.push({name: 'ITSOFTcoil'})
   console.log(`Found ${talents.length} talents and ${organizations.length} organizations.`)
   let proxyNeeded = []
   for (const talent of talents) {
@@ -36,6 +36,7 @@ const linkedinStatusCheck = async () => {
     const url = talent.linkedinProfile
     if (url && isLinkedInProfileUrl(url)) {
       // if (talent.email == 'zheniarudchik@gmail.com') {
+      
       console.log(url, '*******************************', apiUrl)
       const data = JSON.stringify([{ url: url }])
       let SNAPSHOT_ID = null
@@ -105,11 +106,13 @@ const linkedinStatusCheck = async () => {
                   organizations.map(org => {
                     if (org.name) {
                       org.name = org.name.replace(/[^a-zA-Z0-9\s]/g, '').trim()
+                      console.log(lastCompany.toLocaleLowerCase(), '---', org.name);
                       if (lastCompany.toLowerCase().includes(org.name.toLowerCase())) {
                         flag = 1
                       }
                     }
                   })
+                  console.log('flag:', flag, 'Last Company:', lastCompany)
                   if (flag) {
                     talent.linkedinProfileChecked = true
                     talent.linkedinComment = 'Confirmed by COMS';
@@ -172,6 +175,7 @@ const linkedinStatusCheck = async () => {
       talent.linkedinComment = "Profile url is not valid"
       talent.linkedinProfileChecked = false
     }
+    console.log('Talent:', talent.fullName, 'LinkedIn Profile Checked:', talent.linkedinProfileChecked, 'Comment:', talent.linkedinComment)
     talent.linkedinProfileDate = moment().format()
     await talent.save()
   }

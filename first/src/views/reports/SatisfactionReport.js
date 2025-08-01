@@ -112,9 +112,9 @@ const SatisfactionReport = () => {
                       onClick={() => setStakeholderDialog(item)}
                       className='whitespace-nowrap justify-end cursor-pointer text-[#020202] hover:underline'
                     >
-                      {item.Customer?.fullName}
+                      {item['Customer.fullName']}
                     </TableCell>
-                    <TableCell className='whitespace-nowrap'>{item.Customer?.Organization?.name}</TableCell>
+                    <TableCell className='whitespace-nowrap'>{item['Customer.Organization.name']}</TableCell>
                     <TableCell className='whitespace-nowrap'>
                       {item.csLastContactDate ? moment(item.csLastContactDate).format('DD/MM/YYYY') : '-'}
                     </TableCell>
@@ -139,7 +139,7 @@ const SatisfactionReport = () => {
                 <span className='mr-3'>
                   <icons.userEditIcon />
                 </span>
-                {stakeholderDialog.Customer.fullName} (Tasks)
+                {stakeholderDialog['Customer.fullName']} (Tasks)
               </div>
             </div>
             <div className='mt-[1.5rem]'>
