@@ -7,10 +7,13 @@ import PageStartLoader from '../loaders/PageStartLoader';
 import { useSelector } from 'react-redux';
 import config from '../../config';
 import EditTalentModal from '../talents/EditTalentModal';
+import {NoLinkedinFilterWidget} from './NoLinkedinFilterWidget'
 
 const NoLinkedinReport = () => {
   const [editTalentId, setEditTalentId] = useState();
   const { aggregatedTalents, organizations, customers, agencies } = useSelector(state => state);
+
+  const [ignore, setIgnore] = useState(false);
 
   const getRelevantTalent = id => {
     return aggregatedTalents.find(cus => +cus.id === +id) || {};
@@ -26,6 +29,9 @@ const NoLinkedinReport = () => {
 
   return (
     <div>
+      <div className='mx-6 my-3'>
+        <NoLinkedinFilterWidget type={ignore} onApplyType={setIgnore} />
+      </div>
       <table className='w-full text-sm text-left rtl:text-right text-gray-500' id={`employees_table`}>
         <thead className='text-[12px] text-gray-700 border-b border-gray-100'>
           <tr>
@@ -37,7 +43,7 @@ const NoLinkedinReport = () => {
         </thead>
         <tbody className='text-[12px]'>
           {aggregatedTalents && aggregatedTalents.length > 0 ? (aggregatedTalents
-            .filter(item => (!item.linkedinProfileChecked || !item.linkedinProfile) && item.agencyName === 'Commit Offshore' && item.inactive === false && item.ignoreLinkedinCheck === false)
+            .filter(item => (!item.linkedinProfileChecked || !item.linkedinProfile) && item.agencyName === 'Commit Offshore' && item.inactive === false && item.ignoreLinkedinCheck === ignore)
             .map((item, index) => (
               <tr key={item.id} className='bg-white border-b border-gray-100 text-[#9197B3]'>
                 <TableCell className='whitespace-nowrap'>{index + 1}</TableCell>
