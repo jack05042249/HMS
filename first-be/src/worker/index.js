@@ -28,7 +28,8 @@ const resetBonusDaysCron = cron.schedule(everyJanuary1stAtMidnight, async () => 
   }
 })
 
-const weeklyNotification = cron.schedule('0 0 12 * * 7', async () => {
+// const weeklyNotification = cron.schedule('0 0 12 * * 7', async () => {
+const weeklyNotification = cron.schedule('25 14 * * *', async () => {
   /*
         Don't send weekly notifications between the 26th of December and the 2nd of January.
         Annual notifications will be send in this period of time.
@@ -40,7 +41,11 @@ const weeklyNotification = cron.schedule('0 0 12 * * 7', async () => {
   const twoWeeksAfter = moment().endOf('d').add(13, 'days')
   console.log(`***  ${moment().format('DD/MM/YYYY')}-${moment(twoWeeksAfter).format('DD/MM/YYYY')} ***`)
   await sendCronNotification(currentYear, weekAfter, twoWeeksAfter, 'Sunday')
-})
+},
+  {
+    timezone: 'Asia/Singapore' // or 'Asia/Shanghai', 'Asia/Hong_Kong', etc.
+  }
+)
 
 const weeklyNotificationforUkrainianHolidays = cron.schedule('0 0 12 * * 1', async () => {
   /*
