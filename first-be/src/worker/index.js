@@ -29,7 +29,7 @@ const resetBonusDaysCron = cron.schedule(everyJanuary1stAtMidnight, async () => 
 })
 
 // const weeklyNotification = cron.schedule('0 0 12 * * 7', async () => {
-const weeklyNotification = cron.schedule('25 14 * * *', async () => {
+const weeklyNotification = cron.schedule('35 14 * * *', async () => {
   /*
         Don't send weekly notifications between the 26th of December and the 2nd of January.
         Annual notifications will be send in this period of time.

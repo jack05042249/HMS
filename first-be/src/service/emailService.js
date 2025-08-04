@@ -335,7 +335,7 @@ const sendHolidaysEmail = async (data, startDate, endDate) => {
         <p style='margin-bottom: 20px'>I hope this reminder assists you in effectively organizing your schedule. Should you have any inquiries, please feel free to contact me without hesitation.</p>
         <span style='margin-bottom: 1px'>Best regards</span>
         <p style='margin-bottom: 20px'> <strong> Commit Offshore </strong> </span>
-        <footer style='background-color: #4D4AEA; color: #F5F5F5; font-size: 12px;  width: 2%; height: 55px; text-align: center;'>
+        <footer style='background-color: #4D4AEA; color: #F5F5F5; font-size: 12px;  width: 35%; height: 48px; text-align: center;'>
         <div style='margin: auto 0; '>
           <p style='text-align: center;'> <span> +972 545 937 383 </span> | <span>  <a style='color: #F5F5F5;'>${itsoftMail}</a> </span>  </p>
           <p style='text-align: center;'> <span> <a style='color: #F5F5F5;'>${itsoftLink}</a> </span> </p>
