@@ -117,7 +117,7 @@ const getAllCustomerTasks = async ({ status, risk, startDate, endDate, sortBy = 
     ],
   }
 
-  queryOptions.order = [[sortBy, sortOrder]]
+  // queryOptions.order = [[sortBy, sortOrder]];
 
   if (status) queryOptions.where.status = status
 

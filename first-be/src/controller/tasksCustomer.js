@@ -80,6 +80,23 @@ const getAllCustomerTasks = async (req, res) => {
   }
 };
 
+
+// Get all tasks for customers with optional filters
+const getAllActiveTasks = async () => {
+  try {
+    const tasks = await tasksCustomerService.getAllCustomerTasks({
+      sortOrder: '',
+      status: 'OPEN',
+      risk: '',
+      startDate: '',
+      endDate: '',
+    });
+    return tasks;
+  } catch (error) {
+    throw new Error('Error fetching active tasks');
+  }
+};
+
 const getCustomersAndTalentsWithoutTasks = async (req, res) => {
   try {
     const tasks = await tasksCustomerService.getCustomersAndTalentsWithoutTasks();
@@ -106,5 +123,6 @@ module.exports = {
   getAllCustomerTasks,
   getCustomersAndTalentsWithoutTasks,
   getCustomerTaskDetails,
-  deleteTaskCustomerById
+  deleteTaskCustomerById,
+  getAllActiveTasks
 };

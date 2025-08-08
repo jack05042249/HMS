@@ -82,6 +82,21 @@ const getAllEmployeeTasks = async (req, res) => {
   }
 };
 
+const getAllActiveTasks = async () => {
+  try {
+    const tasks = await tasksEmployeeService.getAllEmployeeTasks({
+      sortOrder: '',
+      status: 'OPEN',
+      risk: '',
+      startDate: '',
+      endDate: '',
+    });
+    return tasks;
+  } catch (error) {
+    throw new Error('Error fetching active tasks');
+  }
+};
+
 const getEmployeeTaskDetails = async (req, res) => {
   try {
     const tasks = await tasksEmployeeService.getEmployeeTaskDetails();
@@ -98,5 +113,6 @@ module.exports = {
   updateEmployeeCommentByStatus,
   getAllEmployeeTasks,
   getEmployeeTaskDetails,
-  deleteTaskTalentById
+  deleteTaskTalentById,
+  getAllActiveTasks
 };

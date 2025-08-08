@@ -6,8 +6,9 @@ const app = express()
 const telegram_app = express()
 const bodyParser = require('body-parser')
 const { router } = require('./router')
+const { basic_router } = require('./basicRouter')
 const db = require('./models')
-const { authorize } = require('./middleware/authorise')
+const { authorize, basicAuth } = require('./middleware/authorise')
 const { croneExecutor } = require('./worker')
 const path = require('path')
 const fs = require('fs')
@@ -34,15 +35,14 @@ const run = async () =>
     }
      */
       app.use('/public/', express.static(path.join(__dirname, 'public'))) // Serve static files
-      app.use('/api/telegram/webhook', express.json()); // Allow this first, no auth
+      // app.use('/api/telegram/webhook', express.json()); // Allow this first, no auth
       app.use(express.static('public'))
       // app.use(cors());
       app.use(cors({ origin: '*' }))
-      // router api/auth/login
-      app.use(authorize)
 
-      app.use('/api/', router)
+      app.use('/basic-api/', authorize, router)
 
+      app.use('/api/', basicAuth, basic_router);
       // app.post('/api/telegram/webhook', async (req, res) => {
       //   const message = req.body.message
       //   console.log('message', message);

@@ -103,7 +103,7 @@ const getAllEmployeeTasks = async ({ status, risk, startDate, endDate, sortBy = 
     ],
   };
 
-  queryOptions.order = [[sortBy, sortOrder]];
+  // queryOptions.order = [[sortBy, sortOrder]];
 
   if (status) queryOptions.where.status = status;
 
@@ -125,6 +125,8 @@ const getAllEmployeeTasks = async ({ status, risk, startDate, endDate, sortBy = 
 
   return await TasksEmployee.findAll(queryOptions);
 };
+
+
 
 const getEmployeeTaskDetails = async () => {
   return await TasksEmployee.findAll({

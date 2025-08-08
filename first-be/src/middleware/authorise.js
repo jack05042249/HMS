@@ -27,6 +27,25 @@ const authorize = async (req, res, next) => {
 };
 
 
+// === Basic Auth Middleware ===
+const basicAuth = async (req, res, next) => {
+  const auth = req.headers.authorization;
+
+  if (!auth || !auth.startsWith('Basic ')) {
+    return res.status(401).json({ message: 'Missing or invalid Authorization header' });
+  }
+
+  const base64Credentials = auth.split(' ')[1];
+  const credentials = Buffer.from(base64Credentials, 'base64').toString('ascii');
+  const [username, password] = credentials.split(':');
+
+  if (username === 'evgeny@itsoft.co.il' && password === 'Aa123456!') {
+    return next();
+  }
+
+  return res.status(403).json({ message: 'Forbidden: Incorrect credentials' });
+}
+
 async function getAuthUser(tokenUserData) {
     let userFromDb;
     switch (tokenUserData.type) {
@@ -48,4 +67,4 @@ async function getAuthUser(tokenUserData) {
     return userFromDb;
 }
 
-module.exports = { authorize };
+module.exports = { authorize, basicAuth };
