@@ -40,11 +40,11 @@ const run = async () =>
       // app.use(cors());
       app.use(cors({ origin: '*' }))
 
-      app.use(authorize);
+      // app.use(authorize);
 
-      app.use('/basic-api/', router)
+      app.use('/basic-api/', authorize, router)
 
-      // app.use('/api/', basicAuth, basic_router);
+      app.use('/api/', basicAuth, basic_router);
       // app.post('/api/telegram/webhook', async (req, res) => {
       //   const message = req.body.message
       //   console.log('message', message);

@@ -3,7 +3,7 @@ const talentService = require('../service/talentsService');
 const { GenericError } = require('../utils/customError')
 const {verifyToken} = require('../service/jwt');
 
-const exception = ['/basic-api/', '/basic-api/login', '/basic-api/forgotPassword', '/basic-api/reset-password', '/basic-api/public/', '/basic-api/postcards/', '/public/', '/basic-api/telegram/webhook',
+const exception = ['/basic-api', '/basic-api/login', '/basic-api/forgotPassword', '/basic-api/reset-password', '/basic-api/public/', '/basic-api/postcards/', '/public/', '/basic-api/telegram/webhook',
     // '/signupnewmannager'
 ];
 
