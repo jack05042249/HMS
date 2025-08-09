@@ -104,6 +104,7 @@ const EditTalentModal = ({
     hourlyRate,
     cv,
     canWorkOnTwoPositions,
+    doesNotHaveAVacation,
     linkedinProfileChecked,
     ignoreLinkedinCheck,
     linkedinProfile,
@@ -196,7 +197,7 @@ const EditTalentModal = ({
       }
       return;
     }
-    if (id === 'isActive' || id === 'hourlyRate' || id === 'canWorkOnTwoPositions' || id === 'ignoreLinkedinCheck') {
+    if (id === 'isActive' || id === 'hourlyRate' || id === 'canWorkOnTwoPositions' || id === 'ignoreLinkedinCheck' || id === 'doesNotHaveAVacation') {
       setTalent(prev => ({ ...prev, [id]: checked }));
       return;
     }
@@ -612,6 +613,7 @@ const EditTalentModal = ({
             <label htmlFor='canWorkOnTwoPositions' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
               Can Work On Two Positions
             </label>
+            
             <div className='flex items-center h-[40px] px-2'>
               <input
                 className='cursor-pointer w-4 h-4'
@@ -619,6 +621,19 @@ const EditTalentModal = ({
                 checked={canWorkOnTwoPositions}
                 id='canWorkOnTwoPositions'
                 name='canWorkOnTwoPositions'
+                onChange={onChangeHandler}
+              />
+            </div>
+            <label htmlFor='canWorkOnTwoPositions' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
+              Doesn't have a vacation
+            </label>
+            <div className='flex items-center h-[40px] px-2'>
+              <input
+                className='cursor-pointer w-4 h-4'
+                type='checkbox'
+                checked={doesNotHaveAVacation}
+                id='doesNotHaveAVacation'
+                name='doesNotHaveAVacation'
                 onChange={onChangeHandler}
               />
             </div>

@@ -16,6 +16,17 @@ const getAllCustomers = async (req, res) => {
     }
 }
 
+
+const getAllCustomers2 = async () => {
+    try {
+        const customers = await Customer.findAll()
+        return customers
+    } catch (err) {
+        console.error(err)
+        throw new GenericError(500, 'Internal server error')
+    }
+}
+
 const getCustomersWithTalents = async (req, res) => {
     try {
         const year = moment().endOf('year').add(1, 'day').format('yyyy')
@@ -89,5 +100,5 @@ const sendMassEmail = async (req, res) => {
 
 
 module.exports = {
-    createCustomer, updateCustomer, deleteCustomer, getAllCustomers, getCustomersWithTalents, sendMassEmail
+    createCustomer, updateCustomer, deleteCustomer, getAllCustomers, getCustomersWithTalents, sendMassEmail, getAllCustomers2
 }

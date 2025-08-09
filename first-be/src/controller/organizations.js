@@ -34,6 +34,16 @@ const getAllOrganizations = async (req, res) => {
     }
 }
 
+const getAllOrganizations2 = async () => {
+    try {
+        const organizations = await Organization.findAll({ raw: true })
+        return organizations
+    } catch (err) {
+        console.error(err)
+        throw new GenericError(500, 'Internal server error')
+    }
+}
+
 const deleteOrganization = async (req, res) => {
     try {
         const { id } = req.params
@@ -53,5 +63,5 @@ const deleteOrganization = async (req, res) => {
 }
 
 module.exports = {
-    createOrganization, getAllOrganizations, updateOrganization, deleteOrganization
+    createOrganization, getAllOrganizations, updateOrganization, deleteOrganization, getAllOrganizations2
 }

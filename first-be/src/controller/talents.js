@@ -58,6 +58,25 @@ const getAllTalents = async (req, res) => {
     }
 };
 
+
+const getAllTalents2 = async () => {
+    try {
+        const talents = await Talent.findAll({
+            include: [{
+                model: Agencies,
+                as: 'agency',
+                attributes: ['name'],
+            }],
+            raw: true
+        });
+
+        return talents;
+    } catch (err) {
+        console.error(err);
+        throw new GenericError(500, 'Internal server error');
+    }
+};
+
 const getAggregatedTalents = async (req, res) => {
     try {
         const aggregatedTalents = await Talent.findAll({
@@ -310,5 +329,6 @@ module.exports = {
     sendNotificationManually,
     search,
     normalizeTalentInput,
-    getTalentCV
+    getTalentCV,
+    getAllTalents2
 }
