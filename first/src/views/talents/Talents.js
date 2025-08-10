@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import EditTalentModal from './EditTalentModal';
 import { useDispatch, useSelector } from 'react-redux';
 import './talents.scss';
@@ -20,6 +20,7 @@ import { updateSingleAggregatedTalent } from '../../store/actionCreator';
 import { showNotificationSuccess } from '../../utils/notifications';
 import { objectToFormData } from '../../utils/objectToFormData';
 import GenericModal from '../components/modal/GenericModal';
+import { globalVacationHistoryPush } from '../../store/actionCreator';
 
 const Talents = ({ API_URL }) => {
   const { aggregatedTalents, organizations, customers, agencies } = useSelector(state => state);
@@ -120,6 +121,18 @@ const Talents = ({ API_URL }) => {
   const combinedData = [tableHeaders, ...tableData];
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const responseVacationHistory = await axios.get(`${API_URL}/vacation/approvedList`);
+        dispatch(globalVacationHistoryPush(responseVacationHistory.data));
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+    fetchData();
+  }, [dispatch]);
 
   return (
     <div className='w-full'>

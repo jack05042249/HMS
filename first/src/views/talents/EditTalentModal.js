@@ -59,6 +59,7 @@ const EditTalentModal = ({
   const [loading, setLoading] = useState(false);
   const { codeToCountry } = useSelector(state => state.countries);
   const allOrganizations = useSelector(state => state.organizations);
+  const { globalVacationHistory } = useSelector(state => state);
 
   const isPersonalDetailsActive = activeTab === tabs[0];
   const isVacationAllowanceActive = activeTab === tabs[1];
@@ -104,7 +105,6 @@ const EditTalentModal = ({
     hourlyRate,
     cv,
     canWorkOnTwoPositions,
-    doesNotHaveAVacation,
     linkedinProfileChecked,
     ignoreLinkedinCheck,
     linkedinProfile,
@@ -137,6 +137,9 @@ const EditTalentModal = ({
   const formattedEndDate = endDate ? new Date(endDate) : null;
   const formattedBirthday = birthday ? new Date(birthday) : null;
   const formattedLinkedinProfileDate = linkedinProfileDate ? new Date(linkedinProfileDate) : null;
+  const doesNotHaveAVacation = !globalVacationHistory.some(
+    vacation => vacation.talentId === id && vacation.approved && moment(vacation.endDate).isAfter(moment())
+  );
 
   const toggleCustomers = () => {
     setShowCustomers(state => !state);
@@ -197,7 +200,12 @@ const EditTalentModal = ({
       }
       return;
     }
-    if (id === 'isActive' || id === 'hourlyRate' || id === 'canWorkOnTwoPositions' || id === 'ignoreLinkedinCheck' || id === 'doesNotHaveAVacation') {
+    if (
+      id === 'isActive' ||
+      id === 'hourlyRate' ||
+      id === 'canWorkOnTwoPositions' ||
+      id === 'ignoreLinkedinCheck'
+    ) {
       setTalent(prev => ({ ...prev, [id]: checked }));
       return;
     }
@@ -398,10 +406,12 @@ const EditTalentModal = ({
                   {cusIds.map((id, i) => {
                     const { fullName, inactive } = getRelevantCustomer(id);
                     return (
-                      !inactive && <div key={id} className={`flex items-center${i === 0 ? '' : 'ml-10'}`}>
-                        <span>{fullName}</span>
-                        {i < cusIds.length - 1 && <span>,&nbsp;</span>}
-                      </div>
+                      !inactive && (
+                        <div key={id} className={`flex items-center${i === 0 ? '' : 'ml-10'}`}>
+                          <span>{fullName}</span>
+                          {i < cusIds.length - 1 && <span>,&nbsp;</span>}
+                        </div>
+                      )
                     );
                   })}
                 </div>
@@ -484,7 +494,14 @@ const EditTalentModal = ({
               className='mb-4 border border-[#F5F0F0]  text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
             />
 
-            {email === 'tsimur.pazniakou@innowise.com' && console.log(talent['talentMainCustomer'], '--', customersForMainStakeholder, '--', organizationIdsForMainStakeholder)}
+            {email === 'tsimur.pazniakou@innowise.com' &&
+              console.log(
+                talent['talentMainCustomer'],
+                '--',
+                customersForMainStakeholder,
+                '--',
+                organizationIdsForMainStakeholder
+              )}
 
             <label htmlFor='email' className='text-[#000] text-[14px] mt-2 font-medium text-left'>
               E-mail
@@ -613,7 +630,7 @@ const EditTalentModal = ({
             <label htmlFor='canWorkOnTwoPositions' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
               Can Work On Two Positions
             </label>
-            
+
             <div className='flex items-center h-[40px] px-2'>
               <input
                 className='cursor-pointer w-4 h-4'
@@ -634,7 +651,7 @@ const EditTalentModal = ({
                 checked={doesNotHaveAVacation}
                 id='doesNotHaveAVacation'
                 name='doesNotHaveAVacation'
-                onChange={onChangeHandler}
+                // onChange={onChangeHandler}
               />
             </div>
           </div>
@@ -787,11 +804,14 @@ const EditTalentModal = ({
                 </div>
               )}
             </div>
-            <label htmlFor='linkedinProfileChecked_Date' className='text-[#000] mb-[7px] text-[14px] font-medium text-left'>
+            <label
+              htmlFor='linkedinProfileChecked_Date'
+              className='text-[#000] mb-[7px] text-[14px] font-medium text-left'
+            >
               Linkedin Status
             </label>
             <span className='badge-tooltip'>
-              {ignoreLinkedinCheck ? 'IGNORED' : linkedinProfileChecked ? 'TRUE': 'FALSE'}
+              {ignoreLinkedinCheck ? 'IGNORED' : linkedinProfileChecked ? 'TRUE' : 'FALSE'}
               <span className='tooltip-text'>{moment(linkedinProfileDate).format('YYYY-MM-DD')}</span>
             </span>
             {/* <span className='relative left-[280px] top-[25px] pointer-events-none z-50'>

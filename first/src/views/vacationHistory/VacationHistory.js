@@ -22,17 +22,17 @@ const VacationHistory = ({ displayModal, closeModal }) => {
   const [talId, setTalId] = useState()
   const dispatch = useDispatch()
   const { globalVacationHistory, aggregatedTalents, organizations, customers, agencies } = useSelector(state => state)
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const responseVacationHistory = await axios.get(`${API_URL}/vacation/approvedList`);
-        dispatch(globalVacationHistoryPush(responseVacationHistory.data));
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
-    fetchData();
-  }, [dispatch]);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const responseVacationHistory = await axios.get(`${API_URL}/vacation/approvedList`);
+  //       dispatch(globalVacationHistoryPush(responseVacationHistory.data));
+  //     } catch (error) {
+  //       console.error('Error:', error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, [dispatch]);
 
   const toggleDetails = (talId) => {
     setShowTalentDetails(talId);
