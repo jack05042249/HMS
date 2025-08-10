@@ -79,7 +79,7 @@ const TasksTable = ({ tasks, derivedColumnsForTask, onEdited, onDeleted }) => {
           </tr>
         </thead>
         <tbody className='text-[12px]'>
-          {tasks.map((task, index) => {
+          {tasks.slice(0, 100).map((task, index) => {
             const shouldShowDetails = detailsTask && detailsTask.id === task.id;
             const commentCropped =
               task.comment.length > NOTES_MAX_CHAR ? `${task.comment.substring(0, NOTES_MAX_CHAR)}...` : task.comment;
