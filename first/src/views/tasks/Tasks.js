@@ -17,7 +17,12 @@ import { PrimaryButton } from '../components/buttons';
 
 const Tasks = () => {
   const { filter, data: tasks, isLoading } = useSelector(state => state.tasks);
+  const customers = useSelector(state => state.customers);
+  const aggregatedTalents = useSelector(state => state.aggregatedTalents);
+  const organizations = useSelector(state => state.organizations);
   const { startDate, endDate, types, statuses, risks } = filter;
+
+  const [derivedColumnsForTask, setDerivedColumnsForTask] = useState([]);
 
   const dispatch = useDispatch();
   const isAdminUser = getIsAdmin();
@@ -63,11 +68,30 @@ const Tasks = () => {
         );
 
         dispatch(updateTasks(mergedTasks));
+        setDerivedColumnsForTask(
+          mergedTasks.map(task => {
+            const object =
+                (task.type === 'employee' ? aggregatedTalents.find(t => t.id === task.talentId) : customers.find(c => c.id === task.customerId)) ||
+                {};
+            let organization = {};
+            if (task.type === 'employee') {
+              let relevantCustomer = customers.find(c => c.id === object.talentMainCustomer);
+              organization = relevantCustomer ? organizations.find(org => org.id === relevantCustomer.organizationId) : {};
+            } else {
+              organization = organizations.find(org => org.id === object.organizationId) || {};
+            }
+            return {
+              fullName: object.fullName,
+              Customer: organization.name || '',
+              Agency: object.agencyName || '',
+            };
+          })
+        );
       })
       .finally(() => {
         dispatch(updateTasksIsLoading(false));
       });
-  }, [dispatch, endDate, risks, startDate, statuses, types]);
+  }, [dispatch, endDate, risks, startDate, statuses, types, aggregatedTalents, customers, organizations]);
 
   const loadTasksRef = useRef(loadTasks);
   loadTasksRef.current = loadTasks;
@@ -139,7 +163,7 @@ const Tasks = () => {
         ) : (
           <>
             {tasks.length ? (
-              <TasksTable tasks={tasks} onEdited={loadTasks} onDeleted={loadTasks} />
+              <TasksTable tasks={tasks} derivedColumnsForTask={derivedColumnsForTask} onEdited={loadTasks} onDeleted={loadTasks} />
             ) : (
               <p className='font-medium whitespace-nowrap py-1'>
                 No tasks found for the selected filters. Please try again with different filters.

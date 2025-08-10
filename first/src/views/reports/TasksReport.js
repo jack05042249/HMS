@@ -12,6 +12,7 @@ const TasksReport = () => {
   const [data, setData] = useState([]);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [names, setNames] = useState([]);
 
   const [newTaskObject, setNewTaskObject] = useState(null);
 
@@ -31,10 +32,18 @@ const TasksReport = () => {
             type: Array.isArray(task.TasksCustomers) ? TYPE.STAKEHOLDER.value : TYPE.TALENT.value
           }))
         );
+
+        setNames(
+          tasks.map(task => {
+            const isTalent = !Array.isArray(task.TasksCustomers);
+            const object = (isTalent ? getRelevantTalent(task.id) : getRelevantCustomer(task.id)) || {};
+            return object.fullName;
+          })
+        );
       })
       .finally(() => setIsLoading(false));
     return abortController;
-  }, []);
+  }, [getRelevantTalent, getRelevantCustomer]);
 
   useEffect(() => {
     const abortController = updateTasksList();
@@ -51,6 +60,10 @@ const TasksReport = () => {
     return <p>No Tasks</p>;
   }
 
+  if (names.length === 0) {
+    return null;
+  }
+
   return (
     <>
       <table className='w-full text-sm text-left rtl:text-right text-gray-500' id={`employees_table`}>
@@ -64,7 +77,6 @@ const TasksReport = () => {
         <tbody className='text-[12px]'>
           {data.map((item, index) => {
             const isTalent = item.type === TYPE.TALENT.value;
-            const object = (isTalent ? getRelevantTalent(item.id) : getRelevantCustomer(item.id)) || {};
             return (
               <>
                 <tr key={item.id} className='bg-white border-b border-gray-100 text-[#9197B3]'>
@@ -73,7 +85,7 @@ const TasksReport = () => {
                     className='justify-end whitespace-nowrap cursor-pointer text-[#020202] hover:underline'
                     onClick={() => setNewTaskObject(item)}
                   >
-                    {object.fullName}
+                    {names[index]}
                   </TableCell>
                   <TableCell className='whitespace-nowrap text-[#020202]'>
                     {isTalent ? 'Talent' : 'Stakeholder'}

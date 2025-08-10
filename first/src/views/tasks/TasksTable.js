@@ -14,15 +14,11 @@ import config from '../../config';
 
 const NOTES_MAX_CHAR = 100;
 
-const TasksTable = ({ tasks, onEdited, onDeleted }) => {
+const TasksTable = ({ tasks, derivedColumnsForTask, onEdited, onDeleted }) => {
   const [detailsTask, setDetailsTask] = useState(null);
   const [taskToEdit, setTaskToEdit] = useState(null);
   const [taskToDelete, setTaskToDelete] = useState(null);
   const [isLoadingDelete, setIsLoadingDelete] = useState(false);
-  const organizations = useSelector(state => state.organizations);
-
-  const getRelevantTalent = useGetTalent();
-  const getRelevantCustomer = useGetCustomer();
 
   const cleanTaskToEdit = useCallback(() => setTaskToEdit(null), []);
 
@@ -62,9 +58,9 @@ const TasksTable = ({ tasks, onEdited, onDeleted }) => {
       });
   }, [taskToDelete, onDeleted]);
 
-  const getOrganizationName = (organizationId => {
-    return organizations.find(org => org.id === organizationId)?.name || '';
-  });
+  if (derivedColumnsForTask.length === 0) {
+    return null;
+  }
 
   return (
     <>
@@ -84,9 +80,6 @@ const TasksTable = ({ tasks, onEdited, onDeleted }) => {
         </thead>
         <tbody className='text-[12px]'>
           {tasks.map((task, index) => {
-            const object =
-              (task.type === 'employee' ? getRelevantTalent(task.talentId) : getRelevantCustomer(task.customerId)) ||
-              {};
             const shouldShowDetails = detailsTask && detailsTask.id === task.id;
             const commentCropped =
               task.comment.length > NOTES_MAX_CHAR ? `${task.comment.substring(0, NOTES_MAX_CHAR)}...` : task.comment;
@@ -101,10 +94,10 @@ const TasksTable = ({ tasks, onEdited, onDeleted }) => {
                       setDetailsTask(prev => (prev === task ? null : task));
                     }}
                   >
-                    {object.fullName}
+                    {derivedColumnsForTask[index].fullName}
                   </TableCell>
-                  <TableCell>{task.type === 'employee' ? object.talentMainCustomer ? getOrganizationName(getRelevantCustomer(object.talentMainCustomer).organizationId) : '' : getOrganizationName(object.organizationId)}</TableCell>
-                  <TableCell>{task.type === 'employee' ? object.agencyName : ''}</TableCell>
+                  <TableCell>{task.type === 'employee' ? derivedColumnsForTask[index].Customer : ''}</TableCell>
+                  <TableCell>{task.type === 'employee' ? derivedColumnsForTask[index].Agency : ''}</TableCell>
                   <TableCell className='max-w-[200px] overflow-hidden overflow-ellipsis'>{commentCropped}</TableCell>
                   <TableCell>{STATUS[task.status].label}</TableCell>
                   <TableCell>{RISK[task.risk].label}</TableCell>
