@@ -87,7 +87,7 @@ const Talents = ({ API_URL }) => {
     : aggregatedTalents;
   const [canWorkOnTwoPositionsValues, setCanWorkOnTwoPositionsValues] = useState([true, false]);
   const [inactiveValues, setInactiveValues] = useState([false]);
-  const [ignoreValues, setIgnoreValues] = useState([false]);
+  const [ignoreValues, setIgnoreValues] = useState([false, true]);
   const [linkedinProfileCheckedValues, setLinkedinProfileCheckedValues] = useState([true, false]);
   const sortedTalents = sortArr(filteredTalents, sortBy).filter(item => {
     const canWorkOnTwoPositionsFilter =

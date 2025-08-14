@@ -98,6 +98,11 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             default: false
         },
+        doesNotHaveAVacation: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            default: false
+        },
         inactive: {
             type: DataTypes.BOOLEAN,
             allowNull: false,

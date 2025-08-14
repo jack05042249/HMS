@@ -105,6 +105,7 @@ const EditTalentModal = ({
     hourlyRate,
     cv,
     canWorkOnTwoPositions,
+    doesNotHaveAVacation,
     linkedinProfileChecked,
     ignoreLinkedinCheck,
     linkedinProfile,
@@ -137,9 +138,9 @@ const EditTalentModal = ({
   const formattedEndDate = endDate ? new Date(endDate) : null;
   const formattedBirthday = birthday ? new Date(birthday) : null;
   const formattedLinkedinProfileDate = linkedinProfileDate ? new Date(linkedinProfileDate) : null;
-  const doesNotHaveAVacation = !globalVacationHistory.some(
-    vacation => vacation.talentId === id && vacation.approved && moment(vacation.endDate).isAfter(moment())
-  );
+  // const doesNotHaveAVacation = !globalVacationHistory.some(
+  //   vacation => vacation.talentId === id && vacation.approved && moment(vacation.endDate).isAfter(moment())
+  // );
 
   const toggleCustomers = () => {
     setShowCustomers(state => !state);
@@ -204,7 +205,8 @@ const EditTalentModal = ({
       id === 'isActive' ||
       id === 'hourlyRate' ||
       id === 'canWorkOnTwoPositions' ||
-      id === 'ignoreLinkedinCheck'
+      id === 'ignoreLinkedinCheck' ||
+      id === 'doesNotHaveAVacation'
     ) {
       setTalent(prev => ({ ...prev, [id]: checked }));
       return;
@@ -651,7 +653,7 @@ const EditTalentModal = ({
                 checked={doesNotHaveAVacation}
                 id='doesNotHaveAVacation'
                 name='doesNotHaveAVacation'
-                // onChange={onChangeHandler}
+                onChange={onChangeHandler}
               />
             </div>
           </div>
