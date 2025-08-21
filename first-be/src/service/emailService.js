@@ -193,7 +193,7 @@ async function refinePostcard(imgBuffer, firstName, type, photoBase64) {
 
     If ${isImageFile} is false, please insert a cheerful 25-year-old male/female cartoon Starfleet officer(concerning to fullName : ${firstName}) celebrating him/her birthday, in a simplified Star Trek: Enterprise-inspired uniform with colored piping randomly with orange/blue bg. 
     Then the cartoon Starfleet officer is smiling with a colorful party hat, surrounded by confetti and birthday decorations. Style: playful, modern 2D cartoon illustration. but not overly childish. Place it in the white square in the middle of left panel as where the photo would be, inside the same frame or layout.
-    If ${isImageFile} is true, enhance the employee photo by adjusting lighting and contrast for a clear, professional appearance. Center the face naturally, crop the photo to focus on the upper body or shoulders and head, and smooth out harsh shadows or glare. Use a soft, neutral background that blends well with the postcard’s design, and subtly blur it if needed to keep the focus on the person.
+    If ${isImageFile} is true, keep the person's photo as original and only adjust the width and height if needed. Use a soft, neutral background that blends well with the postcard’s design, and subtly blur it if needed to keep the focus on the person.
     
     And decorate the underline on the bottom of the fullName of employee on left side.
 
@@ -209,7 +209,7 @@ async function refinePostcard(imgBuffer, firstName, type, photoBase64) {
 
     If ${isImageFile} is false, please insert a cheerful 25-year-old male/female cartoon Starfleet officer(concerning to fullName : ${firstName}) celebrating him/her anniversary, in a simplified Star Trek: Enterprise-inspired uniform with colored piping randomly with orange/blue bg. 
     Then the cartoon Starfleet officer is smiling with a colorful party hat, surrounded by confetti and anniversary decorations. Style: playful, modern 2D cartoon illustration. but not overly childish. Place it in the white square in the middle of left panel as where the photo would be, inside the same frame or layout.
-    If ${isImageFile} is true, enhance the employee photo by adjusting lighting and contrast for a clear, professional appearance. Center the face naturally, crop the photo to focus on the upper body or shoulders and head, and smooth out harsh shadows or glare. Use a soft, neutral background that blends well with the postcard’s design, and subtly blur it if needed to keep the focus on the person.
+    If ${isImageFile} is true, keep the person's photo as original and only adjust the width and height if needed. Use a soft, neutral background that blends well with the postcard’s design, and subtly blur it if needed to keep the focus on the person.
     
     And decorate the underline on the bottom of the fullName of employee on left side.
 

@@ -49,7 +49,8 @@ const codeToCountry = Object.freeze({
     cz: 'Czech Republic',
     ro: 'Romania',
     it: 'Italy',
-    gr: 'Greece'
+    gr: 'Greece',
+    at: 'Austria'
 });
 
 const countryCodes = Object.keys(codeToCountry);

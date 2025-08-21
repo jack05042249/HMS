@@ -448,7 +448,10 @@ function whereClauseForRecords() {
             feedbackFrequency: {
                 [Op.not]: null
             },
-            inactive: false
+            inactive: false,
+            startDate: {
+                [Op.lte]: new Date() // Only talents whose start_date is before now
+            }
         },
         attributes: ['id', 'fullName', 'feedbackFrequency', 'email'],
         include: [{
