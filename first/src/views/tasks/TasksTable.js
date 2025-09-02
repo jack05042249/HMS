@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 
@@ -13,12 +13,43 @@ import axios from 'axios';
 import config from '../../config';
 
 const NOTES_MAX_CHAR = 100;
+const PAGE_SIZE = 30;
 
 const TasksTable = ({ tasks, derivedColumnsForTask, onEdited, onDeleted }) => {
   const [detailsTask, setDetailsTask] = useState(null);
   const [taskToEdit, setTaskToEdit] = useState(null);
   const [taskToDelete, setTaskToDelete] = useState(null);
   const [isLoadingDelete, setIsLoadingDelete] = useState(false);
+
+  const [visibleCount, setVisibleCount] = useState(0);
+  const tableBodyRef = useRef(null);
+
+  useEffect(() => {
+    const el = tableBodyRef.current;
+    if (!el) {
+      // This is important part for handling the initial null value of tableBodyRef
+      setVisibleCount(prev => Math.min(prev + PAGE_SIZE, tasks.length));
+      return;
+    }
+
+    const handleScroll = () => {
+      if (el.scrollHeight - el.scrollTop - el.clientHeight < 50) {
+        setVisibleCount(prev => Math.min(prev + PAGE_SIZE, tasks.length));
+      }
+    };
+
+    el.addEventListener('scroll', handleScroll);
+
+    // Initial check for scrollability
+    if (el.scrollHeight <= el.clientHeight && visibleCount < tasks.length) {
+      setVisibleCount(prev => Math.min(prev + PAGE_SIZE, tasks.length));
+    }
+
+    return () => {
+      el.removeEventListener('scroll', handleScroll);
+    };
+  }, [tasks, visibleCount]);
+
 
   const cleanTaskToEdit = useCallback(() => setTaskToEdit(null), []);
 
@@ -64,6 +95,7 @@ const TasksTable = ({ tasks, derivedColumnsForTask, onEdited, onDeleted }) => {
 
   return (
     <>
+    <div ref={tableBodyRef} style={{ maxHeight: '630px', overflowY: 'auto', width: '100%' }}>
       <table className='w-full text-sm text-left rtl:text-right text-gray-500' id={`employees_table`}>
         <thead className='text-[12px] text-gray-700 border-b border-gray-100'>
           <tr>
@@ -78,8 +110,8 @@ const TasksTable = ({ tasks, derivedColumnsForTask, onEdited, onDeleted }) => {
             <TableHeaderItem></TableHeaderItem>
           </tr>
         </thead>
-        <tbody className='text-[12px]'>
-          {tasks.slice(0, 100).map((task, index) => {
+        <tbody className='text-[12px]' >
+          {tasks.slice(0, visibleCount).map((task, index) => {
             const shouldShowDetails = detailsTask && detailsTask.id === task.id;
             const commentCropped =
               task.comment.length > NOTES_MAX_CHAR ? `${task.comment.substring(0, NOTES_MAX_CHAR)}...` : task.comment;
@@ -157,6 +189,7 @@ const TasksTable = ({ tasks, derivedColumnsForTask, onEdited, onDeleted }) => {
           />
         )}
       </GenericModal>
+      </div>
     </>
   );
 };

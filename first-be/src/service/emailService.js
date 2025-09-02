@@ -22,13 +22,13 @@ const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN
 const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`
 
 async function composePostcard(talentPhotoBase64, logoPath, fullName, years, type) {
-  const canvas = createCanvas(900, 1150)
+  const canvas = createCanvas(1024, 1536)
   const ctx = canvas.getContext('2d')
 
   ctx.fillStyle = 'lightgray'
-  ctx.fillRect(0, 0, 420, 1150)
+  ctx.fillRect(0, 0, 512, 1536)
   ctx.fillStyle = '#C32C1D'
-  ctx.fillRect(420, 0, 480, 1150)
+  ctx.fillRect(512, 0, 512, 1536)
 
   // Load company logo
   const logo_Path = path.resolve(__dirname, logoPath)
@@ -42,67 +42,68 @@ async function composePostcard(talentPhotoBase64, logoPath, fullName, years, typ
   ctx.shadowOffsetX = 0
   ctx.shadowOffsetY = 8
 
-  // Draw rounded rectangle background for the image
-  const x = 100,
-    y = 300,
-    width = 360,
-    height = 360,
-    radius = 32
-  ctx.beginPath()
-  ctx.moveTo(x + radius, y)
-  ctx.lineTo(x + width - radius, y)
-  ctx.quadraticCurveTo(x + width, y, x + width, y + radius)
-  ctx.lineTo(x + width, y + height - radius)
-  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height)
-  ctx.lineTo(x + radius, y + height)
-  ctx.quadraticCurveTo(x, y + height, x, y + height - radius)
-  ctx.lineTo(x, y + radius)
-  ctx.quadraticCurveTo(x, y, x + radius, y)
-  ctx.closePath()
-  ctx.fillStyle = '#fff' // white background
-  ctx.fill()
-  ctx.restore()
-
-  // Draw border (optional)
-  ctx.save()
-  ctx.beginPath()
-  ctx.moveTo(x + radius, y)
-  ctx.lineTo(x + width - radius, y)
-  ctx.quadraticCurveTo(x + width, y, x + width, y + radius)
-  ctx.lineTo(x + width, y + height - radius)
-  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height)
-  ctx.lineTo(x + radius, y + height)
-  ctx.quadraticCurveTo(x, y + height, x, y + height - radius)
-  ctx.lineTo(x, y + radius)
-  ctx.quadraticCurveTo(x, y, x + radius, y)
-  ctx.closePath()
-  ctx.lineWidth = 6
-  ctx.strokeStyle = '#fff' // Commit blue border
-  ctx.stroke()
-  ctx.restore()
-
-  // Draw the talent image clipped to rounded rectangle
-  ctx.save()
-  ctx.beginPath()
-  ctx.moveTo(x + radius, y)
-  ctx.lineTo(x + width - radius, y)
-  ctx.quadraticCurveTo(x + width, y, x + width, y + radius)
-  ctx.lineTo(x + width, y + height - radius)
-  ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height)
-  ctx.lineTo(x + radius, y + height)
-  ctx.quadraticCurveTo(x, y + height, x, y + height - radius)
-  ctx.lineTo(x, y + radius)
-  ctx.quadraticCurveTo(x, y, x + radius, y)
-  ctx.closePath()
-  ctx.clip()
 
   // Load talent photo from base64
   if (talentPhotoBase64 && talentPhotoBase64.startsWith('data:image/')) {
-    const base64Data = talentPhotoBase64.split(',')[1] // remove "data:image/jpeg;base64,"
-    const talentBuffer = Buffer.from(base64Data, 'base64')
-    const talentImg = await loadImage(talentBuffer)
-    ctx.drawImage(talentImg, x, y, width, height)
+    // const base64Data = talentPhotoBase64.split(',')[1] // remove "data:image/jpeg;base64,"
+    // const talentBuffer = Buffer.from(base64Data, 'base64')
+    // const talentImg = await loadImage(talentBuffer)
+    // ctx.drawImage(talentImg, x, y, width, height)
   } else {
+    // Draw rounded rectangle background for the image
+    const x = 50,
+      y = 300,
+      width = 460,
+      height = 460,
+      radius = 32
+    ctx.beginPath()
+    ctx.moveTo(x + radius, y)
+    ctx.lineTo(x + width - radius, y)
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius)
+    ctx.lineTo(x + width, y + height - radius)
+    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height)
+    ctx.lineTo(x + radius, y + height)
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius)
+    ctx.lineTo(x, y + radius)
+    ctx.quadraticCurveTo(x, y, x + radius, y)
+    ctx.closePath()
+    ctx.fillStyle = '#fff' // white background
+    ctx.fill()
+    ctx.restore()
+
+    // Draw border (optional)
+    ctx.save()
+    ctx.beginPath()
+    ctx.moveTo(x + radius, y)
+    ctx.lineTo(x + width - radius, y)
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius)
+    ctx.lineTo(x + width, y + height - radius)
+    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height)
+    ctx.lineTo(x + radius, y + height)
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius)
+    ctx.lineTo(x, y + radius)
+    ctx.quadraticCurveTo(x, y, x + radius, y)
+    ctx.closePath()
+    ctx.lineWidth = 6
+    ctx.strokeStyle = '#fff' // Commit blue border
+    ctx.stroke()
+    ctx.restore()
+
+    // Draw the talent image clipped to rounded rectangle
+    ctx.save()
+    ctx.beginPath()
+    ctx.moveTo(x + radius, y)
+    ctx.lineTo(x + width - radius, y)
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius)
+    ctx.lineTo(x + width, y + height - radius)
+    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height)
+    ctx.lineTo(x + radius, y + height)
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius)
+    ctx.lineTo(x, y + radius)
+    ctx.quadraticCurveTo(x, y, x + radius, y)
+    ctx.closePath()
+    ctx.clip()
+
     ctx.fillStyle = 'white'
     ctx.fillRect(x, y, width, height)
   }
@@ -118,26 +119,26 @@ async function composePostcard(talentPhotoBase64, logoPath, fullName, years, typ
   // Draw first part (first line)
   ctx.font = 'bold 50px Montserrat, sans-serif'
   ctx.fillStyle = 'black'
-  ctx.fillText(firstLine, 120, 750)
+  ctx.fillText(firstLine, 120, 1000)
 
   // Draw second part (second line, only if exists)
   if (secondLine) {
-    ctx.fillText(secondLine, 120, 810)
+    ctx.fillText(secondLine, 120, 1060)
 
     // Draw underline under the second line
     ctx.lineWidth = 2
     ctx.strokeStyle = 'gray'
     ctx.beginPath()
-    ctx.moveTo(100, 850) // start X, Y
-    ctx.lineTo(395, 850) // end X, Y
+    ctx.moveTo(100, 1100) // start X, Y
+    ctx.lineTo(395, 1100) // end X, Y
     ctx.stroke()
   } else {
     // If no second line, draw underline under the first line
     ctx.lineWidth = 2
     ctx.strokeStyle = 'gray'
     ctx.beginPath()
-    ctx.moveTo(100, 790)
-    ctx.lineTo(395, 790)
+    ctx.moveTo(100, 1140)
+    ctx.lineTo(395, 1140)
     ctx.stroke()
   }
   // end of drawing talent's fullName
@@ -145,14 +146,14 @@ async function composePostcard(talentPhotoBase64, logoPath, fullName, years, typ
   ctx.font = 'bold 60px Impact, Verdana, sans-serif'
   ctx.fillStyle = 'white'
   if (type == 'birthday') {
-    ctx.fillText(`Happy`, 520, 200)
-    ctx.fillText(`Birthday!`, 520, 280)
+    ctx.fillText(`Happy`, 580, 200)
+    ctx.fillText(`Birthday!`, 580, 280)
   } else {
-    ctx.fillText(`Happy`, 520, 200)
-    ctx.fillText(`Anniversary!`, 520, 280)
+    ctx.fillText(`Happy`, 580, 200)
+    ctx.fillText(`Anniversary!`, 580, 280)
   }
   ctx.font = 'bold 35px Impact, Verdana, sans-serif'
-  ctx.fillText(`Dear ${fullName.split(' ')[0]},`, 520, 380)
+  ctx.fillText(`Dear ${fullName.split(' ')[0]},`, 580, 380)
   ctx.font = '30px Impact, Verdana, sans-serif'
   const message1 =
     type === 'birthday'
@@ -160,13 +161,13 @@ async function composePostcard(talentPhotoBase64, logoPath, fullName, years, typ
       : `Wishing you ${years} years&work anniversary&and continued success.`
   const lines1 = message1.split('&')
   lines1.forEach((line, i) => {
-    ctx.fillText(line, 520, 425 + i * 46) // 40px vertical spacing between lines
+    ctx.fillText(line, 580, 525 + i * 46) // 40px vertical spacing between lines
   })
 
   const message2 = `Thank you for your&hard work and&dedication. We're&grateful to have you&on our team!`
   const lines2 = message2.split('&')
   lines2.forEach((line, i) => {
-    ctx.fillText(line, 520, 625 + i * 46) // 40px vertical spacing between lines
+    ctx.fillText(line, 580, 725 + i * 46) // 40px vertical spacing between lines
   })
 
   return canvas.toBuffer('image/png')
@@ -181,19 +182,54 @@ function savePostcardToPublic(buffer, filename) {
   return `https://coms.commit-offshore.com/public/${filename}.png`
 }
 
+async function generateMask(width, height, rect) {
+  // rect: { x, y, w, h }
+  const canvas = createCanvas(width, height)
+  const ctx = canvas.getContext('2d')
+  ctx.fillStyle = 'black'
+  ctx.fillRect(0, 0, width, height)
+  ctx.fillStyle = 'white'
+  ctx.fillRect(rect.x, rect.y, rect.w, rect.h)
+  return canvas.toBuffer('image/png')
+}
+
 async function refinePostcard(imgBuffer, firstName, type, photoBase64) {
+
+  // Define the rectangle region to protect (example: left panel photo area)
+
+    // Define the rectangle region to protect (example: left panel photo area)
+  const maskRect = { x: 50, y: 400, w: 420, h: 450 }
+  const maskBuffer = await generateMask(1024, 1536, maskRect)
+  const maskBlob = new Blob([maskBuffer], { type: 'image/png' })
+  const maskFile = new File([maskBlob], 'mask.png', { type: maskBlob.type })
+
   const imgBlob = new Blob([imgBuffer], { type: 'image/png' })
   const file = new File([imgBlob], 'image.png', { type: imgBlob.type })
   let isImageFile = false
   if (photoBase64 && photoBase64.startsWith('data:image/')) isImageFile = true
-  const refinedPrompt =
-    type == 'birthday'
-      ? `This image shows postcard for congratulating employee's birthday.
+  // const talentBuffer = Buffer.from(base64Data, 'base64')
+  // const talentImg = await loadImage(talentBuffer)
+  //  ctx.drawImage(talentImg, x, y, width, height)
+  let refinedPrompt = '';
+  if (type == 'birthday') {
+    refinedPrompt =
+      isImageFile
+        ? `This image shows postcard for congratulating employee's birthday.
     Please redesign this birthday greeting image so that the text block is consistently aligned and constrained to the same width as the 'Happy Birthday!' title. Maintain a clean, balanced look by adjusting line breaks so that each line fills the same approximate width, avoiding short or overly long lines. Ensure the overall design (balloons, background color, and confetti) stays festive and professional.
 
-    If ${isImageFile} is false, please insert a cheerful 25-year-old male/female cartoon Starfleet officer(concerning to fullName : ${firstName}) celebrating him/her birthday, in a simplified Star Trek: Enterprise-inspired uniform with colored piping randomly with orange/blue bg. 
+    And decorate the underline on the bottom of the fullName of employee on left side.
+
+    Decorate the postcard with tasteful and festive birthday-themed elements. For each generation, vary the decoration style—for example, use different combinations of balloons, confetti, streamers, ribbons, sparkles, or birthday icons. Change the layout, decoration density, and placement subtly per card. Use a rotating color palette that aligns with our company branding but allows for creative variations. Ensure the design stays professional, clean, and celebratory. 
+    Keep the greeting content clearly readable, and do not obstruct the logo or the main image.
+
+    Add a small note tag in the bottom right corner inside a light semi-transparent rounded rectangle. The tag should say: 'Note: ${firstName}. We appreciate your hard work and dedication. Have a wonderful year ahead!' in a clean, sans-serif font and if the content is cut via low height, please increase the height more containing the whole texts of note tag.
+ 
+    You must ensure the note tag's rounded rectangle is fully inside of the whole square by reducing the content of tag and font size.
+` : `This image shows postcard for congratulating employee's birthday.
+    Please redesign this birthday greeting image so that the text block is consistently aligned and constrained to the same width as the 'Happy Birthday!' title. Maintain a clean, balanced look by adjusting line breaks so that each line fills the same approximate width, avoiding short or overly long lines. Ensure the overall design (balloons, background color, and confetti) stays festive and professional.
+
+    Please insert a cheerful 25-year-old male/female cartoon Starfleet officer(concerning to fullName : ${firstName}) celebrating him/her birthday, in a simplified Star Trek: Enterprise-inspired uniform with colored piping randomly with orange/blue bg. 
     Then the cartoon Starfleet officer is smiling with a colorful party hat, surrounded by confetti and birthday decorations. Style: playful, modern 2D cartoon illustration. but not overly childish. Place it in the white square in the middle of left panel as where the photo would be, inside the same frame or layout.
-    If ${isImageFile} is true, enhance the employee photo by adjusting lighting and contrast for a clear, professional appearance. Center the face naturally, crop the photo to focus on the upper body or shoulders and head, and smooth out harsh shadows or glare. Use a soft, neutral background that blends well with the postcard’s design, and subtly blur it if needed to keep the focus on the person.
     
     And decorate the underline on the bottom of the fullName of employee on left side.
 
@@ -204,12 +240,13 @@ async function refinePostcard(imgBuffer, firstName, type, photoBase64) {
 
     You must ensure the note tag's rounded rectangle is fully inside of the whole square by reducing the content of tag and font size.
 `
-      : `This image shows postcard for congratulating employee's anniversary.
+  } else {
+    refinedPrompt = `This image shows postcard for congratulating employee's anniversary.
     Please redesign this anniversary greeting image so that the text block is consistently aligned and constrained to the same width as the 'Happy anniversary!' title. Maintain a clean, balanced look by adjusting line breaks so that each line fills the same approximate width, avoiding short or overly long lines. Ensure the overall design (balloons, background color, and confetti) stays festive and professional.
 
     If ${isImageFile} is false, please insert a cheerful 25-year-old male/female cartoon Starfleet officer(concerning to fullName : ${firstName}) celebrating him/her anniversary, in a simplified Star Trek: Enterprise-inspired uniform with colored piping randomly with orange/blue bg. 
     Then the cartoon Starfleet officer is smiling with a colorful party hat, surrounded by confetti and anniversary decorations. Style: playful, modern 2D cartoon illustration. but not overly childish. Place it in the white square in the middle of left panel as where the photo would be, inside the same frame or layout.
-    If ${isImageFile} is true, enhance the employee photo by adjusting lighting and contrast for a clear, professional appearance. Center the face naturally, crop the photo to focus on the upper body or shoulders and head, and smooth out harsh shadows or glare. Use a soft, neutral background that blends well with the postcard’s design, and subtly blur it if needed to keep the focus on the person.
+    If ${isImageFile} is true, place the photo on the postcard without altering its content, adjusting only the overall size to fit the postcard dimensions. Use a soft, neutral background that blends well with the postcard’s design, and subtly blur it if needed to keep the focus on the person.
     
     And decorate the underline on the bottom of the fullName of employee on left side.
 
@@ -220,24 +257,74 @@ async function refinePostcard(imgBuffer, firstName, type, photoBase64) {
 
     You must ensure the note tag's rounded rectangle is fully inside of the whole square by reducing the content of tag and font size.
 `
-  const res = await openai.images.edit({
+  }
+
+  const res = isImageFile ? await openai.images.edit({
     model: 'gpt-image-1',
     prompt: refinedPrompt,
     size: '1024x1536',
     n: 1,
     quality: 'high',
-    image: file
-  })
+    image: file,
+    mask: maskFile
+  }) : await openai.images.edit({
+    model: 'gpt-image-1',
+    prompt: refinedPrompt,
+    size: '1024x1536',
+    n: 1,
+    quality: 'high',
+    image: file,
+  });
 
   return Buffer.from(res.data[0].b64_json, 'base64')
 }
 
+
+async function pastePhotoOnBuffer(refinedBuffer, photoBase64, rect = { x: 50, y: 400, w: 420, h: 450 }) {
+  const canvas = createCanvas(1024, 1536)
+  const ctx = canvas.getContext('2d')
+
+  // Draw the refined postcard as background
+  const bgImg = await loadImage(refinedBuffer)
+  ctx.drawImage(bgImg, 0, 0, 1024, 1536)
+
+  // Draw the photoBase64 image in the specified rectangle
+  if (photoBase64 && photoBase64.startsWith('data:image/')) {
+    const base64Data = photoBase64.split(',')[1]
+    const photoBuffer = Buffer.from(base64Data, 'base64')
+    const photoImg = await loadImage(photoBuffer)
+    ctx.save()
+    // Clip to rounded rectangle if needed
+    const { x, y, w, h } = rect
+    const radius = 32
+    ctx.beginPath()
+    ctx.moveTo(x + radius, y)
+    ctx.lineTo(x + w - radius, y)
+    ctx.quadraticCurveTo(x + w, y, x + w, y + radius)
+    ctx.lineTo(x + w, y + h - radius)
+    ctx.quadraticCurveTo(x + w, y + h, x + w - radius, y + h)
+    ctx.lineTo(x + radius, y + h)
+    ctx.quadraticCurveTo(x, y + h, x, y + h - radius)
+    ctx.lineTo(x, y + radius)
+    ctx.quadraticCurveTo(x, y, x + radius, y)
+    ctx.closePath()
+    ctx.clip()
+    ctx.drawImage(photoImg, x, y, w, h)
+    ctx.restore()
+  }
+
+  return canvas.toBuffer('image/png')
+}
+
 async function generateFinalPostcard({ firstName, years, type, photoBase64 }) {
   const finalBuffer = await composePostcard(photoBase64, '../public/commit_logo.png', firstName, years, type)
+
   const refinedBuffer = await refinePostcard(finalBuffer, firstName, type, photoBase64)
 
+  const pastePhotoBuffer = await pastePhotoOnBuffer(refinedBuffer, photoBase64)
+
   const uploadedUrl = savePostcardToPublic(
-    refinedBuffer,
+    pastePhotoBuffer,
     `${type}_postcard_${firstName.replace(/\s+/g, '_')}_${Date.now()}`
   )
 
@@ -328,8 +415,8 @@ const sendHolidaysEmail = async (data, startDate, endDate) => {
     <div style='width: 600px; margin-top: 80px; font-family: "Poppins", sans-serif;'>
         <p style='margin-bottom: 20px'>Dear <strong>${fullName}</strong>,</p>
         <p style='margin-bottom: 20px'>I hope this email finds you well. This is a reminder about the upcoming national holidays in ${countriesArr.join(
-          ', '
-        )}</p>
+    ', '
+  )}</p>
         ${getContentPerCountry(countriesArr, rest).join(' ')}
         <p style='margin-bottom: 20px;'>Please note that these holidays are observed nationwide, and most businesses and government offices will be closed on these days.</p>
         <p style='margin-bottom: 20px'>I hope this reminder assists you in effectively organizing your schedule. Should you have any inquiries, please feel free to contact me without hesitation.</p>
@@ -733,11 +820,9 @@ const sendTalentBirthdaysToHR = async (talents, talentsForToday, { monthName, da
           messages: [
             {
               role: 'user',
-              content: `Write a short birthday blessing for ${
-                user.fullName.split(' ')[0]
-              } as 2 sentences starting exactly with "🎉 Happy Birthday ${user.fullName.split(' ')[0]} ! ${
-                user.telegram ? user.telegram[0] == '@' ? user.telegram : '' : ''
-              }". Make it warm and friendly, but not too formal.`
+              content: `Write a short birthday blessing for ${user.fullName.split(' ')[0]
+                } as 2 sentences starting exactly with "🎉 Happy Birthday ${user.fullName.split(' ')[0]} ! ${user.telegram ? user.telegram[0] == '@' ? user.telegram : '' : ''
+                }". Make it warm and friendly, but not too formal.`
             }
           ]
         })
@@ -813,11 +898,9 @@ const sendTalentsAnniversaryToHR = async (talents, talentsForToday) => {
         messages: [
           {
             role: 'user',
-            content: `Write a short anniversary blessing for ${
-              talent.fullName.split(' ')[0]
-            } as 2 sentences starting exactly with "🎉 Happy Anniversary ${talent.fullName.split(' ')[0]} ! ${
-              talent.email ? talent.email + ',' : ''
-            }". Make it warm and friendly, but not too formal.`
+            content: `Write a short anniversary blessing for ${talent.fullName.split(' ')[0]
+              } as 2 sentences starting exactly with "🎉 Happy Anniversary ${talent.fullName.split(' ')[0]} ! ${talent.email ? talent.email + ',' : ''
+              }". Make it warm and friendly, but not too formal.`
           }
         ]
       })
