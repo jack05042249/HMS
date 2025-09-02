@@ -83,6 +83,7 @@ const CreateTalentModal = ({
     organizations: allOrganizations.length ? [{ id: allOrganizations[0].id, name: allOrganizations[0].name }] : [],
     hourlyRate: false,
     canWorkOnTwoPositions: false,
+    doesNotHaveAVacation : false,
     linkedinProfileChecked: false,
     ignoreLinkedinCheck: false,
     linkedinProfile: '',
@@ -174,6 +175,7 @@ const CreateTalentModal = ({
           picture,
           hourlyRate,
           canWorkOnTwoPositions,
+          doesNotHaveAVacation,
           linkedinProfile,
           linkedinComment,
           linkedinProfileChecked,
@@ -201,6 +203,7 @@ const CreateTalentModal = ({
           summary,
           hourlyRate,
           canWorkOnTwoPositions,
+          doesNotHaveAVacation,
           linkedinProfile,
           linkedinComment,
           linkedinProfileChecked,
@@ -558,6 +561,21 @@ const CreateTalentModal = ({
                 name='canWorkOnTwoPositions'
                 onChange={event =>
                   handleChangeForm({ target: { name: 'canWorkOnTwoPositions', value: event.target.checked } })
+                }
+              />
+            </div>
+            <label htmlFor='canWorkOnTwoPositions' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
+              Doesn't have a vacation
+            </label>
+            <div className='flex items-center h-[40px] px-2'>
+              <input
+                className='cursor-pointer w-4 h-4'
+                type='checkbox'
+                checked={values.doesNotHaveAVacation}
+                id='doesNotHaveAVacation'
+                name='doesNotHaveAVacation'
+                onChange={event =>
+                  handleChangeForm({ target: { name: 'doesNotHaveAVacation', value: event.target.checked } })
                 }
               />
             </div>

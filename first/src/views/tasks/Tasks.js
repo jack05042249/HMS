@@ -8,7 +8,7 @@ import PageStartLoader from '../loaders/PageStartLoader';
 import { NewTask } from './NewTask';
 import { DateRangePicker } from './DateRangePicker';
 import { getIsAdmin, TYPE } from '../../utils';
-import { updateTaskFilter, updateTasks, updateTasksIsLoading } from '../../store/actionCreator';
+import { updateTaskFilter, updateTasks, updateTasksIsLoading, updateAggregatedTalents, updateCustomers } from '../../store/actionCreator';
 import { TasksTable } from './TasksTable';
 import config from '../../config';
 import { PendingTasks } from '../pendingTasks';
@@ -23,16 +23,72 @@ const Tasks = () => {
   const { startDate, endDate, types, statuses, risks } = filter;
 
   const [derivedColumnsForTask, setDerivedColumnsForTask] = useState([]);
+  const [isInitialDataLoading, setIsInitialDataLoading] = useState(true);
+  const [isTasksLoading, setIsTasksLoading] = useState(false);
 
   const dispatch = useDispatch();
   const isAdminUser = getIsAdmin();
+  let promises = [];
+
+  // Load initial data (aggregatedTalents and customers) when component mounts
+  useEffect(() => {
+    const loadInitialData = async () => {
+      try {
+        setIsInitialDataLoading(true);
+        
+        // Only fetch data if it's not already available in the store
+        promises = [];
+        
+        if (aggregatedTalents.length === 0) {
+          promises.push(axios.get(`${config.API_URL}/getAggregatedTalents`));
+        }
+        
+        if (customers.length === 0) {
+          promises.push(axios.get(`${config.API_URL}/customers`));
+        }
+        
+        // Note: organizations are loaded in DefaultLayout.js, so we don't need to fetch them here
+        
+        if (promises.length > 0) {
+          const results = await Promise.all(promises);
+          
+          results.forEach((res, index) => {
+            if (res.config.url.includes('getAggregatedTalents')) {
+              dispatch(updateAggregatedTalents(res.data.aggregatedTalents));
+            } else if (res.config.url.includes('customers')) {
+              dispatch(updateCustomers(res.data.customers));
+            }
+          });
+        }
+        
+        // If no promises were added, it means all data is already available
+        if (promises.length === 0) {
+          setIsInitialDataLoading(false);
+        }
+      } catch (error) {
+        console.error('Error loading initial data:', error);
+      } finally {
+        // Only set loading to false if we actually made API calls
+        if (promises.length > 0) {
+          setIsInitialDataLoading(false);
+        }
+      }
+    };
+
+    loadInitialData();
+  }, [dispatch, aggregatedTalents.length, customers.length, organizations.length]);
 
   const loadTasks = useCallback(() => {
     if (!statuses.length || !risks.length || !types.length) {
       dispatch(updateTasks([]));
       return;
     }
-
+    // Don't load tasks if initial data is still loading or if required data is missing
+    if (isInitialDataLoading || aggregatedTalents.length === 0 || customers.length === 0 || organizations.length === 0) {
+      return;
+    }
+    
+    setIsTasksLoading(true);
     dispatch(updateTasksIsLoading(true));
 
     const statusFilter = statuses.length === 2 ? '' : `status=${statuses[0]}`;
@@ -47,13 +103,18 @@ const Tasks = () => {
     const isEmployeeTasksChecked = types.includes(TYPE.TALENT.value);
     const isCustomerTasksChecked = types.includes(TYPE.STAKEHOLDER.value);
 
+    
+
     const promises = Promise.all([
       isEmployeeTasksChecked ? axios.get(employeeTasksUrl) : Promise.resolve({ data: [] }),
-      isCustomerTasksChecked ? axios.get(customerTasksUrl) : Promise.resolve({ data: [] })
+      isCustomerTasksChecked ? axios.get(customerTasksUrl) : Promise.resolve({ data: [] }),
     ]);
 
     promises
       .then(([{ data: employeeTasks }, { data: customerTasks }]) => {
+
+        
+
         const processedEmployeeTasks = employeeTasks.map(task => ({
           ...task,
           type: 'employee'
@@ -66,6 +127,8 @@ const Tasks = () => {
         const mergedTasks = [...processedEmployeeTasks, ...processedCustomerTasks].sort(
           (a, b) => new Date(b.dueDate) - new Date(a.dueDate)
         );
+
+
 
         dispatch(updateTasks(mergedTasks));
         setDerivedColumnsForTask(
@@ -89,9 +152,10 @@ const Tasks = () => {
         );
       })
       .finally(() => {
+        setIsTasksLoading(false);
         dispatch(updateTasksIsLoading(false));
       });
-  }, [dispatch, endDate, risks, startDate, statuses, types, aggregatedTalents, customers, organizations]);
+  }, [dispatch, endDate, risks, startDate, statuses, types, aggregatedTalents, customers, organizations, isInitialDataLoading]);
 
   const loadTasksRef = useRef(loadTasks);
   loadTasksRef.current = loadTasks;
@@ -99,8 +163,22 @@ const Tasks = () => {
   const pendingTasksRef = useRef();
 
   useEffect(() => {
-    loadTasksRef.current();
-  }, []);
+    // Only load tasks after initial data has been loaded
+    if (!isInitialDataLoading) {
+      // Set tasks loading to true immediately to prevent showing "No tasks found"
+      setIsTasksLoading(true);
+      loadTasks();
+    }
+  }, [isInitialDataLoading, loadTasks]);
+
+  // Auto-load tasks when aggregatedTalents or customers change (after initial load)
+  useEffect(() => {
+    if (!isInitialDataLoading && aggregatedTalents.length > 0 && customers.length > 0 && organizations.length > 0) {
+      // Set tasks loading to true immediately to prevent showing "No tasks found"
+      setIsTasksLoading(true);
+      loadTasks();
+    }
+  }, [isInitialDataLoading, aggregatedTalents.length, customers.length, organizations.length, loadTasks]);
 
   const onChangeDates = useCallback(
     ([startDate, endDate]) => dispatch(updateTaskFilter({ startDate, endDate })),
@@ -158,7 +236,7 @@ const Tasks = () => {
           />
         </div>
 
-        {isLoading ? (
+        {isInitialDataLoading || isLoading || isTasksLoading ? (
           <PageStartLoader />
         ) : (
           <>

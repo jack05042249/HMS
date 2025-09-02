@@ -110,7 +110,7 @@ const resetState = () => {
 };
 
 const updateAggregatedTalents = (state, data) => {
-  return { ...state, ...data };
+  return { ...state, aggregatedTalents: data };
 };
 
 const updateSingleOrganization = (state, organization) => {
