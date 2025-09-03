@@ -1,6 +1,8 @@
 const countryToCode = Object.freeze({
     Ukraine: 'ua',
     Israel: 'il',
+    Austria: 'at',
+    USA: 'us',
     Armenia: 'am',
     Belarus: 'by',
     Azerbaijan: 'az',
@@ -28,6 +30,8 @@ const countryToCode = Object.freeze({
 const codeToCountry = Object.freeze({
     ua: 'Ukraine',
     il: 'Israel',
+    at: 'Austria',
+    us: 'USA',
     am: 'Armenia',
     by: 'Belarus',
     az: 'Azerbaijan',

@@ -95,7 +95,7 @@ const TasksTable = ({ tasks, derivedColumnsForTask, onEdited, onDeleted }) => {
 
   return (
     <>
-      <div ref={tableBodyRef} style={{ maxHeight: '770px', overflowY: 'auto', width: '100%' }}>
+      <div ref={tableBodyRef} style={{ maxHeight: '700px', overflowY: 'auto', width: '100%' }}>
         <table className='w-full text-sm text-left rtl:text-right text-gray-500' id={`employees_table`}>
           <thead className='text-[12px] text-gray-700 border-b border-gray-100'>
             <tr>
