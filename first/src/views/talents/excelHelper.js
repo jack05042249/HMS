@@ -23,7 +23,8 @@ const generateTableHeaders = () => {
     'Can Work On Two Positions',
     'Linkedin Checked',
     'Linkedin Profile',
-    'Inactive'
+    'Inactive',
+    'Linkedin Comment'
   );
 
   return headers;
@@ -50,10 +51,13 @@ const getTableRowData = (talent, data) => {
     return customers.find(cus => cus.id === id) || {};
   };
 
-  const customerNames = talent.cusIds.map(customerId => getRelevantCustomer(customerId).fullName);
+  // Add null checks for cusIds
+  const cusIds = talent.cusIds || [];
+  
+  const customerNames = cusIds.map(customerId => getRelevantCustomer(customerId).fullName);
   const uniqueOrganizationNames = [
     ...new Set(
-      talent.cusIds.map(customerId => {
+      cusIds.map(customerId => {
         const customer = getRelevantCustomer(customerId);
         const orgz = getRelevantOrganization(customer.organizationId);
         return orgz.name ? orgz.name : '-';
@@ -78,9 +82,10 @@ const getTableRowData = (talent, data) => {
     talent.summary || '-',
     talent.talentMainCustomer ? getRelevantCustomer(talent.talentMainCustomer)?.fullName || '-' : '-',
     typeof talent.canWorkOnTwoPositions === 'boolean' ? String(talent.canWorkOnTwoPositions) : '-',
-    typeof talent.linkedinProfileChecked === 'boolean' ? String(talent.linkedinProfileChecked) : '-',
+    talent.ignoreLinkedinCheck ? 'ignore' : typeof talent.linkedinProfileChecked === 'boolean' ? String(talent.linkedinProfileChecked) : '-',
     talent.linkedinProfile ?? '-',
-    typeof talent.inactive === 'boolean' ? String(talent.inactive) : '-'
+    typeof talent.inactive === 'boolean' ? String(talent.inactive) : '-',
+    talent.linkedinComment ?? '-'
   );
 
   return rowData;
@@ -89,8 +94,16 @@ const getTableRowData = (talent, data) => {
 const generateTableData = (talents, data) => {
   const tableData = [];
 
+  // Add safety check for talents array
+  if (!talents || !Array.isArray(talents)) {
+    return tableData;
+  }
+
   talents.forEach(talent => {
-    tableData.push(getTableRowData(talent, data));
+    // Only process talent if it has valid data
+    if (talent && typeof talent === 'object') {
+      tableData.push(getTableRowData(talent, data));
+    }
   });
 
   return tableData;

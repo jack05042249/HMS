@@ -145,7 +145,7 @@ const Tasks = () => {
             }
             return {
               fullName: object.fullName,
-              Customer: organization.name || '',
+              Customer: task.type === 'employee' ? object.projectName : organization.name || '',
               Agency: object.agencyName || '',
             };
           })

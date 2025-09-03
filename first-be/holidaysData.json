@@ -7938,5 +7938,319 @@
       "locations": "All",
       "states": "All"
     }
+  ],
+  "at": [
+    {
+      "name": "New Year's Day",
+      "description": "New Year’s Day is the first day of the year, or January 1, in the Gregorian calendar.",
+      "country": {
+        "id": "at",
+        "name": "Austria"
+      },
+      "date": {
+        "iso": "2025-01-01",
+        "datetime": {
+          "year": 2025,
+          "month": 1,
+          "day": 1
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/austria/new-year-day",
+      "urlid": "austria/new-year-day",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Epiphany",
+      "description": "Epiphany is a Christian holiday celebrated globally on January 6 each year. It commemorates two events recorded in the Bible: the three wise men’s visit to baby Jesus; and Jesus’ baptism.",
+      "country": {
+        "id": "at",
+        "name": "Austria"
+      },
+      "date": {
+        "iso": "2025-01-06",
+        "datetime": {
+          "year": 2025,
+          "month": 1,
+          "day": 6
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/austria/epiphany",
+      "urlid": "austria/epiphany",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Easter Monday",
+      "description": "Easter Monday is the day after Easter Sunday.",
+      "country": {
+        "id": "at",
+        "name": "Austria"
+      },
+      "date": {
+        "iso": "2025-04-21",
+        "datetime": {
+          "year": 2025,
+          "month": 4,
+          "day": 21
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/austria/easter-monday",
+      "urlid": "austria/easter-monday",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Labor Day / May Day",
+      "description": "Labor Day, International Workers' Day, and May Day, is a day off for workers in many countries around the world.",
+      "country": {
+        "id": "at",
+        "name": "Austria"
+      },
+      "date": {
+        "iso": "2025-05-01",
+        "datetime": {
+          "year": 2025,
+          "month": 5,
+          "day": 1
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/austria/labor-day",
+      "urlid": "austria/labor-day",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Ascension Day",
+      "description": "Ascension Day is the 40th day of Easter. It is a religious holiday that commemorates the ascension of Jesus Christ into heaven.",
+      "country": {
+        "id": "at",
+        "name": "Austria"
+      },
+      "date": {
+        "iso": "2025-05-29",
+        "datetime": {
+          "year": 2025,
+          "month": 5,
+          "day": 29
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/austria/ascension",
+      "urlid": "austria/ascension",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Whit Monday",
+      "description": "Whit Monday, or Pentecost Monday, is a Christian holiday that falls on the day after Pentecost, which is also known as Whit Sunday or Whitsunday.",
+      "country": {
+        "id": "at",
+        "name": "Austria"
+      },
+      "date": {
+        "iso": "2025-06-09",
+        "datetime": {
+          "year": 2025,
+          "month": 6,
+          "day": 9
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/austria/pentecost-monday",
+      "urlid": "austria/pentecost-monday",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Corpus Christi",
+      "description": "Corpus Christi is a Christian feast in honor of the Holy Eucharist.",
+      "country": {
+        "id": "at",
+        "name": "Austria"
+      },
+      "date": {
+        "iso": "2025-06-19",
+        "datetime": {
+          "year": 2025,
+          "month": 6,
+          "day": 19
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/austria/corpus-christi",
+      "urlid": "austria/corpus-christi",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Assumption of Mary",
+      "description": "The Christian feast of the Assumption of Mary is on or around Aug 15 in most countries. A few celebrate Assumption Day at other times of the year.",
+      "country": {
+        "id": "at",
+        "name": "Austria"
+      },
+      "date": {
+        "iso": "2025-08-15",
+        "datetime": {
+          "year": 2025,
+          "month": 8,
+          "day": 15
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/austria/assumption-of-mary",
+      "urlid": "austria/assumption-of-mary",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "National Day",
+      "description": "National Day on October 26 is a public holiday in Austria.",
+      "country": {
+        "id": "at",
+        "name": "Austria"
+      },
+      "date": {
+        "iso": "2025-10-26",
+        "datetime": {
+          "year": 2025,
+          "month": 10,
+          "day": 26
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/austria/national-day",
+      "urlid": "austria/national-day",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "All Saints' Day",
+      "description": "Many churches honor all their saints on All Saints' Day, also known as All Hallows' Day.",
+      "country": {
+        "id": "at",
+        "name": "Austria"
+      },
+      "date": {
+        "iso": "2025-11-01",
+        "datetime": {
+          "year": 2025,
+          "month": 11,
+          "day": 1
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/austria/all-saints",
+      "urlid": "austria/all-saints",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Immaculate Conception",
+      "description": "The Feast of the Immaculate Conception is a Christian observance on December 8 each year.",
+      "country": {
+        "id": "at",
+        "name": "Austria"
+      },
+      "date": {
+        "iso": "2025-12-08",
+        "datetime": {
+          "year": 2025,
+          "month": 12,
+          "day": 8
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/austria/immaculate-conception",
+      "urlid": "austria/immaculate-conception",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "Christmas Day",
+      "description": "Christmas Day is one of the biggest Christian celebrations and falls on December 25 in the Gregorian calendar.",
+      "country": {
+        "id": "at",
+        "name": "Austria"
+      },
+      "date": {
+        "iso": "2025-12-25",
+        "datetime": {
+          "year": 2025,
+          "month": 12,
+          "day": 25
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/austria/christmas-day",
+      "urlid": "austria/christmas-day",
+      "locations": "All",
+      "states": "All"
+    },
+    {
+      "name": "St. Stephen's Day",
+      "description": "St. Stephen's Day is a national holiday in Austria",
+      "country": {
+        "id": "at",
+        "name": "Austria"
+      },
+      "date": {
+        "iso": "2025-12-26",
+        "datetime": {
+          "year": 2025,
+          "month": 12,
+          "day": 26
+        }
+      },
+      "type": [
+        "National holiday"
+      ],
+      "primary_type": "National holiday",
+      "canonical_url": "https://calendarific.com/holiday/austria/st-stephen-day",
+      "urlid": "austria/st-stephen-day",
+      "locations": "All",
+      "states": "All"
+    }
   ]
 }

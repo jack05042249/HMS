@@ -66,7 +66,7 @@ const UpdateTaskModalContent = ({ taskToEdit, onCancel, onSaved, onFailedSave })
         <span>Update {relevantObject.fullName}'s Task</span>
       </div>
       <div className='flex mt-8 mb-6 gap-4 flex-col'>
-        <TextAreaField name='Notes' id='notes' value={notes} onChange={handleChangeNotes} />
+        <TextAreaField name='Tasks' id='notes' value={notes} onChange={handleChangeNotes} />
         <SelectField name='Status' id='status' value={status} options={STATUSES} onChange={handleStatusChange} />
         <SelectField name='Risk' id='risk' value={risk} options={RISKS} onChange={handleChangeRisk} />
         <DateField name='Due Date' id='dueDate' minDate={DateHelper.getToday()} value={dueDate} onChange={setDueDate} />

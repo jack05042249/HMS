@@ -95,15 +95,15 @@ const TasksTable = ({ tasks, derivedColumnsForTask, onEdited, onDeleted }) => {
 
   return (
     <>
-      <div ref={tableBodyRef} style={{ maxHeight: '700px', overflowY: 'auto', width: '100%' }}>
+      <div ref={tableBodyRef} style={{ maxHeight: '650px', overflowY: 'auto', width: '100%' }}>
         <table className='w-full text-sm text-left rtl:text-right text-gray-500' id={`employees_table`}>
           <thead className='text-[12px] text-gray-700 border-b border-gray-100'>
             <tr>
               <TableHeaderItem>№</TableHeaderItem>
-              <TableHeaderItem>Talent / Stakeholder</TableHeaderItem>
-              <TableHeaderItem>Customer</TableHeaderItem>
-              <TableHeaderItem>Agency</TableHeaderItem>
-              <TableHeaderItem>Notes</TableHeaderItem>
+              <TableHeaderItem width = '160px'>Talent / Stakeholder</TableHeaderItem>
+              <TableHeaderItem width = '160px'>Customer</TableHeaderItem>
+              <TableHeaderItem width = '160px'>Agency</TableHeaderItem>
+              <TableHeaderItem width = '160px'>Tasks</TableHeaderItem>
               <TableHeaderItem>Status</TableHeaderItem>
               <TableHeaderItem>Risk</TableHeaderItem>
               <TableHeaderItem>Due Date</TableHeaderItem>
@@ -127,7 +127,7 @@ const TasksTable = ({ tasks, derivedColumnsForTask, onEdited, onDeleted }) => {
                     >
                       {derivedColumnsForTask[index]?.fullName}
                     </TableCell>
-                    <TableCell>{task.type === 'employee' ? derivedColumnsForTask[index]?.Customer : ''}</TableCell>
+                    <TableCell>{derivedColumnsForTask[index]?.Customer}</TableCell>
                     <TableCell>{task.type === 'employee' ? derivedColumnsForTask[index]?.Agency : ''}</TableCell>
                     <TableCell className='max-w-[200px] overflow-hidden overflow-ellipsis'>{commentCropped}</TableCell>
                     <TableCell>{STATUS[task.status].label}</TableCell>

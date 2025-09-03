@@ -54,7 +54,7 @@ const Talents = ({ API_URL }) => {
     return customers.find(cus => cus.id === id) || {};
   };
 
-  const filteredTalents = filter
+  const filteredTalents = filter && aggregatedTalents
     ? aggregatedTalents.filter(tal => {
         const { location, fullName, email, cusIds, projectName, agencyId, summary } = tal || {};
         const agencyName = findAgencyNameById(agencyId);
@@ -84,12 +84,13 @@ const Talents = ({ API_URL }) => {
         }
         return false;
       })
-    : aggregatedTalents;
+    : (aggregatedTalents || []);
   const [canWorkOnTwoPositionsValues, setCanWorkOnTwoPositionsValues] = useState([true, false]);
   const [inactiveValues, setInactiveValues] = useState([false]);
   const [ignoreValues, setIgnoreValues] = useState([false, true]);
   const [linkedinProfileCheckedValues, setLinkedinProfileCheckedValues] = useState([true, false]);
-  const sortedTalents = sortArr(filteredTalents, sortBy).filter(item => {
+  const sortedTalents = (filteredTalents && Array.isArray(filteredTalents)) 
+    ? sortArr(filteredTalents, sortBy).filter(item => {
     const canWorkOnTwoPositionsFilter =
       typeof item.canWorkOnTwoPositions === 'boolean'
         ? canWorkOnTwoPositionsValues.includes(item.canWorkOnTwoPositions)
@@ -105,9 +106,10 @@ const Talents = ({ API_URL }) => {
         : true;
 
     return canWorkOnTwoPositionsFilter && inactiveFilter && linkedinProfileCheckedFilter && ignoreFilter;
-  });
+      })
+    : [];
 
-  const isTalentNotFound = !sortedTalents.length && filteredTalents.length;
+  const isTalentNotFound = (!sortedTalents || !sortedTalents.length) && filteredTalents && filteredTalents.length;
 
   useLayoutEffect(() => {
     const { id } = get(history, 'location.state') || {};
@@ -116,7 +118,11 @@ const Talents = ({ API_URL }) => {
   }, []);
 
   const data = { agencies, organizations, customers };
-  const tableData = generateTableData(sortedTalents, data);
+  
+  // Only generate table data when all required data is available
+  const tableData = (agencies && organizations && customers && sortedTalents) 
+    ? generateTableData(sortedTalents, data) 
+    : [];
   const tableHeaders = generateTableHeaders();
   const combinedData = [tableHeaders, ...tableData];
 
@@ -196,7 +202,14 @@ const Talents = ({ API_URL }) => {
             </button>
           </div>
         </div>
-        <table className='w-full text-sm text-left rtl:text-right text-gray-500' id={`employees_table`}>
+        
+        {/* Show loading state when data is not ready */}
+        {(!agencies || !organizations || !customers || !aggregatedTalents) ? (
+          <div className="flex justify-center items-center py-20">
+            <PageStartLoader />
+          </div>
+        ) : (
+          <table className='w-full text-sm text-left rtl:text-right text-gray-500' id={`employees_table`}>
           <thead className='text-[12px] text-gray-700 border-b border-gray-100'>
             <tr>
               <th scope='col' className='px-6 py-3 font-medium'>
@@ -243,7 +256,7 @@ const Talents = ({ API_URL }) => {
             </tr>
           </thead>
           <tbody className='text-[12px]'>
-            {sortedTalents.length ? (
+            {sortedTalents && sortedTalents.length ? (
               sortedTalents.map((tal, idx) => (
                 <tr key={tal.id} className='bg-white border-b border-gray-100 text-[#9197B3]'>
                   <th scope='row' className='px-6 py-4 font-medium whitespace-nowrap'>
@@ -435,6 +448,7 @@ const Talents = ({ API_URL }) => {
             )}
           </tbody>
         </table>
+        )}
         {/*<div className="flex justify-between items-center px-10 pt-10">*/}
         {/*    <button*/}
         {/*      className="px-[16px] py-[8px] border-[#E0E0E0] border rounded-lg disabled:opacity-40 disabled:cursor-not-allowed"*/}
