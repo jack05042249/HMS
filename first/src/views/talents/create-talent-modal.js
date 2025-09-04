@@ -43,16 +43,16 @@ const CreateTalentModal = ({
 
   const filteredCustomers = filter
     ? activeCustomers.filter(cus => {
-        const { fullName, organizationId } = cus;
-        const { name } = getRelevantOrganization(organizationId);
-        if (
-          fullName.toLocaleLowerCase().includes(filter.toLocaleLowerCase()) ||
-          name.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
-        ) {
-          return cus;
-        }
-        return null;
-      })
+      const { fullName, organizationId } = cus;
+      const { name } = getRelevantOrganization(organizationId);
+      if (
+        fullName.toLocaleLowerCase().includes(filter.toLocaleLowerCase()) ||
+        name.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
+      ) {
+        return cus;
+      }
+      return null;
+    })
     : activeCustomers;
 
   const toggleCustomers = () => {
@@ -61,7 +61,7 @@ const CreateTalentModal = ({
 
   const initValues = {
     fullName: '',
-    location: 'ua',
+    location: '',
     email: '',
     cusIds: [],
     picture: '',
@@ -83,12 +83,13 @@ const CreateTalentModal = ({
     organizations: allOrganizations.length ? [{ id: allOrganizations[0].id, name: allOrganizations[0].name }] : [],
     hourlyRate: false,
     canWorkOnTwoPositions: false,
-    doesNotHaveAVacation : false,
+    doesNotHaveAVacation: false,
     linkedinProfileChecked: false,
     ignoreLinkedinCheck: false,
     linkedinProfile: '',
     linkedinProfileDate: null,
-    linkedinComment: ''
+    linkedinComment: '',
+    inactive: false
   };
   const initState = { values: initValues };
   const [formState, setFormState] = useState(initState);
@@ -180,6 +181,7 @@ const CreateTalentModal = ({
           linkedinComment,
           linkedinProfileChecked,
           linkedinProfileDate,
+          inactive,
           cv
         } = response.data.savedTalent;
 
@@ -212,6 +214,7 @@ const CreateTalentModal = ({
           organizations,
           agencyId,
           feedbackFrequency,
+          inactive,
           cv
         };
         const agencyName = findAgencyNameById(agencyIdToNumber);
@@ -428,8 +431,8 @@ const CreateTalentModal = ({
               value={
                 values.talentMainCustomer && cusIds.length > 0
                   ? allOrganizations
-                      .filter(org => organizationIdsForMainStakeholder.includes(org.id))
-                      .map(org => ({ key: `${org.id}`, value: org.name }))[0].value
+                    .filter(org => organizationIdsForMainStakeholder.includes(org.id))
+                    .map(org => ({ key: `${org.id}`, value: org.name }))[0].value
                   : 'None'
               }
               placeholder='Customer'
@@ -614,6 +617,12 @@ const CreateTalentModal = ({
               value={values.location}
               onChange={handleChangeForm}
             >
+              {/* Show placeholder only when no value is selected */}
+              {!values.location && (
+                <option value="" disabled>
+                  Choose a country
+                </option>
+              )}
               {Object.entries(codeToCountry ?? {}).map(([code, countryName]) => {
                 return (
                   <option value={code} key={code}>
@@ -678,12 +687,14 @@ const CreateTalentModal = ({
             <label htmlFor='summary' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
               Summary
             </label>
-            <input
+            <textarea
               onChange={handleChangeForm}
               name='summary'
               value={values.summary}
               placeholder='Summary'
-              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+              rows={4}
+              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg px-[15px] py-[10px] appearance-none outline-none resize-none overflow-y-auto'
+              style={{ minHeight: '80px', maxHeight: '200px' }}
             />
             <label htmlFor='linkedinProfile' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
               Linkedin Profile
@@ -753,6 +764,19 @@ const CreateTalentModal = ({
                 id='hourlyRate'
                 name='hourlyRate'
                 onChange={event => handleChangeForm({ target: { name: 'hourlyRate', value: event.target.checked } })}
+              />
+            </div>
+            <label htmlFor='hourlyRate' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
+              Inactive
+            </label>
+            <div className='flex items-center h-[40px] mb-4 px-2'>
+              <input
+                className='cursor-pointer w-4 h-4'
+                type='checkbox'
+                checked={values.inactive}
+                id='inactive'
+                name='inactive'
+                onChange={event => handleChangeForm({ target: { name: 'inactive', value: event.target.checked } })}
               />
             </div>
             <label htmlFor='cv' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>

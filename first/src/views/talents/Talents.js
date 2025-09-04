@@ -233,25 +233,7 @@ const Talents = ({ API_URL }) => {
                 Customers
               </th>
               <th scope='col' className='px-6 py-3 font-medium'>
-                Start Date
-              </th>
-              <th scope='col' className='px-6 py-3 font-medium whitespace-nowrap'>
-                Two Position
-              </th>
-              <th scope='col' className='px-6 py-3 font-medium whitespace-nowrap'>
-                Summary
-              </th>
-              <th scope='col' className='px-6 py-3 font-medium whitespace-nowrap'>
-                Linkedin Status
-              </th>
-              <th scope='col' className='px-6 py-3 font-medium whitespace-nowrap'>
-                Ignored
-              </th>
-              <th scope='col' className='px-6 py-3 font-medium whitespace-nowrap'>
-                Linkedin Profile
-              </th>
-              <th scope='col' className='px-6 py-3 font-medium whitespace-nowrap'>
-                Inactive
+                Project
               </th>
             </tr>
           </thead>
@@ -310,8 +292,10 @@ const Talents = ({ API_URL }) => {
                         })()
                       : '-'}
                   </th>
-
-                  <th scope='row' className='px-6 py-4 font-medium '>
+                  <th scope='row' className='px-6 py-4 font-medium'>
+                    {tal.projectName || '-'}
+                  </th>
+                  {/* <th scope='row' className='px-6 py-4 font-medium '>
                     {tal.startDate ? moment(tal.startDate).format('DD/MM/YYYY') : '-'}
                   </th>
                   <th scope='row' className='px-6 py-4 font-medium '>
@@ -368,8 +352,8 @@ const Talents = ({ API_URL }) => {
                     ) : (
                       '-'
                     )}
-                  </th>
-                  <th scope='row' className='px-6 py-4 font-medium '>
+                  </th> */}
+                  {/* <th scope='row' className='px-6 py-4 font-medium '>
                     {typeof tal.inactive === 'boolean' ? (
                       <div
                         onClick={async () => {
@@ -435,7 +419,7 @@ const Talents = ({ API_URL }) => {
                     ) : (
                       '-'
                     )}
-                  </th>
+                  </th> */}
                   <td scope='row' className='px-6 py-4 font-medium'>
                     <button onClick={() => handleDeleteIconClick(tal)}>
                       <icons.deleteIcon />

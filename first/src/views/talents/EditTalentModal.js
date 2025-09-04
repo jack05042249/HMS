@@ -81,7 +81,7 @@ const EditTalentModal = ({
   let {
     id,
     fullName,
-    location = 'ua',
+    location,
     email,
     cusIds = [],
     picture = '',
@@ -110,7 +110,8 @@ const EditTalentModal = ({
     ignoreLinkedinCheck,
     linkedinProfile,
     linkedinProfileDate,
-    linkedinComment
+    linkedinComment,
+    inactive
   } = talent;
 
   const customersForMainStakeholder = customers.filter(cus => !cus.inactive && cusIds.includes(cus.id));
@@ -120,18 +121,18 @@ const EditTalentModal = ({
 
   const customersForStakeholdersDropdown = filter
     ? customers
-        .filter(cus => {
-          const { fullName, organizationId } = cus;
-          const { name } = getRelevantOrganization(organizationId);
-          if (
-            fullName.toLocaleLowerCase().includes(filter.toLocaleLowerCase()) ||
-            name.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
-          ) {
-            return cus;
-          }
-          return null;
-        })
-        .filter(cus => !cus.inactive || cusIds.includes(cus.id))
+      .filter(cus => {
+        const { fullName, organizationId } = cus;
+        const { name } = getRelevantOrganization(organizationId);
+        if (
+          fullName.toLocaleLowerCase().includes(filter.toLocaleLowerCase()) ||
+          name.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
+        ) {
+          return cus;
+        }
+        return null;
+      })
+      .filter(cus => !cus.inactive || cusIds.includes(cus.id))
     : customers.filter(cus => !cus.inactive || cusIds.includes(cus.id));
 
   const formattedStartDate = startDate ? new Date(startDate) : null;
@@ -206,7 +207,8 @@ const EditTalentModal = ({
       id === 'hourlyRate' ||
       id === 'canWorkOnTwoPositions' ||
       id === 'ignoreLinkedinCheck' ||
-      id === 'doesNotHaveAVacation'
+      id === 'doesNotHaveAVacation' ||
+      id === 'inactive'
     ) {
       setTalent(prev => ({ ...prev, [id]: checked }));
       return;
@@ -246,7 +248,7 @@ const EditTalentModal = ({
       const agencyName = findAgencyNameById(agencyId);
       const dataToSave = {
         ...talent,
-        location: location || 'ua',
+        location: location || '',
         isActive,
         cusIds,
         agencyId: Number(agencyId),
@@ -397,7 +399,7 @@ const EditTalentModal = ({
               className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
             />
             <label htmlFor='cusIds' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Stakeholders
+              Email Notification
             </label>
             <div id='customers_to_select' className='multiple-select relative'>
               {cusIds?.length ? (
@@ -481,15 +483,15 @@ const EditTalentModal = ({
               }}
             />
             <label htmlFor='Customer' className='text-[#000] text-[14px] font-medium text-left'>
-              Customer
+              Billing Customer
             </label>
             <input
               id='Customer'
               value={
                 talent['talentMainCustomer'] && customersForMainStakeholder.length > 0
                   ? allOrganizations
-                      .filter(org => organizationIdsForMainStakeholder.includes(org.id))
-                      .map(org => ({ key: `${org.id}`, value: org.name }))[0]?.value
+                    .filter(org => organizationIdsForMainStakeholder.includes(org.id))
+                    .map(org => ({ key: `${org.id}`, value: org.name }))[0]?.value
                   : 'None'
               }
               placeholder='Customer'
@@ -687,6 +689,12 @@ const EditTalentModal = ({
               defaultValue={location}
               onChange={onChangeHandler}
             >
+              {!location && (
+                <option value="" disabled>
+                  Choose a country
+                </option>
+              )}
+
               {Object.entries(codeToCountry).map(([code, countryName]) => {
                 return (
                   <option value={code} key={code}>
@@ -771,12 +779,14 @@ const EditTalentModal = ({
               {' '}
               <icons.editIcon />{' '}
             </span>
-            <input
+            <textarea
               onChange={onChangeHandler}
               id='summary'
               defaultValue={summary}
               placeholder='Summary'
-              className='mb-4 border border-[#F5F0F0] text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+              rows={4}
+              className='mb-4 border border-[#F5F0F0] text-[#9197B3] w-[313px] rounded-lg px-[15px] py-[10px] appearance-none outline-none resize-none overflow-y-auto'
+              style={{ minHeight: '80px', maxHeight: '200px' }}
             />
             <label htmlFor='linkedinProfile' className='text-[#000] text-[14px] font-medium text-left'>
               Linkedin Profile
@@ -855,6 +865,19 @@ const EditTalentModal = ({
                 onChange={onChangeHandler}
               />
             </div>
+            <label htmlFor='hourlyRate' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
+              Inactive
+            </label>
+            <div className='flex items-center h-[40px] mb-4 px-2'>
+              <input
+                className='cursor-pointer w-4 h-4'
+                type='checkbox'
+                checked={inactive}
+                id='inactive'
+                name='inactive'
+                onChange={onChangeHandler}
+              />
+            </div>
             <label htmlFor='cv' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
               CV
             </label>
@@ -863,15 +886,15 @@ const EditTalentModal = ({
                 getInitialFile={
                   cv
                     ? () => {
-                        return axios
-                          .get(`${API_URL}/talent/${id}/cv`, { responseType: 'blob' })
-                          .then(res => res.data)
-                          .then(blob => {
-                            const file = new File([blob], 'cv.pdf', { type: 'application/pdf' });
-                            return file;
-                          })
-                          .catch(console.log);
-                      }
+                      return axios
+                        .get(`${API_URL}/talent/${id}/cv`, { responseType: 'blob' })
+                        .then(res => res.data)
+                        .then(blob => {
+                          const file = new File([blob], 'cv.pdf', { type: 'application/pdf' });
+                          return file;
+                        })
+                        .catch(console.log);
+                    }
                     : null
                 }
                 onChange={file => {

@@ -24,16 +24,15 @@ const FilterWidget = ({
           selectedOptions={canWorkOnTwoPositionsValues}
           onApplyFilter={onApplyCanWorkOnTwoPositions}
         />
-
         <FilterItem
           isSelected={false}
-          label='Linkedin Checked'
+          label='Linkedin Ignored'
           options={[
             { value: true, label: 'Checked' },
             { value: false, label: 'Not Checked' }
           ]}
-          selectedOptions={linkedinProfileCheckedValues}
-          onApplyFilter={onApplyLinkedinProfileCheckedValues}
+          selectedOptions={ignoreValues}
+          onApplyFilter={onApplyIgnoreValues}
         />
 
         <FilterItem
@@ -46,17 +45,7 @@ const FilterWidget = ({
           selectedOptions={inactiveValues}
           onApplyFilter={onApplyInactiveValues}
         />
-        
-        <FilterItem
-          isSelected={false}
-          label='Ignore'
-          options={[
-            { value: true, label: 'Checked' },
-            { value: false, label: 'Not Checked' }
-          ]}
-          selectedOptions={ignoreValues}
-          onApplyFilter={onApplyIgnoreValues}
-        />
+
 
       </div>
       <div className='flex justify-start mt-2.5 items-center'>
@@ -69,20 +58,16 @@ const FilterWidget = ({
               label='Can Work On Two Positions'
             />
             <FilteredByItem
-              selectedItems={linkedinProfileCheckedValues}
+              selectedItems={ignoreValues}
               getLabel={item => (item ? 'Checked' : 'Not Checked')}
-              label='Linkedin Checked'
+              label='Linkedin Ignored'
             />
             <FilteredByItem
               selectedItems={inactiveValues}
               getLabel={item => (item ? 'Checked' : 'Not Checked')}
               label='Inactive'
             />
-            <FilteredByItem
-              selectedItems={ignoreValues}
-              getLabel={item => (item ? 'Checked' : 'Not Checked')}
-              label='Ignore'
-            />
+
           </div>
         </div>
       </div>
