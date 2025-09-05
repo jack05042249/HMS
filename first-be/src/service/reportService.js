@@ -107,6 +107,10 @@ const getReport = async payload => {
     whereConditions.agencyId = { [Op.in]: agencies }
   }
 
+  if (customers && customers.length) {
+    whereConditions.talentMainCustomer = { [Op.in]: customers }
+  }
+
   const organizationWhere =
     customers && customers.length
       ? {
@@ -119,7 +123,7 @@ const getReport = async payload => {
 
   const talents = await Talent.findAll({
     where: whereConditions,
-    attributes: ['id', 'fullName', 'agencyId', 'location'],
+    attributes: ['id', 'fullName', 'agencyId', 'location', 'talentMainCustomer'],
     include: [
       {
         model: VacationHistory,
@@ -161,6 +165,7 @@ const getReport = async payload => {
       const yearlyReport = {
         talentId: talent.id,
         fullName: talent.fullName,
+        talentMainCustomer: talent.talentMainCustomer,
         agency: { name: talent.agency.name, id: talent.agency.id },
         customers: talent.Customers.map(c => ({
           id: c.id,

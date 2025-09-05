@@ -295,131 +295,7 @@ const Talents = ({ API_URL }) => {
                   <th scope='row' className='px-6 py-4 font-medium'>
                     {tal.projectName || '-'}
                   </th>
-                  {/* <th scope='row' className='px-6 py-4 font-medium '>
-                    {tal.startDate ? moment(tal.startDate).format('DD/MM/YYYY') : '-'}
-                  </th>
-                  <th scope='row' className='px-6 py-4 font-medium '>
-                    {typeof tal.canWorkOnTwoPositions === 'boolean' ? (
-                      <>{tal.canWorkOnTwoPositions ? <Checked /> : <NotChecked />}</>
-                    ) : (
-                      '-'
-                    )}
-                  </th>
-                  <th scope='row' className='px-6 py-4 font-medium '>
-                    {tal.summary ? (
-                      <div
-                        style={{
-                          maxHeight: '120px',
-                          maxWidth: '350px',
-                          overflowY: 'auto',
-                          background: '#f8fafc',
-                          border: '1px solid #e5e7eb',
-                          borderRadius: '8px',
-                          padding: '8px',
-                          fontSize: '13px',
-                          whiteSpace: 'pre-wrap'
-                        }}
-                      >
-                        {tal.summary}
-                      </div>
-                    ) : (
-                      '-'
-                    )}
-                  </th>
-                  <th scope='row' className='px-6 py-4 font-medium '>
-                    {typeof tal.linkedinProfileChecked === 'boolean' ? (
-                      <>{!tal.ignoreLinkedinCheck && tal.linkedinProfileChecked ? <Checked /> : <NotChecked />}</>
-                    ) : (
-                      '-'
-                    )}
-                  </th>
-                  <th scope='row' className='px-6 py-4 font-medium '>
-                    {typeof tal.ignoreLinkedinCheck === 'boolean' ? (
-                      <>{tal.ignoreLinkedinCheck ? <Checked /> : <NotChecked />}</>
-                    ) : (
-                      '-'
-                    )}
-                  </th>
-                  <th scope='row' className='px-6 py-4 font-medium '>
-                    {tal.linkedinProfile ? (
-                      <a
-                        target='_blank'
-                        className='font-medium text-blue-600 dark:text-blue-500 hover:underline'
-                        href={tal.linkedinProfile}
-                      >
-                        {tal.linkedinProfile}
-                      </a>
-                    ) : (
-                      '-'
-                    )}
-                  </th> */}
-                  {/* <th scope='row' className='px-6 py-4 font-medium '>
-                    {typeof tal.inactive === 'boolean' ? (
-                      <div
-                        onClick={async () => {
-                          setTalentToToggleInactive(tal);
-                          setShowInactiveConfirm(true);
-                        }}
-                      >
-                        {tal.inactive ? (
-                          <div className='inline-flex items-center'>
-                            <label className={`relative flex items-center p-3 rounded-full`} htmlFor='purple'>
-                              <input
-                                type='checkbox'
-                                className={`before:content[''] peer relative h-5 w-5 appearance-none rounded-md border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-[#4D4AEA] checked:bg-[#4D4AEA] checked:before:bg-purple-500 hover:before:opacity-10`}
-                                id='purple-answered'
-                                checked={true}
-                              />
-                              <span className='absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100'>
-                                <svg
-                                  xmlns='http://www.w3.org/2000/svg'
-                                  className='h-3.5 w-3.5'
-                                  viewBox='0 0 20 20'
-                                  fill='currentColor'
-                                  stroke='currentColor'
-                                  strokeWidth='1'
-                                >
-                                  <path
-                                    fillRule='evenodd'
-                                    d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'
-                                    clipRule='evenodd'
-                                  ></path>
-                                </svg>
-                              </span>
-                            </label>
-                          </div>
-                        ) : (
-                          <div className={`inline-flex items-center`}>
-                            <label className={`relative flex items-center p-3 rounded-full`} htmlFor='purple'>
-                              <input
-                                type='checkbox'
-                                className={`before:content[''] peer relative h-5 w-5 appearance-none rounded-md border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-[#4D4AEA] checked:bg-[#4D4AEA] checked:before:bg-purple-500 hover:before:opacity-10`}
-                                checked={false}
-                              />
-                              <span className='absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100'>
-                                <svg
-                                  xmlns='http://www.w3.org/2000/svg'
-                                  className='h-3.5 w-3.5'
-                                  viewBox='0 0 20 20'
-                                  fill='currentColor'
-                                  stroke='currentColor'
-                                  strokeWidth='1'
-                                >
-                                  <path
-                                    fillRule='evenodd'
-                                    d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'
-                                    clipRule='evenodd'
-                                  ></path>
-                                </svg>
-                              </span>
-                            </label>
-                          </div>
-                        )}
-                      </div>
-                    ) : (
-                      '-'
-                    )}
-                  </th> */}
+                 
                   <td scope='row' className='px-6 py-4 font-medium'>
                     <button onClick={() => handleDeleteIconClick(tal)}>
                       <icons.deleteIcon />
@@ -433,23 +309,7 @@ const Talents = ({ API_URL }) => {
           </tbody>
         </table>
         )}
-        {/*<div className="flex justify-between items-center px-10 pt-10">*/}
-        {/*    <button*/}
-        {/*      className="px-[16px] py-[8px] border-[#E0E0E0] border rounded-lg disabled:opacity-40 disabled:cursor-not-allowed"*/}
-        {/*      onClick={() => setPage(page - 1)}*/}
-        {/*      // disabled={vacationHistory.currentPage === 1}*/}
-        {/*    >*/}
-        {/*        <span className="text-[14px] text-[#2A2A2A] text-center font-medium">Previous</span>*/}
-        {/*    </button>*/}
-        {/*    <p className="text-[14px] font-medium text-[#2A2A2A]">Page 1 of 1</p>*/}
-        {/*    <button*/}
-        {/*      className="px-[16px] py-[8px] border-[#E0E0E0] border rounded-lg disabled:opacity-40 disabled:cursor-not-allowed"*/}
-        {/*      onClick={() => setPage(page + 1)}*/}
-        {/*      // disabled={vacationHistory.currentPage === vacationHistory.totalPages}*/}
-        {/*    >*/}
-        {/*        <span className="text-[14px] text-[#2A2A2A] text-center font-medium">Next</span>*/}
-        {/*    </button>*/}
-        {/*</div>*/}
+
       </div>
       {!!createTalentModal && (
         <CreateTalentModal

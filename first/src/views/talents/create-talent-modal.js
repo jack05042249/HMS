@@ -120,6 +120,11 @@ const CreateTalentModal = ({
         return;
       }
 
+      if (!values['location']?.trim()) {
+        setError('Location cannot be empty');
+        return;
+      }
+
       for (const fieldInfo of requiredFields) {
         const { field, message } = fieldInfo;
         if (!values[field]) {
