@@ -12,8 +12,8 @@ const { MATH_UTIL } = require('../utils/util')
 
 const processTalent = async (talent, startDate, endDate) => {
   const raw = talent.toJSON()
-  raw.customers = raw.Customers.map(c => c.Organization)
-  delete raw.Customers
+  raw.customers = [raw.mainCustomer.Organization]
+  delete raw.mainCustomer
 
   const [balances, granted] = await Promise.all([
     getTalentAllUsedDays(talent.id),
@@ -107,10 +107,6 @@ const getReport = async payload => {
     whereConditions.agencyId = { [Op.in]: agencies }
   }
 
-  if (customers && customers.length) {
-    whereConditions.talentMainCustomer = { [Op.in]: customers }
-  }
-
   const organizationWhere =
     customers && customers.length
       ? {
@@ -123,7 +119,7 @@ const getReport = async payload => {
 
   const talents = await Talent.findAll({
     where: whereConditions,
-    attributes: ['id', 'fullName', 'agencyId', 'location', 'talentMainCustomer'],
+    attributes: ['id', 'fullName', 'agencyId', 'location'],
     include: [
       {
         model: VacationHistory,
@@ -137,16 +133,16 @@ const getReport = async payload => {
       },
       {
         model: Customer,
+        as: 'mainCustomer',
         attributes: ['id'],
-        required: true,
-        through: { attributes: [] },
         include: [
           {
             model: Organization,
             attributes: ['id', 'name'],
             where: organizationWhere
           }
-        ]
+        ],
+        required: true
       },
       {
         model: Agencies,
@@ -155,6 +151,8 @@ const getReport = async payload => {
       }
     ]
   })
+
+  console.log('Talents', talents.length);
 
   if (type === 'monthly') {
     return await Promise.all(talents.map(t => processTalent(t, startDate, endDate)))
@@ -165,12 +163,11 @@ const getReport = async payload => {
       const yearlyReport = {
         talentId: talent.id,
         fullName: talent.fullName,
-        talentMainCustomer: talent.talentMainCustomer,
         agency: { name: talent.agency.name, id: talent.agency.id },
-        customers: talent.Customers.map(c => ({
-          id: c.id,
-          name: c.Organization.name
-        })),
+        customers: [{
+          id: talent.mainCustomer.id,
+          name: talent.mainCustomer.Organization.name
+        }],
         monthsData: {},
         totalUsed: 0,
         totalGranted: 0,
