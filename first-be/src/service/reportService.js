@@ -12,7 +12,7 @@ const { MATH_UTIL } = require('../utils/util')
 
 const processTalent = async (talent, startDate, endDate) => {
   const raw = talent.toJSON()
-  raw.customers = [raw.mainCustomer.Organization]
+  raw.customers = raw.mainCustomer ? [raw.mainCustomer.Organization] : []
   delete raw.mainCustomer
 
   const [balances, granted] = await Promise.all([
@@ -142,7 +142,7 @@ const getReport = async payload => {
             where: organizationWhere
           }
         ],
-        required: true
+        required: false
       },
       {
         model: Agencies,
@@ -164,10 +164,10 @@ const getReport = async payload => {
         talentId: talent.id,
         fullName: talent.fullName,
         agency: { name: talent.agency.name, id: talent.agency.id },
-        customers: [{
+        customers: talent.mainCustomer ? [{
           id: talent.mainCustomer.id,
           name: talent.mainCustomer.Organization.name
-        }],
+        }] : [],
         monthsData: {},
         totalUsed: 0,
         totalGranted: 0,

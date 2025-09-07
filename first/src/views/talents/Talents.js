@@ -15,6 +15,7 @@ import { generateTableHeaders, generateTableData } from './excelHelper';
 import SortButton from '../components/sortButton/SortButton';
 import { Checked, NotChecked } from '../components/Checkboxes';
 import { FilterWidget } from './FilterWidget';
+import { FilterItem } from '../components/filter';
 import axios from 'axios';
 import { updateSingleAggregatedTalent } from '../../store/actionCreator';
 import { showNotificationSuccess } from '../../utils/notifications';
@@ -35,6 +36,7 @@ const Talents = ({ API_URL }) => {
   // const [showTooltip, setShowTooltip] = useState(false);
   const [showInactiveConfirm, setShowInactiveConfirm] = useState(false);
   const [talentToToggleInactive, setTalentToToggleInactive] = useState(null);
+  const [searchByValues, setSearchByValues] = useState(['name']);
   const getRelevantTalent = id => {
     return aggregatedTalents.find(cus => +cus.id === +id) || {};
   };
@@ -56,21 +58,22 @@ const Talents = ({ API_URL }) => {
 
   const filteredTalents = filter && aggregatedTalents
     ? aggregatedTalents.filter(tal => {
-        const { location, fullName, email, cusIds, projectName, agencyId, summary } = tal || {};
-        const agencyName = findAgencyNameById(agencyId);
-        const country = codeToCountry[location] || '';
+      const { fullName, position, agencyId, cusIds, customerId, summary, projectName } = tal || {};
+      const agencyName = findAgencyNameById(agencyId);
+      const customerName = getRelevantCustomer(customerId).fullName;
 
-        if (
-          (fullName && fullName.toLocaleLowerCase().includes(filter.toLocaleLowerCase())) ||
-          country.toLocaleLowerCase().includes(filter.toLocaleLowerCase()) ||
-          (email && email.toLocaleLowerCase().includes(filter.toLocaleLowerCase())) ||
-          (projectName && projectName.toLocaleLowerCase().includes(filter.toLocaleLowerCase())) ||
-          (agencyName && agencyName.toLocaleLowerCase().includes(filter.toLocaleLowerCase())) ||
-          (summary && summary.toLocaleLowerCase().includes(filter.toLocaleLowerCase()))
-        ) {
-          return true;
-        }
+      if (
+        (searchByValues.includes('name') && fullName && fullName.toLocaleLowerCase().includes(filter.toLocaleLowerCase())) ||
+        (searchByValues.includes('position') && position && position.toLocaleLowerCase().includes(filter.toLocaleLowerCase())) ||
+        (searchByValues.includes('projectName') && projectName && projectName.toLocaleLowerCase().includes(filter.toLocaleLowerCase())) ||
+        (searchByValues.includes('agency') && agencyName && agencyName.toLocaleLowerCase().includes(filter.toLocaleLowerCase())) ||
+        (searchByValues.includes('summary') && summary && summary.toLocaleLowerCase().includes(filter.toLocaleLowerCase())) ||
+        (searchByValues.includes('billingCustomer') && customerName && customerName.toLocaleLowerCase().includes(filter.toLocaleLowerCase()))
+      ) {
+        return true;
+      }
 
+      if (searchByValues.includes('stakeholder')) {
         for (const cusId of cusIds || []) {
           const { organizationId, fullName } = getRelevantCustomer(cusId) || {};
           const { name } = getRelevantOrganization(organizationId) || {};
@@ -82,31 +85,27 @@ const Talents = ({ API_URL }) => {
             return true;
           }
         }
-        return false;
-      })
+      }
+      return false;
+    })
     : (aggregatedTalents || []);
   const [canWorkOnTwoPositionsValues, setCanWorkOnTwoPositionsValues] = useState([true, false]);
   const [inactiveValues, setInactiveValues] = useState([false]);
   const [ignoreValues, setIgnoreValues] = useState([false, true]);
-  const [linkedinProfileCheckedValues, setLinkedinProfileCheckedValues] = useState([true, false]);
-  const sortedTalents = (filteredTalents && Array.isArray(filteredTalents)) 
+
+  const sortedTalents = (filteredTalents && Array.isArray(filteredTalents))
     ? sortArr(filteredTalents, sortBy).filter(item => {
-    const canWorkOnTwoPositionsFilter =
-      typeof item.canWorkOnTwoPositions === 'boolean'
-        ? canWorkOnTwoPositionsValues.includes(item.canWorkOnTwoPositions)
-        : true;
+      const canWorkOnTwoPositionsFilter =
+        typeof item.canWorkOnTwoPositions === 'boolean'
+          ? canWorkOnTwoPositionsValues.includes(item.canWorkOnTwoPositions)
+          : true;
 
-    const inactiveFilter = typeof item.inactive === 'boolean' ? inactiveValues.includes(item.inactive) : true;
+      const inactiveFilter = typeof item.inactive === 'boolean' ? inactiveValues.includes(item.inactive) : true;
 
-    const ignoreFilter = typeof item.ignoreLinkedinCheck === 'boolean' ? ignoreValues.includes(item.ignoreLinkedinCheck) : true;
+      const ignoreFilter = typeof item.ignoreLinkedinCheck === 'boolean' ? ignoreValues.includes(item.ignoreLinkedinCheck) : true;
 
-    const linkedinProfileCheckedFilter =
-      typeof item.linkedinProfileChecked === 'boolean'
-        ? linkedinProfileCheckedValues.includes(item.linkedinProfileChecked)
-        : true;
-
-    return canWorkOnTwoPositionsFilter && inactiveFilter && linkedinProfileCheckedFilter && ignoreFilter;
-      })
+      return canWorkOnTwoPositionsFilter && inactiveFilter && ignoreFilter;
+    })
     : [];
 
   const isTalentNotFound = (!sortedTalents || !sortedTalents.length) && filteredTalents && filteredTalents.length;
@@ -118,10 +117,10 @@ const Talents = ({ API_URL }) => {
   }, []);
 
   const data = { agencies, organizations, customers };
-  
+
   // Only generate table data when all required data is available
-  const tableData = (agencies && organizations && customers && sortedTalents) 
-    ? generateTableData(sortedTalents, data) 
+  const tableData = (agencies && organizations && customers && sortedTalents)
+    ? generateTableData(sortedTalents, data)
     : [];
   const tableHeaders = generateTableHeaders();
   const combinedData = [tableHeaders, ...tableData];
@@ -152,31 +151,58 @@ const Talents = ({ API_URL }) => {
       </div>
       <div className='bg-[#FFF] mt-5 h-fit shadow-md rounded-lg py-[35px] px-[10px]'>
         <div className='flex items-center mb-5 justify-between px-[20px]'>
-          <div className='flex gap-2'>
-            <div className='border b-[#E7E7E7] py-[8px] px-[16px] rounded-md w-[300px] flex items-center h-[36px]'>
-              <span>
-                {' '}
-                <icons.search />{' '}
-              </span>
-              <input
-                value={filter}
-                onChange={e => setFilter(e.target.value)}
-                placeholder='Search'
-                className='outline-none ml-2.5 text-[12px] w-[200px]'
-                type='text'
+          <div className='flex gap-2 flex-col'>
+            <div className='flex items-center'>
+              <FilterItem
+                isSelected={false}
+                label='Search by:'
+                options={[
+                  { value: 'name', label: 'Name' },
+                  { value: 'position', label: 'Position' },
+                  { value: 'agency', label: 'Agency' },
+                  { value: 'stakeholder', label: 'Stakeholder' },
+                  { value: 'billingCustomer', label: 'Billing Customer' },
+                  { value: 'summary', label: 'Summary' },
+                  { value: 'projectName', label: 'Project' },
+                ]}
+                selectedOptions={searchByValues}
+                onApplyFilter={setSearchByValues}
+              />
+              <textarea
+                value={searchByValues.join(', ')}
+                readOnly
+                rows={2}
+                className='border border-[#F5F0F0] text-[#9197B3] w-[300px] rounded-lg px-[15px] py-[10px] appearance-none outline-none resize-none overflow-y-auto'
+                style={{ minHeight: '60px', maxHeight: '80px' }}
+                placeholder='Select search fields'
               />
             </div>
-            <FilterWidget
-              canWorkOnTwoPositionsValues={canWorkOnTwoPositionsValues}
-              ignoreValues={ignoreValues}
-              inactiveValues={inactiveValues}
-              linkedinProfileCheckedValues={linkedinProfileCheckedValues}
-              onApplyCanWorkOnTwoPositions={setCanWorkOnTwoPositionsValues}
-              onApplyIgnoreValues={setIgnoreValues}
-              onApplyInactiveValues={setInactiveValues}
-              onApplyLinkedinProfileCheckedValues={setLinkedinProfileCheckedValues}
-            />
+            <div className='flex'>
+              <div className='w-[110px]'></div>
+              <div className='border b-[#E7E7E7] py-[8px] px-[16px] rounded-md w-[300px] flex items-center h-[36px]'>
+                <span>
+                  {' '}
+                  <icons.search />{' '}
+                </span>
+                <input
+                  value={filter}
+                  onChange={e => setFilter(e.target.value)}
+                  placeholder='Search'
+                  className='outline-none ml-2.5 text-[12px] w-[200px]'
+                  type='text'
+                />
+              </div>
+            </div>
+
           </div>
+          <FilterWidget
+            canWorkOnTwoPositionsValues={canWorkOnTwoPositionsValues}
+            ignoreValues={ignoreValues}
+            inactiveValues={inactiveValues}
+            onApplyCanWorkOnTwoPositions={setCanWorkOnTwoPositionsValues}
+            onApplyIgnoreValues={setIgnoreValues}
+            onApplyInactiveValues={setInactiveValues}
+          />
           <div className='flex'>
             <button
               onClick={() => {
@@ -202,7 +228,7 @@ const Talents = ({ API_URL }) => {
             </button>
           </div>
         </div>
-        
+
         {/* Show loading state when data is not ready */}
         {(!agencies || !organizations || !customers || !aggregatedTalents) ? (
           <div className="flex justify-center items-center py-20">
@@ -210,56 +236,56 @@ const Talents = ({ API_URL }) => {
           </div>
         ) : (
           <table className='w-full text-sm text-left rtl:text-right text-gray-500' id={`employees_table`}>
-          <thead className='text-[12px] text-gray-700 border-b border-gray-100'>
-            <tr>
-              <th scope='col' className='px-6 py-3 font-medium'>
-                №
-              </th>
-              <th scope='col' className='px-6 py-3 font-medium'>
-                Name
-                <SortButton sortBy={sortBy} setSortBy={setSortBy} />
-              </th>
-              <th scope='col' className='px-6 py-3 font-medium'>
-                Position
-              </th>
-              <th scope='col' className='px-6 py-3 font-medium'>
-                Agency
-                <SortButton sortBy={sortBy} setSortBy={setSortBy} />
-              </th>
-              <th scope='col' className='px-6 py-3 font-medium'>
-                Stakeholder
-              </th>
-              <th scope='col' className='px-6 py-3 font-medium'>
-                Customers
-              </th>
-              <th scope='col' className='px-6 py-3 font-medium'>
-                Project
-              </th>
-            </tr>
-          </thead>
-          <tbody className='text-[12px]'>
-            {sortedTalents && sortedTalents.length ? (
-              sortedTalents.map((tal, idx) => (
-                <tr key={tal.id} className='bg-white border-b border-gray-100 text-[#9197B3]'>
-                  <th scope='row' className='px-6 py-4 font-medium whitespace-nowrap'>
-                    {idx + 1}
-                  </th>
-                  <th
-                    scope='row'
-                    onClick={() => setEditTalentId(tal.id)}
-                    className='px-6 py-4 font-medium text-[#4D4AEA] underline pointer'
-                  >
-                    {tal.fullName}
-                  </th>
-                  <th scope='row' className='px-6 py-4 font-medium'>
-                    {tal.position || '-'}
-                  </th>
-                  <th scope='row' className='px-6 py-4 font-medium '>
-                    {findAgencyNameById(tal.agencyId) || tal.agencyName}
-                  </th>
-                  <th scope='row' className='px-6 py-4 font-medium '>
-                    {tal.cusIds && tal.cusIds.length > 0
-                      ? (() => {
+            <thead className='text-[12px] text-gray-700 border-b border-gray-100'>
+              <tr>
+                <th scope='col' className='px-6 py-3 font-medium'>
+                  №
+                </th>
+                <th scope='col' className='px-6 py-3 font-medium'>
+                  Name
+                  <SortButton sortBy={sortBy} setSortBy={setSortBy} />
+                </th>
+                <th scope='col' className='px-6 py-3 font-medium'>
+                  Position
+                </th>
+                <th scope='col' className='px-6 py-3 font-medium'>
+                  Agency
+                  <SortButton sortBy={sortBy} setSortBy={setSortBy} />
+                </th>
+                <th scope='col' className='px-6 py-3 font-medium'>
+                  Stakeholder
+                </th>
+                <th scope='col' className='px-6 py-3 font-medium'>
+                  Customers
+                </th>
+                <th scope='col' className='px-6 py-3 font-medium'>
+                  Project
+                </th>
+              </tr>
+            </thead>
+            <tbody className='text-[12px]'>
+              {sortedTalents && sortedTalents.length ? (
+                sortedTalents.map((tal, idx) => (
+                  <tr key={tal.id} className='bg-white border-b border-gray-100 text-[#9197B3]'>
+                    <th scope='row' className='px-6 py-4 font-medium whitespace-nowrap'>
+                      {idx + 1}
+                    </th>
+                    <th
+                      scope='row'
+                      onClick={() => setEditTalentId(tal.id)}
+                      className='px-6 py-4 font-medium text-[#4D4AEA] underline pointer'
+                    >
+                      {tal.fullName}
+                    </th>
+                    <th scope='row' className='px-6 py-4 font-medium'>
+                      {tal.position || '-'}
+                    </th>
+                    <th scope='row' className='px-6 py-4 font-medium '>
+                      {findAgencyNameById(tal.agencyId) || tal.agencyName}
+                    </th>
+                    <th scope='row' className='px-6 py-4 font-medium '>
+                      {tal.cusIds && tal.cusIds.length > 0
+                        ? (() => {
                           const customers = tal.cusIds.map(customerId => getRelevantCustomer(customerId).fullName);
                           return customers.map((customer, index) => (
                             <span key={index}>
@@ -268,11 +294,11 @@ const Talents = ({ API_URL }) => {
                             </span>
                           ));
                         })()
-                      : '-'}
-                  </th>
-                  <th scope='row' className='px-6 py-4 font-medium '>
-                    {tal.cusIds && tal.cusIds.length > 0
-                      ? (() => {
+                        : '-'}
+                    </th>
+                    <th scope='row' className='px-6 py-4 font-medium '>
+                      {tal.cusIds && tal.cusIds.length > 0
+                        ? (() => {
                           const uniqueOrganizationNames = [
                             ...new Set(
                               tal.cusIds.map(customerId => {
@@ -290,24 +316,28 @@ const Talents = ({ API_URL }) => {
                             </span>
                           ));
                         })()
-                      : '-'}
-                  </th>
-                  <th scope='row' className='px-6 py-4 font-medium'>
-                    {tal.projectName || '-'}
-                  </th>
-                 
-                  <td scope='row' className='px-6 py-4 font-medium'>
-                    <button onClick={() => handleDeleteIconClick(tal)}>
-                      <icons.deleteIcon />
-                    </button>
-                  </td>
-                </tr>
-              ))
-            ) : isTalentNotFound ? null : (
-              <PageStartLoader />
-            )}
-          </tbody>
-        </table>
+                        : '-'}
+                    </th>
+                    <th scope='row' className='px-6 py-4 font-medium'>
+                      {tal.projectName || '-'}
+                    </th>
+
+                    <td scope='row' className='px-6 py-4 font-medium'>
+                      <button onClick={() => handleDeleteIconClick(tal)}>
+                        <icons.deleteIcon />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : isTalentNotFound ? null : (
+                filter.length == 0 ? <PageStartLoader /> : (
+                  <tr>
+                    <td colSpan={7} className='px-6 py-4 font-medium text-center text-2xl'>No data found</td>
+                  </tr>
+                )
+              )}
+            </tbody>
+          </table>
         )}
 
       </div>

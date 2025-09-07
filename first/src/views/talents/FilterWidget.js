@@ -3,12 +3,10 @@ import { FilterItem, FilteredByItem } from '../components/filter';
 const FilterWidget = ({
   ignoreValues,
   inactiveValues,
-  linkedinProfileCheckedValues,
   canWorkOnTwoPositionsValues,
   onApplyIgnoreValues,
   onApplyCanWorkOnTwoPositions,
   onApplyInactiveValues,
-  onApplyLinkedinProfileCheckedValues
 }) => {
   return (
     <div className='flex flex-col font-medium text-[12px]'>
