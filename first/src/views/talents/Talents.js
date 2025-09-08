@@ -36,7 +36,6 @@ const Talents = ({ API_URL }) => {
   // const [showTooltip, setShowTooltip] = useState(false);
   const [showInactiveConfirm, setShowInactiveConfirm] = useState(false);
   const [talentToToggleInactive, setTalentToToggleInactive] = useState(null);
-  const [searchByValues, setSearchByValues] = useState(['name']);
   const getRelevantTalent = id => {
     return aggregatedTalents.find(cus => +cus.id === +id) || {};
   };
@@ -63,17 +62,17 @@ const Talents = ({ API_URL }) => {
       const customerName = getRelevantCustomer(customerId).fullName;
 
       if (
-        (searchByValues.includes('name') && fullName && fullName.toLocaleLowerCase().includes(filter.toLocaleLowerCase())) ||
-        (searchByValues.includes('position') && position && position.toLocaleLowerCase().includes(filter.toLocaleLowerCase())) ||
-        (searchByValues.includes('projectName') && projectName && projectName.toLocaleLowerCase().includes(filter.toLocaleLowerCase())) ||
-        (searchByValues.includes('agency') && agencyName && agencyName.toLocaleLowerCase().includes(filter.toLocaleLowerCase())) ||
-        (searchByValues.includes('summary') && summary && summary.toLocaleLowerCase().includes(filter.toLocaleLowerCase())) ||
-        (searchByValues.includes('billingCustomer') && customerName && customerName.toLocaleLowerCase().includes(filter.toLocaleLowerCase()))
+        (fullName && fullName.toLocaleLowerCase().includes(filter.toLocaleLowerCase())) ||
+        (position && position.toLocaleLowerCase().includes(filter.toLocaleLowerCase())) ||
+        (projectName && projectName.toLocaleLowerCase().includes(filter.toLocaleLowerCase())) ||
+        (agencyName && agencyName.toLocaleLowerCase().includes(filter.toLocaleLowerCase())) ||
+        (summary && summary.toLocaleLowerCase().includes(filter.toLocaleLowerCase())) ||
+        (customerName && customerName.toLocaleLowerCase().includes(filter.toLocaleLowerCase()))
       ) {
         return true;
       }
 
-      if (searchByValues.includes('stakeholder')) {
+      if (cusIds && cusIds.length > 0) {
         for (const cusId of cusIds || []) {
           const { organizationId, fullName } = getRelevantCustomer(cusId) || {};
           const { name } = getRelevantOrganization(organizationId) || {};
@@ -151,58 +150,29 @@ const Talents = ({ API_URL }) => {
       </div>
       <div className='bg-[#FFF] mt-5 h-fit shadow-md rounded-lg py-[35px] px-[10px]'>
         <div className='flex items-center mb-5 justify-between px-[20px]'>
-          <div className='flex gap-2 flex-col'>
-            <div className='flex items-center'>
-              <FilterItem
-                isSelected={false}
-                label='Search by:'
-                options={[
-                  { value: 'name', label: 'Name' },
-                  { value: 'position', label: 'Position' },
-                  { value: 'agency', label: 'Agency' },
-                  { value: 'stakeholder', label: 'Stakeholder' },
-                  { value: 'billingCustomer', label: 'Billing Customer' },
-                  { value: 'summary', label: 'Summary' },
-                  { value: 'projectName', label: 'Project' },
-                ]}
-                selectedOptions={searchByValues}
-                onApplyFilter={setSearchByValues}
-              />
-              <textarea
-                value={searchByValues.join(', ')}
-                readOnly
-                rows={2}
-                className='border border-[#F5F0F0] text-[#9197B3] w-[300px] rounded-lg px-[15px] py-[10px] appearance-none outline-none resize-none overflow-y-auto'
-                style={{ minHeight: '60px', maxHeight: '80px' }}
-                placeholder='Select search fields'
+          <div className='flex gap-2'>
+            <div className='border b-[#E7E7E7] py-[8px] px-[16px] rounded-md w-[300px] flex items-center h-[36px]'>
+              <span>
+                {' '}
+                <icons.search />{' '}
+              </span>
+              <input
+                value={filter}
+                onChange={e => setFilter(e.target.value)}
+                placeholder='Search'
+                className='outline-none ml-2.5 text-[12px] w-[200px]'
+                type='text'
               />
             </div>
-            <div className='flex'>
-              <div className='w-[110px]'></div>
-              <div className='border b-[#E7E7E7] py-[8px] px-[16px] rounded-md w-[300px] flex items-center h-[36px]'>
-                <span>
-                  {' '}
-                  <icons.search />{' '}
-                </span>
-                <input
-                  value={filter}
-                  onChange={e => setFilter(e.target.value)}
-                  placeholder='Search'
-                  className='outline-none ml-2.5 text-[12px] w-[200px]'
-                  type='text'
-                />
-              </div>
-            </div>
-
+            <FilterWidget
+              canWorkOnTwoPositionsValues={canWorkOnTwoPositionsValues}
+              ignoreValues={ignoreValues}
+              inactiveValues={inactiveValues}
+              onApplyCanWorkOnTwoPositions={setCanWorkOnTwoPositionsValues}
+              onApplyIgnoreValues={setIgnoreValues}
+              onApplyInactiveValues={setInactiveValues}
+            />
           </div>
-          <FilterWidget
-            canWorkOnTwoPositionsValues={canWorkOnTwoPositionsValues}
-            ignoreValues={ignoreValues}
-            inactiveValues={inactiveValues}
-            onApplyCanWorkOnTwoPositions={setCanWorkOnTwoPositionsValues}
-            onApplyIgnoreValues={setIgnoreValues}
-            onApplyInactiveValues={setInactiveValues}
-          />
           <div className='flex'>
             <button
               onClick={() => {
