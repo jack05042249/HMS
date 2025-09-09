@@ -23,7 +23,7 @@ const linkedinStatusCheck = async () => {
   console.log(`Found ${talents.length} talents and ${organizations.length} organizations.`)
   let proxyNeeded = []
   for (const talent of talents) {
-    if (talent.linkedinProfileChecked) continue;
+    // if (talent.linkedinProfileChecked) continue;
     // Check LinkedIn status for each talent
 
     if (talent.inactive) {
@@ -100,7 +100,6 @@ const linkedinStatusCheck = async () => {
                     lastCompany = exp.company ? exp.company.replace(/[^a-zA-Z0-9\s]/g, '').trim() : ''
                   }
                 })
-                console.log('Present Number:', presentNum, 'Last Company:', lastCompany)
                 if (presentNum === 1) {
                   let flag = 0
                   organizations.map(org => {
@@ -112,7 +111,6 @@ const linkedinStatusCheck = async () => {
                       }
                     }
                   })
-                  console.log('flag:', flag, 'Last Company:', lastCompany)
                   if (flag) {
                     talent.linkedinProfileChecked = true
                     talent.linkedinComment = 'Confirmed by COMS';
@@ -124,7 +122,6 @@ const linkedinStatusCheck = async () => {
                   presentNum == 0 ? talent.linkedinComment = 'NOT Employed' : talent.linkedinComment = 'More than one present company'
                   talent.linkedinProfileChecked = false
                 }
-                console.log('Experience checked:', lastCompany);
               } else if (data.current_company && data.current_company.name) {
                 let currentCompanyName = data.current_company.name.replace(/[^a-zA-Z0-9\s]/g, '').trim()
                 let flag = 1

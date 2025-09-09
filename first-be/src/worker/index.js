@@ -120,7 +120,7 @@ const everyFirstOfNovemberCron = cron.schedule(everyFirstDayOfNovember, async ()
 // Run every day at 00:10
 const linkedinCron = cron.schedule('0 10 20 * *', async () => {
   // logger(`[CRON linkedinCron] started: `);
-  // await linkedinStatusCheck();
+  await linkedinStatusCheck();
 })
 
 const croneExecutor = () => {
