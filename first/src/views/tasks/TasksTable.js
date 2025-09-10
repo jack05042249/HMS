@@ -15,11 +15,35 @@ import config from '../../config';
 const NOTES_MAX_CHAR = 100;
 const PAGE_SIZE = 30;
 
-const TasksTable = ({ tasks, derivedColumnsForTask, onEdited, onDeleted }) => {
+const TasksTable = ({ totalTasks, totalDerivedColumnsForTask, onEdited, onDeleted, search }) => {
   const [detailsTask, setDetailsTask] = useState(null);
   const [taskToEdit, setTaskToEdit] = useState(null);
   const [taskToDelete, setTaskToDelete] = useState(null);
   const [isLoadingDelete, setIsLoadingDelete] = useState(false);
+  const [tasks, setTasks] = useState([]);
+  const [derivedColumnsForTask, setDerivedColumnsForTask] = useState([]);
+
+  useEffect(() => {
+    if (!search) {
+      setTasks(totalTasks);
+      setDerivedColumnsForTask(totalDerivedColumnsForTask);
+      return;
+    }
+    let tempTasks = [];
+    let tempDerivedColumnsForTask = [];
+    let len = totalTasks.length;
+    for (let i = 0; i < len; i++) {
+      if (totalDerivedColumnsForTask[i]?.fullName.toLowerCase().includes(search.toLowerCase()) || totalDerivedColumnsForTask[i]?.Customer.toLowerCase().includes(search.toLowerCase()) || totalDerivedColumnsForTask[i]?.Agency.toLowerCase().includes(search.toLowerCase()) || totalTasks[i]?.comment.toLowerCase().includes(search.toLowerCase())) {
+        tempTasks.push(totalTasks[i]);
+        tempDerivedColumnsForTask.push(totalDerivedColumnsForTask[i]);
+      }
+    }
+    setTasks(tempTasks);
+    setDerivedColumnsForTask(tempDerivedColumnsForTask);
+  }, [search]);
+
+  console.log(tasks);
+  console.log(derivedColumnsForTask);
 
   const [visibleCount, setVisibleCount] = useState(0);
   const tableBodyRef = useRef(null);
@@ -100,10 +124,10 @@ const TasksTable = ({ tasks, derivedColumnsForTask, onEdited, onDeleted }) => {
           <thead className='text-[12px] text-gray-700 border-b border-gray-100'>
             <tr>
               <TableHeaderItem>№</TableHeaderItem>
-              <TableHeaderItem width = '160px'>Talent / Stakeholder</TableHeaderItem>
-              <TableHeaderItem width = '160px'>Customer</TableHeaderItem>
-              <TableHeaderItem width = '160px'>Agency</TableHeaderItem>
-              <TableHeaderItem width = '160px'>Tasks</TableHeaderItem>
+              <TableHeaderItem width='160px'>Talent / Stakeholder</TableHeaderItem>
+              <TableHeaderItem width='160px'>Customer</TableHeaderItem>
+              <TableHeaderItem width='160px'>Agency</TableHeaderItem>
+              <TableHeaderItem width='160px'>Tasks</TableHeaderItem>
               <TableHeaderItem>Status</TableHeaderItem>
               <TableHeaderItem>Risk</TableHeaderItem>
               <TableHeaderItem>Due Date</TableHeaderItem>

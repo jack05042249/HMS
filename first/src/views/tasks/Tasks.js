@@ -21,6 +21,7 @@ const Tasks = () => {
   const aggregatedTalents = useSelector(state => state.aggregatedTalents);
   const organizations = useSelector(state => state.organizations);
   const { startDate, endDate, types, statuses, risks } = filter;
+  const [search, setSearch] = useState('');
 
   const [derivedColumnsForTask, setDerivedColumnsForTask] = useState([]);
   const [isInitialDataLoading, setIsInitialDataLoading] = useState(true);
@@ -113,8 +114,6 @@ const Tasks = () => {
     promises
       .then(([{ data: employeeTasks }, { data: customerTasks }]) => {
 
-        
-
         const processedEmployeeTasks = employeeTasks.map(task => ({
           ...task,
           type: 'employee'
@@ -127,8 +126,6 @@ const Tasks = () => {
         const mergedTasks = [...processedEmployeeTasks, ...processedCustomerTasks].sort(
           (a, b) => new Date(b.dueDate) - new Date(a.dueDate)
         );
-
-
 
         dispatch(updateTasks(mergedTasks));
         setDerivedColumnsForTask(
@@ -225,6 +222,19 @@ const Tasks = () => {
       <div className='bg-[#FFF] w-full mt-5 h-fit shadow-md rounded-lg py-[35px]'>
         <div className='flex mb-5 gap-8 px-[20px]'>
           <DateRangePicker startDate={startDate} endDate={endDate} onChange={onChangeDates} clearDates={[]} />
+          <div className='border b-[#E7E7E7] py-[8px] px-[16px] rounded-md w-[300px] flex items-center h-[36px]'>
+              <span>
+                {' '}
+                <icons.search />{' '}
+              </span>
+              <input
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                placeholder='Search'
+                className='outline-none ml-2.5 text-[12px] w-[200px]'
+                type='text'
+              />
+            </div>
           <FilterWidget
             types={types}
             onApplyTypes={handleApplyTypeFilter}
@@ -241,7 +251,7 @@ const Tasks = () => {
         ) : (
           <>
             {tasks.length ? (
-              <TasksTable tasks={tasks} derivedColumnsForTask={derivedColumnsForTask} onEdited={loadTasks} onDeleted={loadTasks} />
+              <TasksTable totalTasks={tasks} totalDerivedColumnsForTask={derivedColumnsForTask} onEdited={loadTasks} onDeleted={loadTasks} search={search} />
             ) : (
               <p className='font-medium whitespace-nowrap py-1'>
                 No tasks found for the selected filters. Please try again with different filters.
