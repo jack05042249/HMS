@@ -140,7 +140,7 @@ const createTalent = async (req, res) => {
         }
 
         const savedTalent = await uploadTalent(talent, cv)
-        const nextWeekDate = moment().add(7, 'days').format('YYYY-MM-DD HH:mm:ss');
+        const nextWeekDate = moment(req.body.startDate).add(7, 'days').format('YYYY-MM-DD HH:mm:ss')
 
         await Promise.all([
           createTaskEmployee({
