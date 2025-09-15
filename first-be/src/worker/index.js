@@ -74,9 +74,9 @@ const annualNotification = cron.schedule('0 0 26 12 *', async () => {
 
 const frequency1Min = '* * * * *' // every minute
 // const frequency = '*/5 * * * * *'; // every 5 sec
-//  const everyDay9AM = '00 09 * * *' // every day at 09:00 am
+const everyDay9AM = '00 09 * * *' // every day at 09:00 am
 
-const everyDay9AM = '08 16 * * *' // every day at 09:00 am
+// const everyDay9AM = '08 16 * * *' // every day at 09:00 am
 
 
 const everyDayCron = cron.schedule(
@@ -85,12 +85,12 @@ const everyDayCron = cron.schedule(
     await sendTalentBirthdaysNotification()
     await sendAnniversaryNotification()
   },
-  {
-    timezone: 'Asia/Singapore' // or 'Asia/Shanghai', 'Asia/Hong_Kong', etc.
-  }
-  //  {
-  //    timezone: 'Europe/Moscow' // or your preferred UTC+3 city
-  //  }
+  // {
+  //   timezone: 'Asia/Singapore' // or 'Asia/Shanghai', 'Asia/Hong_Kong', etc.
+  // }
+   {
+     timezone: 'Europe/Moscow' // or your preferred UTC+3 city
+   }
 )
 
 const everyMonday945AM = '45 9 * * MON'
