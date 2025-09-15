@@ -21,19 +21,19 @@ const openai = new OpenAI({ apiKey: process.env.openaiKey })
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN
 const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`
 
-async function composePostcard(talentPhotoBase64, logoPath, fullName, years, type) {
+async function composePostcard(talentPhotoBase64, logoPath, fullName, years, type, maskRect) {
   const canvas = createCanvas(1024, 1536)
   const ctx = canvas.getContext('2d')
 
   ctx.fillStyle = 'lightgray'
-  ctx.fillRect(0, 0, 512, 1536)
+  ctx.fillRect(0, 0, 500, 1536)
   ctx.fillStyle = '#C32C1D'
-  ctx.fillRect(512, 0, 512, 1536)
+  ctx.fillRect(500, 0, 524, 1536)
 
   // Load company logo
   const logo_Path = path.resolve(__dirname, logoPath)
   const logo = await loadImage(logo_Path)
-  ctx.drawImage(logo, 60, 80, 300, 150)
+  ctx.drawImage(logo, 60, 110, 320, 160)
 
   // Draw drop shadow (optional)
   ctx.save()
@@ -42,6 +42,7 @@ async function composePostcard(talentPhotoBase64, logoPath, fullName, years, typ
   ctx.shadowOffsetX = 0
   ctx.shadowOffsetY = 8
 
+  const adjustingH = maskRect.h - 450;
 
   // Load talent photo from base64
   if (talentPhotoBase64 && talentPhotoBase64.startsWith('data:image/')) {
@@ -119,26 +120,26 @@ async function composePostcard(talentPhotoBase64, logoPath, fullName, years, typ
   // Draw first part (first line)
   ctx.font = 'bold 50px Montserrat, sans-serif'
   ctx.fillStyle = 'black'
-  ctx.fillText(firstLine, 120, 1000)
+  ctx.fillText(firstLine, 120, 1000 + adjustingH)
 
   // Draw second part (second line, only if exists)
   if (secondLine) {
-    ctx.fillText(secondLine, 120, 1060)
+    ctx.fillText(secondLine, 120, 1060 + adjustingH)
 
     // Draw underline under the second line
     ctx.lineWidth = 2
     ctx.strokeStyle = 'gray'
     ctx.beginPath()
-    ctx.moveTo(100, 1100) // start X, Y
-    ctx.lineTo(395, 1100) // end X, Y
+    ctx.moveTo(100, 1100 + adjustingH) // start X, Y
+    ctx.lineTo(395, 1100 + adjustingH) // end X, Y
     ctx.stroke()
   } else {
     // If no second line, draw underline under the first line
     ctx.lineWidth = 2
     ctx.strokeStyle = 'gray'
     ctx.beginPath()
-    ctx.moveTo(100, 1140)
-    ctx.lineTo(395, 1140)
+    ctx.moveTo(100, 1140 + adjustingH)
+    ctx.lineTo(395, 1140 + adjustingH)
     ctx.stroke()
   }
   // end of drawing talent's fullName
@@ -146,14 +147,14 @@ async function composePostcard(talentPhotoBase64, logoPath, fullName, years, typ
   ctx.font = 'bold 60px Impact, Verdana, sans-serif'
   ctx.fillStyle = 'white'
   if (type == 'birthday') {
-    ctx.fillText(`Happy`, 580, 200)
-    ctx.fillText(`Birthday!`, 580, 280)
+    ctx.fillText(`Happy`, 610, 200)
+    ctx.fillText(`Birthday!`, 610, 280)
   } else {
-    ctx.fillText(`Happy`, 580, 200)
-    ctx.fillText(`Anniversary!`, 580, 280)
+    ctx.fillText(`Happy`, 610, 200)
+    ctx.fillText(`Anniversary!`, 610, 280)
   }
   ctx.font = 'bold 35px Impact, Verdana, sans-serif'
-  ctx.fillText(`Dear ${fullName.split(' ')[0]},`, 580, 380)
+  ctx.fillText(`Dear ${fullName.split(' ')[0]},`, 610, 380)
   ctx.font = '30px Impact, Verdana, sans-serif'
   const message1 =
     type === 'birthday'
@@ -161,13 +162,13 @@ async function composePostcard(talentPhotoBase64, logoPath, fullName, years, typ
       : `Wishing you ${years} years&work anniversary&and continued success.`
   const lines1 = message1.split('&')
   lines1.forEach((line, i) => {
-    ctx.fillText(line, 580, 525 + i * 46) // 40px vertical spacing between lines
+    ctx.fillText(line, 610, 525 + i * 46) // 40px vertical spacing between lines
   })
 
   const message2 = `Thank you for your&hard work and&dedication. We're&grateful to have you&on our team!`
   const lines2 = message2.split('&')
   lines2.forEach((line, i) => {
-    ctx.fillText(line, 580, 725 + i * 46) // 40px vertical spacing between lines
+    ctx.fillText(line, 610, 725 + i * 46) // 40px vertical spacing between lines
   })
 
   return canvas.toBuffer('image/png')
@@ -193,12 +194,10 @@ async function generateMask(width, height, rect) {
   return canvas.toBuffer('image/png')
 }
 
-async function refinePostcard(imgBuffer, firstName, type, photoBase64) {
+async function refinePostcard(imgBuffer, firstName, type, photoBase64, maskRect) {
 
   // Define the rectangle region to protect (example: left panel photo area)
 
-    // Define the rectangle region to protect (example: left panel photo area)
-  const maskRect = { x: 50, y: 400, w: 420, h: 450 }
   const maskBuffer = await generateMask(1024, 1536, maskRect)
   const maskBlob = new Blob([maskBuffer], { type: 'image/png' })
   const maskFile = new File([maskBlob], 'mask.png', { type: maskBlob.type })
@@ -215,6 +214,7 @@ async function refinePostcard(imgBuffer, firstName, type, photoBase64) {
     refinedPrompt =
       isImageFile
         ? `This image shows postcard for congratulating employee's birthday.
+        While customizing this, the mask rectangle should be on the white left part, shouldn't be go on top of red right part.
     Please redesign this birthday greeting image so that the text block is consistently aligned and constrained to the same width as the 'Happy Birthday!' title. Maintain a clean, balanced look by adjusting line breaks so that each line fills the same approximate width, avoiding short or overly long lines. Ensure the overall design (balloons, background color, and confetti) stays festive and professional.
 
     And decorate the underline on the bottom of the fullName of employee on left side.
@@ -226,6 +226,7 @@ async function refinePostcard(imgBuffer, firstName, type, photoBase64) {
  
     You must ensure the note tag's rounded rectangle is fully inside of the whole square by reducing the content of tag and font size.
 ` : `This image shows postcard for congratulating employee's birthday.
+    While customizing this, please keep the original left light gray part size (width:500, height:1536).
     Please redesign this birthday greeting image so that the text block is consistently aligned and constrained to the same width as the 'Happy Birthday!' title. Maintain a clean, balanced look by adjusting line breaks so that each line fills the same approximate width, avoiding short or overly long lines. Ensure the overall design (balloons, background color, and confetti) stays festive and professional.
 
     Please insert a cheerful 25-year-old male/female cartoon Starfleet officer(concerning to fullName : ${firstName}) celebrating him/her birthday, in a simplified Star Trek: Enterprise-inspired uniform with colored piping randomly with orange/blue bg. 
@@ -280,7 +281,7 @@ async function refinePostcard(imgBuffer, firstName, type, photoBase64) {
 }
 
 
-async function pastePhotoOnBuffer(refinedBuffer, photoBase64, rect = { x: 50, y: 400, w: 420, h: 450 }) {
+async function pastePhotoOnBuffer(refinedBuffer, photoBase64, maskRect) {
   const canvas = createCanvas(1024, 1536)
   const ctx = canvas.getContext('2d')
 
@@ -295,7 +296,7 @@ async function pastePhotoOnBuffer(refinedBuffer, photoBase64, rect = { x: 50, y:
     const photoImg = await loadImage(photoBuffer)
     ctx.save()
     // Clip to rounded rectangle if needed
-    const { x, y, w, h } = rect
+    const { x, y, w, h } = maskRect
     const radius = 32
     ctx.beginPath()
     ctx.moveTo(x + radius, y)
@@ -317,11 +318,18 @@ async function pastePhotoOnBuffer(refinedBuffer, photoBase64, rect = { x: 50, y:
 }
 
 async function generateFinalPostcard({ firstName, years, type, photoBase64 }) {
-  const finalBuffer = await composePostcard(photoBase64, '../public/commit_logo.png', firstName, years, type)
+  let maskRect = { x: 50, y: 400, w: 420, h: 450 }
+  if (photoBase64.startsWith('data:image/')) {
+    const base64Data = photoBase64.split(',')[1];
+    const buffer = Buffer.from(base64Data, 'base64');
+    const img = await loadImage(buffer);
+    maskRect = { x: 50, y: 400, w: 420, h: 420 * (img.height / img.width) };
+  }
+  const finalBuffer = await composePostcard(photoBase64, '../public/commit_logo.png', firstName, years, type, maskRect)
 
-  const refinedBuffer = await refinePostcard(finalBuffer, firstName, type, photoBase64)
+  const refinedBuffer = await refinePostcard(finalBuffer, firstName, type, photoBase64, maskRect)
 
-  const pastePhotoBuffer = await pastePhotoOnBuffer(refinedBuffer, photoBase64)
+  const pastePhotoBuffer = await pastePhotoOnBuffer(refinedBuffer, photoBase64, maskRect)
 
   const uploadedUrl = savePostcardToPublic(
     pastePhotoBuffer,
