@@ -335,277 +335,305 @@ const CreateTalentModal = ({
         </div>
         <form className='flex' onSubmit={event => event.preventDefault()}>
           <div className='text-[14px] flex justify-start flex-col mr-[50px]'>
-            <label htmlFor='fullName' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Full Name
-            </label>
-            <input
-              name='fullName'
-              value={values.fullName}
-              onChange={handleChangeForm}
-              placeholder=''
-              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            />
-            <label htmlFor='cusIds' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Stakeholders
-            </label>
-            <div id='customers_to_select' className='multiple-select'>
-              {cusIds?.length ? (
-                <div
-                  className='flex flex-wrap justify-start text-gray-500 py-2 px-8 underline border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-fit px-[15px] appearance-none outline-none'
-                  onClick={toggleCustomers}
-                >
-                  {cusIds.map((id, i) => {
-                    const { fullName } = getRelevantCustomer(id);
-                    return (
-                      <div key={id} className={`flex items-center${i === 0 ? '' : ' ml-2'}`}>
-                        <div>{fullName}</div>
-                        {i < cusIds.length - 1 && <div className='mx-1'>,</div>}
-                      </div>
-                    );
-                  })}
-                </div>
-              ) : (
-                <span
-                  onClick={toggleCustomers}
-                  className='min-h-[40px] flex justify-start text-gray-500 py-2 px-8 items-center underline border mb-4 border-[#F5F0F0] text-[#9197B3] w-[313px] rounded-lg h-auto px-[15px] appearance-none outline-none'
-                >
-                  Select Customer
-                </span>
-              )}
-
-              {showCustomers && (
-                <div className='multiple-select border-x border-[#F5F0F0] relative bottom-4 max-h-[125px] overflow-auto customer-select  px-1 bg-[#fff]'>
-                  <div className='border rounded border-[#F5F0F0] mb-2 flex items-center mt-1'>
-                    <span>
-                      {' '}
-                      <icons.search />{' '}
+            {/* Basic Information Section */}
+            <div className='bg-gray-50 p-4 rounded-lg mb-6'>
+              <h3 className='text-[#333] text-[16px] font-semibold mb-4 border-b border-gray-200 pb-2'>Basic Information</h3>
+              
+              <div className='flex items-center mb-4'>
+                <label htmlFor='fullName' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Full Name
+                </label>
+                <input
+                  name='fullName'
+                  value={values.fullName}
+                  onChange={handleChangeForm}
+                  placeholder=''
+                  className='border border-[#F5F0F0] text-[#9197B3] flex-1 rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                />
+              </div>
+              
+              <div className='flex items-start mb-4'>
+                <label htmlFor='cusIds' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4 mt-2'>
+                  Stakeholders
+                </label>
+                <div id='customers_to_select' className='multiple-select flex-1'>
+                  {cusIds?.length ? (
+                    <div
+                      className='flex flex-wrap justify-start text-gray-500 py-2 px-8 underline border border-[#F5F0F0] text-[#9197B3] rounded-lg h-fit px-[15px] appearance-none outline-none'
+                      onClick={toggleCustomers}
+                    >
+                      {cusIds.map((id, i) => {
+                        const { fullName } = getRelevantCustomer(id);
+                        return (
+                          <div key={id} className={`flex items-center${i === 0 ? '' : ' ml-2'}`}>
+                            <div>{fullName}</div>
+                            {i < cusIds.length - 1 && <div className='mx-1'>,</div>}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <span
+                      onClick={toggleCustomers}
+                      className='min-h-[40px] flex justify-start text-gray-500 py-2 px-8 items-center underline border border-[#F5F0F0] text-[#9197B3] rounded-lg h-auto px-[15px] appearance-none outline-none'
+                    >
+                      Select Customer
                     </span>
-                    <input
-                      value={filter}
-                      onChange={e => setFilter(e.target.value)}
-                      placeholder='Search'
-                      className='outline-none ml-2.5 text-[14px] w-[200px]'
-                      type='text'
-                    />
-                  </div>
-                  {filteredCustomers.map(cus => {
-                    const { id, fullName, organizationId } = cus;
-                    const { name } = getRelevantOrganization(organizationId);
+                  )}
 
-                    return (
-                      <div key={id} className='flex flex-col'>
-                        <div className='flex'>
-                          <input
-                            className='cursor-pointer'
-                            type='checkbox'
-                            checked={cusIds.includes(id)}
-                            id={id}
-                            name='customer'
-                            onChange={event => handleCheckboxChange(id, event)}
-                          />
-                          <label htmlFor={id} className='ml-10'>{`${fullName} (${name})`}</label>
-                        </div>
+                  {showCustomers && (
+                    <div className='multiple-select border-x border-[#F5F0F0] relative bottom-4 max-h-[125px] overflow-auto customer-select  px-1 bg-[#fff]'>
+                      <div className='border rounded border-[#F5F0F0] mb-2 flex items-center mt-1'>
+                        <span>
+                          {' '}
+                          <icons.search />{' '}
+                        </span>
+                        <input
+                          value={filter}
+                          onChange={e => setFilter(e.target.value)}
+                          placeholder='Search'
+                          className='outline-none ml-2.5 text-[14px] w-[200px]'
+                          type='text'
+                        />
                       </div>
-                    );
-                  })}
+                      {filteredCustomers.map(cus => {
+                        const { id, fullName, organizationId } = cus;
+                        const { name } = getRelevantOrganization(organizationId);
+
+                        return (
+                          <div key={id} className='flex flex-col'>
+                            <div className='flex'>
+                              <input
+                                className='cursor-pointer'
+                                type='checkbox'
+                                checked={cusIds.includes(id)}
+                                id={id}
+                                name='customer'
+                                onChange={event => handleCheckboxChange(id, event)}
+                              />
+                              <label htmlFor={id} className='ml-10'>{`${fullName} (${name})`}</label>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
+              </div>
 
-            <SearchableField
-              name='Main Stakeholder'
-              data={activeCustomers
-                .map(customer =>
-                  cusIds.includes(customer.id) ? { key: `${customer.id}`, value: customer.fullName } : null
-                )
-                .filter(Boolean)}
-              selectedKeys={values.talentMainCustomer ? [`${values.talentMainCustomer}`] : []}
-              emptyText='Select Main Stakeholder'
-              onChangeSelectedKeys={selectedKeys => {
-                handleChangeForm({
-                  target: {
-                    name: 'talentMainCustomer',
-                    value: selectedKeys.length ? selectedKeys[selectedKeys.length - 1] : null
+              <div className='flex items-center mb-4'>
+                <label className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Main Stakeholder
+                </label>
+                <div className='flex-1'>
+                  <SearchableField
+                    // name='Main Stakeholder'
+                    data={activeCustomers
+                      .map(customer =>
+                        cusIds.includes(customer.id) ? { key: `${customer.id}`, value: customer.fullName } : null
+                      )
+                      .filter(Boolean)}
+                    selectedKeys={values.talentMainCustomer ? [`${values.talentMainCustomer}`] : []}
+                    emptyText='Select Main Stakeholder'
+                    onChangeSelectedKeys={selectedKeys => {
+                      handleChangeForm({
+                        target: {
+                          name: 'talentMainCustomer',
+                          value: selectedKeys.length ? selectedKeys[selectedKeys.length - 1] : null
+                        }
+                      });
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div className='flex items-center mb-4'>
+                <label htmlFor='Customer' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Customer
+                </label>
+                <input
+                  id='Customer'
+                  value={
+                    values.talentMainCustomer && cusIds.length > 0
+                      ? allOrganizations
+                        .filter(org => organizationIdsForMainStakeholder.includes(org.id))
+                        .map(org => ({ key: `${org.id}`, value: org.name }))[0].value
+                      : 'None'
                   }
-                });
-              }}
-            />
-
-            <div className='h-[30px] mb-4'>
+                  placeholder='Customer'
+                  className='border border-[#F5F0F0] text-[#9197B3] flex-1 rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                />
+              </div>
             </div>
 
-            <label htmlFor='Customer' className='text-[#000] text-[14px] font-medium text-left'>
-              Customer
-            </label>
-            <input
-              id='Customer'
-              value={
-                values.talentMainCustomer && cusIds.length > 0
-                  ? allOrganizations
-                    .filter(org => organizationIdsForMainStakeholder.includes(org.id))
-                    .map(org => ({ key: `${org.id}`, value: org.name }))[0].value
-                  : 'None'
-              }
-              placeholder='Customer'
-              className='mb-4 border border-[#F5F0F0]  text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            />
+            {/* Project & Agency Information Section */}
+            <div className='bg-blue-50 p-4 rounded-lg mb-6'>
+              <h3 className='text-[#333] text-[16px] font-semibold mb-4 border-b border-blue-200 pb-2'>Project & Agency</h3>
             
-            {/* <SearchableField
-              name='Customer'
-              data={allOrganizations.map(org => ({ key: `${org.id}`, value: org.name }))}
-              selectedKeys={values.organizations?.length ? [`${values.organizations[0].id}`] : []}
-              emptyText='Select'
-              onChangeSelectedKeys={selectedKeys => {
-                if (!selectedKeys.length) {
-                  return;
-                }
-                const id = selectedKeys[selectedKeys.length - 1];
-                const org = allOrganizations.find(org => `${org.id}` === `${id}`);
+              <div className='flex items-center mb-4'>
+                <label htmlFor='projectName' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Project
+                </label>
+                <input
+                  name='projectName'
+                  onChange={handleChangeForm}
+                  value={values.projectName}
+                  placeholder=''
+                  className='border border-[#F5F0F0] text-[#9197B3] flex-1 rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                />
+              </div>
+              
+              <div className='flex items-center mb-4'>
+                <label htmlFor='agencyId' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Agency
+                </label>
+                <div className='relative flex-1'>
+                  <span className='absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none'>
+                    <icons.selectIcon />
+                  </span>
+                  <select
+                    id='agencyId'
+                    name='agencyId'
+                    onChange={handleChangeForm}
+                    value={values.agencyId}
+                    className='border border-[#F5F0F0] text-[#9197B3] w-full rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                  >
+                    {agencies.map(agency => (
+                      <option id='agencyId' name='agencyId' key={agency.id} value={agency.id}>
+                        {agency.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
 
-                handleChangeForm({
-                  target: {
-                    name: 'organizations',
-                    value: org ? [{ id: org.id, name: org.name }] : []
-                  }
-                });
-              }}
-            /> */}
+              <div className='flex items-start mb-4'>
+                <label htmlFor='summary' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4 mt-2'>
+                  Summary
+                </label>
+                <textarea
+                  onChange={handleChangeForm}
+                  name='summary'
+                  value={values.summary}
+                  placeholder=''
+                  rows={4}
+                  className='border border-[#F5F0F0] text-[#9197B3] flex-1 rounded-lg px-[15px] py-[10px] appearance-none outline-none resize-none overflow-y-auto'
+                  style={{ minHeight: '80px', maxHeight: '200px' }}
+                />
+              </div>
 
-            <label htmlFor='projectName' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Project
-            </label>
-            <input
-              name='projectName'
-              onChange={handleChangeForm}
-              value={values.projectName}
-              placeholder=''
-              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            />
-            <label htmlFor='agencyId' className='text-[#000] text-[14px] font-medium text-left'>
-              Agency
-            </label>
-            <span className='relative left-[280px] top-[24px] pointer-events-none'>
-              {' '}
-              <icons.selectIcon />{' '}
-            </span>
-            <select
-              id='agencyId'
-              name='agencyId'
-              onChange={handleChangeForm}
-              value={values.agencyId}
-              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            >
-              {agencies.map(agency => (
-                <option id='agencyId' name='agencyId' key={agency.id} value={agency.id}>
-                  {agency.name}
-                </option>
-              ))}
-            </select>
-
-            <label htmlFor='summary' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Summary
-            </label>
-            <textarea
-              onChange={handleChangeForm}
-              name='summary'
-              value={values.summary}
-              placeholder=''
-              rows={4}
-              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg px-[15px] py-[10px] appearance-none outline-none resize-none overflow-y-auto'
-              style={{ minHeight: '80px', maxHeight: '200px' }}
-            />
-
-            <label htmlFor='cv' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              CV
-            </label>
-            <div className='flex items-center h-[40px] mb-4 px-2'>
-              <UploadCV
-                onChange={file => {
-                  setFormState(prev => ({
-                    ...prev,
-                    values: {
-                      ...prev.values,
-                      cv: file
-                    }
-                  }));
-                }}
-              />
-            </div>
-            <div className='h-[30px] mb-4'>
+              <div className='flex items-center mb-4'>
+                <label htmlFor='cv' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  CV
+                </label>
+                <div className='flex-1'>
+                  <UploadCV
+                    onChange={file => {
+                      setFormState(prev => ({
+                        ...prev,
+                        values: {
+                          ...prev.values,
+                          cv: file
+                        }
+                      }));
+                    }}
+                  />
+                </div>
+              </div>
             </div>
 
-            <label htmlFor='email' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              E-mail
-            </label>
-            <input
-              type='email'
-              name='email'
-              onChange={handleChangeForm}
-              value={values.email}
-              placeholder=''
-              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            />
-            <label htmlFor='address' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Address
-            </label>
-            <input
-              name='address'
-              onChange={handleChangeForm}
-              value={values.address}
-              placeholder=''
-              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            />
-             <label htmlFor='location' className='text-[#000] text-[14px] font-medium text-left'>
-              Location
-            </label>
-            <span className='relative left-[280px] top-[24px] pointer-events-none'>
-              {' '}
-              <icons.selectIcon />{' '}
-            </span>
-            <select
-              className='border text-[#9197B3] text-[14px] mb-4 border-[#F5F0F0] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-              id='location'
-              name='location'
-              value={values.location}
-              onChange={handleChangeForm}
-            >
-              {/* Show placeholder only when no value is selected */}
-              {!values.location && (
-                <option value="" disabled>
-                  
-                </option>
-              )}
-              {Object.entries(codeToCountry ?? {}).map(([code, countryName]) => {
-                return (
-                  <option value={code} key={code}>
-                    {countryName}
-                  </option>
-                );
-              })}
-            </select>
-            <label htmlFor='position' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Position
-            </label>
-            <input
-              name='position'
-              onChange={handleChangeForm}
-              value={values.position}
-              placeholder=''
-              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            />
-            <label htmlFor='birthday' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Birthday
-            </label>
-            <DatePicker
-              selected={values.birthday}
-              onChange={date => handleChangeForm({ target: { name: 'birthday', value: date } })}
-              selectsStart
-              showMonthDropdown
-              showYearDropdown
-              placeholderText={''}
-              dateFormat='dd/MM/yyyy'
-              className='border border-[#F5F0F0] mb-4 w-[313px] rounded-lg h-[40px] px-[15px] outline-none'
-            />
+            {/* Contact Information Section */}
+            <div className='bg-green-50 p-4 rounded-lg mb-6'>
+              <h3 className='text-[#333] text-[16px] font-semibold mb-4 border-b border-green-200 pb-2'>Contact Information</h3>
+
+              <div className='flex items-center mb-4'>
+                <label htmlFor='email' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  E-mail
+                </label>
+                <input
+                  type='email'
+                  name='email'
+                  onChange={handleChangeForm}
+                  value={values.email}
+                  placeholder=''
+                  className='border border-[#F5F0F0] text-[#9197B3] flex-1 rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                />
+              </div>
+              
+              <div className='flex items-center mb-4'>
+                <label htmlFor='address' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Address
+                </label>
+                <input
+                  name='address'
+                  onChange={handleChangeForm}
+                  value={values.address}
+                  placeholder=''
+                  className='border border-[#F5F0F0] text-[#9197B3] flex-1 rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                />
+              </div>
+              
+              <div className='flex items-center mb-4'>
+                <label htmlFor='location' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Location
+                </label>
+                <div className='relative flex-1'>
+                  <span className='absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none'>
+                    <icons.selectIcon />
+                  </span>
+                  <select
+                    className='border text-[#9197B3] text-[14px] border-[#F5F0F0] w-full rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                    id='location'
+                    name='location'
+                    value={values.location}
+                    onChange={handleChangeForm}
+                  >
+                    {/* Show placeholder only when no value is selected */}
+                    {!values.location && (
+                      <option value="" disabled>
+                        
+                      </option>
+                    )}
+                    {Object.entries(codeToCountry ?? {}).map(([code, countryName]) => {
+                      return (
+                        <option value={code} key={code}>
+                          {countryName}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+              </div>
+              
+              <div className='flex items-center mb-4'>
+                <label htmlFor='position' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Position
+                </label>
+                <input
+                  name='position'
+                  onChange={handleChangeForm}
+                  value={values.position}
+                  placeholder=''
+                  className='border border-[#F5F0F0] text-[#9197B3] flex-1 rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                />
+              </div>
+              
+              <div className='flex items-center mb-4'>
+                <label htmlFor='birthday' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Birthday
+                </label>
+                <DatePicker
+                  selected={values.birthday}
+                  onChange={date => handleChangeForm({ target: { name: 'birthday', value: date } })}
+                  selectsStart
+                  showMonthDropdown
+                  showYearDropdown
+                  placeholderText={''}
+                  dateFormat='dd/MM/yyyy'
+                  className='border border-[#F5F0F0] flex-1 rounded-lg h-[40px] px-[15px] outline-none'
+                />
+              </div>
+            </div>
            
             
             {error && (
@@ -619,290 +647,358 @@ const CreateTalentModal = ({
             )}
           </div>
           <div className='text-[14px] mr-[50px] flex justify-start flex-col'>
-
-            <label htmlFor='startDate' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Start Date
-            </label>
-            <DatePicker
-              selected={values.startDate}
-              onChange={date => handleChangeForm({ target: { name: 'startDate', value: date } })}
-              selectsStart
-              showMonthDropdown
-              showYearDropdown
-              placeholderText={'DD/MM/YYYY'}
-              dateFormat='dd/MM/yyyy'
-              className='border border-[#F5F0F0] w-[313px] mb-4 rounded-lg h-[40px] px-[15px] outline-none'
-            />
-            <label htmlFor='workFromMonday' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Working from Monday
-            </label>
-            <div className='flex items-center h-[40px] px-2'>
-              <input
-                className='cursor-pointer w-4 h-4'
-                type='checkbox'
-                checked={values.workFromMonday}
-                id='workFromMonday'
-                name='workFromMonday'
-                onChange={event =>
-                  handleChangeForm({ target: { name: 'workFromMonday', value: event.target.checked } })
-                }
-              />
-            </div>
-            <label htmlFor='canWorkOnTwoPositions' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Can Work On Two Positions
-            </label>
-            <div className='flex items-center h-[40px] mb-4 px-2'>
-              <input
-                className='cursor-pointer w-4 h-4'
-                type='checkbox'
-                checked={values.canWorkOnTwoPositions}
-                id='canWorkOnTwoPositions'
-                name='canWorkOnTwoPositions'
-                onChange={event =>
-                  handleChangeForm({ target: { name: 'canWorkOnTwoPositions', value: event.target.checked } })
-                }
-              />
-            </div>
-            <div className='h-[30px] mb-4'>
-            </div>
-            <label htmlFor='endDate' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              End Date
-            </label>
-            <DatePicker
-              selected={values.endDate}
-              onChange={date => handleChangeForm({ target: { name: 'endDate', value: date } })}
-              selectsStart
-              showMonthDropdown
-              showYearDropdown
-              placeholderText={'DD/MM/YYYY'}
-              dateFormat='dd/MM/yyyy'
-              className='border border-[#F5F0F0] w-[313px] mb-4 rounded-lg h-[40px] px-[15px] outline-none'
-            />
-            <label htmlFor='removeReason' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Reason For Removal
-            </label>
-            <input
-              name='removeReason'
-              onChange={handleChangeForm}
-              value={values.removeReason}
-              placeholder='Reason For Removal'
-              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            />
-            <div className='h-[30px] mb-4'>
-            </div>
-
-            <label htmlFor='phoneNumber' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Mobile Phone
-            </label>
-            <input
-              name='phoneNumber'
-              onChange={handleChangeForm}
-              value={values.phoneNumber}
-              placeholder=''
-              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            />
-            
-            <label htmlFor='whatsup' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Whatsup
-            </label>
-            <input
-              onChange={handleChangeForm}
-              name='whatsup'
-              value={values.whatsup}
-              placeholder=''
-              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            />
-
-            <label htmlFor='telegram' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Telegram
-            </label>
-            <input
-              onChange={handleChangeForm}
-              name='telegram'
-              value={values.telegram}
-              placeholder='@telegram'
-              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            />
-            <div className='h-[30px] mb-4'>
-            </div>
-           
-            <label htmlFor='linkedinProfile' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Linkedin Profile
-            </label>
-            <input
-              onChange={handleChangeForm}
-              name='linkedinProfile'
-              value={values.linkedinProfile}
-              placeholder='Linkedin Profile URL'
-              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            />
-            {!values.ignoreLinkedinCheck ? (
-              <>
-                <label
-                  htmlFor='linkedinProfileChecked'
-                  className='text-[#000] text-[14px] font-medium text-left mb-[8px]'
-                >
-                  Linkedin Checked
-                </label>
-                <div className='flex items-center h-[40px] mb-4 px-2'>
-                  <input
-                    className='cursor-pointer w-4 h-4'
-                    type='checkbox'
-                    checked={values.linkedinProfileChecked}
-                    id='linkedinProfileChecked'
-                    name='linkedinProfileChecked'
-                    onChange={event =>
-                      handleChangeForm({ target: { name: 'linkedinProfileChecked', value: event.target.checked } })
-                    }
-                  />
-                </div>
-                <label htmlFor='linkedinProfileDate' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-                  Linkedin Checked Date
+            {/* Employment Details Section */}
+            <div className='bg-purple-50 p-4 rounded-lg mb-6'>
+              <h3 className='text-[#333] text-[16px] font-semibold mb-4 border-b border-purple-200 pb-2'>Employment Details</h3>
+              
+              <div className='flex items-center mb-4'>
+                <label htmlFor='startDate' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Start Date
                 </label>
                 <DatePicker
-                  selected={values.linkedinProfileDate}
-                  onChange={date => handleChangeForm({ target: { name: 'linkedinProfileDate', value: date } })}
+                  selected={values.startDate}
+                  onChange={date => handleChangeForm({ target: { name: 'startDate', value: date } })}
                   selectsStart
                   showMonthDropdown
                   showYearDropdown
                   placeholderText={'DD/MM/YYYY'}
                   dateFormat='dd/MM/yyyy'
-                  className='border border-[#F5F0F0] mb-4 w-[313px] rounded-lg h-[40px] px-[15px] outline-none'
+                  className='border border-[#F5F0F0] flex-1 rounded-lg h-[40px] px-[15px] outline-none'
                 />
-              </>
-            ) : (
-              ''
-            )}
-            <label htmlFor='linkedinComment' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Linkedin Comment
-            </label>
-            <input
-              onChange={handleChangeForm}
-              name='linkedinComment'
-              value={values.linkedinComment}
-              placeholder='Linkedin Comment'
-              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            />
-            <div className='h-[30px] mb-4'>
+              </div>
+              
+              <div className='flex items-center mb-4'>
+                <label htmlFor='endDate' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  End Date
+                </label>
+                <DatePicker
+                  selected={values.endDate}
+                  onChange={date => handleChangeForm({ target: { name: 'endDate', value: date } })}
+                  selectsStart
+                  showMonthDropdown
+                  showYearDropdown
+                  placeholderText={'DD/MM/YYYY'}
+                  dateFormat='dd/MM/yyyy'
+                  className='border border-[#F5F0F0] flex-1 rounded-lg h-[40px] px-[15px] outline-none'
+                />
+              </div>
+              
+              <div className='flex items-center mb-4'>
+                <label htmlFor='removeReason' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Reason For Removal
+                </label>
+                <input
+                  name='removeReason'
+                  onChange={handleChangeForm}
+                  value={values.removeReason}
+                  placeholder='Reason For Removal'
+                  className='border border-[#F5F0F0] text-[#9197B3] flex-1 rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                />
+              </div>
             </div>
 
-            <label htmlFor='ignoreLinkedinCheck' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Ignore Linkedin Check
-            </label>
-            <div className='flex items-center h-[40px] mb-4 px-2'>
-              <input
-                className='cursor-pointer w-4 h-4'
-                type='checkbox'
-                checked={values.ignoreLinkedinCheck}
-                id='ignoreLinkedinCheck'
-                name='ignoreLinkedinCheck'
-                onChange={event =>
-                  handleChangeForm({ target: { name: 'ignoreLinkedinCheck', value: event.target.checked } })
-                }
-              />
+            {/* Work Preferences Section */}
+            <div className='bg-orange-50 p-4 rounded-lg mb-6'>
+              <h3 className='text-[#333] text-[16px] font-semibold mb-4 border-b border-orange-200 pb-2'>Work Preferences</h3>
+              
+              <div className='flex items-center mb-4'>
+                <label htmlFor='workFromMonday' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Working from Monday
+                </label>
+                <div className='flex-1'>
+                  <input
+                    className='cursor-pointer w-4 h-4'
+                    type='checkbox'
+                    checked={values.workFromMonday}
+                    id='workFromMonday'
+                    name='workFromMonday'
+                    onChange={event =>
+                      handleChangeForm({ target: { name: 'workFromMonday', value: event.target.checked } })
+                    }
+                  />
+                </div>
+              </div>
+              
+              <div className='flex items-center mb-4'>
+                <label htmlFor='canWorkOnTwoPositions' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Can Work On Two Positions
+                </label>
+                <div className='flex-1'>
+                  <input
+                    className='cursor-pointer w-4 h-4'
+                    type='checkbox'
+                    checked={values.canWorkOnTwoPositions}
+                    id='canWorkOnTwoPositions'
+                    name='canWorkOnTwoPositions'
+                    onChange={event =>
+                      handleChangeForm({ target: { name: 'canWorkOnTwoPositions', value: event.target.checked } })
+                    }
+                  />
+                </div>
+              </div>
             </div>
 
-            <label htmlFor='hourlyRate' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Hourly Rate
-            </label>
-            <div className='flex items-center h-[40px] mb-4 px-2'>
-              <input
-                className='cursor-pointer w-4 h-4'
-                type='checkbox'
-                checked={values.hourlyRate}
-                id='hourlyRate'
-                name='hourlyRate'
-                onChange={event => handleChangeForm({ target: { name: 'hourlyRate', value: event.target.checked } })}
-              />
+            {/* Communication Section */}
+            <div className='bg-indigo-50 p-4 rounded-lg mb-6'>
+              <h3 className='text-[#333] text-[16px] font-semibold mb-4 border-b border-indigo-200 pb-2'>Communication</h3>
+
+              <div className='flex items-center mb-4'>
+                <label htmlFor='phoneNumber' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Mobile Phone
+                </label>
+                <input
+                  name='phoneNumber'
+                  onChange={handleChangeForm}
+                  value={values.phoneNumber}
+                  placeholder=''
+                  className='border border-[#F5F0F0] text-[#9197B3] flex-1 rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                />
+              </div>
+              
+              <div className='flex items-center mb-4'>
+                <label htmlFor='whatsup' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Whatsup
+                </label>
+                <input
+                  onChange={handleChangeForm}
+                  name='whatsup'
+                  value={values.whatsup}
+                  placeholder=''
+                  className='border border-[#F5F0F0] text-[#9197B3] flex-1 rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                />
+              </div>
+
+              <div className='flex items-center mb-4'>
+                <label htmlFor='telegram' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Telegram
+                </label>
+                <input
+                  onChange={handleChangeForm}
+                  name='telegram'
+                  value={values.telegram}
+                  placeholder='@telegram'
+                  className='border border-[#F5F0F0] text-[#9197B3] flex-1 rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                />
+              </div>
             </div>
-             <label htmlFor='canWorkOnTwoPositions' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Doesn't have a vacation
-            </label>
-            <div className='flex items-center h-[40px] px-2'>
-              <input
-                className='cursor-pointer w-4 h-4'
-                type='checkbox'
-                checked={values.doesNotHaveAVacation}
-                id='doesNotHaveAVacation'
-                name='doesNotHaveAVacation'
-                onChange={event =>
-                  handleChangeForm({ target: { name: 'doesNotHaveAVacation', value: event.target.checked } })
-                }
-              />
+           
+            {/* LinkedIn & Social Media Section */}
+            <div className='bg-pink-50 p-4 rounded-lg mb-6'>
+              <h3 className='text-[#333] text-[16px] font-semibold mb-4 border-b border-pink-200 pb-2'>LinkedIn & Social Media</h3>
+              
+              <div className='flex items-center mb-4'>
+                <label htmlFor='linkedinProfile' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Linkedin Profile
+                </label>
+                <input
+                  onChange={handleChangeForm}
+                  name='linkedinProfile'
+                  value={values.linkedinProfile}
+                  placeholder='Linkedin Profile URL'
+                  className='border border-[#F5F0F0] text-[#9197B3] flex-1 rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                />
+              </div>
+              
+              {!values.ignoreLinkedinCheck ? (
+                <>
+                  <div className='flex items-center mb-4'>
+                    <label
+                      htmlFor='linkedinProfileChecked'
+                      className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'
+                    >
+                      Linkedin Checked
+                    </label>
+                    <div className='flex-1'>
+                      <input
+                        className='cursor-pointer w-4 h-4'
+                        type='checkbox'
+                        checked={values.linkedinProfileChecked}
+                        id='linkedinProfileChecked'
+                        name='linkedinProfileChecked'
+                        onChange={event =>
+                          handleChangeForm({ target: { name: 'linkedinProfileChecked', value: event.target.checked } })
+                        }
+                      />
+                    </div>
+                  </div>
+                  <div className='flex items-center mb-4'>
+                    <label htmlFor='linkedinProfileDate' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                      Linkedin Checked Date
+                    </label>
+                    <DatePicker
+                      selected={values.linkedinProfileDate}
+                      onChange={date => handleChangeForm({ target: { name: 'linkedinProfileDate', value: date } })}
+                      selectsStart
+                      showMonthDropdown
+                      showYearDropdown
+                      placeholderText={'DD/MM/YYYY'}
+                      dateFormat='dd/MM/yyyy'
+                      className='border border-[#F5F0F0] flex-1 rounded-lg h-[40px] px-[15px] outline-none'
+                    />
+                  </div>
+                </>
+              ) : (
+                ''
+              )}
+              
+              <div className='flex items-center mb-4'>
+                <label htmlFor='linkedinComment' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Linkedin Comment
+                </label>
+                <input
+                  onChange={handleChangeForm}
+                  name='linkedinComment'
+                  value={values.linkedinComment}
+                  placeholder='Linkedin Comment'
+                  className='border border-[#F5F0F0] text-[#9197B3] flex-1 rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                />
+              </div>
+
+              <div className='flex items-center mb-4'>
+                <label htmlFor='ignoreLinkedinCheck' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Ignore Linkedin Check
+                </label>
+                <div className='flex-1'>
+                  <input
+                    className='cursor-pointer w-4 h-4'
+                    type='checkbox'
+                    checked={values.ignoreLinkedinCheck}
+                    id='ignoreLinkedinCheck'
+                    name='ignoreLinkedinCheck'
+                    onChange={event =>
+                      handleChangeForm({ target: { name: 'ignoreLinkedinCheck', value: event.target.checked } })
+                    }
+                  />
+                </div>
+              </div>
             </div>
-            <div className='h-[30px] mb-4'>
-            </div>
-            <label htmlFor='hourlyRate' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Inactive
-            </label>
-            <div className='flex items-center h-[40px] mb-4 px-2'>
-              <input
-                className='cursor-pointer w-4 h-4'
-                type='checkbox'
-                checked={values.inactive}
-                id='inactive'
-                name='inactive'
-                onChange={event => handleChangeForm({ target: { name: 'inactive', value: event.target.checked } })}
-              />
+
+            {/* Additional Settings Section */}
+            <div className='bg-yellow-50 p-4 rounded-lg mb-6'>
+              <h3 className='text-[#333] text-[16px] font-semibold mb-4 border-b border-yellow-200 pb-2'>Additional Settings</h3>
+              
+              <div className='flex items-center mb-4'>
+                <label htmlFor='hourlyRate' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Hourly Rate
+                </label>
+                <div className='flex-1'>
+                  <input
+                    className='cursor-pointer w-4 h-4'
+                    type='checkbox'
+                    checked={values.hourlyRate}
+                    id='hourlyRate'
+                    name='hourlyRate'
+                    onChange={event => handleChangeForm({ target: { name: 'hourlyRate', value: event.target.checked } })}
+                  />
+                </div>
+              </div>
+              
+              <div className='flex items-center mb-4'>
+                <label htmlFor='doesNotHaveAVacation' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Doesn't have a vacation
+                </label>
+                <div className='flex-1'>
+                  <input
+                    className='cursor-pointer w-4 h-4'
+                    type='checkbox'
+                    checked={values.doesNotHaveAVacation}
+                    id='doesNotHaveAVacation'
+                    name='doesNotHaveAVacation'
+                    onChange={event =>
+                      handleChangeForm({ target: { name: 'doesNotHaveAVacation', value: event.target.checked } })
+                    }
+                  />
+                </div>
+              </div>
+              
+              <div className='flex items-center mb-4'>
+                <label htmlFor='inactive' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Inactive
+                </label>
+                <div className='flex-1'>
+                  <input
+                    className='cursor-pointer w-4 h-4'
+                    type='checkbox'
+                    checked={values.inactive}
+                    id='inactive'
+                    name='inactive'
+                    onChange={event => handleChangeForm({ target: { name: 'inactive', value: event.target.checked } })}
+                  />
+                </div>
+              </div>
             </div>
             
           </div>
           <div className='flex flex-col'>
-            <div>
-              <div className='w-[284px] h-[284px] overflow-hidden'>
-                <img
-                  id='profile_picture'
-                  className='w-full h-full object-contain'
-                  src={values.picture ? values.picture : defaultPicture}
-                  alt='profile'
-                />
+            {/* Profile Picture Section */}
+            <div className='bg-cyan-50 p-4 rounded-lg mb-6'>
+              <h3 className='text-[#333] text-[16px] font-semibold mb-4 border-b border-cyan-200 pb-2'>Profile Picture</h3>
+              
+              <div className='flex justify-center'>
+                <div className='relative'>
+                  <div className='w-[284px] h-[284px] overflow-hidden rounded-lg border-2 border-gray-200'>
+                    <img
+                      id='profile_picture'
+                      className='w-full h-full object-contain'
+                      src={values.picture ? values.picture : defaultPicture}
+                      alt='profile'
+                    />
+                  </div>
+                  {values.picture && (
+                    <button
+                      onClick={handleRemovePicture}
+                      className='absolute -top-2 -right-2 bg-white rounded-full shadow-lg hover:bg-gray-50'
+                    >
+                      <icons.closeModal style={{ width: '26px', height: '26px' }} />
+                    </button>
+                  )}
+                  <input
+                    type='file'
+                    id='picture'
+                    name='picture'
+                    onChange={handleFileChange}
+                    className='opacity-0 absolute inset-0 cursor-pointer'
+                    accept='image/png, image/gif, image/jpeg'
+                  />
+                  <span className='absolute bottom-2 right-2 pointer-events-none cursor-pointer'>
+                    {' '}
+                    <icons.imageCircle />{' '}
+                  </span>
+                  <span className='absolute bottom-2 right-8 pointer-events-none cursor-pointer'>
+                    {' '}
+                    <icons.imageIcon />{' '}
+                  </span>
+                </div>
               </div>
-              {values.picture && (
-                <button
-                  onClick={handleRemovePicture}
-                  className='relative left-[80px] bottom-[3px] bg-white rounded-full'
-                >
-                  <icons.closeModal style={{ width: '26px', height: '26px' }} />
-                </button>
-              )}
-              <input
-                type='file'
-                id='picture'
-                name='picture'
-                onChange={handleFileChange}
-                className='opacity-0 relative cursor-pointer left-[95px] bottom-[10px]'
-                accept='image/png, image/gif, image/jpeg'
-              />
-              <span className='relative left-[121px] bottom-[50px] pointer-events-none cursor-pointer'>
-                {' '}
-                <icons.imageCircle />{' '}
-              </span>
-              <span className='relative left-[134px] bottom-[86px] pointer-events-none cursor-pointer'>
-                {' '}
-                <icons.imageIcon />{' '}
-              </span>
             </div>
-            <div className='flex flex-col mt-2'>
-              <label htmlFor='feedbackFrequency' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-                Feedback Collection
-              </label>
-              <span className='relative left-[280px] top-[24px] pointer-events-none'>
-                {' '}
-                <icons.selectIcon />{' '}
-              </span>
-              <select
-                onChange={handleChangeForm}
-                className='border text-[#9197B3] text-[14px] border-[#F5F0F0] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-                id='feedbackFrequency'
-                value={values.feedbackFrequency}
-                name='feedbackFrequency'
-              >
-                <option value=''>Select Frequency</option>
-                <option value=''>No Feedback Frequency</option>
-                <option value='1w'>once a week</option>
-                <option value='2w'>every two weeks</option>
-                <option value='1m'>once a month</option>
-              </select>
+
+            {/* Feedback Settings Section */}
+            <div className='bg-teal-50 p-4 rounded-lg mb-6'>
+              <h3 className='text-[#333] text-[16px] font-semibold mb-4 border-b border-teal-200 pb-2'>Feedback Settings</h3>
+              
+              <div className='flex items-center mb-4'>
+                <label htmlFor='feedbackFrequency' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Feedback Collection
+                </label>
+                <div className='relative flex-1'>
+                  <span className='absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none'>
+                    <icons.selectIcon />
+                  </span>
+                  <select
+                    onChange={handleChangeForm}
+                    className='border text-[#9197B3] text-[14px] border-[#F5F0F0] w-full rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                    id='feedbackFrequency'
+                    value={values.feedbackFrequency}
+                    name='feedbackFrequency'
+                  >
+                    <option value=''>Select Frequency</option>
+                    <option value=''>No Feedback Frequency</option>
+                    <option value='1w'>once a week</option>
+                    <option value='2w'>every two weeks</option>
+                    <option value='1m'>once a month</option>
+                  </select>
+                </div>
+              </div>
             </div>
           </div>
         </form>
