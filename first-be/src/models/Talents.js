@@ -103,6 +103,11 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             default: false
         },
+        workFromMonday: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            default: true
+        },
         inactive: {
             type: DataTypes.BOOLEAN,
             allowNull: false,

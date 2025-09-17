@@ -178,7 +178,7 @@ const getReport = async payload => {
       const isUkraine = location === 'ua'
 
       const holidays = await getHolidaysForCountry(location, isUkraine)
-      const usedData = calculateYearlyUsedDays(talent.vacations, holidays)
+      const usedData = calculateYearlyUsedDays(talent.vacations, holidays, talent.workFromMonday)
       const granted = await getTalentGrantedValues(talent.id)
       const totalUsed = await getTalentAllUsedDays(talent.id)
 

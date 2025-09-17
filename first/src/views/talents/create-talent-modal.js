@@ -84,6 +84,7 @@ const CreateTalentModal = ({
     hourlyRate: false,
     canWorkOnTwoPositions: false,
     doesNotHaveAVacation: false,
+    workFromMonday : true,
     linkedinProfileChecked: false,
     ignoreLinkedinCheck: false,
     linkedinProfile: '',
@@ -182,6 +183,7 @@ const CreateTalentModal = ({
           hourlyRate,
           canWorkOnTwoPositions,
           doesNotHaveAVacation,
+          workFromMonday,
           linkedinProfile,
           linkedinComment,
           linkedinProfileChecked,
@@ -211,6 +213,7 @@ const CreateTalentModal = ({
           hourlyRate,
           canWorkOnTwoPositions,
           doesNotHaveAVacation,
+          workFromMonday,
           linkedinProfile,
           linkedinComment,
           linkedinProfileChecked,
@@ -339,7 +342,7 @@ const CreateTalentModal = ({
               name='fullName'
               value={values.fullName}
               onChange={handleChangeForm}
-              placeholder='Iris Levy'
+              placeholder=''
               className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
             />
             <label htmlFor='cusIds' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
@@ -428,6 +431,9 @@ const CreateTalentModal = ({
               }}
             />
 
+            <div className='h-[30px] mb-4'>
+            </div>
+
             <label htmlFor='Customer' className='text-[#000] text-[14px] font-medium text-left'>
               Customer
             </label>
@@ -443,7 +449,7 @@ const CreateTalentModal = ({
               placeholder='Customer'
               className='mb-4 border border-[#F5F0F0]  text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
             />
-
+            
             {/* <SearchableField
               name='Customer'
               data={allOrganizations.map(org => ({ key: `${org.id}`, value: org.name }))}
@@ -465,190 +471,6 @@ const CreateTalentModal = ({
               }}
             /> */}
 
-            <label htmlFor='email' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              E-mail
-            </label>
-            <input
-              type='email'
-              name='email'
-              onChange={handleChangeForm}
-              value={values.email}
-              placeholder='iris@gmail.com'
-              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            />
-            <label htmlFor='address' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Address
-            </label>
-            <input
-              name='address'
-              onChange={handleChangeForm}
-              value={values.address}
-              placeholder='Employee Address'
-              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            />
-            <label htmlFor='position' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Position
-            </label>
-            <input
-              name='position'
-              onChange={handleChangeForm}
-              value={values.position}
-              placeholder='Position here'
-              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            />
-            <label htmlFor='removeReason' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Reason For Removal
-            </label>
-            <input
-              name='removeReason'
-              onChange={handleChangeForm}
-              value={values.removeReason}
-              placeholder='Reason For Removal'
-              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            />
-            <label htmlFor='startDate' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Start Date
-            </label>
-            <DatePicker
-              selected={values.startDate}
-              onChange={date => handleChangeForm({ target: { name: 'startDate', value: date } })}
-              selectsStart
-              showMonthDropdown
-              showYearDropdown
-              placeholderText={'DD/MM/YYYY'}
-              dateFormat='dd/MM/yyyy'
-              className='border border-[#F5F0F0] w-[313px] mb-4 rounded-lg h-[40px] px-[15px] outline-none'
-            />
-            <label htmlFor='endDate' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              End Date
-            </label>
-            <DatePicker
-              selected={values.endDate}
-              onChange={date => handleChangeForm({ target: { name: 'endDate', value: date } })}
-              selectsStart
-              showMonthDropdown
-              showYearDropdown
-              placeholderText={'DD/MM/YYYY'}
-              dateFormat='dd/MM/yyyy'
-              className='border border-[#F5F0F0] w-[313px] mb-4 rounded-lg h-[40px] px-[15px] outline-none'
-            />
-            <label htmlFor='telegram' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Telegram
-            </label>
-            <input
-              onChange={handleChangeForm}
-              name='telegram'
-              value={values.telegram}
-              placeholder='@telegram'
-              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            />
-            <label htmlFor='ignoreLinkedinCheck' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Ignore Linkedin Check
-            </label>
-            <div className='flex items-center h-[40px] mb-4 px-2'>
-              <input
-                className='cursor-pointer w-4 h-4'
-                type='checkbox'
-                checked={values.ignoreLinkedinCheck}
-                id='ignoreLinkedinCheck'
-                name='ignoreLinkedinCheck'
-                onChange={event =>
-                  handleChangeForm({ target: { name: 'ignoreLinkedinCheck', value: event.target.checked } })
-                }
-              />
-            </div>
-            <label htmlFor='canWorkOnTwoPositions' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Can Work On Two Positions
-            </label>
-            <div className='flex items-center h-[40px] mb-4 px-2'>
-              <input
-                className='cursor-pointer w-4 h-4'
-                type='checkbox'
-                checked={values.canWorkOnTwoPositions}
-                id='canWorkOnTwoPositions'
-                name='canWorkOnTwoPositions'
-                onChange={event =>
-                  handleChangeForm({ target: { name: 'canWorkOnTwoPositions', value: event.target.checked } })
-                }
-              />
-            </div>
-            <label htmlFor='canWorkOnTwoPositions' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Doesn't have a vacation
-            </label>
-            <div className='flex items-center h-[40px] px-2'>
-              <input
-                className='cursor-pointer w-4 h-4'
-                type='checkbox'
-                checked={values.doesNotHaveAVacation}
-                id='doesNotHaveAVacation'
-                name='doesNotHaveAVacation'
-                onChange={event =>
-                  handleChangeForm({ target: { name: 'doesNotHaveAVacation', value: event.target.checked } })
-                }
-              />
-            </div>
-            {error && (
-              <p className='text-[#D0004B] my-3 text-[12px] flex items-center'>
-                <span className='mr-[5px]'>
-                  {' '}
-                  <icons.alert />{' '}
-                </span>{' '}
-                {error}
-              </p>
-            )}
-          </div>
-          <div className='text-[14px] mr-[50px] flex justify-start flex-col'>
-            <label htmlFor='phoneNumber' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Mobile Phone
-            </label>
-            <input
-              name='phoneNumber'
-              onChange={handleChangeForm}
-              value={values.phoneNumber}
-              placeholder='Mobile phone'
-              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            />
-            <label htmlFor='location' className='text-[#000] text-[14px] font-medium text-left'>
-              Location
-            </label>
-            <span className='relative left-[280px] top-[24px] pointer-events-none'>
-              {' '}
-              <icons.selectIcon />{' '}
-            </span>
-            <select
-              className='border text-[#9197B3] text-[14px] mb-4 border-[#F5F0F0] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-              id='location'
-              name='location'
-              value={values.location}
-              onChange={handleChangeForm}
-            >
-              {/* Show placeholder only when no value is selected */}
-              {!values.location && (
-                <option value="" disabled>
-                  Choose a country
-                </option>
-              )}
-              {Object.entries(codeToCountry ?? {}).map(([code, countryName]) => {
-                return (
-                  <option value={code} key={code}>
-                    {countryName}
-                  </option>
-                );
-              })}
-            </select>
-            <label htmlFor='birthday' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Birthday
-            </label>
-            <DatePicker
-              selected={values.birthday}
-              onChange={date => handleChangeForm({ target: { name: 'birthday', value: date } })}
-              selectsStart
-              showMonthDropdown
-              showYearDropdown
-              placeholderText={'DD/MM/YYYY'}
-              dateFormat='dd/MM/yyyy'
-              className='border border-[#F5F0F0] mb-4 w-[313px] rounded-lg h-[40px] px-[15px] outline-none'
-            />
             <label htmlFor='projectName' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
               Project
             </label>
@@ -656,7 +478,7 @@ const CreateTalentModal = ({
               name='projectName'
               onChange={handleChangeForm}
               value={values.projectName}
-              placeholder='Project Name here'
+              placeholder=''
               className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
             />
             <label htmlFor='agencyId' className='text-[#000] text-[14px] font-medium text-left'>
@@ -679,16 +501,7 @@ const CreateTalentModal = ({
                 </option>
               ))}
             </select>
-            <label htmlFor='whatsup' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Whatsup
-            </label>
-            <input
-              onChange={handleChangeForm}
-              name='whatsup'
-              value={values.whatsup}
-              placeholder='@whatsup'
-              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            />
+
             <label htmlFor='summary' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
               Summary
             </label>
@@ -696,11 +509,223 @@ const CreateTalentModal = ({
               onChange={handleChangeForm}
               name='summary'
               value={values.summary}
-              placeholder='Summary'
+              placeholder=''
               rows={4}
               className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg px-[15px] py-[10px] appearance-none outline-none resize-none overflow-y-auto'
               style={{ minHeight: '80px', maxHeight: '200px' }}
             />
+
+            <label htmlFor='cv' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
+              CV
+            </label>
+            <div className='flex items-center h-[40px] mb-4 px-2'>
+              <UploadCV
+                onChange={file => {
+                  setFormState(prev => ({
+                    ...prev,
+                    values: {
+                      ...prev.values,
+                      cv: file
+                    }
+                  }));
+                }}
+              />
+            </div>
+            <div className='h-[30px] mb-4'>
+            </div>
+
+            <label htmlFor='email' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
+              E-mail
+            </label>
+            <input
+              type='email'
+              name='email'
+              onChange={handleChangeForm}
+              value={values.email}
+              placeholder=''
+              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+            />
+            <label htmlFor='address' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
+              Address
+            </label>
+            <input
+              name='address'
+              onChange={handleChangeForm}
+              value={values.address}
+              placeholder=''
+              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+            />
+             <label htmlFor='location' className='text-[#000] text-[14px] font-medium text-left'>
+              Location
+            </label>
+            <span className='relative left-[280px] top-[24px] pointer-events-none'>
+              {' '}
+              <icons.selectIcon />{' '}
+            </span>
+            <select
+              className='border text-[#9197B3] text-[14px] mb-4 border-[#F5F0F0] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+              id='location'
+              name='location'
+              value={values.location}
+              onChange={handleChangeForm}
+            >
+              {/* Show placeholder only when no value is selected */}
+              {!values.location && (
+                <option value="" disabled>
+                  
+                </option>
+              )}
+              {Object.entries(codeToCountry ?? {}).map(([code, countryName]) => {
+                return (
+                  <option value={code} key={code}>
+                    {countryName}
+                  </option>
+                );
+              })}
+            </select>
+            <label htmlFor='position' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
+              Position
+            </label>
+            <input
+              name='position'
+              onChange={handleChangeForm}
+              value={values.position}
+              placeholder=''
+              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+            />
+            <label htmlFor='birthday' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
+              Birthday
+            </label>
+            <DatePicker
+              selected={values.birthday}
+              onChange={date => handleChangeForm({ target: { name: 'birthday', value: date } })}
+              selectsStart
+              showMonthDropdown
+              showYearDropdown
+              placeholderText={''}
+              dateFormat='dd/MM/yyyy'
+              className='border border-[#F5F0F0] mb-4 w-[313px] rounded-lg h-[40px] px-[15px] outline-none'
+            />
+           
+            
+            {error && (
+              <p className='text-[#D0004B] my-3 text-[12px] flex items-center'>
+                <span className='mr-[5px]'>
+                  {' '}
+                  <icons.alert />{' '}
+                </span>{' '}
+                {error}
+              </p>
+            )}
+          </div>
+          <div className='text-[14px] mr-[50px] flex justify-start flex-col'>
+
+            <label htmlFor='startDate' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
+              Start Date
+            </label>
+            <DatePicker
+              selected={values.startDate}
+              onChange={date => handleChangeForm({ target: { name: 'startDate', value: date } })}
+              selectsStart
+              showMonthDropdown
+              showYearDropdown
+              placeholderText={'DD/MM/YYYY'}
+              dateFormat='dd/MM/yyyy'
+              className='border border-[#F5F0F0] w-[313px] mb-4 rounded-lg h-[40px] px-[15px] outline-none'
+            />
+            <label htmlFor='workFromMonday' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
+              Working from Monday
+            </label>
+            <div className='flex items-center h-[40px] px-2'>
+              <input
+                className='cursor-pointer w-4 h-4'
+                type='checkbox'
+                checked={values.workFromMonday}
+                id='workFromMonday'
+                name='workFromMonday'
+                onChange={event =>
+                  handleChangeForm({ target: { name: 'workFromMonday', value: event.target.checked } })
+                }
+              />
+            </div>
+            <label htmlFor='canWorkOnTwoPositions' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
+              Can Work On Two Positions
+            </label>
+            <div className='flex items-center h-[40px] mb-4 px-2'>
+              <input
+                className='cursor-pointer w-4 h-4'
+                type='checkbox'
+                checked={values.canWorkOnTwoPositions}
+                id='canWorkOnTwoPositions'
+                name='canWorkOnTwoPositions'
+                onChange={event =>
+                  handleChangeForm({ target: { name: 'canWorkOnTwoPositions', value: event.target.checked } })
+                }
+              />
+            </div>
+            <div className='h-[30px] mb-4'>
+            </div>
+            <label htmlFor='endDate' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
+              End Date
+            </label>
+            <DatePicker
+              selected={values.endDate}
+              onChange={date => handleChangeForm({ target: { name: 'endDate', value: date } })}
+              selectsStart
+              showMonthDropdown
+              showYearDropdown
+              placeholderText={'DD/MM/YYYY'}
+              dateFormat='dd/MM/yyyy'
+              className='border border-[#F5F0F0] w-[313px] mb-4 rounded-lg h-[40px] px-[15px] outline-none'
+            />
+            <label htmlFor='removeReason' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
+              Reason For Removal
+            </label>
+            <input
+              name='removeReason'
+              onChange={handleChangeForm}
+              value={values.removeReason}
+              placeholder='Reason For Removal'
+              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+            />
+            <div className='h-[30px] mb-4'>
+            </div>
+
+            <label htmlFor='phoneNumber' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
+              Mobile Phone
+            </label>
+            <input
+              name='phoneNumber'
+              onChange={handleChangeForm}
+              value={values.phoneNumber}
+              placeholder=''
+              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+            />
+            
+            <label htmlFor='whatsup' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
+              Whatsup
+            </label>
+            <input
+              onChange={handleChangeForm}
+              name='whatsup'
+              value={values.whatsup}
+              placeholder=''
+              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+            />
+
+            <label htmlFor='telegram' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
+              Telegram
+            </label>
+            <input
+              onChange={handleChangeForm}
+              name='telegram'
+              value={values.telegram}
+              placeholder='@telegram'
+              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+            />
+            <div className='h-[30px] mb-4'>
+            </div>
+           
             <label htmlFor='linkedinProfile' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
               Linkedin Profile
             </label>
@@ -758,6 +783,25 @@ const CreateTalentModal = ({
               placeholder='Linkedin Comment'
               className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
             />
+            <div className='h-[30px] mb-4'>
+            </div>
+
+            <label htmlFor='ignoreLinkedinCheck' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
+              Ignore Linkedin Check
+            </label>
+            <div className='flex items-center h-[40px] mb-4 px-2'>
+              <input
+                className='cursor-pointer w-4 h-4'
+                type='checkbox'
+                checked={values.ignoreLinkedinCheck}
+                id='ignoreLinkedinCheck'
+                name='ignoreLinkedinCheck'
+                onChange={event =>
+                  handleChangeForm({ target: { name: 'ignoreLinkedinCheck', value: event.target.checked } })
+                }
+              />
+            </div>
+
             <label htmlFor='hourlyRate' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
               Hourly Rate
             </label>
@@ -770,6 +814,23 @@ const CreateTalentModal = ({
                 name='hourlyRate'
                 onChange={event => handleChangeForm({ target: { name: 'hourlyRate', value: event.target.checked } })}
               />
+            </div>
+             <label htmlFor='canWorkOnTwoPositions' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
+              Doesn't have a vacation
+            </label>
+            <div className='flex items-center h-[40px] px-2'>
+              <input
+                className='cursor-pointer w-4 h-4'
+                type='checkbox'
+                checked={values.doesNotHaveAVacation}
+                id='doesNotHaveAVacation'
+                name='doesNotHaveAVacation'
+                onChange={event =>
+                  handleChangeForm({ target: { name: 'doesNotHaveAVacation', value: event.target.checked } })
+                }
+              />
+            </div>
+            <div className='h-[30px] mb-4'>
             </div>
             <label htmlFor='hourlyRate' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
               Inactive
@@ -784,22 +845,7 @@ const CreateTalentModal = ({
                 onChange={event => handleChangeForm({ target: { name: 'inactive', value: event.target.checked } })}
               />
             </div>
-            <label htmlFor='cv' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              CV
-            </label>
-            <div className='flex items-center h-[40px] mb-4 px-2'>
-              <UploadCV
-                onChange={file => {
-                  setFormState(prev => ({
-                    ...prev,
-                    values: {
-                      ...prev.values,
-                      cv: file
-                    }
-                  }));
-                }}
-              />
-            </div>
+            
           </div>
           <div className='flex flex-col'>
             <div>

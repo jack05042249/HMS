@@ -80,7 +80,7 @@ const getAllTalents2 = async () => {
 const getAggregatedTalents = async (req, res) => {
     try {
         const aggregatedTalents = await Talent.findAll({
-            attributes: {exclude: ['password'], include: ['talentMainCustomer', 'hourlyRate', 'canWorkOnTwoPositions', 'inactive', 'linkedinProfileChecked', 'linkedinComment']},
+            attributes: {exclude: ['password'], include: ['talentMainCustomer', 'hourlyRate', 'canWorkOnTwoPositions', 'workFromMonday', 'inactive', 'linkedinProfileChecked', 'linkedinComment']},
             include: [
                 {
                     model: TalentCustomer,

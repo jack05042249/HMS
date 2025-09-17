@@ -106,6 +106,7 @@ const EditTalentModal = ({
     cv,
     canWorkOnTwoPositions,
     doesNotHaveAVacation,
+    workFromMonday,
     linkedinProfileChecked,
     ignoreLinkedinCheck,
     linkedinProfile,
@@ -208,7 +209,8 @@ const EditTalentModal = ({
       id === 'canWorkOnTwoPositions' ||
       id === 'ignoreLinkedinCheck' ||
       id === 'doesNotHaveAVacation' ||
-      id === 'inactive'
+      id === 'inactive' ||
+      id === 'workFromMonday'
     ) {
       setTalent(prev => ({ ...prev, [id]: checked }));
       return;
@@ -655,6 +657,19 @@ const EditTalentModal = ({
                 checked={doesNotHaveAVacation}
                 id='doesNotHaveAVacation'
                 name='doesNotHaveAVacation'
+                onChange={onChangeHandler}
+              />
+            </div>
+            <label htmlFor='workFromMonday' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
+              Working from Monday
+            </label>
+            <div className='flex items-center h-[40px] px-2'>
+              <input
+                className='cursor-pointer w-4 h-4'
+                type='checkbox'
+                checked={workFromMonday}
+                id='workFromMonday'
+                name='workFromMonday'
                 onChange={onChangeHandler}
               />
             </div>

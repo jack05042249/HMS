@@ -251,7 +251,7 @@ function initializeMonths() {
   The function should calculate days user PER 1  month separately and also include holidays and weekdays
 
  */
-function calculateYearlyUsedDays(vacationRequests, holidays) {
+function calculateYearlyUsedDays(vacationRequests, holidays, workFromMonday) {
   const usedDaysPerMonth = initializeMonths(); // Initialize for the year 2024
 
   vacationRequests.forEach(record => {
@@ -275,13 +275,15 @@ function calculateYearlyUsedDays(vacationRequests, holidays) {
       const month = start.format('MMMM');
       const dayOfWeek = start.day();
       const isHoliday = isISODayAsHoliday(start.format('YYYY-MM-DD'), holidays);
-
-      // Handle half-day logic correctly
-      if (record.isHalfDay && start.isSame(moment(record.startDate), 'day')) {
-        usedDaysPerMonth[month][typeName] += 0.5;
-      } else if (dayOfWeek !== 6 && dayOfWeek !== 0 && !isHoliday) {
-        // Only count full working days
-        usedDaysPerMonth[month][typeName] += 1;
+      
+      if (((workFromMonday && dayOfWeek !== 6 && dayOfWeek !== 0) || (!workFromMonday && dayOfWeek !== 5 && dayOfWeek !== 6)) && !isHoliday) {
+        if (record.isHalfDay && start.isSame(moment(record.endDate), 'day')) {
+          // Handle half-day logic correctly
+          usedDaysPerMonth[month][typeName] += 0.5; // Adjust for half-day on the end date
+        } else {
+          // Only count full working days
+          usedDaysPerMonth[month][typeName] += 1;
+        }
       }
 
       start.add(1, 'day');
