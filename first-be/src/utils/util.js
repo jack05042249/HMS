@@ -94,7 +94,7 @@ const roundToInt = (number) => {
   return Math.round(number)
 };
 
-const isWeekend = (date, workFromMonday = 1) => {
+const isWeekend = (date, workFromMonday) => {
   const day = moment(date).day();
   return (workFromMonday && (day === 6 || day === 0)) || (!workFromMonday && (day === 5 || day === 6)); // 6 = Saturday, 0 = Sunday
 };
