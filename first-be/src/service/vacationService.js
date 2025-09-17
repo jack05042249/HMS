@@ -296,25 +296,25 @@ function calculateYearlyUsedDays(vacationRequests, holidays, workFromMonday) {
 }
 
 
-const calculateUsedDaysByType = async (historyRecords, holidaysResponse) => {
+const calculateUsedDaysByType = async (historyRecords, holidaysResponse, workFromMonday = 1) => {
   let usedDays = 0
 
   for (const record of historyRecords) {
-    usedDays += calculateDaysCountForRecord(record, holidaysResponse)
+    usedDays += calculateDaysCountForRecord(record, holidaysResponse, workFromMonday)
   }
   return usedDays
 }
 
-function calculateDaysCountForRecord(record, holidaysResponse) {
+function calculateDaysCountForRecord(record, holidaysResponse, workFromMonday = 1) {
   const currentYear = moment().year();
   let start = moment(record.startDate).year() < currentYear ? moment(`${currentYear}-01-01`) : moment(record.startDate);
   let end = moment(record.endDate).year() > currentYear ? moment(`${currentYear}-12-31`) : moment(record.endDate);
 
   const requestDates = getDatesBetween(start, end);
 
-  const nonHolidayDates = filterNonHolidayDaysFromArrayOfISODays(requestDates, holidaysResponse);
+  const nonHolidayDates = filterNonHolidayDaysFromArrayOfISODays(requestDates, holidaysResponse, workFromMonday);
 
-  const nonWeekendAndNonHolidayDates = nonHolidayDates.filter(d => !isWeekend(d));
+  const nonWeekendAndNonHolidayDates = nonHolidayDates.filter(d => !isWeekend(d, workFromMonday));
 
   return record.isHalfDay ? nonWeekendAndNonHolidayDates.length / 2 : nonWeekendAndNonHolidayDates.length;
 }
@@ -461,7 +461,7 @@ const getDatesBetween = (startDate, endDate) => {
 }
 
 
-const getTalentAllUsedDays = async (talentId) => {
+const getTalentAllUsedDays = async (talentId, workFromMonday = 1) => {
   const talent = await getTalentById(talentId)
   const { location } = talent
   const isUkraine = location === 'ua'
@@ -474,10 +474,10 @@ const getTalentAllUsedDays = async (talentId) => {
   const approvedBonusRequests = await getTalentApprovedVacationRequestsByType(talentId, 'bonus')
 
   if (approvedVacationRequests || approvedSickRequests || approvedUnpaidRequests || approvedBonusRequests) {
-    const usedTalentVacationDaysByType = await calculateUsedDaysByType(approvedVacationRequests, holidays)
-    const usedTalentSickDaysByType = await calculateUsedDaysByType(approvedSickRequests, holidays)
-    const usedTalentUnpaidDaysByType = await calculateUsedDaysByType(approvedUnpaidRequests, holidays)
-    const usedTalentBonusDaysByType = await calculateUsedDaysByType(approvedBonusRequests, holidays)
+    const usedTalentVacationDaysByType = await calculateUsedDaysByType(approvedVacationRequests, holidays, workFromMonday)
+    const usedTalentSickDaysByType = await calculateUsedDaysByType(approvedSickRequests, holidays, workFromMonday)
+    const usedTalentUnpaidDaysByType = await calculateUsedDaysByType(approvedUnpaidRequests, holidays, workFromMonday)
+    const usedTalentBonusDaysByType = await calculateUsedDaysByType(approvedBonusRequests, holidays, workFromMonday)
 
     return {
       usedVacationDays: usedTalentVacationDaysByType ? usedTalentVacationDaysByType : 0,
