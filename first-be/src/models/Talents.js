@@ -76,7 +76,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         feedbackFrequency: {
             type: DataTypes.ENUM,
-            values: ['1w', '2w', '1m'],
+            values: ['No','1w', '2w', '1m', '3m'],
             allowNull: true,
             defaultValue: null,
         },

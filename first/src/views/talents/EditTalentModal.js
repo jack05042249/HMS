@@ -247,6 +247,11 @@ const EditTalentModal = ({
         setError('At least one customer is required');
         return;
       }
+
+      if (!feedbackFrequency) {
+        setError('Please select feedback frequency for this talent');
+        return;
+      }
       const agencyName = findAgencyNameById(agencyId);
       const dataToSave = {
         ...talent,
@@ -992,7 +997,7 @@ const EditTalentModal = ({
                     name='feedbackFrequency'
                   >
                     <option value=''>Select Frequency</option>
-                    <option value=''>No Feedback Frequency</option>
+                    <option value='No'>No Feedback Frequency</option>
                     <option value='1w'>once a week</option>
                     <option value='2w'>every two weeks</option>
                     <option value='1m'>once a month</option>

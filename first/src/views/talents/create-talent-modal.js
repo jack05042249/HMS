@@ -126,6 +126,11 @@ const CreateTalentModal = ({
         return;
       }
 
+      if (!values['feedbackFrequency']) {
+        setError('Please select feedback frequency for this talent');
+        return;
+      }
+
       for (const fieldInfo of requiredFields) {
         const { field, message } = fieldInfo;
         if (!values[field]) {
@@ -976,7 +981,7 @@ const CreateTalentModal = ({
                     name='feedbackFrequency'
                   >
                     <option value=''>Select Frequency</option>
-                    <option value=''>No Feedback Frequency</option>
+                    <option value='No'>No Feedback Frequency</option>
                     <option value='1w'>once a week</option>
                     <option value='2w'>every two weeks</option>
                     <option value='1m'>once a month</option>
