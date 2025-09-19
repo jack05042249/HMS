@@ -8,8 +8,9 @@ import { showNotificationSuccess } from '../../utils/notifications';
 import moment from 'moment';
 import { useDispatch } from 'react-redux'
 import axios from 'axios';
+import { set } from 'lodash';
 
-const RequestEdit = ({ requestData, displayModal, closeModal, API_URL, fullName, talentId }) => {
+const RequestEdit = ({ requestData, displayModal, closeModal, API_URL, fullName, talentId, edited, setEdited }) => {
   const { startDate, endDate, comment, type, id, isHalfDay } = requestData;
   const formattedStartDate = startDate ? new Date(startDate) : new Date();
   const formattedEndDate = endDate ? new Date(endDate) : new Date();
@@ -82,6 +83,7 @@ const RequestEdit = ({ requestData, displayModal, closeModal, API_URL, fullName,
             }
           }
           dispatch(updateGlobalVacationHistoryData(requestData));
+          setEdited(!edited)
 
           showNotificationSuccess('Vacation request was updated');
           closeModal();

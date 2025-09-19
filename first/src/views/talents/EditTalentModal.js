@@ -310,62 +310,699 @@ const EditTalentModal = ({
     if (isPersonalDetailsActive) {
       return (
         <form className='flex' onSubmit={event => event.preventDefault()}>
-          <div className='flex flex-col mr-10'>
-            <div>
-              <div className='w-[284px] h-[284px] overflow-hidden'>
-                <img
-                  id='profile_picture'
-                  className='w-full h-full object-contain'
-                  src={picture || defaultPicture}
-                  alt='profile'
+          <div className='text-[14px] flex justify-start flex-col mr-[50px]'>
+            {/* Basic Information Section */}
+            <div className='bg-gray-50 p-4 rounded-lg mb-6'>
+              <h3 className='text-[#333] text-[16px] font-semibold mb-4 border-b border-gray-200 pb-2'>Basic Information</h3>
+              
+              <div className='flex items-center mb-4'>
+                <label htmlFor='fullName' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Full Name
+                </label>
+                <div className='relative flex-1'>
+                  <span className='absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none'>
+                    <icons.editIcon />
+                  </span>
+                  <input
+                    id='fullName'
+                    defaultValue={fullName}
+                    type='text'
+                    onChange={onChangeHandler}
+                    className='border border-[#F5F0F0] text-[#9197B3] w-full rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                  />
+                </div>
+              </div>
+              
+              <div className='flex items-start mb-4'>
+                <label htmlFor='cusIds' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4 mt-2'>
+                  Stakeholders
+                </label>
+                <div id='customers_to_select' className='multiple-select relative flex-1'>
+                  {cusIds?.length ? (
+                    <div
+                      className='flex flex-wrap justify-start text-gray-500 py-2 px-8 border border-[#F5F0F0] text-[#9197B3] rounded-lg h-fit px-[15px] appearance-none outline-none'
+                      onClick={toggleCustomers}
+                    >
+                      {cusIds.map((id, i) => {
+                        const { fullName, inactive } = getRelevantCustomer(id);
+                        return (
+                          !inactive && (
+                            <div key={id} className={`flex items-center${i === 0 ? '' : 'ml-10'}`}>
+                              <span>{fullName}</span>
+                              {i < cusIds.length - 1 && <span>,&nbsp;</span>}
+                            </div>
+                          )
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <span
+                      className='flex justify-start text-gray-500 py-2 px-8 items-center underline border border-[#F5F0F0] text-[#9197B3] rounded-lg h-auto px-[15px] appearance-none outline-none'
+                      onClick={toggleCustomers}
+                    >
+                      Select Stakeholders
+                    </span>
+                  )}
+
+                  {showCustomers && (
+                    <div className='multiple-select border-x border-[#F5F0F0] relative bottom-4 max-h-[125px] overflow-auto customer-select px-1 bg-[#fff]'>
+                      <div className='border rounded border-[#F5F0F0] mb-2 flex items-center mt-1'>
+                        <span>
+                          {' '}
+                          <icons.search />{' '}
+                        </span>
+                        <input
+                          value={filter}
+                          onChange={e => setFilter(e.target.value)}
+                          placeholder='Search'
+                          className='outline-none ml-2.5 text-[14px] w-[200px]'
+                          type='text'
+                        />
+                      </div>
+                      {customersForStakeholdersDropdown.map(cus => {
+                        const { id, fullName, organizationId } = cus;
+                        const { name } = getRelevantOrganization(organizationId);
+
+                        return (
+                          <div key={id} className='flex flex-col'>
+                            <div className='flex'>
+                              <input
+                                className='cursor-pointer'
+                                type='checkbox'
+                                checked={cusIds.includes(id)}
+                                id={id}
+                                name='customer'
+                                onChange={event => handleCheckboxChange(id, event.target.id)}
+                              />
+                              <label htmlFor={id} className='ml-10'>{`${fullName} (${name})`}</label>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className='flex items-center mb-4'>
+                <label className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Main Stakeholder
+                </label>
+                <div className='flex-1'>
+                  <SearchableField
+                    data={customersForMainStakeholder.map(customer => ({ key: `${customer.id}`, value: customer.fullName }))}
+                    selectedKeys={talentMainCustomer ? [`${talentMainCustomer}`] : []}
+                    emptyText='Select Main Stakeholder'
+                    onChangeSelectedKeys={selectedKeys => {
+                      onChangeHandler({
+                        target: {
+                          id: 'talentMainCustomer',
+                          name: 'talentMainCustomer',
+                          value: selectedKeys.length ? selectedKeys[selectedKeys.length - 1] : null
+                        }
+                      });
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div className='flex items-center mb-4'>
+                <label htmlFor='Customer' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Billing Customer
+                </label>
+                <input
+                  id='Customer'
+                  value={
+                    talent['talentMainCustomer'] && customersForMainStakeholder.length > 0
+                      ? allOrganizations
+                        .filter(org => organizationIdsForMainStakeholder.includes(org.id))
+                        .map(org => ({ key: `${org.id}`, value: org.name }))[0]?.value
+                      : 'None'
+                  }
+                  placeholder='Customer'
+                  className='border border-[#F5F0F0] text-[#9197B3] flex-1 rounded-lg h-[40px] px-[15px] appearance-none outline-none'
                 />
               </div>
-              {picture && (
-                <button onClick={deletePicture} className='relative left-[80px] bottom-[3px] bg-white rounded-full'>
-                  <icons.closeModal style={{ width: '26px', height: '26px' }} />
-                </button>
-              )}
-              <input
-                type='file'
-                id='picture'
-                name='picture'
-                onChange={onChangeHandler}
-                className='opacity-0 z-10 relative cursor-pointer bottom-[10px]'
-                accept='image/png, image/gif, image/jpeg'
-              />
-              <span className='relative left-[121px] bottom-[50px] pointer-events-none cursor-pointer'>
-                {' '}
-                <icons.imageCircle />{' '}
-              </span>
-              <span className='relative left-[134px] bottom-[86px] pointer-events-none cursor-pointer'>
-                {' '}
-                <icons.imageIcon />{' '}
-              </span>
+
+              <div className='flex items-center mb-4'>
+                <label htmlFor='position' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Position
+                </label>
+                <div className='relative flex-1'>
+                  <span className='absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none'>
+                    <icons.editIcon />
+                  </span>
+                  <input
+                    id='position'
+                    name='position'
+                    onChange={onChangeHandler}
+                    defaultValue={position}
+                    placeholder='Position here'
+                    className='border border-[#F5F0F0] text-[#9197B3] w-full rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                  />
+                </div>
+              </div>
+
+              <div className='flex items-center mb-4'>
+                <label htmlFor='projectName' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Project
+                </label>
+                <div className='relative flex-1'>
+                  <span className='absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none'>
+                    <icons.editIcon />
+                  </span>
+                  <input
+                    id='projectName'
+                    name='projectName'
+                    onChange={onChangeHandler}
+                    defaultValue={projectName}
+                    placeholder='Project Name here'
+                    className='border border-[#F5F0F0] text-[#9197B3] w-full rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                  />
+                </div>
+              </div>
+
+              <div className='flex items-center mb-4'>
+                <label htmlFor='agencyId' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Agency
+                </label>
+                <div className='relative flex-1'>
+                  <span className='absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none'>
+                    <icons.editIcon />
+                  </span>
+                  <select
+                    id='agencyId'
+                    name='agencyId'
+                    onChange={onChangeHandler}
+                    defaultValue={parseInt(agencyId)}
+                    placeholder='Iris Levy'
+                    className='border border-[#F5F0F0] text-[#9197B3] w-full rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                  >
+                    {!parseInt(agencyId) && <option>-- SELECT NEW AGENCY --</option>}
+                    {agencies.map(agency => (
+                      <option key={agency.id} value={parseInt(agency.id)}>
+                        {agency.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className='flex items-start mb-4'>
+                <label htmlFor='summary' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4 mt-2'>
+                  Summary
+                </label>
+                <div className='relative flex-1'>
+                  <span className='absolute right-3 top-3 pointer-events-none'>
+                    <icons.editIcon />
+                  </span>
+                  <textarea
+                    onChange={onChangeHandler}
+                    id='summary'
+                    defaultValue={summary}
+                    placeholder='Summary'
+                    rows={4}
+                    className='border border-[#F5F0F0] text-[#9197B3] w-full rounded-lg px-[15px] py-[10px] appearance-none outline-none resize-none overflow-y-auto'
+                    style={{ minHeight: '80px', maxHeight: '200px' }}
+                  />
+                </div>
+              </div>
+
+              <div className='flex items-center mb-4'>
+                <label htmlFor='cv' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  CV
+                </label>
+                <div className='flex-1'>
+                  <UploadCV
+                    onChange={file => {
+                      setTalent(prev => ({
+                        ...prev,
+                        cv: file
+                      }));
+                    }}
+                  />
+                </div>
+              </div>
             </div>
-            <div className='flex flex-col relative mt-[30px]'>
-              <label htmlFor='feedbackFrequency' className='text-[#000] text-[14px] font-medium text-left mb-1'>
-                Feedback Collection
-              </label>
-              <span className='relative left-[280px] top-[24px] pointer-events-none'>
-                {' '}
-                <icons.selectIcon />{' '}
-              </span>
-              <select
-                defaultValue={feedbackFrequency}
-                className='border text-[#9197B3] text-[14px] border-[#F5F0F0] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-                id='feedbackFrequency'
-                onChange={onChangeHandler}
-                name='feedbackFrequency'
-              >
-                <option value=''>Select Frequency</option>
-                <option value=''>No Feedback Frequency</option>
-                <option value='1w'>once a week</option>
-                <option value='2w'>every two weeks</option>
-                <option value='1m'>once a month</option>
-                <option value='3m'>once in 3 months</option>
-              </select>
+
+            {/* Contact Information & Communication Section */}
+            <div className='bg-green-50 p-4 rounded-lg mb-6'>
+              <h3 className='text-[#333] text-[16px] font-semibold mb-4 border-b border-green-200 pb-2'>Contact Information & Communication</h3>
+
+              <div className='flex items-center mb-4'>
+                <label htmlFor='email' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Email
+                </label>
+                <div className='relative flex-1'>
+                  <span className='absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none'>
+                    <icons.editIcon />
+                  </span>
+                  <input
+                    id='email'
+                    type='email'
+                    name='email'
+                    onChange={onChangeHandler}
+                    defaultValue={email}
+                    placeholder='iris@gmail.com'
+                    className='border border-[#F5F0F0] text-[#9197B3] w-full rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                  />
+                </div>
+              </div>
+
+              <div className='flex items-center mb-4'>
+                <label htmlFor='address' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Employee Address
+                </label>
+                <div className='relative flex-1'>
+                  <span className='absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none'>
+                    <icons.editIcon />
+                  </span>
+                  <input
+                    id='address'
+                    name='address'
+                    onChange={onChangeHandler}
+                    defaultValue={address}
+                    placeholder='Employee Address'
+                    className='border border-[#F5F0F0] text-[#9197B3] w-full rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                  />
+                </div>
+              </div>
+
+              <div className='flex items-center mb-4'>
+                <label htmlFor='location' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Location
+                </label>
+                <div className='relative flex-1'>
+                  <span className='absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none'>
+                    <icons.selectIcon />
+                  </span>
+                  <select
+                    className='border text-[#9197B3] text-[14px] border-[#F5F0F0] w-full rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                    id='location'
+                    name='location'
+                    defaultValue={location}
+                    onChange={onChangeHandler}
+                  >
+                    {!location && (
+                      <option value="" disabled>
+                        Choose a country
+                      </option>
+                    )}
+
+                    {Object.entries(codeToCountry).map(([code, countryName]) => {
+                      return (
+                        <option value={code} key={code}>
+                          {countryName}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+              </div>
+
+              <div className='flex items-center mb-4'>
+                <label htmlFor='birthday' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Birthday
+                </label>
+                <div className='relative flex-1'>
+                  <span className='absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none'>
+                    <icons.editIcon />
+                  </span>
+                  <DatePicker
+                    id='birthday'
+                    selected={formattedBirthday}
+                    onChange={date => onChangeHandler({ target: { id: 'birthday', value: date } })}
+                    selectsStart
+                    showMonthDropdown
+                    showYearDropdown
+                    placeholderText={'DD/MM/YYYY'}
+                    dateFormat='dd/MM/yyyy'
+                    className='border border-[#F5F0F0] text-[#9197B3] w-full rounded-lg h-[40px] px-[15px] outline-none'
+                  />
+                </div>
+              </div>
+
+              <div className='flex items-center mb-4'>
+                <label htmlFor='phoneNumber' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Mobile Phone
+                </label>
+                <div className='relative flex-1'>
+                  <span className='absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none'>
+                    <icons.editIcon />
+                  </span>
+                  <input
+                    id='phoneNumber'
+                    name='phoneNumber'
+                    onChange={onChangeHandler}
+                    value={phoneNumber}
+                    placeholder='Mobile phone'
+                    className='border border-[#F5F0F0] text-[#9197B3] w-full rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                  />
+                </div>
+              </div>
+
+              <div className='flex items-center mb-4'>
+                <label htmlFor='whatsup' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  WhatsApp
+                </label>
+                <div className='relative flex-1'>
+                  <span className='absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none'>
+                    <icons.editIcon />
+                  </span>
+                  <input
+                    onChange={onChangeHandler}
+                    id='whatsup'
+                    defaultValue={whatsup}
+                    placeholder='@whatsup'
+                    className='border border-[#F5F0F0] text-[#9197B3] w-full rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                  />
+                </div>
+              </div>
+
+              <div className='flex items-center mb-4'>
+                <label htmlFor='telegram' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Telegram
+                </label>
+                <div className='relative flex-1'>
+                  <span className='absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none'>
+                    <icons.editIcon />
+                  </span>
+                  <input
+                    id='telegram'
+                    defaultValue={telegram}
+                    onChange={onChangeHandler}
+                    placeholder='@telegram'
+                    className='border border-[#F5F0F0] text-[#9197B3] w-full rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='text-[14px] mr-[50px] flex justify-start flex-col'>
+            {/* Employment Details Section */}
+            <div className='bg-purple-50 p-4 rounded-lg mb-6'>
+              <h3 className='text-[#333] text-[16px] font-semibold mb-4 border-b border-purple-200 pb-2'>Employment Details</h3>
+              
+              <div className='flex items-center mb-4'>
+                <label htmlFor='startDate' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Start Date
+                </label>
+                <div className='relative flex-1'>
+                  <span className='absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none'>
+                    <icons.editIcon />
+                  </span>
+                  <DatePicker
+                    selected={formattedStartDate}
+                    onChange={date => onChangeHandler({ target: { id: 'startDate', value: date } })}
+                    id='startDate'
+                    selectsStart
+                    showMonthDropdown
+                    showYearDropdown
+                    placeholderText={'DD/MM/YYYY'}
+                    dateFormat='dd/MM/yyyy'
+                    className='border border-[#F5F0F0] text-[#9197B3] w-full rounded-lg h-[40px] px-[15px] outline-none'
+                  />
+                </div>
+              </div>
+              
+              <div className='flex items-center mb-4'>
+                <label htmlFor='workFromMonday' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Working from Monday-Friday
+                </label>
+                <div className='flex-1'>
+                  <input
+                    className='cursor-pointer w-4 h-4'
+                    type='checkbox'
+                    checked={workFromMonday}
+                    id='workFromMonday'
+                    name='workFromMonday'
+                    onChange={onChangeHandler}
+                  />
+                </div>
+              </div>
+              
+              <div className='flex items-center mb-4'>
+                <label htmlFor='canWorkOnTwoPositions' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Can Work On 2 Positions
+                </label>
+                <div className='flex-1'>
+                  <input
+                    className='cursor-pointer w-4 h-4'
+                    type='checkbox'
+                    checked={canWorkOnTwoPositions}
+                    id='canWorkOnTwoPositions'
+                    name='canWorkOnTwoPositions'
+                    onChange={onChangeHandler}
+                  />
+                </div>
+              </div>
+
+              <div className='flex items-center mb-4'>
+                <label htmlFor='endDate' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  End Date
+                </label>
+                <div className='relative flex-1'>
+                  <span className='absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none'>
+                    <icons.editIcon />
+                  </span>
+                  <DatePicker
+                    selected={formattedEndDate}
+                    onChange={date => onChangeHandler({ target: { id: 'endDate', value: date } })}
+                    id='endDate'
+                    selectsStart
+                    showMonthDropdown
+                    showYearDropdown
+                    placeholderText={'DD/MM/YYYY'}
+                    dateFormat='dd/MM/yyyy'
+                    className='border border-[#F5F0F0] text-[#9197B3] w-full rounded-lg h-[40px] px-[15px] outline-none'
+                  />
+                </div>
+              </div>
+              
+              <div className='flex items-center mb-4'>
+                <label htmlFor='removeReason' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Reason For Removal
+                </label>
+                <div className='relative flex-1'>
+                  <span className='absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none'>
+                    <icons.editIcon />
+                  </span>
+                  <input
+                    id='removeReason'
+                    name='removeReason'
+                    onChange={onChangeHandler}
+                    defaultValue={removeReason}
+                    placeholder='Reason For Removal'
+                    className='border border-[#F5F0F0] text-[#9197B3] w-full rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* LinkedIn & Social Media Section */}
+            <div className='bg-pink-50 p-4 rounded-lg mb-6'>
+              <h3 className='text-[#333] text-[16px] font-semibold mb-4 border-b border-pink-200 pb-2'>LinkedIn & Social Media</h3>
+              
+              <div className='flex items-center mb-4'>
+                <label htmlFor='linkedinProfile' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  LN Profile
+                </label>
+                <div className='relative flex-1'>
+                  <span className='absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none'>
+                    <icons.editIcon />
+                  </span>
+                  <input
+                    onChange={onChangeHandler}
+                    id='linkedinProfile'
+                    defaultValue={linkedinProfile}
+                    placeholder='Linkedin Profile URL'
+                    className='border border-[#F5F0F0] text-[#9197B3] w-full rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                  />
+                  {linkedinProfile && isValidLink(linkedinProfile) && (
+                    <div
+                      onClick={() => {
+                        window.open(linkedinProfile, '_blank');
+                      }}
+                      className='absolute h-[22px] w-[22px] top-[9px] right-[8px] bg-[#d1d4df] rounded-full pointer'
+                    >
+                      <svg width='100' height='50' xmlns='http://www.w3.org/2000/svg'>
+                        <polygon points='8,5 8,17 18,11' fill='#262626' stroke-width='2' />
+                      </svg>
+                    </div>
+                  )}
+                </div>
+              </div>
+              
+              <div className='flex items-center mb-4'>
+                <label
+                  htmlFor='linkedinProfileChecked_Date'
+                  className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'
+                >
+                  Linkedin Checked
+                </label>
+                <div className='flex-1'>
+                  <span className='badge-tooltip'>
+                    {ignoreLinkedinCheck ? 'IGNORED' : linkedinProfileChecked ? 'TRUE' : 'FALSE'}
+                    <span className='tooltip-text'>{moment(linkedinProfileDate).format('YYYY-MM-DD')}</span>
+                  </span>
+                </div>
+              </div>
+              
+              <div className='flex items-center mb-4'>
+                <label htmlFor='linkedinComment' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Linkedin Comment
+                </label>
+                <input
+                  onChange={onChangeHandler}
+                  name='linkedinComment'
+                  id='linkedinComment'
+                  value={linkedinComment}
+                  placeholder='Linkedin Comment'
+                  className='border border-[#F5F0F0] text-[#9197B3] flex-1 rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                />
+              </div>
+
+              <div className='flex items-center mb-4'>
+                <label htmlFor='ignoreLinkedinCheck' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Ignore Linkedin Check
+                </label>
+                <div className='flex-1'>
+                  <input
+                    className='cursor-pointer w-4 h-4'
+                    type='checkbox'
+                    checked={ignoreLinkedinCheck}
+                    id='ignoreLinkedinCheck'
+                    name='ignoreLinkedinCheck'
+                    onChange={onChangeHandler}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Additional Information Section */}
+            <div className='bg-yellow-50 p-4 rounded-lg mb-6'>
+              <h3 className='text-[#333] text-[16px] font-semibold mb-4 border-b border-yellow-200 pb-2'>Additional Information</h3>
+              
+              <div className='flex items-center mb-4'>
+                <label htmlFor='hourlyRate' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Hourly Rate
+                </label>
+                <div className='flex-1'>
+                  <input
+                    className='cursor-pointer w-4 h-4'
+                    type='checkbox'
+                    checked={hourlyRate}
+                    id='hourlyRate'
+                    name='hourlyRate'
+                    onChange={onChangeHandler}
+                  />
+                </div>
+              </div>
+              
+              <div className='flex items-center mb-4'>
+                <label htmlFor='doesNotHaveAVacation' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Does Not Have A Vacation
+                </label>
+                <div className='flex-1'>
+                  <input
+                    className='cursor-pointer w-4 h-4'
+                    type='checkbox'
+                    checked={doesNotHaveAVacation}
+                    id='doesNotHaveAVacation'
+                    name='doesNotHaveAVacation'
+                    onChange={onChangeHandler}
+                  />
+                </div>
+              </div>
+              
+              <div className='flex items-center mb-4'>
+                <label htmlFor='inactive' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Inactive
+                </label>
+                <div className='flex-1'>
+                  <input
+                    className='cursor-pointer w-4 h-4'
+                    type='checkbox'
+                    checked={inactive}
+                    id='inactive'
+                    name='inactive'
+                    onChange={onChangeHandler}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='flex flex-col'>
+            {/* Profile Picture Section */}
+            <div className='bg-cyan-50 p-4 rounded-lg mb-6'>
+              <h3 className='text-[#333] text-[16px] font-semibold mb-4 border-b border-cyan-200 pb-2'>Profile Picture</h3>
+              
+              <div className='flex justify-center'>
+                <div className='relative'>
+                  <div className='w-[284px] h-[284px] overflow-hidden rounded-lg border-2 border-gray-200'>
+                    <img
+                      id='profile_picture'
+                      className='w-full h-full object-contain'
+                      src={picture || defaultPicture}
+                      alt='profile'
+                    />
+                  </div>
+                  {picture && (
+                    <button onClick={deletePicture} className='absolute -top-2 -right-2 bg-white rounded-full shadow-lg hover:bg-gray-50'>
+                      <icons.closeModal style={{ width: '26px', height: '26px' }} />
+                    </button>
+                  )}
+                  <input
+                    type='file'
+                    id='picture'
+                    name='picture'
+                    onChange={onChangeHandler}
+                    className='opacity-0 absolute inset-0 cursor-pointer'
+                    accept='image/png, image/gif, image/jpeg'
+                  />
+                  <span className='absolute bottom-2 right-2 pointer-events-none cursor-pointer'>
+                    {' '}
+                    <icons.imageCircle />{' '}
+                  </span>
+                  <span className='absolute bottom-5 right-5 pointer-events-none cursor-pointer'>
+                    {' '}
+                    <icons.imageIcon />{' '}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Feedback Settings Section */}
+            <div className='bg-teal-50 p-4 rounded-lg mb-6'>
+              <h3 className='text-[#333] text-[16px] font-semibold mb-4 border-b border-teal-200 pb-2'>Feedback Settings</h3>
+              
+              <div className='flex items-center mb-4'>
+                <label htmlFor='feedbackFrequency' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Feedback Collection
+                </label>
+                <div className='relative flex-1'>
+                  <span className='absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none'>
+                    <icons.selectIcon />
+                  </span>
+                  <select
+                    defaultValue={feedbackFrequency}
+                    className='border text-[#9197B3] text-[14px] border-[#F5F0F0] w-full rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                    id='feedbackFrequency'
+                    onChange={onChangeHandler}
+                    name='feedbackFrequency'
+                  >
+                    <option value=''>Select Frequency</option>
+                    <option value=''>No Feedback Frequency</option>
+                    <option value='1w'>once a week</option>
+                    <option value='2w'>every two weeks</option>
+                    <option value='1m'>once a month</option>
+                    <option value='3m'>once in 3 months</option>
+                  </select>
+                </div>
+              </div>
+              
               {error && (
-                <p className='text-[#D0004B] absolute bottom-[3rem] text-[12px] flex items-center'>
+                <p className='text-[#D0004B] text-[12px] flex items-center'>
                   <span className='mr-[5px]'>
                     {' '}
                     <icons.alert />{' '}
@@ -373,9 +1010,10 @@ const EditTalentModal = ({
                   {error}
                 </p>
               )}
+              
               <button
                 onClick={toggleResetPassword}
-                className='flex justify-center w-[313px] py-[8px] mt-[52px] px-[16px] bg-[#169A52] rounded-md'
+                className='flex justify-center w-full py-[8px] mt-4 px-[16px] bg-[#169A52] rounded-md hover:bg-[#148a47] transition-colors'
               >
                 <span className='text-[#fff] text-[14px] font-medium text-center items-center'>Update Password</span>
                 <span className='relative left-[70px]'>
@@ -383,545 +1021,6 @@ const EditTalentModal = ({
                   <icons.lockIcon />{' '}
                 </span>
               </button>
-            </div>
-          </div>
-          <div className='text-[14px] flex justify-start flex-col mr-[50px]'>
-            <label htmlFor='fullName' className='text-[#000] text-[14px] font-medium text-left '>
-              Full Name
-            </label>
-            <span className='relative left-[280px] top-[25px] pointer-events-none'>
-              {' '}
-              <icons.editIcon />{' '}
-            </span>
-            <input
-              id='fullName'
-              defaultValue={fullName}
-              type='text'
-              onChange={onChangeHandler}
-              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            />
-            <label htmlFor='cusIds' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Email Notification
-            </label>
-            <div id='customers_to_select' className='multiple-select relative'>
-              {cusIds?.length ? (
-                <div
-                  className='flex flex-wrap justify-start text-gray-500 py-2 px-8 border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-fit px-[15px] appearance-none outline-none'
-                  onClick={toggleCustomers}
-                >
-                  {cusIds.map((id, i) => {
-                    const { fullName, inactive } = getRelevantCustomer(id);
-                    return (
-                      !inactive && (
-                        <div key={id} className={`flex items-center${i === 0 ? '' : 'ml-10'}`}>
-                          <span>{fullName}</span>
-                          {i < cusIds.length - 1 && <span>,&nbsp;</span>}
-                        </div>
-                      )
-                    );
-                  })}
-                </div>
-              ) : (
-                <span
-                  className='flex justify-start text-gray-500 py-2 px-8  bottom-4 mb-4 items-center underline border border-[#F5F0F0] text-[#9197B3] w-[313px] rounded-lg h-auto px-[15px] appearance-none outline-none'
-                  onClick={toggleCustomers}
-                >
-                  Select Stakeholders
-                </span>
-              )}
-
-              {showCustomers && (
-                <div className='multiple-select border-x border-[#F5F0F0] relative bottom-4 max-h-[125px] overflow-auto customer-select px-1 bg-[#fff]'>
-                  <div className='border rounded border-[#F5F0F0] mb-2 flex items-center mt-1'>
-                    <span>
-                      {' '}
-                      <icons.search />{' '}
-                    </span>
-                    <input
-                      value={filter}
-                      onChange={e => setFilter(e.target.value)}
-                      placeholder='Search'
-                      className='outline-none ml-2.5 text-[14px] w-[200px]'
-                      type='text'
-                    />
-                  </div>
-                  {customersForStakeholdersDropdown.map(cus => {
-                    const { id, fullName, organizationId } = cus;
-                    const { name } = getRelevantOrganization(organizationId);
-
-                    return (
-                      <div key={id} className='flex flex-col'>
-                        <div className='flex'>
-                          <input
-                            className='cursor-pointer'
-                            type='checkbox'
-                            checked={cusIds.includes(id)}
-                            id={id}
-                            name='customer'
-                            onChange={event => handleCheckboxChange(id, event.target.id)}
-                          />
-                          <label htmlFor={id} className='ml-10'>{`${fullName} (${name})`}</label>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-
-            <SearchableField
-              name='Main Stakeholder'
-              data={customersForMainStakeholder.map(customer => ({ key: `${customer.id}`, value: customer.fullName }))}
-              selectedKeys={talentMainCustomer ? [`${talentMainCustomer}`] : []}
-              emptyText='Select Main Stakeholder'
-              onChangeSelectedKeys={selectedKeys => {
-                onChangeHandler({
-                  target: {
-                    id: 'talentMainCustomer',
-                    name: 'talentMainCustomer',
-                    value: selectedKeys.length ? selectedKeys[selectedKeys.length - 1] : null
-                  }
-                });
-              }}
-            />
-            <label htmlFor='Customer' className='text-[#000] text-[14px] font-medium text-left'>
-              Billing Customer
-            </label>
-            <input
-              id='Customer'
-              value={
-                talent['talentMainCustomer'] && customersForMainStakeholder.length > 0
-                  ? allOrganizations
-                    .filter(org => organizationIdsForMainStakeholder.includes(org.id))
-                    .map(org => ({ key: `${org.id}`, value: org.name }))[0]?.value
-                  : 'None'
-              }
-              placeholder='Customer'
-              className='mb-4 border border-[#F5F0F0]  text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            />
-
-            {email === 'tsimur.pazniakou@innowise.com' &&
-              console.log(
-                talent['talentMainCustomer'],
-                '--',
-                customersForMainStakeholder,
-                '--',
-                organizationIdsForMainStakeholder
-              )}
-
-            <label htmlFor='email' className='text-[#000] text-[14px] mt-2 font-medium text-left'>
-              E-mail
-            </label>
-            <span className='relative left-[280px] top-[25px] pointer-events-none'>
-              {' '}
-              <icons.editIcon />{' '}
-            </span>
-            <input
-              id='email'
-              type='email'
-              name='email'
-              onChange={onChangeHandler}
-              defaultValue={email}
-              placeholder='iris@gmail.com'
-              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            />
-            <label htmlFor='address' className='text-[#000] text-[14px] font-medium text-left'>
-              Address
-            </label>
-            <span className='relative left-[280px] top-[25px] pointer-events-none'>
-              {' '}
-              <icons.editIcon />{' '}
-            </span>
-            <input
-              id='address'
-              name='address'
-              onChange={onChangeHandler}
-              defaultValue={address}
-              placeholder='Employee Address'
-              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            />
-            <label htmlFor='position' className='text-[#000] text-[14px] font-medium text-left'>
-              Position
-            </label>
-            <span className='relative left-[280px] top-[25px] pointer-events-none'>
-              {' '}
-              <icons.editIcon />{' '}
-            </span>
-            <input
-              id='position'
-              name='position'
-              onChange={onChangeHandler}
-              defaultValue={position}
-              placeholder='Position here'
-              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            />
-            <label htmlFor='removeReason' className='text-[#000] text-[14px] font-medium text-left'>
-              Reason For Removal
-            </label>
-            <span className='relative left-[280px] top-[25px] pointer-events-none'>
-              {' '}
-              <icons.editIcon />{' '}
-            </span>
-            <input
-              id='removeReason'
-              name='removeReason'
-              onChange={onChangeHandler}
-              defaultValue={removeReason}
-              placeholder='Reason For Removal'
-              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            />
-            <label htmlFor='startDate' className='text-[#000] text-[14px] font-medium text-left'>
-              Start Date
-            </label>
-            <span className='relative left-[280px] top-[25px] pointer-events-none z-50'>
-              {' '}
-              <icons.editIcon />{' '}
-            </span>
-            <DatePicker
-              selected={formattedStartDate}
-              onChange={date => onChangeHandler({ target: { id: 'startDate', value: date } })}
-              id='startDate'
-              selectsStart
-              showMonthDropdown
-              showYearDropdown
-              placeholderText={'DD/MM/YYYY'}
-              dateFormat='dd/MM/yyyy'
-              className='border border-[#F5F0F0] w-[313px] text-[#9197B3] mb-4 rounded-lg h-[40px] px-[15px] outline-none'
-            />
-            <label htmlFor='endDate' className='text-[#000] text-[14px] font-medium text-left'>
-              End Date
-            </label>
-            <span className='relative left-[280px] top-[25px] pointer-events-none z-50'>
-              {' '}
-              <icons.editIcon />{' '}
-            </span>
-            <DatePicker
-              selected={formattedEndDate}
-              onChange={date => onChangeHandler({ target: { id: 'endDate', value: date } })}
-              id='endDate'
-              selectsStart
-              showMonthDropdown
-              showYearDropdown
-              placeholderText={'DD/MM/YYYY'}
-              dateFormat='dd/MM/yyyy'
-              className='border border-[#F5F0F0] w-[313px] text-[#9197B3] mb-4 rounded-lg h-[40px] px-[15px] outline-none'
-            />
-            <label htmlFor='telegram' className='text-[#000] text-[14px] font-medium text-left'>
-              Telegram
-            </label>
-            <span className='relative left-[280px] top-[25px] pointer-events-none'>
-              {' '}
-              <icons.editIcon />{' '}
-            </span>
-            <input
-              id='telegram'
-              defaultValue={telegram}
-              onChange={onChangeHandler}
-              placeholder='@telegram'
-              className='mb-4 border border-[#F5F0F0]  text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            />
-            <label htmlFor='ignoreLinkedinCheck' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Ignore Linkedin Check
-            </label>
-            <div className='flex items-center h-[40px] px-2'>
-              <input
-                className='cursor-pointer w-4 h-4'
-                type='checkbox'
-                checked={ignoreLinkedinCheck}
-                id='ignoreLinkedinCheck'
-                name='ignoreLinkedinCheck'
-                onChange={onChangeHandler}
-              />
-            </div>
-            <label htmlFor='canWorkOnTwoPositions' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Can Work On Two Positions
-            </label>
-
-            <div className='flex items-center h-[40px] px-2'>
-              <input
-                className='cursor-pointer w-4 h-4'
-                type='checkbox'
-                checked={canWorkOnTwoPositions}
-                id='canWorkOnTwoPositions'
-                name='canWorkOnTwoPositions'
-                onChange={onChangeHandler}
-              />
-            </div>
-            <label htmlFor='canWorkOnTwoPositions' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Doesn't have a vacation
-            </label>
-            <div className='flex items-center h-[40px] px-2'>
-              <input
-                className='cursor-pointer w-4 h-4'
-                type='checkbox'
-                checked={doesNotHaveAVacation}
-                id='doesNotHaveAVacation'
-                name='doesNotHaveAVacation'
-                onChange={onChangeHandler}
-              />
-            </div>
-            <label htmlFor='workFromMonday' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Working from Monday
-            </label>
-            <div className='flex items-center h-[40px] px-2'>
-              <input
-                className='cursor-pointer w-4 h-4'
-                type='checkbox'
-                checked={workFromMonday}
-                id='workFromMonday'
-                name='workFromMonday'
-                onChange={onChangeHandler}
-              />
-            </div>
-          </div>
-          <div className='text-[14px] mr-[50px] flex justify-start flex-col'>
-            <label htmlFor='phoneNumber' className='text-[#000] text-[14px] font-medium text-left'>
-              Mobile Phone
-            </label>
-            <span className='relative left-[280px] top-[25px] pointer-events-none'>
-              {' '}
-              <icons.editIcon />{' '}
-            </span>
-            <input
-              id='phoneNumber'
-              name='phoneNumber'
-              onChange={onChangeHandler}
-              value={phoneNumber}
-              placeholder='Mobile phone'
-              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            />
-            <label htmlFor='location' className='text-[#000] text-[14px] font-medium text-left'>
-              Location
-            </label>
-            <span className='relative left-[280px] top-[24px] pointer-events-none'>
-              {' '}
-              <icons.selectIcon />{' '}
-            </span>
-            <select
-              className='border text-[#9197B3] text-[14px] mb-4 border-[#F5F0F0] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-              id='location'
-              name='location'
-              defaultValue={location}
-              onChange={onChangeHandler}
-            >
-              {!location && (
-                <option value="" disabled>
-                  Choose a country
-                </option>
-              )}
-
-              {Object.entries(codeToCountry).map(([code, countryName]) => {
-                return (
-                  <option value={code} key={code}>
-                    {countryName}
-                  </option>
-                );
-              })}
-            </select>
-            <label htmlFor='birthday' className='text-[#000] mb-[7px] text-[14px] font-medium text-left'>
-              Birthday
-            </label>
-            <span className='relative left-[280px] top-[25px] pointer-events-none z-50'>
-              {' '}
-              <icons.editIcon />{' '}
-            </span>
-            <DatePicker
-              id='birthday'
-              selected={formattedBirthday}
-              onChange={date => onChangeHandler({ target: { id: 'birthday', value: date } })}
-              selectsStart
-              showMonthDropdown
-              showYearDropdown
-              placeholderText={'DD/MM/YYYY'}
-              dateFormat='dd/MM/yyyy'
-              className='border border-[#F5F0F0] text-[#9197B3] mb-4 w-[313px] rounded-lg h-[40px] px-[15px] outline-none'
-            />
-            <label htmlFor='projectName' className='text-[#000] text-[14px] font-medium text-left'>
-              Project
-            </label>
-            <span className='relative left-[280px] top-[25px] pointer-events-none'>
-              {' '}
-              <icons.editIcon />{' '}
-            </span>
-            <input
-              id='projectName'
-              name='projectName'
-              onChange={onChangeHandler}
-              defaultValue={projectName}
-              placeholder='Project Name here'
-              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            />
-            <label htmlFor='agencyId' className='text-[#000] text-[14px] font-medium text-left'>
-              Agency
-            </label>
-            <span className='relative left-[280px] top-[25px] pointer-events-none'>
-              {' '}
-              <icons.editIcon />{' '}
-            </span>
-            <select
-              id='agencyId'
-              name='agencyId'
-              onChange={onChangeHandler}
-              defaultValue={parseInt(agencyId)}
-              placeholder='Iris Levy'
-              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            >
-              {!parseInt(agencyId) && <option>-- SELECT NEW AGENCY --</option>}
-              {agencies.map(agency => (
-                <option key={agency.id} value={parseInt(agency.id)}>
-                  {agency.name}
-                </option>
-              ))}
-            </select>
-            <label htmlFor='whatsup' className='text-[#000] text-[14px] font-medium text-left'>
-              Whatsup
-            </label>
-            <span className='relative left-[280px] top-[25px] pointer-events-none'>
-              {' '}
-              <icons.editIcon />{' '}
-            </span>
-            <input
-              onChange={onChangeHandler}
-              id='whatsup'
-              defaultValue={whatsup}
-              placeholder='@whatsup'
-              className='border  mb-4 border-[#F5F0F0] text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            />
-            <label htmlFor='summary' className='text-[#000] text-[14px] font-medium text-left'>
-              Summary
-            </label>
-            <span className='relative left-[280px] top-[25px] pointer-events-none'>
-              {' '}
-              <icons.editIcon />{' '}
-            </span>
-            <textarea
-              onChange={onChangeHandler}
-              id='summary'
-              defaultValue={summary}
-              placeholder='Summary'
-              rows={4}
-              className='mb-4 border border-[#F5F0F0] text-[#9197B3] w-[313px] rounded-lg px-[15px] py-[10px] appearance-none outline-none resize-none overflow-y-auto'
-              style={{ minHeight: '80px', maxHeight: '200px' }}
-            />
-            <label htmlFor='linkedinProfile' className='text-[#000] text-[14px] font-medium text-left'>
-              Linkedin Profile
-            </label>
-            <span className='relative left-[280px] top-[25px] pointer-events-none'>
-              {' '}
-              <icons.editIcon />{' '}
-            </span>
-            <div className='relative'>
-              <input
-                onChange={onChangeHandler}
-                id='linkedinProfile'
-                defaultValue={linkedinProfile}
-                placeholder='Linkedin Profile URL'
-                className='mb-4 border border-[#F5F0F0] text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-              />
-              {linkedinProfile && isValidLink(linkedinProfile) && (
-                <div
-                  onClick={() => {
-                    window.open(linkedinProfile, '_blank');
-                  }}
-                  className='absolute h-[22px] w-[22px] top-[9px] right-[8px] bg-[#d1d4df] rounded-full pointer'
-                >
-                  <svg width='100' height='50' xmlns='http://www.w3.org/2000/svg'>
-                    <polygon points='8,5 8,17 18,11' fill='#262626' stroke-width='2' />
-                  </svg>
-                </div>
-              )}
-            </div>
-            <label
-              htmlFor='linkedinProfileChecked_Date'
-              className='text-[#000] mb-[7px] text-[14px] font-medium text-left'
-            >
-              Linkedin Status
-            </label>
-            <span className='badge-tooltip'>
-              {ignoreLinkedinCheck ? 'IGNORED' : linkedinProfileChecked ? 'TRUE' : 'FALSE'}
-              <span className='tooltip-text'>{moment(linkedinProfileDate).format('YYYY-MM-DD')}</span>
-            </span>
-            {/* <span className='relative left-[280px] top-[25px] pointer-events-none z-50'>
-              {' '}
-              <icons.editIcon />{' '}
-            </span> */}
-            {/* <DatePicker
-              id='linkedinProfileDate'
-              selected={formattedLinkedinProfileDate}
-              onChange={date => onChangeHandler({ target: { id: 'linkedinProfileDate', value: date } })}
-              selectsStart
-              showMonthDropdown
-              showYearDropdown
-              placeholderText={'DD/MM/YYYY'}
-              dateFormat='dd/MM/yyyy'
-              className='border border-[#F5F0F0] text-[#9197B3] mb-4 w-[313px] rounded-lg h-[40px] px-[15px] outline-none'
-            /> */}
-            <label htmlFor='linkedinComment' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Linkedin Comment
-            </label>
-            <input
-              onChange={onChangeHandler}
-              name='linkedinComment'
-              id='linkedinComment'
-              value={linkedinComment}
-              placeholder='Linkedin Comment'
-              className='border border-[#F5F0F0] mb-4 text-[#9197B3] w-[313px] rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-            />
-            <label htmlFor='hourlyRate' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Hourly Rate
-            </label>
-            <div className='flex items-center h-[40px] mb-4 px-2'>
-              <input
-                className='cursor-pointer w-4 h-4'
-                type='checkbox'
-                checked={hourlyRate}
-                id='hourlyRate'
-                name='hourlyRate'
-                onChange={onChangeHandler}
-              />
-            </div>
-            <label htmlFor='hourlyRate' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              Inactive
-            </label>
-            <div className='flex items-center h-[40px] mb-4 px-2'>
-              <input
-                className='cursor-pointer w-4 h-4'
-                type='checkbox'
-                checked={inactive}
-                id='inactive'
-                name='inactive'
-                onChange={onChangeHandler}
-              />
-            </div>
-            <label htmlFor='cv' className='text-[#000] text-[14px] font-medium text-left mb-[8px]'>
-              CV
-            </label>
-            <div className='flex items-center h-[40px] mb-4 px-2'>
-              <UploadCV
-                getInitialFile={
-                  cv
-                    ? () => {
-                      return axios
-                        .get(`${API_URL}/talent/${id}/cv`, { responseType: 'blob' })
-                        .then(res => res.data)
-                        .then(blob => {
-                          const file = new File([blob], 'cv.pdf', { type: 'application/pdf' });
-                          return file;
-                        })
-                        .catch(console.log);
-                    }
-                    : null
-                }
-                onChange={file => {
-                  onChangeHandler({
-                    target: {
-                      id: 'cv',
-                      name: 'cv',
-                      value: file
-                    }
-                  });
-                }}
-              />
             </div>
           </div>
         </form>

@@ -427,7 +427,6 @@ const CreateTalentModal = ({
                 </label>
                 <div className='flex-1'>
                   <SearchableField
-                    // name='Main Stakeholder'
                     data={activeCustomers
                       .map(customer =>
                         cusIds.includes(customer.id) ? { key: `${customer.id}`, value: customer.fullName } : null
@@ -449,7 +448,7 @@ const CreateTalentModal = ({
 
               <div className='flex items-center mb-4'>
                 <label htmlFor='Customer' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
-                  Customer
+                  Billing Customer
                 </label>
                 <input
                   id='Customer'
@@ -460,16 +459,24 @@ const CreateTalentModal = ({
                         .map(org => ({ key: `${org.id}`, value: org.name }))[0].value
                       : 'None'
                   }
-                  placeholder='Customer'
+                  placeholder='Billing Customer'
                   className='border border-[#F5F0F0] text-[#9197B3] flex-1 rounded-lg h-[40px] px-[15px] appearance-none outline-none'
                 />
               </div>
-            </div>
 
-            {/* Project & Agency Information Section */}
-            <div className='bg-blue-50 p-4 rounded-lg mb-6'>
-              <h3 className='text-[#333] text-[16px] font-semibold mb-4 border-b border-blue-200 pb-2'>Project & Agency</h3>
-            
+              <div className='flex items-center mb-4'>
+                <label htmlFor='position' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Position
+                </label>
+                <input
+                  name='position'
+                  onChange={handleChangeForm}
+                  value={values.position}
+                  placeholder=''
+                  className='border border-[#F5F0F0] text-[#9197B3] flex-1 rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                />
+              </div>
+
               <div className='flex items-center mb-4'>
                 <label htmlFor='projectName' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
                   Project
@@ -542,13 +549,13 @@ const CreateTalentModal = ({
               </div>
             </div>
 
-            {/* Contact Information Section */}
+            {/* Contact Information & Communication Section */}
             <div className='bg-green-50 p-4 rounded-lg mb-6'>
-              <h3 className='text-[#333] text-[16px] font-semibold mb-4 border-b border-green-200 pb-2'>Contact Information</h3>
+              <h3 className='text-[#333] text-[16px] font-semibold mb-4 border-b border-green-200 pb-2'>Contact Information & Communication</h3>
 
               <div className='flex items-center mb-4'>
                 <label htmlFor='email' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
-                  E-mail
+                  Email
                 </label>
                 <input
                   type='email'
@@ -562,7 +569,7 @@ const CreateTalentModal = ({
               
               <div className='flex items-center mb-4'>
                 <label htmlFor='address' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
-                  Address
+                  Employee Address
                 </label>
                 <input
                   name='address'
@@ -606,19 +613,6 @@ const CreateTalentModal = ({
               </div>
               
               <div className='flex items-center mb-4'>
-                <label htmlFor='position' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
-                  Position
-                </label>
-                <input
-                  name='position'
-                  onChange={handleChangeForm}
-                  value={values.position}
-                  placeholder=''
-                  className='border border-[#F5F0F0] text-[#9197B3] flex-1 rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-                />
-              </div>
-              
-              <div className='flex items-center mb-4'>
                 <label htmlFor='birthday' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
                   Birthday
                 </label>
@@ -631,6 +625,45 @@ const CreateTalentModal = ({
                   placeholderText={''}
                   dateFormat='dd/MM/yyyy'
                   className='border border-[#F5F0F0] flex-1 rounded-lg h-[40px] px-[15px] outline-none'
+                />
+              </div>
+
+              <div className='flex items-center mb-4'>
+                <label htmlFor='phoneNumber' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Mobile Phone
+                </label>
+                <input
+                  name='phoneNumber'
+                  onChange={handleChangeForm}
+                  value={values.phoneNumber}
+                  placeholder=''
+                  className='border border-[#F5F0F0] text-[#9197B3] flex-1 rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                />
+              </div>
+              
+              <div className='flex items-center mb-4'>
+                <label htmlFor='whatsup' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  WhatsApp
+                </label>
+                <input
+                  onChange={handleChangeForm}
+                  name='whatsup'
+                  value={values.whatsup}
+                  placeholder=''
+                  className='border border-[#F5F0F0] text-[#9197B3] flex-1 rounded-lg h-[40px] px-[15px] appearance-none outline-none'
+                />
+              </div>
+
+              <div className='flex items-center mb-4'>
+                <label htmlFor='telegram' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Telegram
+                </label>
+                <input
+                  onChange={handleChangeForm}
+                  name='telegram'
+                  value={values.telegram}
+                  placeholder='@telegram'
+                  className='border border-[#F5F0F0] text-[#9197B3] flex-1 rounded-lg h-[40px] px-[15px] appearance-none outline-none'
                 />
               </div>
             </div>
@@ -668,6 +701,42 @@ const CreateTalentModal = ({
               </div>
               
               <div className='flex items-center mb-4'>
+                <label htmlFor='workFromMonday' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Working from Monday-Friday
+                </label>
+                <div className='flex-1'>
+                  <input
+                    className='cursor-pointer w-4 h-4'
+                    type='checkbox'
+                    checked={values.workFromMonday}
+                    id='workFromMonday'
+                    name='workFromMonday'
+                    onChange={event =>
+                      handleChangeForm({ target: { name: 'workFromMonday', value: event.target.checked } })
+                    }
+                  />
+                </div>
+              </div>
+              
+              <div className='flex items-center mb-4'>
+                <label htmlFor='canWorkOnTwoPositions' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
+                  Can Work On 2 Positions
+                </label>
+                <div className='flex-1'>
+                  <input
+                    className='cursor-pointer w-4 h-4'
+                    type='checkbox'
+                    checked={values.canWorkOnTwoPositions}
+                    id='canWorkOnTwoPositions'
+                    name='canWorkOnTwoPositions'
+                    onChange={event =>
+                      handleChangeForm({ target: { name: 'canWorkOnTwoPositions', value: event.target.checked } })
+                    }
+                  />
+                </div>
+              </div>
+
+              <div className='flex items-center mb-4'>
                 <label htmlFor='endDate' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
                   End Date
                 </label>
@@ -696,91 +765,6 @@ const CreateTalentModal = ({
                 />
               </div>
             </div>
-
-            {/* Work Preferences Section */}
-            <div className='bg-orange-50 p-4 rounded-lg mb-6'>
-              <h3 className='text-[#333] text-[16px] font-semibold mb-4 border-b border-orange-200 pb-2'>Work Preferences</h3>
-              
-              <div className='flex items-center mb-4'>
-                <label htmlFor='workFromMonday' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
-                  Working from Monday
-                </label>
-                <div className='flex-1'>
-                  <input
-                    className='cursor-pointer w-4 h-4'
-                    type='checkbox'
-                    checked={values.workFromMonday}
-                    id='workFromMonday'
-                    name='workFromMonday'
-                    onChange={event =>
-                      handleChangeForm({ target: { name: 'workFromMonday', value: event.target.checked } })
-                    }
-                  />
-                </div>
-              </div>
-              
-              <div className='flex items-center mb-4'>
-                <label htmlFor='canWorkOnTwoPositions' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
-                  Can Work On Two Positions
-                </label>
-                <div className='flex-1'>
-                  <input
-                    className='cursor-pointer w-4 h-4'
-                    type='checkbox'
-                    checked={values.canWorkOnTwoPositions}
-                    id='canWorkOnTwoPositions'
-                    name='canWorkOnTwoPositions'
-                    onChange={event =>
-                      handleChangeForm({ target: { name: 'canWorkOnTwoPositions', value: event.target.checked } })
-                    }
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Communication Section */}
-            <div className='bg-indigo-50 p-4 rounded-lg mb-6'>
-              <h3 className='text-[#333] text-[16px] font-semibold mb-4 border-b border-indigo-200 pb-2'>Communication</h3>
-
-              <div className='flex items-center mb-4'>
-                <label htmlFor='phoneNumber' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
-                  Mobile Phone
-                </label>
-                <input
-                  name='phoneNumber'
-                  onChange={handleChangeForm}
-                  value={values.phoneNumber}
-                  placeholder=''
-                  className='border border-[#F5F0F0] text-[#9197B3] flex-1 rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-                />
-              </div>
-              
-              <div className='flex items-center mb-4'>
-                <label htmlFor='whatsup' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
-                  Whatsup
-                </label>
-                <input
-                  onChange={handleChangeForm}
-                  name='whatsup'
-                  value={values.whatsup}
-                  placeholder=''
-                  className='border border-[#F5F0F0] text-[#9197B3] flex-1 rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-                />
-              </div>
-
-              <div className='flex items-center mb-4'>
-                <label htmlFor='telegram' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
-                  Telegram
-                </label>
-                <input
-                  onChange={handleChangeForm}
-                  name='telegram'
-                  value={values.telegram}
-                  placeholder='@telegram'
-                  className='border border-[#F5F0F0] text-[#9197B3] flex-1 rounded-lg h-[40px] px-[15px] appearance-none outline-none'
-                />
-              </div>
-            </div>
            
             {/* LinkedIn & Social Media Section */}
             <div className='bg-pink-50 p-4 rounded-lg mb-6'>
@@ -788,7 +772,7 @@ const CreateTalentModal = ({
               
               <div className='flex items-center mb-4'>
                 <label htmlFor='linkedinProfile' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
-                  Linkedin Profile
+                  LN Profile
                 </label>
                 <input
                   onChange={handleChangeForm}
@@ -873,9 +857,9 @@ const CreateTalentModal = ({
               </div>
             </div>
 
-            {/* Additional Settings Section */}
+            {/* Additional Information Section */}
             <div className='bg-yellow-50 p-4 rounded-lg mb-6'>
-              <h3 className='text-[#333] text-[16px] font-semibold mb-4 border-b border-yellow-200 pb-2'>Additional Settings</h3>
+              <h3 className='text-[#333] text-[16px] font-semibold mb-4 border-b border-yellow-200 pb-2'>Additional Information</h3>
               
               <div className='flex items-center mb-4'>
                 <label htmlFor='hourlyRate' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
@@ -895,7 +879,7 @@ const CreateTalentModal = ({
               
               <div className='flex items-center mb-4'>
                 <label htmlFor='doesNotHaveAVacation' className='text-[#000] text-[14px] font-medium text-left w-[120px] mr-4'>
-                  Doesn't have a vacation
+                  Does Not Have A Vacation
                 </label>
                 <div className='flex-1'>
                   <input
@@ -964,7 +948,7 @@ const CreateTalentModal = ({
                     {' '}
                     <icons.imageCircle />{' '}
                   </span>
-                  <span className='absolute bottom-2 right-8 pointer-events-none cursor-pointer'>
+                  <span className='absolute bottom-5 right-5 pointer-events-none cursor-pointer'>
                     {' '}
                     <icons.imageIcon />{' '}
                   </span>

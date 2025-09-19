@@ -20,19 +20,20 @@ const VacationHistory = ({ displayModal, closeModal }) => {
   const [recordData, setRecordData] = useState()
   const [talName, setTalName] = useState()
   const [talId, setTalId] = useState()
+  const [edited, setEdited] = useState(false)
   const dispatch = useDispatch()
   const { globalVacationHistory, aggregatedTalents, organizations, customers, agencies } = useSelector(state => state)
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const responseVacationHistory = await axios.get(`${API_URL}/vacation/approvedList`);
-  //       dispatch(globalVacationHistoryPush(responseVacationHistory.data));
-  //     } catch (error) {
-  //       console.error('Error:', error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, [dispatch]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const responseVacationHistory = await axios.get(`${API_URL}/vacation/approvedList`);
+        dispatch(globalVacationHistoryPush(responseVacationHistory.data));
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+    fetchData();
+  }, [dispatch, edited]);
 
   const toggleDetails = (talId) => {
     setShowTalentDetails(talId);
@@ -82,6 +83,8 @@ const VacationHistory = ({ displayModal, closeModal }) => {
             closeModal={() => setIsEditRequest(null)}
             API_URL={API_URL}
             fullName={talName}
+            edited={edited}
+            setEdited={setEdited}
           />
         )}
         {showTalentDetails && (
